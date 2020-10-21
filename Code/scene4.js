@@ -19,13 +19,12 @@ class scene4 extends Phaser.Scene {
 		var coffeeMachine = new CoffeeMachine(1);
 
 		for (var i = 0; i<Client.maxClients; i++) 
-			{
-				Client.clientSlots.add(new Slot(100+(i*200),100,false));
-				var client = new Client(scene);
-				var pos=Client.clientSlots.getAt(i);
-				client.changePosition(pos.x,pos.y);
-			}
-		
+		{
+			Client.clientSlots.add(new Slot(100+(i*200),100,false));
+			var client = new Client(scene);
+			var pos=Client.clientSlots.getAt(i);
+			client.changePosition(pos.x,pos.y);
+		}
 		
 
         coffeeSpawnerImg.setInteractive();
@@ -39,8 +38,7 @@ class scene4 extends Phaser.Scene {
                 CoffeeMachine.slots.getAt(num).occupied=true;
 			}
         	
-        })
-        
+        })     
     }
 
     update(time, delta){
