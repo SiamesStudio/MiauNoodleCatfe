@@ -169,17 +169,14 @@ class scene1 extends Phaser.Scene {
 		
 
 	}
-
 	
-
-	
-
 }
 
 class GameManager
 {
 	static scene;
 	static numDishes=0;
+	static maxUpgrades=4;
 	static coffeeMachine;
 	static griddle;
 	static dishesImgs = new Phaser.Structs.List();
@@ -208,6 +205,7 @@ class Coffee
 	static coffeeTime = 5;
 	constructor(assignedSlot)
 	{
+		this.index = 1;
 		this.img = GameManager.scene.physics.add.sprite(0,0,'spr_glass_empty');
 		this.img.setScale(0.05);
 		this.countdown = Coffee.coffeeTime;
@@ -263,7 +261,7 @@ class Coffee
 	{
 		img.disableBody(true,true);
 		Coffee.coffeeList.remove(this);
-		GameManager.coffeMachine.occupiedSlots--;
+		GameManager.coffeeMachine.occupiedSlots--;
 		//free the coffee slot from the coffeeMachine
 		CoffeeMachine.slots.getAt(this.assignedSlot).occupied = false;
 	}
@@ -335,7 +333,6 @@ class Griddle extends Machine
 
 class Pancake
 {
-	static pancakeList = new Phaser.Structs.List();
 	static pancakeTime = 1.5;
 	constructor(trashCanImg, assignedSlot)
 	{
@@ -346,14 +343,10 @@ class Pancake
 		this.assignedSlot = assignedSlot;
 		this.img = GameManager.scene.physics.add.sprite(0,0,'spr_pancake_cooking'); this.img.setScale(0.25);
 
-		this.collidingObject;
-		this.selfRef = this;
 		var pancake = this;
 		this.trashCanImg = trashCanImg;
 		this.sideTimer;
 		this.burnTimer;
-
-        this.originalPos;
 
         this.img.setInteractive();
         this.img.on('pointerdown', function(pointer){
@@ -367,7 +360,7 @@ class Pancake
 	/* Called when the current side of the pancake is done */
 	sideDone()
 	{
-		var pancake = this.selfRef;
+		var pancake = this;
 		if(!this.side1Done)
 		{
 			this.side1Done = true;
@@ -465,8 +458,10 @@ class Pancake
 		food.setPosition(dish.x,dish.y);
 		food.removeInteractive();
 		food.disableBody(true,true);
-		/* Update order and change sprite */
+		dish.disableBody(true,true);
 		this.freeGriddle();
+		/* Update dish and create sprite according to the dish */
+		
 	}
 
 	throwFood(food, trashCan)
@@ -518,14 +513,6 @@ class Syrup
 	constructor(mask)
 	{
 		this.mask = mask;
-	}
-}
-
-class Dish
-{
-	constructor()
-	{
-		this.occupied;
 	}
 }
 
@@ -636,4 +623,57 @@ function checkHoverWithClient()
 function checkHoverWithOrder()
 {
 
+}
+
+
+class Client{
+	static clientList = new Phaser.Structs.List();
+	static clientSlots = new Phaser.Structs.List();
+	static maxClients= 3;
+	constructor(scene){
+		this.clientImg = scene.physics.add.sprite(100,100, 'client');
+		this.clientImg.setScale(0.2);
+		this.order=0;//this.generateOrder()
+		this.happiness=90;
+		Client.clientList.add(this);
+	}
+	changePosition(x, y)
+	{
+		this.clientImg.setPosition(x, y);
+	}
+	generateOrder(){
+		//generar un pedido
+	}
+
+}
+
+/* */
+class Order{
+	constructor(numDishes, scene){
+		this.scene=scene;
+		this.dishes = new Phaser.Structs.List();
+		this.recibedDishes=0;
+		this.numDishes=numDishes;
+	}
+
+	addDishToOrder(dish){
+		this.dish.add(dish);
+	}
+
+	compareDish(dish){
+		for (var i=0; i< this.numDishes-this.recibedDishes;i++){
+			if(dish.index==this.dishes.getAt(i).index){
+				return true;
+			}
+			//comparar toppings
+		}
+	}
+}
+
+class Dish{
+	constructor(){
+		this.index=0; //1 coffee, 2 pancakes, 3 noodles
+		this.pancakeToppins;
+		this.noodleToppins;
+	}
 }

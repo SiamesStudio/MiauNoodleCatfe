@@ -56,17 +56,6 @@ class scene4 extends Phaser.Scene {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 class Slot
 {
 	constructor(x, y, occupied)
@@ -76,15 +65,6 @@ class Slot
 		this.occupied = false;
 	}	
 }
-
-
-
-
-
-
-
-
-
 
 
 class CoffeeMachine
@@ -132,22 +112,6 @@ class CoffeeMachine
 		return -1;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class Coffee
@@ -217,44 +181,14 @@ class Coffee
 	{
 			CoffeeMachine.slots.getAt(this.slot).occupied=false;
 			coffeeImg.disableBody(true,true);
-			Coffee.coffeeList.remove(this);
-		
-		
+			Coffee.coffeeList.remove(this);	
 	}
 
 	sameOrder(client){
-		client.order.comparePlate(this);
+		client.order.compareDish(this);
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// Esta clase sería la pila de vasos que reaccionarían a un click para poner un café en la cafetera
-class CoffeeSpawner
-{
-	constructor()
-	{
-
-	}
-}
-
-
-
-
-
-
-
-
 
 
 class Client{
@@ -276,48 +210,32 @@ class Client{
 		//generar un pedido
 	}
 
-	
-
 }
 
 
-
-
-
-
-
 class Order{
-	constructor(numPlates, scene){
+	constructor(numDishes, scene){
 		this.scene=scene;
-		this.plates = new Phaser.Structs.List();
-		this.recibedPlates=0;
-		this.numPlates=numPlates;
+		this.dishes = new Phaser.Structs.List();
+		this.recibedDishes=0;
+		this.numDishes=numDishes;
 	}
 
-	addPlateToOrder(plate){
-		this.plates.add(plate);
+	addDishToOrder(dish){
+		this.dish.add(dish);
 	}
 
-	comparePlate(plate){
-		for (var i=0; i< this.numPlates-this.recibedPlates;i++){
-			if(plate.index==this.plates.getAt(i).index){
+	compareDish(dish){
+		for (var i=0; i< this.numDishes-this.recibedDishes;i++){
+			if(dish.index==this.dishes.getAt(i).index){
 				return true;
 			}
-			//comparar toppins
+			//comparar toppings
 		}
 	}
 }
 
-
-
-
-
-
-
-
-
-
-class Plate{
+class Dish{
 	constructor(){
 		this.index=0; //1 coffee, 2 pancakes, 3 noodles
 		this.pancakeToppins;
