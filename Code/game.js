@@ -1,10 +1,20 @@
+var game;
+var totalCoins = 0;
+var totalDiamonds = 0;
+var totalChefPoints = 0;
+var playerLevel = 1;
+var expPerLevel = [0,10,50,100,200,500]
+var MutedMusic = false;
+var languageSelected = false;
 
 var config = {
         type: Phaser.AUTO,
-        width: 800,
-        height: 600,
+        width: 320,
+        height: 180,
         backgroundColor: 0x000000,
-        scene: [Inicio,scene1,scene2,Menu,Shop,Roulette],
+        pixelArt: true, //Prevent pixel art from becoming blurred when scaled.
+        //antialias: true,
+        scene: [Loading,Inicio,scene1,scene2,Menu,Shop],
         physics: {
             default: 'arcade',
             arcade: {
@@ -14,13 +24,14 @@ var config = {
         },
         scale: { 
         mode: Phaser.Scale.FIT,// para qeu al rescalar la pantalla se siga manteninedo igual
-        autoCenter: Phaser.Scale.LEFT,// centrar
-        width: 800,
-        height: 600
+        autoCenter: Phaser.Scale.CENTER_BOTH, // centrar
+        width: 320,
+        height: 180
         }
 }
 
 window.onload = function()
 {
-	var game = new Phaser.Game(config);
+    game = new Phaser.Game(config);
+    window.focus();
 }
