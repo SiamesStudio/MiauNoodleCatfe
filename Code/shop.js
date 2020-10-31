@@ -4,9 +4,11 @@ class Shop extends Phaser.Scene {
     }
 
     init(gameData){
-        this.gameStrings = new GameStrings()
-        this.currentLanguage = gameData.language
-        if(gameData.language){
+        this.gameStrings = new ShopStrings()
+        this.playerSettings = gameData.playerInfo
+        console.log(this.playerSettings)
+
+        if(this.playerSettings.language){
             this.gameStrings.convertToSpanish()
         }else{
             this.gameStrings.convertToEnglish()
@@ -14,19 +16,7 @@ class Shop extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('coin_1','assets/UI/coin_1.png');
-        this.load.image('coin_2','assets/UI/coin_2.png');
-        this.load.image('coin_3','assets/UI/coin_3.png');
-        this.load.image('coin_4','assets/UI/coin_4.png');
-        this.load.image('coin_5','assets/UI/coin_5.png');
-        this.load.image('coin_6','assets/UI/coin_6.png');
 
-        this.load.image('diamond_1','assets/UI/diamond_1.png');
-        this.load.image('diamond_2','assets/UI/diamond_2.png');
-        this.load.image('diamond_3','assets/UI/diamond_3.png');
-        this.load.image('diamond_4','assets/UI/diamond_4.png');
-        this.load.image('diamond_5','assets/UI/diamond_5.png');
-        this.load.image('diamond_6','assets/UI/diamond_6.png');
     }
 
     create(){
@@ -89,17 +79,35 @@ class Shop extends Phaser.Scene {
         this.coin_6 = this.add.sprite(3*config.width/4, 3.8*config.height/5,'coin_6')
 
 
-        this.bannerSlot1.setInteractive().on('pointerdown', () => {this.buy_Slot(1);})
-        this.bannerSlot2.setInteractive().on('pointerdown', () => {this.buy_Slot(2);})
-        this.bannerSlot3.setInteractive().on('pointerdown', () => {this.buy_Slot(3);})
-        this.bannerSlot4.setInteractive().on('pointerdown', () => {this.buy_Slot(4);})
-        this.bannerSlot5.setInteractive().on('pointerdown', () => {this.buy_Slot(5);})
-        this.bannerSlot6.setInteractive().on('pointerdown', () => {this.buy_Slot(6);})
+        this.bannerSlot1.setInteractive().on('pointerdown', () => {console.log(1), this.buyScreen(1);})
+        this.bannerSlot2.setInteractive().on('pointerdown', () => {console.log(2), this.buyScreen(2);})
+        this.bannerSlot3.setInteractive().on('pointerdown', () => {console.log(3), this.buyScreen(3);})
+        this.bannerSlot4.setInteractive().on('pointerdown', () => {console.log(4), this.buyScreen(4);})
+        this.bannerSlot5.setInteractive().on('pointerdown', () => {console.log(5), this.buyScreen(5);})
+        this.bannerSlot6.setInteractive().on('pointerdown', () => {console.log(6), this.buyScreen(6);})
 
 
         //BACK
         var backButton = this.add.sprite(config.width/12, 9*config.height/10,'back').setScale(0.08)
-        backButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {language: this.currentLanguage});})
+        backButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {playerInfo: this.playerSettings});})
+
+        //EXTRA
+        this.blackScreen = this.add.image(config.width/2, config.height/2, 'blackScreen').setAlpha(0.5);
+        this.blackScreen.setVisible(false)
+        this.extraBanner = this.add.sprite(config.width/2, config.height/2,'banner_long').setScale(0.2)
+        this.extraBanner.setVisible(false)
+        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'cross').setScale(0.03)
+        this.crossButton.setVisible(false)
+        this.crossButton.setInteractive().on('pointerdown', () => {this.enableAllButtons();})
+
+        this.confirmationText = this.add.text(config.width/2, config.height/2, '', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false);
+        this.confirmationButton = this.add.image(2.4*config.width/5, 2*config.height/3,'banner_light').setScale(0.5).setVisible(false).setTint(0x32a852).setOrigin(1,0.5)
+        this.negationButton = this.add.image(2.6*config.width/5, 2*config.height/3,'banner_light').setScale(0.5).setVisible(false).setTint(0xeb4034).setOrigin(0,0.5)
+        this.number = 0
+
+        this.confirmationButton.setInteractive().on('pointerdown', () => {this.buy_Slot(this.number);})
+        this.negationButton.setInteractive().on('pointerdown', () => {this.enableAllButtons();})
+
 
     }
 
@@ -147,15 +155,74 @@ class Shop extends Phaser.Scene {
         this.coin_6.setVisible(false)
     }
 
+    buyScreen(number){
+        this.number = number
+        console.log("BuyScreen: "+number)
+        this.blackScreen.setVisible(true)
+        this.extraBanner.setVisible(true)
+        this.crossButton.setVisible(true)
+        this.confirmationText.setVisible(true)
+        this.confirmationText.setText(this.gameStrings.Shop_buyConfirmation)
+        this.confirmationButton.setVisible(true)
+        this.negationButton.setVisible(true)
+    }
+
+
     buy_Slot(number){
+        this.negationButton.setVisible(false)
+        this.confirmationButton.setVisible(false)
+        //console.log("He entrado "+ number)
         if(this.CoinsSelected){
-            alert("Has comprado monedas : " + number)
-            totalCoins += number;
+            this.playerSettings.coins += number
+            this.savePlayerSettings()
+            if(this.playerSettings.language){
+                this.confirmationText.setText('¡Has obtenido '+number+' monedas!');
+            }
+            else{
+                this.confirmationText.setText('Obtained '+number+' coins!');
+            }
+            
         }
         else{
-            alert("Has comprado diamantes : " + number)
-            totalDiamonds += number;
+            this.playerSettings.diamonds += number
+            this.savePlayerSettings()
+            if(this.playerSettings.language){
+                this.confirmationText.setText('¡Has obtenido '+number+' diamantes!');
+            }else{
+                this.confirmationText.setText('Obtained '+number+' diamonds!');
+            }
+            
         }
+        
+    }
+
+    enableAllButtons(){
+        this.bannerSlot1.setInteractive()
+        this.bannerSlot2.setInteractive()
+        this.bannerSlot3.setInteractive()
+        this.bannerSlot4.setInteractive()
+        this.bannerSlot5.setInteractive()
+        this.bannerSlot6.setInteractive()
+
+        this.blackScreen.setVisible(false)
+        this.extraBanner.setVisible(false)
+        this.crossButton.setVisible(false)
+        this.confirmationText.setVisible(false)
+        this.confirmationButton.setVisible(false)
+        this.negationButton.setVisible(false)
+    }
+
+    disableAllButtons(){
+        this.bannerSlot1.disableInteractive()
+        this.bannerSlot2.disableInteractive()
+        this.bannerSlot3.disableInteractive()
+        this.bannerSlot4.disableInteractive()
+        this.bannerSlot5.disableInteractive()
+        this.bannerSlot6.disableInteractive()
+    }
+
+    savePlayerSettings(){
+        localStorage.setItem('playerSettings', JSON.stringify(this.playerSettings))
     }
 
     

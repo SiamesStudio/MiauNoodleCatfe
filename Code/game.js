@@ -1,11 +1,5 @@
 var game;
-var totalCoins = 0;
-var totalDiamonds = 0;
-var totalChefPoints = 0;
-var playerLevel = 1;
-var expPerLevel = [0,10,50,100,200,500]
-var MutedMusic = false;
-var languageSelected = false;
+
 
 var config = {
         type: Phaser.AUTO,

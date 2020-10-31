@@ -4,9 +4,12 @@ class Menu extends Phaser.Scene {
     }
 
     init(gameData){
-        this.gameStrings = new GameStrings()
-        this.currentLanguage = gameData.language
-        if(gameData.language){
+        this.gameStrings = new MenuStrings()
+        this.playerSettings = gameData.playerInfo
+
+        console.log(this.playerSettings)
+        
+        if(this.playerSettings.language){
             this.gameStrings.convertToSpanish()
         }else{
             this.gameStrings.convertToEnglish()
@@ -29,18 +32,18 @@ class Menu extends Phaser.Scene {
         //COIN
         this.add.sprite(config.width/4,config.height/12,'banner').setScale(0.5)
         this.add.sprite(config.width/5,config.height/12,'coin').setScale(0.05)
-        this.numCoins = this.add.text(2*config.width/7,config.height/12, totalCoins, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5);
+        this.numCoins = this.add.text(2*config.width/7,config.height/12, this.playerSettings.coins, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5);
 
         //DIAMONDS
         this.add.sprite(config.width/2,config.height/12,'banner').setScale(0.5)
         this.add.sprite(2*config.width/5,config.height/12,'diamond').setScale(0.05)
-        this.numDiamonds = this.add.text(3.5*config.width/7,config.height/12, totalDiamonds, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5);
+        this.numDiamonds = this.add.text(3.5*config.width/7,config.height/12, this.playerSettings.diamonds, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5);
 
         //CHEF POINTS
         this.add.sprite(3*config.width/4 ,config.height/12,'banner').setScale(0.5)
         this.add.sprite(2*config.width/3,config.height/12,'chef_points').setScale(0.1)
-        var numPlayerLevel = this.add.text(2*config.width/3,config.height/12, playerLevel, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
-        var numChefPoints = this.add.text(5*config.width/7,config.height/12, totalChefPoints+'/'+ expPerLevel[playerLevel], { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5);
+        this.numPlayerLevel = this.add.text(2*config.width/3,config.height/12, this.playerSettings.level, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
+        this.numChefPoints = this.add.text(5*config.width/7,config.height/12, this.playerSettings.experience +'/'+ 0, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5);
 
         //FREE DIAMONDS
         this.freeDiamondsButton = this.add.sprite(5.2*config.width/6, 2*config.height/7,'banner').setScale(0.5)
@@ -58,7 +61,7 @@ class Menu extends Phaser.Scene {
         this.shopButton = this.add.sprite(6*config.width/7, 6*config.height/7,'banner').setScale(0.5)
         this.add.sprite(5.5*config.width/7, 6*config.height/7,'shop').setScale(0.02)
         this.shopTextButton = this.add.text(5.3*config.width/6, 6*config.height/7, this.gameStrings.shopButton, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.shopButton.setInteractive().on('pointerdown', () => {this.scene.start("Shop", {language: this.currentLanguage});})
+        this.shopButton.setInteractive().on('pointerdown', () => {this.scene.start("Shop", { playerInfo: this.playerSettings });})
 
         //OPTIONS
         //this.add.sprite(config.width/14 - 200,config.height/10 - 10,'banner').setScale(4)
@@ -89,9 +92,17 @@ class Menu extends Phaser.Scene {
 
         //BACK
         this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'back').setScale(0.08)
-        this.backButton.setInteractive().on('pointerdown', () => {this.scene.start("Inicio", {language: this.currentLanguage});})
+        this.backButton.setInteractive().on('pointerdown', () => {this.scene.start("Inicio", { playerInfo: this.playerSettings });})
 
 
+        //GIVE EXP
+        this.expButton = this.add.sprite(config.width/12, config.height/2,'banner_light').setScale(0.5).setTint(0x123456)
+        this.expButton.setInteractive().on('pointerdown', () => {
+            this.playerSettings.experience += 5, 
+            this.playerSettings.level = this.uploadPlayerLevel()
+            this.numPlayerLevel.setText(this.playerSettings.level)
+            this.savePlayerSettings()
+        })
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -126,6 +137,16 @@ class Menu extends Phaser.Scene {
         this.crossButtonAd = this.add.sprite(11*config.width/12, config.height/12,'cross').setScale(0.02)
         this.crossButtonAd.setVisible(false)
 
+        this.ViweAdButton.setInteractive().on('pointerdown', () => { //VER ANUNCIO
+            this.adSprite.setVisible(true)
+            this.ViweAdButton.disableInteractive()
+            var button = this.crossButtonAd;
+            setTimeout(function(){ 
+                button.setVisible(true);
+                 }, 5000);
+        })
+
+
         //ViweConfig
         this.titleOptions = this.add.text(config.width/2, config.height/4, this.gameStrings.OptionMenu_title ,{ font: "30px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)
         this.volumeOptions = this.add.text(3*config.width/7, config.height/2,this.gameStrings.OptionsMenu_text,{ font: "20px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)
@@ -151,22 +172,14 @@ class Menu extends Phaser.Scene {
             this.adSprite.setVisible(false); 
             this.crossButtonAd.setVisible(false); 
             this.ViweAdButton.setTint(0xb0b0b0)
+            this.ViweAdButton.disableInteractive()
             this.textAd.setTint(0xb0b0b0)
             this.enableAllButtons(); 
             totalDiamonds += 3;
             this.numDiamonds.text = totalDiamonds;
-
         })
 
-        this.ViweAdButton.setInteractive().on('pointerdown', () => { //VER ANUNCIO
-            this.adSprite.setVisible(true)
-            this.ViweAdButton.disableInteractive()
-            var button = this.crossButtonAd;
-            setTimeout(function(){ 
-                button.setVisible(true);
-                 }, 5000);
-            
-        })
+        
     }
 
     roulettePanel(){
@@ -194,7 +207,7 @@ class Menu extends Phaser.Scene {
         this.languageOptions.setVisible(true)
         
         
-        if(this.currentLanguage){
+        if(this.playerSettings.language){
             this.language_empty_Selection.setVisible(false)
             this.language_tick_Selection.setVisible(true)
         }else{
@@ -202,7 +215,7 @@ class Menu extends Phaser.Scene {
             this.language_tick_Selection.setVisible(false)
         }
 
-        if(MutedMusic){
+        if(this.playerSettings.audioMuted){
             this.empty_Selection.setVisible(false)
             this.tick_Selection.setVisible(true)
         }else{
@@ -212,20 +225,24 @@ class Menu extends Phaser.Scene {
         
         this.empty_Selection.setInteractive().on('pointerdown', () => {
             this.empty_Selection.setVisible(false)
-            MutedMusic = true;
+            this.playerSettings.audioMuted = true;
+            this.savePlayerSettings()
             this.tick_Selection.setVisible(true)
             
         })
 
         this.tick_Selection.setInteractive().on('pointerdown', () => {
             this.empty_Selection.setVisible(true)
-            MutedMusic = false;
+            this.playerSettings.audioMuted = false;
+            this.savePlayerSettings()
             this.tick_Selection.setVisible(false)
         })
 
         this.language_empty_Selection.setInteractive().on('pointerdown', () => {
             this.language_empty_Selection.setVisible(false)
-            this.currentLanguage = true;
+            //this.currentLanguage = true;
+            this.playerSettings.language = true;
+            this.savePlayerSettings()
             this.language_tick_Selection.setVisible(true)
             this.gameStrings.convertToSpanish()
             this.changeAllText()
@@ -234,7 +251,9 @@ class Menu extends Phaser.Scene {
 
         this.language_tick_Selection.setInteractive().on('pointerdown', () => {
             this.language_tick_Selection.setVisible(false)
-            this.currentLanguage = false;
+            //this.currentLanguage = false;
+            this.playerSettings.language = false;
+            this.savePlayerSettings()
             this.language_empty_Selection.setVisible(true)
             this.gameStrings.convertToEnglish()
             //this.titleOptions.text = OptionMenu_title
@@ -320,6 +339,43 @@ class Menu extends Phaser.Scene {
         this.titleOptions.text = this.gameStrings.OptionMenu_title
         this.volumeOptions.text = this.gameStrings.OptionsMenu_text
         this.languageOptions.text = this.gameStrings.OptionsMenu_language
+    }
+
+    savePlayerSettings(){
+        localStorage.setItem('playerSettings', JSON.stringify(this.playerSettings))
+    }
+
+    uploadPlayerLevel(){
+        var expPerLevel = [0,10,50,100,200,500]
+
+        var currentLevel = this.getLevel(expPerLevel,0,expPerLevel.length, this.playerSettings.experience)
+
+        this.numChefPoints.setText( (this.playerSettings.experience - expPerLevel[currentLevel]) +"/"+ (expPerLevel[currentLevel+1] - expPerLevel[currentLevel]) )
+
+        return currentLevel + 1;
+    }
+
+    getLevel(expArray,ini, fin, playerExp){
+
+        var mitad =  Math.floor((ini+fin) /2)
+
+        if (ini>fin){
+            return mitad
+        }
+        else{
+            if(expArray[mitad] == playerExp){
+                return mitad;
+            }
+            else{
+                if(playerExp < expArray[mitad]){
+                    return this.getLevel(expArray, ini , mitad-1, playerExp)
+                }
+                else{
+                    return this.getLevel(expArray, mitad+1, fin, playerExp)
+                }
+            }
+        }
+
     }
 
 }
