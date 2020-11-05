@@ -50,27 +50,25 @@ class Loading extends Phaser.Scene {
             console.log('complete');
         });
         
-        this.load.image('prueba_diana','assets/UI/target.png')
 
         //Inicio assets
-        this.load.image('background_menu','assets/UI/background_menu.jpg');
+        this.load.image('spr_bck_titleMenu','assets/UI/spr_bck_titleMenu.jpg');
         this.load.image('logo','assets/UI/logo.png');
         this.load.image('logo2','assets/UI/logo2.png');
         this.load.image('playButton','assets/UI/playButton.png');
         this.load.image('contactButton','assets/UI/contactButton.png');
-        this.load.image('logo_2_seconds','assets/UI/logo_2_seconds.png');
-
+        this.load.image('spr_logoTeam_Inicio','assets/UI/spr_logoTeam_Inicio.png');
 
         
         //MENU assets
-        this.load.image('selection_menu_background','assets/UI/fondo_menu.png')//fondo
-        this.load.image('coin','assets/UI/coin.png')//monedas
-        this.load.image('diamond','assets/UI/diamond.png')//diamantes
-        this.load.image('chef_points','assets/UI/experience_icon.png')//experiencia
+        this.load.image('spr_bck_mainMenu','assets/UI/spr_bck_mainMenu.png')//fondo
+        this.load.image('spr_ui_icon_coin','assets/UI/spr_ui_icon_coin.png')//monedas
+        this.load.image('spr_ui_icon_gem','assets/UI/spr_ui_icon_gem.png')//diamantes
+        this.load.image('spr_ui_chefLvl','assets/UI/spr_ui_chefLvl.png')//experiencia
         //free_diamantes
-        this.load.image('roulette','assets/UI/roulette.png')//ruleta
-        this.load.image('shop','assets/UI/shop.png')//tienda
-        this.load.image('options','assets/UI/options.png')//opciones
+        this.load.image('spr_ui_icon_spin','assets/UI/spr_ui_icon_spin.png')//ruleta
+        this.load.image('spr_ui_icon_shop','assets/UI/spr_ui_icon_shop.png')//tienda
+        this.load.image('spr_ui_icon_settings','assets/UI/spr_ui_icon_settings.png')//opciones
         this.load.image('banner_big','assets/UI/banner_big.png')//paneles
         this.load.image('banner_long','assets/UI/banner_long.png')//paneles
         //decorar_cocina
@@ -79,9 +77,9 @@ class Loading extends Phaser.Scene {
         //lista niveles
         this.load.image('banner','assets/UI/selection_menu_banner.png')
         this.load.image('banner_light','assets/UI/selection_menu_banner_light.png')
-        this.load.image('back','assets/UI/back.png')//Back
+        this.load.image('spr_back','assets/UI/spr_back.png')//Back
         this.load.image('blackScreen','assets/UI/blackScreen.png')
-        this.load.image('cross','assets/UI/cross.png')
+        this.load.image('spr_closeWindow','assets/UI/spr_closeWindow.png')
         this.load.image('advertising_image','assets/UI/anuncio.png')
 
         this.load.image('tick_button','assets/UI/tick_button.png')
@@ -122,7 +120,6 @@ class Loading extends Phaser.Scene {
         }
 
 
-        //this.scene.start("Inicio",{ language: false}) //laguage = false -> english. true-> spanish
         this.scene.start("Inicio",{playerInfo: this.playerSettings})
         
     }
