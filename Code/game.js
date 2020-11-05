@@ -8,7 +8,7 @@ var config = {
         backgroundColor: 0x000000,
         pixelArt: true, //Prevent pixel art from becoming blurred when scaled.
         //antialias: true,
-        scene: [Loading,Inicio,scene1,scene2,Menu,Shop],
+        scene: [Loading,Inicio,scene1,scene2,Menu,Shop,Contact],
         physics: {
             default: 'arcade',
             arcade: {

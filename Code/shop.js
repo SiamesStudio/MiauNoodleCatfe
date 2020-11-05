@@ -22,7 +22,7 @@ class Shop extends Phaser.Scene {
     create(){
         this.CoinsSelected = true;
         var scene = this;
-        var background = this.add.image(config.width/2,config.height/2,'selection_menu_background')//fondo
+        var background = this.add.image(config.width/2,config.height/2,'spr_bck_mainMenu')//fondo
         background.displayWidth = config.width;
         background.displayHeight = config.height;
 
@@ -84,19 +84,19 @@ class Shop extends Phaser.Scene {
         this.bannerSlot3.setInteractive().on('pointerdown', () => {console.log(3), this.buyScreen(3);})
         this.bannerSlot4.setInteractive().on('pointerdown', () => {console.log(4), this.buyScreen(4);})
         this.bannerSlot5.setInteractive().on('pointerdown', () => {console.log(5), this.buyScreen(5);})
-        this.bannerSlot6.setInteractive().on('pointerdown', () => {console.log(6), this.buyScreen(6);})
+        this.bannerSlot6.setInteractive().on('pointerdown', () => {console.log(6), this.buyScreen(6000);})
 
 
         //BACK
-        var backButton = this.add.sprite(config.width/12, 9*config.height/10,'back').setScale(0.08)
-        backButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {playerInfo: this.playerSettings});})
+        this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'spr_back').setScale(0.08)
+        this.backButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {playerInfo: this.playerSettings});})
 
         //EXTRA
         this.blackScreen = this.add.image(config.width/2, config.height/2, 'blackScreen').setAlpha(0.5);
         this.blackScreen.setVisible(false)
         this.extraBanner = this.add.sprite(config.width/2, config.height/2,'banner_long').setScale(0.2)
         this.extraBanner.setVisible(false)
-        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'cross').setScale(0.03)
+        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow').setScale(0.03)
         this.crossButton.setVisible(false)
         this.crossButton.setInteractive().on('pointerdown', () => {this.enableAllButtons();})
 
@@ -165,6 +165,7 @@ class Shop extends Phaser.Scene {
         this.confirmationText.setText(this.gameStrings.Shop_buyConfirmation)
         this.confirmationButton.setVisible(true)
         this.negationButton.setVisible(true)
+        this.disableAllButtons()
     }
 
 
