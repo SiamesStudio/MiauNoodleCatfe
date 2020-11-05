@@ -95,7 +95,7 @@ class Menu extends Phaser.Scene {
 
         //PLAY -> No aparecera en el juego final
         this.playButton = this.add.sprite(config.width/2,config.height/2,'playButton').setScale(0.3)
-        this.playButton.setInteractive().on('pointerdown', () => {this.scene.start("bootGame");})
+        this.playButton.setInteractive().on('pointerdown', () => {this.scene.start("bootGame", { playerInfo: this.playerSettings });})
 
         //BACK
         this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'spr_back').setScale(0.08)

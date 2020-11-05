@@ -2,6 +2,12 @@ class scene1 extends Phaser.Scene {
 	constructor() {
 		super("bootGame");
 	}
+
+	init(gameData)
+	{
+		this.playerSettings = gameData.playerInfo;
+        console.log(this.playerSettings);
+	}
 	
 	preload()
 	{
@@ -34,10 +40,10 @@ class scene1 extends Phaser.Scene {
 		// this.load.image('spr_topDown_pancake', 'assets/spr_topDown_pancake.png');
 		// cada sirope visto desde arriba (pantalla de echar sirope) spr_topDown_syrup_tipoDeSirope.
 		// Máscaras de sirope (tantas como personajes): spr_syrup_mask_idDeLaMascara
-		this.load.image('spr_topping_galleta','assets/spr_topping_galleta.png');
-		this.load.image('spr_topping_oreo','assets/spr_topping_oreo.png');
-		this.load.image('spr_topping_fresa','assets/spr_topping_fresa.png');
-		this.load.image('spr_topping_platano','assets/spr_topping_platano.png');
+		this.load.image('spr_topping_lacasitos','assets/spr_topping_lacasitos.png');
+		this.load.image('spr_topping_coconut','assets/spr_topping_coconut.png');
+		this.load.image('spr_topping_strawberry','assets/spr_topping_strawberry.png');
+		this.load.image('spr_topping_banana','assets/spr_topping_banana.png');
 		this.load.image('spr_syrup_caramel','assets/spr_syrup_caramel.jpg');
 		this.load.image('spr_syrup_chocolate','assets/spr_syrup_chocolate.jpg');
 		this.load.image('spr_syrup_maple','assets/spr_syrup_maple.jpg');
@@ -65,10 +71,10 @@ class scene1 extends Phaser.Scene {
 		this.load.image('spr_sauce_algerienne','assets/spr_sauce_algerienne.jpg');
 		this.load.image('spr_ladre','assets/spr_ladre.jpg');
 		// Animación del cucharón echando cada salsa. (3 en total): nombrado dependiente de la implementación
-		//this.load.image('spr_topping_platano','assets/spr_topping_platano.png');
-		//this.load.image('spr_topping_fresa','assets/spr_topping_fresa.png');
-		//this.load.image('spr_topping_oreo','assets/spr_topping_oreo.png');
-		//this.load.image('spr_topping_galleta','assets/spr_topping_galleta.png');
+		this.load.image('spr_topping_naruto','assets/spr_topping_naruto.png');
+		this.load.image('spr_topping_mushroom','assets/spr_topping_mushroom.png');
+		this.load.image('spr_topping_egg','assets/spr_topping_egg.png');
+		this.load.image('spr_topping_celery','assets/spr_topping_celery.png');
 		/* 
 		Todas las combinaciones de noodles posibles ya cocinados: spr_noodles_Salsa_Topping1..
 		Fondo animado de calle: animación de gente caminando por la calle: nombrado dependiente de la implementación.
@@ -95,15 +101,14 @@ class scene1 extends Phaser.Scene {
         });
 
 		var coffeeMachineImg = this.add.image(config.width*0.05, config.height*0.92, 'spr_coffeeMachine_1'); coffeeMachineImg.setScale(0.05);
-
 		var coffeeSpawnerImg = this.add.image(config.width*0.05, config.height*0.8, 'spr_glasses'); coffeeSpawnerImg.setScale(0.03);
-		//var test = this.add.image(config.width/2 + config.width, config.height/2 , 'spr_glasses'); test.setScale(0.15);
 
-		var coffeeMachine = new CoffeeMachine(4, coffeeMachineImg);
+		var coffeeMachineLvl = GameManager.scene.playerSettings.upgrades.coffeeMachineLevel;
+		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, coffeeMachineLvl);
 		GameManager.coffeeMachine = coffeeMachine;
 		coffeeSpawnerImg.setInteractive();
         coffeeSpawnerImg.on('pointerdown', function(pointer){
-        	if(coffeeMachine.occupiedSlots < coffeeMachine.maxSlots)
+        	if(coffeeMachine.occupiedSlots < coffeeMachineLvl+1)
         	{	
         		var slotId = findFreeSlot(coffeeMachine, CoffeeMachine.slots);
         		var pos = CoffeeMachine.slots.getAt(slotId);
@@ -115,14 +120,15 @@ class scene1 extends Phaser.Scene {
 
 	pancakesSetting()
 	{
-		var numTablecloth = 4;
+		var numTablecloth = this.playerSettings.upgrades.tableClothPancakeLevel + 1;
+
 		var tableclothImgList = new Phaser.Structs.List();
         for(var i=0; i<numTablecloth; i++)
         {
         	var tableclothImg = this.add.image(config.width*0.075 + (i*42), config.height*0.65, 'spr_tablecloth'); tableclothImg.setScale(0.047);
         	tableclothImgList.add(tableclothImg);
         }
-        var tableclothCoffee = new TableclothsCoffee(numTablecloth, tableclothImgList);
+        var tableclothCoffee = new TableclothsCoffee(tableclothImgList, this.playerSettings.upgrades.tableClothPancakeLevel);
         var dishPileImg = this.add.image(config.width*0.95, config.height*0.6,'spr_dishes'); dishPileImg.setScale(0.03);
 
         dishPileImg.setInteractive();
@@ -138,13 +144,13 @@ class scene1 extends Phaser.Scene {
 
 		var pancakeSpawnerImg = this.add.image(config.width*0.935, config.height*0.8, 'spr_pancake_bottle'); pancakeSpawnerImg.setScale(0.03);
         var griddleImg = this.add.image(config.width*0.65, config.height*0.6,'spr_griddle'); griddleImg.setScale(0.15);
-        var griddle = new Griddle(4, griddleImg, 0);
+        var griddle = new Griddle(griddleImg, this.playerSettings.upgrades.pancakePanLevel);
         GameManager.griddle = griddle;
        	var trashCanImg = this.physics.add.sprite(config.width*0.94, config.height*0.12,'spr_trashCan'); trashCanImg.setScale(0.043);
        	GameManager.trashCanImgPancake = trashCanImg;
         pancakeSpawnerImg.setInteractive();
         pancakeSpawnerImg.on('pointerdown', function(pointer){
-        	if(griddle.occupiedSlots < griddle.maxSlots)
+        	if(griddle.occupiedSlots < GameManager.scene.playerSettings.upgrades.pancakePanLevel+1)
         	{	
         		var slotId = findFreeSlot(griddle, Griddle.slots);
         		var pos = Griddle.slots.getAt(slotId);
@@ -153,9 +159,9 @@ class scene1 extends Phaser.Scene {
         	} 
         })
         
-        for(var i = 0; i<4; i++)
+        for(var i=0; i<4; i++)
 		{
-			var topping = new Topping(i, 0);
+			var topping = new Topping(i, true);
 		}
 		
 		for(var i=0; i<3; i++)
@@ -168,14 +174,14 @@ class scene1 extends Phaser.Scene {
 	{
 		var noodleSpawnerImg = this.add.image(config.width*0.935 + config.width, config.height*0.8, 'spr_noodles'); noodleSpawnerImg.setScale(0.02);
         var strainerImg = this.add.image(config.width*0.7 + config.width, config.height*0.6,'spr_strainer'); strainerImg.setScale(0.2);
-        var strainer = new Strainer(4, strainerImg, 0);
+        var strainer = new Strainer(strainerImg, GameManager.scene.playerSettings.upgrades.noodleLevel);
         GameManager.strainer = strainer;
        	var trashCanImgNoodles = this.physics.add.sprite(config.width*0.94 + config.width, config.height*0.12,'spr_trashCan'); trashCanImgNoodles.setScale(0.043);
        	
        	GameManager.trashCanImgNoodles = trashCanImgNoodles;
         noodleSpawnerImg.setInteractive();
         noodleSpawnerImg.on('pointerdown', function(pointer){
-        	if(strainer.occupiedSlots < strainer.maxSlots)
+        	if(strainer.occupiedSlots < GameManager.scene.playerSettings.upgrades.noodleLevel +1)
         	{	
         		var slotId = findFreeSlot(strainer, Strainer.slots);
         		var pos = Strainer.slots.getAt(slotId);
@@ -184,21 +190,21 @@ class scene1 extends Phaser.Scene {
         	} 
         })
 
-        var numTablecloth = 4;
+        var numTablecloth = this.playerSettings.upgrades.tableClothNoodleLevel + 1;
 		var tableclothImgList = new Phaser.Structs.List();
         for(var i=0; i<numTablecloth; i++)
         {
         	var tableclothImg = this.add.image(config.width*0.075 + config.width + (i*42), config.height*0.65, 'spr_tablecloth'); tableclothImg.setScale(0.047);
         	tableclothImgList.add(tableclothImg);
         }
-        var tableclothCoffee = new TableclothsNoodle(numTablecloth, tableclothImgList);
+        var tableclothNoodle = new TableclothsNoodle(tableclothImgList, this.playerSettings.upgrades.tableClothNoodleLevel);
         var dishPileImg = this.add.image(config.width*0.95 + config.width, config.height*0.6,'spr_dishes'); dishPileImg.setScale(0.03);
         
         dishPileImg.setInteractive();
         dishPileImg.on('pointerdown', function(pointer){
         	if(GameManager.dishImgContainerNoodles.length < numTablecloth)
         	{	
-        		var slotId = findFreeSlot(tableclothCoffee, TableclothsNoodle.slots);
+        		var slotId = findFreeSlot(tableclothNoodle, TableclothsNoodle.slots);
         		var pos = TableclothsNoodle.slots.getAt(slotId);
         		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'spr_dish'); dishImg.setScale(0.04);
         		GameManager.dishImgContainerNoodles.add(new DishImgContainer(dishImg));
@@ -207,12 +213,12 @@ class scene1 extends Phaser.Scene {
 
         for(var i = 0; i<4; i++)
 		{
-			var topping = new Topping(i, config.width);
+			var topping = new Topping(i, false);
 		}
 
 		for(var i=0; i<3; i++)
 		{
-			var sauce = new Sauce(i, config.width);
+			var sauce = new Sauce(i);
 		}   
 	}
 
@@ -287,7 +293,6 @@ class scene1 extends Phaser.Scene {
 class GameManager
 {
 	static scene;
-	static maxUpgrades=4;
 	static coffeeMachine;
 	static griddle;
 	static strainer;
@@ -323,21 +328,21 @@ class Slot
 
 class Machine
 {
-	constructor(maxSlots, img)
+	constructor(img, upgradeLVL)
 	{
-		this.maxSlots = maxSlots;
 		this.img = img;
 		this.occupiedSlots = 0;
+		this.upgradeLVL = upgradeLVL;
 	}	
 }
 
 class CoffeeMachine extends Machine
 {
 	static slots = new Phaser.Structs.List();
-	constructor(maxSlots, img)
+	constructor(img, upgradeLVL)
 	{
-		super(maxSlots, img);
-		for(var i=0; i<this.maxSlots; i++)
+		super(img, upgradeLVL);
+		for(var i=0; i<upgradeLVL+1; i++)
 		{
 			CoffeeMachine.slots.add(new Slot(img.x+(i*8),img.y,false));
 		}
@@ -348,11 +353,12 @@ class CoffeeMachine extends Machine
 class TableclothsCoffee extends Machine
 {
 	static slots = new Phaser.Structs.List();
-	constructor(maxSlots, img)
+	constructor(img, upgradeLVL)
 	{
-		super(maxSlots, img);
-		for(var i=0; i<this.maxSlots; i++)
+		super(img, upgradeLVL);
+		for(var i=0; i<upgradeLVL+1; i++)
 		{
+
 			var _img = this.img.getAt(i);	
 			TableclothsCoffee.slots.add(new Slot(_img.x,_img.y,false));
 		}
@@ -362,10 +368,10 @@ class TableclothsCoffee extends Machine
 class TableclothsNoodle extends Machine
 {
 	static slots = new Phaser.Structs.List();
-	constructor(maxSlots, img)
+	constructor(img, upgradeLVL)
 	{
-		super(maxSlots, img);
-		for(var i=0; i<this.maxSlots; i++)
+		super(img, upgradeLVL);
+		for(var i=0; i<this.upgradeLVL+1; i++)
 		{
 			var _img = this.img.getAt(i);	
 			TableclothsNoodle.slots.add(new Slot(_img.x,_img.y,false));
@@ -376,9 +382,9 @@ class TableclothsNoodle extends Machine
 class Griddle extends Machine
 {
 	static slots = new Phaser.Structs.List();
-	constructor(maxSlots, img)
+	constructor(img, upgradeLVL)
 	{
-		super(maxSlots, img);
+		super(img, upgradeLVL);
 		var offset = 15;
 		Griddle.slots.add(new Slot(img.x-offset,img.y-offset,false));
 		Griddle.slots.add(new Slot(img.x+offset,img.y-offset,false));
@@ -389,7 +395,9 @@ class Griddle extends Machine
 
 class Coffee
 {
-	static coffeeTime = 1;
+	//static coffeeTime = Phaser.Math.Difference(GameManager.scene.playerSettings.upgrades.tableClothNoodleLevel - 8);
+	//static coffeeTime = Math.abs(GameManager.scene.playerSettings.upgrades.tableClothNoodleLevel - 8);
+	static coffeeTime = 8;
 	constructor(assignedSlot)
 	{
 		this.index = 0;
@@ -398,7 +406,8 @@ class Coffee
 		this.assignedSlot = assignedSlot;
 		this.hovering = false;
 		this.done = false;
-		this.timer = GameManager.scene.time.addEvent({ delay: Coffee.coffeeTime*1000, callback: this.coffeeDone, callbackScope: this });
+		this.doneTime = Math.abs(GameManager.scene.playerSettings.upgrades.cofeeTime - Coffee.coffeeTime);
+		this.timer = GameManager.scene.time.addEvent({ delay: this.doneTime*1000, callback: this.coffeeDone, callbackScope: this });
 	}
 
 	coffeeDone()
@@ -427,7 +436,7 @@ class Coffee
 
 class Pancake
 {
-	static pancakeTime = 0.5;
+	static time = 7;
 	constructor(assignedSlot)
 	{
 		this.index = 1;
@@ -440,6 +449,9 @@ class Pancake
 		this.img = GameManager.scene.physics.add.sprite(0,0,'spr_pancake_cooking'); this.img.setScale(0.08);
 		this.trashCollider;
 		this.dishCollider;
+		this.doneTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeTime - Pancake.time);
+		this.burnTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeBurnTime - (Pancake.time*2));
+
 		var pancake = this;
 
         this.img.setInteractive();
@@ -447,8 +459,8 @@ class Pancake
         	pancake.flipPancake();
         });
 
-        this.sideTimer = GameManager.scene.time.addEvent({ delay: Pancake.pancakeTime*1000, callback: this.sideDone, callbackScope: this });
-        this.burnTimer = GameManager.scene.time.addEvent({ delay: Pancake.pancakeTime*2*1000, callback: this.burnPancake, callbackScope: this });
+        this.sideTimer = GameManager.scene.time.addEvent({ delay: this.doneTime*1000, callback: this.sideDone, callbackScope: this });
+        this.burnTimer = GameManager.scene.time.addEvent({ delay: this.burnTime*1000, callback: this.burnPancake, callbackScope: this });
 	}
 
 	/* Called when the current side of the pancake is done */
@@ -493,8 +505,8 @@ class Pancake
 		// reset timers
 		this.sideTimer.remove(false);
         this.burnTimer.remove(false);
-		this.sideTimer = GameManager.scene.time.addEvent({ delay: Pancake.pancakeTime*1000, callback: this.sideDone, callbackScope: this });
-        this.burnTimer = GameManager.scene.time.addEvent({ delay: Pancake.pancakeTime*2*1000, callback: this.burnPancake, callbackScope: this });
+		this.sideTimer = GameManager.scene.time.addEvent({ delay: this.doneTime*1000, callback: this.sideDone, callbackScope: this });
+        this.burnTimer = GameManager.scene.time.addEvent({ delay: this.burnTime*1000, callback: this.burnPancake, callbackScope: this });
 	}
 
 	/* Method called when the pancake has spent too much time in the griddle */
@@ -589,11 +601,11 @@ class Pancake
 	}
 }
 
-
+	// Type 0: Banana - Type 1: Oreo - Type 2: Strawberry - Type 3: Cookie
+	// ●	0: Champiñones ●	1: Huevo ●	2: Naruto ●	3: Apio
 class Topping
 {
-	// Type 0: Banana - Type 1: Oreo - Type 2: Strawberry - Type 3: Cookie
-	constructor(index, offset)
+	constructor(index, pancake)
 	{
 		this.index = index;
 		this.img;
@@ -602,26 +614,36 @@ class Topping
 		this.posx;
 		this.posy;
 		this.collider;
+		var imgKey;
+		var offset = pancake ? offset = config.width : offset = 0;
 		switch(this.index)
 		{
 			case 0:
-				this.img = GameManager.scene.physics.add.sprite(config.width*0.5 + offset,config.height*0.9,'spr_topping_platano'); this.img.setScale(0.04);
-				this.staticImg = GameManager.scene.add.image(config.width*0.5+ offset,config.height*0.9,'spr_topping_platano'); this.staticImg.setScale(0.04);
+				if(pancake) { imgKey = 'spr_topping_strawberry'; }
+				else { imgKey = 'spr_topping_mushroom' ;}
+				this.img = GameManager.scene.physics.add.sprite(config.width*0.5 + offset,config.height*0.9,imgKey); this.img.setScale(0.04);
+				this.staticImg = GameManager.scene.add.image(config.width*0.5 + offset,config.height*0.9,imgKey); this.staticImg.setScale(0.04);
 			break;
 
 			case 1:
-				this.img = GameManager.scene.physics.add.sprite(config.width*0.4 + offset,config.height*0.9,'spr_topping_oreo'); this.img.setScale(0.1);
-				this.staticImg = GameManager.scene.add.image(config.width*0.4 + offset,config.height*0.9,'spr_topping_oreo'); this.staticImg.setScale(0.1);
+				if(pancake) { imgKey = 'spr_topping_coconut'; }
+				else { imgKey = 'spr_topping_egg' ; }
+				this.img = GameManager.scene.physics.add.sprite(config.width*0.4 + offset,config.height*0.9,imgKey); this.img.setScale(0.1);
+				this.staticImg = GameManager.scene.add.image(config.width*0.4 + offset,config.height*0.9,imgKey); this.staticImg.setScale(0.1);
 			break;
 
 			case 2:
-				this.img = GameManager.scene.physics.add.sprite(config.width*0.3 + offset,config.height*0.9,'spr_topping_fresa'); this.img.setScale(0.03);
-				this.staticImg = GameManager.scene.add.image(config.width*0.3 + offset,config.height*0.9,'spr_topping_fresa'); this.staticImg.setScale(0.03);
+				if(pancake) { imgKey = 'spr_topping_banana'; }
+				else { imgKey = 'spr_topping_naruto' ; }
+				this.img = GameManager.scene.physics.add.sprite(config.width*0.3 + offset,config.height*0.9,imgKey); this.img.setScale(0.03);
+				this.staticImg = GameManager.scene.add.image(config.width*0.3 + offset,config.height*0.9,imgKey); this.staticImg.setScale(0.03);
 			break;
 
 			case 3:
-				this.img = GameManager.scene.physics.add.sprite(config.width*0.2 + offset,config.height*0.9,'spr_topping_galleta'); this.img.setScale(0.015);
-				this.staticImg = GameManager.scene.add.image(config.width*0.2 + offset,config.height*0.9,'spr_topping_galleta'); this.staticImg.setScale(0.015);
+				if(pancake) { imgKey = 'spr_topping_lacasitos'; }
+				else { imgKey = 'spr_topping_celery' ; }
+				this.img = GameManager.scene.physics.add.sprite(config.width*0.2 + offset,config.height*0.9,imgKey); this.img.setScale(0.015);
+				this.staticImg = GameManager.scene.add.image(config.width*0.2 + offset,config.height*0.9,imgKey); this.staticImg.setScale(0.015);
 			break;
 
 			default:
@@ -746,7 +768,7 @@ class Syrup
 class Sauce
 {
 	static servingTime = 3; //4
-	constructor(index, offset)
+	constructor(index)
 	{
 		this.index = index;
 		this.img;
@@ -822,9 +844,9 @@ class Sauce
 class Strainer extends Machine
 {
 	static slots = new Phaser.Structs.List();
-	constructor(maxSlots, img)
+	constructor(img, upgradeLVL)
 	{
-		super(maxSlots, img);
+		super(img, upgradeLVL);
 		var offset = 15;
 		Strainer.slots.add(new Slot(img.x-offset,img.y-offset,false));
 		Strainer.slots.add(new Slot(img.x+offset,img.y-offset,false));
@@ -835,7 +857,7 @@ class Strainer extends Machine
 
 class Noodles
 {
-	static noodleTime = 0.5; //10
+	static doneTime = 0.5; //10
 	static burnTime = 5; //17
 	constructor(assignedSlot)
 	{
@@ -846,8 +868,11 @@ class Noodles
 		this.trashCollider;
 		this.dishCollider;
 
-		this.doneTimer = GameManager.scene.time.addEvent({ delay: Noodles.noodleTime*1000, callback: this.noodlesDone, callbackScope: this });
-        this.burnTimer = GameManager.scene.time.addEvent({ delay: Noodles.burnTime*1000, callback: this.noodlesBurnt, callbackScope: this });
+		this.noodleTime = Math.abs(GameManager.scene.playerSettings.upgrades.noodleTime - Noodles.doneTime);
+		this.noodleBurnTime = Math.abs(GameManager.scene.playerSettings.upgrades.noodleBurnTime - Noodles.burnTime);
+
+		this.doneTimer = GameManager.scene.time.addEvent({ delay: this.noodleTime*1000, callback: this.noodlesDone, callbackScope: this });
+        this.burnTimer = GameManager.scene.time.addEvent({ delay: this.noodleBurnTime*1000, callback: this.noodlesBurnt, callbackScope: this });
 	}
 
 	noodlesDone()
@@ -919,7 +944,7 @@ class Noodles
 		});
 		food.setPosition(dishImg.x,dishImg.y);
 		food.removeInteractive();
-		food.setScale(0.1);
+		food.setScale(0.05);
 		//food.disableBody(true,true);
 		this.freeStrainer();
 		/* Update dish and create sprite according to the dish */
@@ -1032,7 +1057,7 @@ function findFreeSlot(machine, slots)
 	var slotId = -1;
 	var slot;
 	var found = false;
-	while(i<machine.maxSlots && !found)
+	while(i < machine.upgradeLVL+1 && !found)
 	{
 		slot = slots.getAt(i);
 		if(!slot.occupied)

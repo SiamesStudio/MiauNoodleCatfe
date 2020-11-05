@@ -15,13 +15,15 @@ class Loading extends Phaser.Scene {
             moneySpent: 0,
             upgrades : {
                 cofeeTime : 0,
-                coffeMachineLevel : 0,
+                coffeeMachineLevel : 0,
                 pancakeTime : 0,
                 pancakeBurnTime : 0,
                 pancakePanLevel : 0,
                 noodleTime : 0,
                 noodleBurnTime : 0,
-                noodleLevel :0
+                noodleLevel :0,
+                tableClothPancakeLevel :0,
+                tableClothNoodleLevel :0, 
             }
         }
     }
@@ -108,7 +110,7 @@ class Loading extends Phaser.Scene {
         localStorage.setItem('score', this.score + 1)
         this.add.text(config.width/2 ,3*config.height/4, this.score, { font: "20px Arial", fill: "#ffffff", align: "center" });
 
-        //localStorage.removeItem('playerSettings')
+        localStorage.removeItem('playerSettings')
         if(localStorage.getItem('playerSettings') === null){ //Si no se ha creado el almacenamiento, lo crea
             console.log("if")
             localStorage.setItem('playerSettings', JSON.stringify(this.defaultPlayer))
