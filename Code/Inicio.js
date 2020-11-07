@@ -16,6 +16,34 @@ class Inicio extends Phaser.Scene {
 
     create(){
     
+        //Anims
+        //this.anims.create({
+        //    key: 'ladle_0',
+        //    frames: this.anims.generateFrameNumbers('anim_ladle_0', { start: 0, end: 11 }),
+        //    frameRate: 10,
+        //    repeat: -1
+        //});
+        //this.anims.create({
+        //    key: 'ladle_1',
+        //    frames: this.anims.generateFrameNumbers('anim_ladle_1', { start: 0, end: 11 }),
+        //    frameRate: 10,
+        //    repeat: -1
+        //});
+        //this.anims.create({
+        //    key: 'ladle_2',
+        //    frames: this.anims.generateFrameNumbers('anim_ladle_2', { start: 0, end: 11 }),
+        //    frameRate: 10,
+        //    repeat: -1
+        //});
+        //this.anims.create({
+        //    key: 'ladle_3',
+        //    frames: this.anims.generateFrameNumbers('anim_ladle_3', { start: 0, end: 11 }),
+        //    frameRate: 10,
+        //    repeat: -1
+        //});
+
+        
+        //Inicio
         var scene = this;
         var backgroundMenu = this.add.image(config.width/2,config.height/2,'spr_bck_titleMenu').setScale(0.3);
         var logo = this.add.image(config.width/2,config.height/4,'logo').setScale(0.4);
@@ -29,6 +57,8 @@ class Inicio extends Phaser.Scene {
 
         playButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {playerInfo: this.playerSettings }); })
         playButton.disableInteractive();
+
+        
 
         contactButton.setInteractive().on('pointerdown', () => {
             //var url = 'https://siamesstudio.github.io/'

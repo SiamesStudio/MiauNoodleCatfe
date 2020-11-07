@@ -84,7 +84,7 @@ class Shop extends Phaser.Scene {
         this.bannerSlot3.setInteractive().on('pointerdown', () => {console.log(3), this.buyScreen(3);})
         this.bannerSlot4.setInteractive().on('pointerdown', () => {console.log(4), this.buyScreen(4);})
         this.bannerSlot5.setInteractive().on('pointerdown', () => {console.log(5), this.buyScreen(5);})
-        this.bannerSlot6.setInteractive().on('pointerdown', () => {console.log(6), this.buyScreen(6000);})
+        this.bannerSlot6.setInteractive().on('pointerdown', () => {console.log(6), this.buyScreen(6);})
 
 
         //BACK
@@ -177,10 +177,10 @@ class Shop extends Phaser.Scene {
             this.playerSettings.coins += number
             this.savePlayerSettings()
             if(this.playerSettings.language){
-                this.confirmationText.setText('¡Has obtenido '+number+' monedas!');
+                this.confirmationText.setText('¡Has obtenido '+number*100+' monedas!');
             }
             else{
-                this.confirmationText.setText('Obtained '+number+' coins!');
+                this.confirmationText.setText('Obtained '+number*100+' coins!');
             }
             
         }
@@ -188,9 +188,9 @@ class Shop extends Phaser.Scene {
             this.playerSettings.diamonds += number
             this.savePlayerSettings()
             if(this.playerSettings.language){
-                this.confirmationText.setText('¡Has obtenido '+number+' diamantes!');
+                this.confirmationText.setText('¡Has obtenido '+number*100+' diamantes!');
             }else{
-                this.confirmationText.setText('Obtained '+number+' diamonds!');
+                this.confirmationText.setText('Obtained '+number*100+' diamonds!');
             }
             
         }

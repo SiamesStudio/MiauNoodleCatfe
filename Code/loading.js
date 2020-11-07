@@ -37,19 +37,19 @@ class Loading extends Phaser.Scene {
         var progressBar = this.add.rectangle(config.width/4, config.height/2, 0, 20, 0xff6699);
 
         this.load.on('progress', function (value) {
-            console.log(value);
+            //console.log(value);
             loading_Text.setText("Loading... "+ parseInt(value * 100) +"%")
             progressBar.destroy();
             sceneRef.add.rectangle(config.width/4, config.height/2, config.width/2 * value, 20, 0xff6699).setOrigin(0,0.5);
         });
                     
         this.load.on('fileprogress', function (file) {
-            console.log(file.src);
+            //console.log(file.src);
             lastAssetLoaded.setText("Asset: "+file.key);
         });
          
         this.load.on('complete', function () {
-            console.log('complete');
+            //console.log('complete');
         });
         
 
@@ -102,6 +102,42 @@ class Loading extends Phaser.Scene {
         this.load.image('diamond_4','assets/UI/diamond_4.png');
         this.load.image('diamond_5','assets/UI/diamond_5.png');
         this.load.image('diamond_6','assets/UI/diamond_6.png');
+
+
+        //ANIMATIONS
+        this.load.spritesheet('anim_ladle_0', 'assets/animaciones/JWRRSS_ladle_animation_0.png',
+        {frameWidth: 48,frameHeight: 75}
+        );
+        
+        this.load.spritesheet('anim_ladle_1', 'assets/animaciones/JWRRSS_ladle_animation_1.png',
+        {frameWidth: 48,frameHeight: 75}
+        );
+
+        this.load.spritesheet('anim_ladle_2', 'assets/animaciones/JWRRSS_ladle_animation_2.png',
+        {frameWidth: 48,frameHeight: 75}
+        );
+
+        this.load.spritesheet('anim_ladle_3', 'assets/animaciones/JWRRSS_ladle_animation_3.png',
+        {frameWidth: 48,frameHeight: 75}
+        );
+
+        this.load.spritesheet('anim_olla_burbujas', 'assets/animaciones/JWRRSS_olla_burbujas.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_olla_noodles_burnt', 'assets/animaciones/JWRRSS_olla_noodles_burnt.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_olla_noodles_cooking', 'assets/animaciones/JWRRSS_olla_noodles_cooking.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+        
+        //this.load.spritesheet('anim_olla_strainers', 'assets/animaciones/JWRRSS_anim_olla_strainers.png',
+        //{frameWidth: 48,frameHeight: 76}
+        //);
+        this.load.atlas('strainer_atlas', 'assets/animaciones/JWRRSS_olla_strainers.png', 'strainers_atlas.json')
+        this.load.multiatlas('ladle_atlas', 'assets/animaciones/ladle_animations.json', 'assets/animaciones')
     }
 
     create(){
@@ -110,7 +146,7 @@ class Loading extends Phaser.Scene {
         localStorage.setItem('score', this.score + 1)
         this.add.text(config.width/2 ,3*config.height/4, this.score, { font: "20px Arial", fill: "#ffffff", align: "center" });
 
-        localStorage.removeItem('playerSettings')
+        //localStorage.removeItem('playerSettings')
         if(localStorage.getItem('playerSettings') === null){ //Si no se ha creado el almacenamiento, lo crea
             console.log("if")
             localStorage.setItem('playerSettings', JSON.stringify(this.defaultPlayer))

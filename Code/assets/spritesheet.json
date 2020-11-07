@@ -1,0 +1,75 @@
+{
+	"frames": {
+		"background_2.png": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 409,
+				"h": 326
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 409,
+				"h": 326
+			},
+			"sourceSize": {
+				"w": 409,
+				"h": 326
+			}
+		},
+		"elephant_alpha_01.jpg": {
+			"frame": {
+				"x": 412,
+				"y": 1,
+				"w": 512,
+				"h": 512
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 512,
+				"h": 512
+			},
+			"sourceSize": {
+				"w": 512,
+				"h": 512
+			}
+		},
+		"permadeth.PNG": {
+			"frame": {
+				"x": 926,
+				"y": 1,
+				"w": 1090,
+				"h": 565
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 1090,
+				"h": 565
+			},
+			"sourceSize": {
+				"w": 1090,
+				"h": 565
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 2017,
+			"h": 567
+		},
+		"scale": "1"
+	}
+}

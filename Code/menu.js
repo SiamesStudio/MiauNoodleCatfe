@@ -202,10 +202,10 @@ class Menu extends Phaser.Scene {
                     break;
                 case 2:
                     //code
-                    if(this.playerSettings.upgrades.coffeMachineLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.coffeMachineLevel) ){
-                        this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.coffeMachineLevel
+                    if(this.playerSettings.upgrades.coffeeMachineLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.coffeeMachineLevel) ){
+                        this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.coffeeMachineLevel
                         this.numCoins.setText(this.playerSettings.coins)
-                        this.playerSettings.upgrades.coffeMachineLevel += 1
+                        this.playerSettings.upgrades.coffeeMachineLevel += 1
                         this.savePlayerSettings()
                         this.upgradesPanelDescription(2);
                         //this.upgradeDescriptionSlotText1.setText("+1 cofee machine\ncapacity\nLevel: "+this.playerSettings.upgrades.coffeMachineLevel)
@@ -323,10 +323,10 @@ class Menu extends Phaser.Scene {
         if(number==2){
             
             this.upgradeTitleSlotText1.setText(this.gameStrings.upgradesCoffeMachine)
-            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesCoffeMachineDescription + this.playerSettings.upgrades.coffeMachineLevel)
-            if(this.playerSettings.upgrades.coffeMachineLevel != 3){
+            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesCoffeMachineDescription + this.playerSettings.upgrades.coffeeMachineLevel)
+            if(this.playerSettings.upgrades.coffeeMachineLevel != 3){
                 this.buySlot.setInteractive()
-                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.coffeMachineLevel)
+                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.coffeeMachineLevel)
                 this.buySlot.setTint(0x32a852);
             }else{
                 this.buySlotText.setText("MAX")
@@ -526,7 +526,7 @@ class Menu extends Phaser.Scene {
         this.languageOptions.text = this.gameStrings.OptionsMenu_language
 
         //Upgrades
-
+        this.upgradesPanelDescription(this.UpgradeSelected)
     }
 
     savePlayerSettings(){
