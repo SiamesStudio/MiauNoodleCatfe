@@ -137,7 +137,8 @@ class Loading extends Phaser.Scene {
         //{frameWidth: 48,frameHeight: 76}
         //);
         this.load.atlas('strainer_atlas', 'assets/animaciones/JWRRSS_olla_strainers.png', 'strainers_atlas.json')
-        this.load.multiatlas('ladle_atlas', 'assets/animaciones/ladle_animations.json', 'assets/animaciones')
+
+        this.load.multiatlas('assets_atlas', 'assets/assets.json', 'assets')
 
         //
 
