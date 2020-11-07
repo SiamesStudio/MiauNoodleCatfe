@@ -75,7 +75,8 @@ class scene1 extends Phaser.Scene {
     	new Client(1, 1,[2,2,0], [1,-1,1,2,2,3]);
     	new Client(2, 0, [2,2,1,0], [1,1,1,0]);
     	new Client(3, 2, [2,3,1,3], [1,2,1,1,0]);
-    	new Client(4, 2, [2,2,1,1], [1,0,2,0]);
+		new Client(4, 2, [2,2,1,1], [1,0,2,0]);
+		new Client(5,1,[2,0,2,1,2],[1,0,2,0])
     	console.log(Client.clientList)
     	//añadir clientes a mano
   	}
@@ -244,7 +245,7 @@ class scene1 extends Phaser.Scene {
 
     	var maxTime = 30;
     	var minTime = 15;
-    	/*
+    	
     	if(Client.clientsInRestaurant.length==0){
       		callClient(-1);
     	}
@@ -268,7 +269,7 @@ class scene1 extends Phaser.Scene {
       		    	callClient(2);
       		    }, streetTime);
       		}
-    	}*/
+    	}
     	
 
 		if(!GameManager.grabbedItemImg) return;
@@ -1191,10 +1192,12 @@ class Client{
     //diferenciar entre gatos de fuera o dentro
     //CAMBIAR
     if(this.place==1){
-      var numDishes=Math.floor(Math.random()*3+1);
+	  var numDishes=Math.floor(Math.random()*2+1);
+	  console.log("platos:"+numDishes)
       var nums=new Phaser.Structs.List();
       while(nums.length<numDishes){
-        var num=Math.floor(Math.random()*2);
+		var num=Math.floor(Math.random()*2);
+		console.log(num)
         nums.add(num);
       }
       this.order = new Order(numDishes, nums, this);
@@ -1209,9 +1212,11 @@ class Client{
 
   goToRestaurant(place){
     this.place=place;
-    var slotId=this.findFreeSlot(place);
+	var slotId=this.findFreeSlot(place);
+	console.log(Client.restaurantOccupiedSlots)
+	console.log(Client.streetOccupiedSlots)
     if(place==1){
-      var pos=Client.restaurantSlots.getAt(slotId);
+	  var pos=Client.restaurantSlots.getAt(slotId);
     }
     else if(place==2){
       var pos=Client.streetSlots.getAt(slotId);
@@ -1642,14 +1647,18 @@ function makeImgInteractive(itemClass, itemImg, item, cookingSound)
 function callClient(place){  	
 	if(place==-1){
     	var place= Math.floor(Math.random()*2+1);
-  	}
+	  }
+	  
+	var long=Client.clientsInRestaurant.length
   	var clientId= Math.floor(Math.random()*Client.clientList.length);
-  	var bool=Client.clientsInRestaurant.add(clientId);
+  	Client.clientsInRestaurant.add(clientId);
 
-  	while(bool==false){
-  		console.log("bool: " + bool); //Lucia cuidado porque el add a la lista de phaser no devuelve booleano como pensabamos, igual puedes mirar la longitud de la lista para ver si se ha añadido
-    	var clientId= Math.floor(Math.random()*Client.clientList.length);
-    	var bool=Client.clientsInRestaurant.add(clientId);
+  	while(long==Client.clientsInRestaurant.length){
+		  console.log("holi")
+  		//console.log("bool: " + bool); //Lucia cuidado porque el add a la lista de phaser no devuelve booleano como pensabamos, igual puedes mirar la longitud de la lista para ver si se ha añadido
+		var clientId= Math.floor(Math.random()*Client.clientList.length);
+		console.log(clientId)
+    	Client.clientsInRestaurant.add(clientId);
   	}
   	Client.clientList.getAt(clientId).goToRestaurant(place);
   	if(place==1){
