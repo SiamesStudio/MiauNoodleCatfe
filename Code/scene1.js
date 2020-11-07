@@ -1,3 +1,5 @@
+var joselu = true;
+
 class scene1 extends Phaser.Scene {
 	constructor() {
 		super("bootGame");
@@ -5,14 +7,45 @@ class scene1 extends Phaser.Scene {
 
 	init(gameData)
 	{
-		this.playerSettings = gameData.playerInfo;
-        console.log(this.playerSettings);
+		this.playerSettings;
+		if(joselu)
+		{
+			this.playerSettings = {
+            coins: 0,
+            diamonds: 0,
+            level: 1,
+            experience: 0,
+            language: false,
+            audioMuted: false,
+            moneySpent: 0,
+            upgrades : {
+                cofeeTime : 0,
+                coffeeMachineLevel : 0,
+                pancakeTime : 0,
+                pancakeBurnTime : 0,
+                pancakePanLevel : 0,
+                noodleTime : 0,
+                noodleBurnTime : 0,
+                noodleLevel :0,
+                tableClothPancakeLevel :0,
+                tableClothNoodleLevel :0, 
+            	}
+        	}
+		}
+		else
+		{
+			this.playerSettings = gameData.playerInfo;
+        	console.log(this.playerSettings);
+		}
+
+		
 	}
 	
 	preload()
 	{
 		this.loadCoffeeScreen();
 		this.loadNoodleScreen();
+		this.loadAudio();
 	}
 
 	loadCoffeeScreen()
@@ -84,15 +117,77 @@ class scene1 extends Phaser.Scene {
 		*/
 	}
 
+	loadAudio()
+	{
+		/* Estos no van en esta escena
+		
+		this.load.audio('snd_purchase', 'snd_purchase.wav');
+		*/
+		this.load.path = "../SFX/";
+		this.load.audio('snd_burnt', 'snd_burnt.wav'); //Used
+		this.load.audio('snd_coins_gain', 'snd_coins_gain.wav');
+		this.load.audio('snd_dish', 'snd_dish.wav'); //Used
+		this.load.audio('snd_filling_catfe', 'snd_filling_catfe.wav'); //Used
+		this.load.audio('snd_gameOver', 'snd_gameOver.wav'); 
+		this.load.audio('snd_levelUp', 'snd_levelUp.wav');
+		/*
+		this.load.audio('snd_music_alone', 'snd_music_alone.wav');
+		this.load.audio('snd_music_biscuit', 'snd_music_biscuit.wav');
+		this.load.audio('snd_music_bobaTea', 'snd_music_bobaTea.wav');
+		this.load.audio('snd_music_bored', 'snd_music_bored.wav');
+		this.load.audio('snd_music_branch', 'snd_music_branch.wav');
+		this.load.audio('snd_music_bread', 'snd_music_bread.wav');
+		this.load.audio('snd_music_breakUp', 'snd_music_breakUp.wav');
+		this.load.audio('snd_music_cafe', 'snd_music_cafe.wav');
+		this.load.audio('snd_music_cheese', 'snd_music_cheese.wav');
+		this.load.audio('snd_music_chocolate', 'snd_music_chocolate.wav');
+		this.load.audio('snd_music_cloud', 'snd_music_cloud.wav');
+		this.load.audio('snd_music_everyDay', 'snd_music_everyDay.wav');
+		this.load.audio('snd_music_kitchen', 'snd_music_kitchen.wav');
+		this.load.audio('snd_music_pancake', 'snd_music_pancake.wav');
+		this.load.audio('snd_music_rainyDay', 'snd_music_rainyDay.wav');
+		this.load.audio('snd_music_kitchen', 'snd_music_kitchen.wav'); */
+		this.load.audio('snd_noodles_cooking', 'snd_noodles_cooking.wav'); //Used
+		this.load.audio('snd_pancake_cooking', 'snd_pancake_cooking.wav'); //Used
+		this.load.audio('snd_ready', 'snd_ready.wav'); //Used
+		this.load.audio('snd_tap', 'snd_tap.wav'); //Used
+		this.load.audio('snd_trash', 'snd_trash.wav'); //Used
+		this.load.audio('snd_ui_back', 'snd_ui_back.wav');
+		this.load.audio('snd_ui_pop', 'snd_ui_pop.wav');
+		this.load.audio('snd_victory', 'snd_victory.wav');
+	}
+
 	create(){
+		this.clientsSettings();
+		/* 
+		Intento fallido de activar el audioContext sin interacción  :(
+
+		var context = new AudioContext();
+     	context.resume().then(() => {
+        	console.log('Playback resumed successfully');
+    	});
+		game.sound.context.resume();
+		*/
+		
 		var gm = new GameManager(this);
         this.coffeeSetting();
         this.pancakesSetting();
         this.noodlesSetting();
-        //var clientImg = this.physics.add.sprite(100,100, 'client'); clientImg.setScale(0.2);
-        //GameManager.clients.add(clientImg);
+
         this.cursors = this.input.keyboard.createCursorKeys();
 	}
+
+	clientsSettings(){
+    	//index, salsa, nº toppings, toppings
+    	//index, salsa, nº plantas,nºtoppings, toppings
+    	new Client(0, 0,[2,0,1,0], [1,-1,1,1,2]);
+    	new Client(1, 1,[2,2,0], [1,-1,1,2,2,3]);
+    	new Client(2, 0, [2,2,1,0], [1,1,1,0]);
+    	new Client(3, 2, [2,3,1,3], [1,2,1,1,0]);
+    	new Client(4, 2, [2,2,1,1], [1,0,2,0]);
+    	console.log(Client.clientList)
+    	//añadir clientes a mano
+  	}
 
 	coffeeSetting()
 	{
@@ -112,10 +207,14 @@ class scene1 extends Phaser.Scene {
         	{	
         		var slotId = findFreeSlot(coffeeMachine, CoffeeMachine.slots);
         		var pos = CoffeeMachine.slots.getAt(slotId);
-        		var coffee = new Coffee(slotId);
+        		var fillingSound = GameManager.scene.sound.add('snd_filling_catfe');
+        		var readySound = GameManager.scene.sound.add('snd_ready');
+        		var coffee = new Coffee(slotId, fillingSound, readySound);
         		changePosition(coffee, pos.x, pos.y);
         	} 
         })
+
+        GameManager.tapSound = GameManager.scene.sound.add('snd_tap');
 	}
 
 	pancakesSetting()
@@ -133,12 +232,13 @@ class scene1 extends Phaser.Scene {
 
         dishPileImg.setInteractive();
         dishPileImg.on('pointerdown', function(pointer){
-        	if(GameManager.dishImgContainerCoffee.length < numTablecloth)
+        	if(GameManager.dishImgContainerPancake.length < numTablecloth)
         	{	
+        		GameManager.scene.sound.play('snd_dish');
         		var slotId = findFreeSlot(tableclothCoffee, TableclothsCoffee.slots);
         		var pos = TableclothsCoffee.slots.getAt(slotId);
         		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'spr_dish'); dishImg.setScale(0.04);
-        		GameManager.dishImgContainerCoffee.add(new DishImgContainer(dishImg));
+        		GameManager.dishImgContainerPancake.add(new DishImgContainer(dishImg));
         	} 
         })
 
@@ -154,19 +254,25 @@ class scene1 extends Phaser.Scene {
         	{	
         		var slotId = findFreeSlot(griddle, Griddle.slots);
         		var pos = Griddle.slots.getAt(slotId);
-        		var pancake = new Pancake(slotId);
+        		var cookingSound = GameManager.scene.sound.add('snd_pancake_cooking');
+        		var burntSound = GameManager.scene.sound.add('snd_burnt');
+        		var trashSound = GameManager.scene.sound.add('snd_trash');
+        		var readySound = GameManager.scene.sound.add('snd_ready');
+        		var pancake = new Pancake(slotId, trashSound, cookingSound, burntSound, readySound);
       			changePosition(pancake, pos.x,pos.y);
         	} 
         })
         
         for(var i=0; i<4; i++)
 		{
-			var topping = new Topping(i, true);
+			//var toppingSound = GameManager.scene.sound.add('snd_toppingSound');
+			var topping = new Topping(i, true, null);
 		}
 		
 		for(var i=0; i<3; i++)
 		{
-			var syrup = new Syrup(i);
+			//var syrupSound = GameManager.scene.sound.add('snd_syrup');
+			var syrup = new Syrup(i,null);
 		}
 	}
 
@@ -185,7 +291,11 @@ class scene1 extends Phaser.Scene {
         	{	
         		var slotId = findFreeSlot(strainer, Strainer.slots);
         		var pos = Strainer.slots.getAt(slotId);
-        		var noodles = new Noodles(slotId);
+        		var cookingSound = GameManager.scene.sound.add('snd_noodles_cooking');
+        		var burntSound = GameManager.scene.sound.add('snd_burnt');
+        		var trashSound = GameManager.scene.sound.add('snd_trash');
+        		var readySound = GameManager.scene.sound.add('snd_ready');
+        		var noodles = new Noodles(slotId, trashSound, cookingSound, burntSound, readySound);
       			changePosition(noodles, pos.x,pos.y);
         	} 
         })
@@ -204,6 +314,7 @@ class scene1 extends Phaser.Scene {
         dishPileImg.on('pointerdown', function(pointer){
         	if(GameManager.dishImgContainerNoodles.length < numTablecloth)
         	{	
+        		GameManager.scene.sound.play('snd_dish');
         		var slotId = findFreeSlot(tableclothNoodle, TableclothsNoodle.slots);
         		var pos = TableclothsNoodle.slots.getAt(slotId);
         		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'spr_dish'); dishImg.setScale(0.04);
@@ -213,12 +324,14 @@ class scene1 extends Phaser.Scene {
 
         for(var i = 0; i<4; i++)
 		{
-			var topping = new Topping(i, false);
+			//var toppingSound = GameManager.scene.sound.add('snd_toppingSound');
+			var topping = new Topping(i, false, null);
 		}
 
 		for(var i=0; i<3; i++)
 		{
-			var sauce = new Sauce(i);
+			var fillingSound = GameManager.scene.sound.add('snd_filling_catfe');
+			var sauce = new Sauce(i, fillingSound);
 		}   
 	}
 
@@ -238,6 +351,35 @@ class scene1 extends Phaser.Scene {
     	    GameManager.scene.cameras.main.fadeOut(25);
     	}
 
+    	var maxTime = 30;
+    	var minTime = 15;
+    	/*
+    	if(Client.clientsInRestaurant.length==0){
+      		callClient(-1);
+    	}
+    	else {
+      		if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 3){
+        		console.log("esperando a cliente en coffee")
+        		GameManager.waitingRestaurantClient=true;
+        		var restaurantTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
+        		console.log("restaurantTime: " + restaurantTime);
+        		setTimeout(function(){
+          			callClient(1);
+           		}, restaurantTime);
+      		}
+      
+      		if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 3){
+      		    console.log("esperando a cliente en calle")
+      		    GameManager.waitingStreetClient=true;
+      		    var streetTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
+      		    console.log("streetTime: " + streetTime);
+      		    setTimeout(function(){
+      		    	callClient(2);
+      		    }, streetTime);
+      		}
+    	}*/
+    	
+
 		if(!GameManager.grabbedItemImg) return;
 		
 		/* Here check if the current grabbed item is colliding with something 
@@ -256,12 +398,6 @@ class scene1 extends Phaser.Scene {
 				checkHoverWithDishes();
 			break;
 
-			case "coffee":
-				//Pienso que este caso va a desaparecer y ser fusionado con dish
-				console.log("Coffee grabbed");
-				//checkHoverWithClient();
-			break;
-
 			case "topping":
 				console.log("Topping grabbed");
 				checkToppingHoverWithDish();
@@ -272,8 +408,18 @@ class scene1 extends Phaser.Scene {
 				checkSauceAndSyrupHover();
 			break;
 
-			case "dish":
-				console.log("Dish grabbed");
+			case "pancakeDish":
+				console.log("pancakeDish grabbed");
+				checkHoverWithClient();
+			break;
+
+			case "noodleDish":
+				console.log("noodleDish grabbed");
+				checkHoverWithClient();
+			break;
+
+			case "coffeeDish":
+				console.log("coffeeDish grabbed");
 				checkHoverWithClient();
 			break;
 
@@ -296,7 +442,8 @@ class GameManager
 	static coffeeMachine;
 	static griddle;
 	static strainer;
-	static dishImgContainerCoffee = new Phaser.Structs.List();
+	static coffeeDishes = new Phaser.Structs.List();
+	static dishImgContainerPancake = new Phaser.Structs.List();
 	static dishImgContainerNoodles = new Phaser.Structs.List();
 	static clients = new Phaser.Structs.List();
 
@@ -309,6 +456,9 @@ class GameManager
 	static collidingObjectImg;
 	static collidingObject;
 
+	static tapSound;
+	static waitingRestaurantClient = false;
+	static waitingStreetClient = false;
 	constructor(scene)
 	{
 		GameManager.scene = scene;
@@ -318,7 +468,7 @@ class GameManager
 
 class Slot
 {
-	constructor(x, y, occupied)
+	constructor(x, y)
 	{
 		this.x = x;
 		this.y = y;
@@ -344,10 +494,9 @@ class CoffeeMachine extends Machine
 		super(img, upgradeLVL);
 		for(var i=0; i<upgradeLVL+1; i++)
 		{
-			CoffeeMachine.slots.add(new Slot(img.x+(i*8),img.y,false));
+			CoffeeMachine.slots.add(new Slot(img.x+(i*8),img.y));
 		}
 	}
-
 }
 
 class TableclothsCoffee extends Machine
@@ -360,7 +509,7 @@ class TableclothsCoffee extends Machine
 		{
 
 			var _img = this.img.getAt(i);	
-			TableclothsCoffee.slots.add(new Slot(_img.x,_img.y,false));
+			TableclothsCoffee.slots.add(new Slot(_img.x,_img.y));
 		}
 	}
 }
@@ -374,7 +523,7 @@ class TableclothsNoodle extends Machine
 		for(var i=0; i<this.upgradeLVL+1; i++)
 		{
 			var _img = this.img.getAt(i);	
-			TableclothsNoodle.slots.add(new Slot(_img.x,_img.y,false));
+			TableclothsNoodle.slots.add(new Slot(_img.x,_img.y));
 		}
 	}
 }
@@ -386,58 +535,84 @@ class Griddle extends Machine
 	{
 		super(img, upgradeLVL);
 		var offset = 15;
-		Griddle.slots.add(new Slot(img.x-offset,img.y-offset,false));
-		Griddle.slots.add(new Slot(img.x+offset,img.y-offset,false));
-		Griddle.slots.add(new Slot(img.x-offset,img.y+offset,false));
-		Griddle.slots.add(new Slot(img.x+offset,img.y+offset,false));
+		Griddle.slots.add(new Slot(img.x-offset,img.y-offset));
+		Griddle.slots.add(new Slot(img.x+offset,img.y-offset));
+		Griddle.slots.add(new Slot(img.x-offset,img.y+offset));
+		Griddle.slots.add(new Slot(img.x+offset,img.y+offset));
 	}
 }
 
 class Coffee
 {
-	//static coffeeTime = Phaser.Math.Difference(GameManager.scene.playerSettings.upgrades.tableClothNoodleLevel - 8);
-	//static coffeeTime = Math.abs(GameManager.scene.playerSettings.upgrades.tableClothNoodleLevel - 8);
-	static coffeeTime = 8;
-	constructor(assignedSlot)
+	static coffeeTime = 0.3; //8 
+	constructor(assignedSlot, fillingSound, readySound)
 	{
 		this.index = 0;
 		this.img = GameManager.scene.physics.add.sprite(0,0,'spr_glass_empty');
+		this.posx;
+		this.posy;
+		GameManager.coffeeContainer;
+		this.imgContainer;
 		this.img.setScale(0.015);
 		this.assignedSlot = assignedSlot;
 		this.hovering = false;
 		this.done = false;
 		this.doneTime = Math.abs(GameManager.scene.playerSettings.upgrades.cofeeTime - Coffee.coffeeTime);
 		this.timer = GameManager.scene.time.addEvent({ delay: this.doneTime*1000, callback: this.coffeeDone, callbackScope: this });
+		this.clientCollider;
+		this.dish;
+		this.fillingSound = fillingSound;
+		this.readySound = readySound;
+		this.fillingSound.play();
 	}
 
 	coffeeDone()
 	{
+		this.readySound.play();
+		this.fillingSound.stop();
 		this.done = true;
-		makeImgInteractive("coffee",this.img, this);
-		this.img.setTexture('spr_glass_filled');
+		this.img.setTexture('spr_glass_filled'); 
+
+		this.dish = new Dish([this.index]);
+		GameManager.coffeeDishes.add(this);
+		makeImgInteractive("coffeeDish", this.img, this)
 	}
 
 	dragEndBehaviour()
 	{
-		var pos = CoffeeMachine.slots.getAt(this.assignedSlot);
-        this.img.setPosition(pos.x, pos.y);
-        grabItem("",null,null);
+		if(this.hovering)
+		{
+			this.hovering = false;
+			this.clientCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.deliverCoffee, null, this);
+		}
+		else
+		{
+			this.img.setPosition(this.posx,this.posy);
+		}
+		grabItem("", null, null);
+		
 	}
 
-	deliverCoffee(clientImg, img)
+	/* Here implement the dish comparison with the client */
+	deliverCoffee(coffee, client)
 	{
-		img.disableBody(true,true);
-		Coffee.coffeeList.remove(this);
+		//Lucia rellena esta parte?¿ o llamame
+		var coffeeDish = this.dish; // aquí te dejo al plato del café para las comparaciones que tengas que hacer, objeto de la clase Dish
+		var client = GameManager.collidingObject; //El cliente con el que ha colisionado, objeto de la clase Client
+
+		//Esta no
+		GameManager.scene.physics.world.removeCollider(this.clientCollider);
+		coffee.disableBody(true,true);
+		GameManager.coffeeDishes.remove(this);
 		GameManager.coffeeMachine.occupiedSlots--;
-		//free the coffee slot from the coffeeMachine
 		CoffeeMachine.slots.getAt(this.assignedSlot).occupied = false;
 	}
 }
 
 class Pancake
 {
-	static time = 7;
-	constructor(assignedSlot)
+	static time = 2;
+	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound)
 	{
 		this.index = 1;
 		this.side1Done = false;
@@ -461,6 +636,13 @@ class Pancake
 
         this.sideTimer = GameManager.scene.time.addEvent({ delay: this.doneTime*1000, callback: this.sideDone, callbackScope: this });
         this.burnTimer = GameManager.scene.time.addEvent({ delay: this.burnTime*1000, callback: this.burnPancake, callbackScope: this });
+	
+        this.trashSound = trashSound;
+        this.cookingSound = cookingSound;
+        this.cookingSound.setLoop(true);
+        this.burntSound = burntSound;
+        this.readySound = readySound;
+        this.cookingSound.play();
 	}
 
 	/* Called when the current side of the pancake is done */
@@ -473,21 +655,25 @@ class Pancake
 		} 
 		else if(this.side1Done) // The pancake is finally done
 		{
+			this.readySound.play();
 			this.side2Done = true;
-			
+			this.cookingSound.setMute(true);
 			GameManager.scene.input.setDraggable(this.img);
 
 			this.img.on('dragstart', function(pointer,dragX,dragY){
+				GameManager.tapSound.play();
 				pancake.sideTimer.paused = true;
         		pancake.burnTimer.paused = true;	
 			})
 
         	this.img.on('drag', function(pointer, dragX, dragY){
         		this.setPosition(dragX, dragY);
+        		pancake.cookingSound.stop();
         		grabItem("pancake", this, pancake);
         	})	
 			
-			this.img.on('dragend',() => {	
+			this.img.on('dragend',() => {
+				pancake.cookingSound.play();	
 				pancake.dragEndBehaviour();		
        		})
        		
@@ -512,6 +698,9 @@ class Pancake
 	/* Method called when the pancake has spent too much time in the griddle */
 	burnPancake()
 	{
+		this.cookingSound.stop();
+		this.cookingSound.setMute(true);
+		this.burntSound.play();
 		this.sideTimer.remove(false);
 		this.burnTimer.remove(false);
 		this.burnt = true;
@@ -524,6 +713,7 @@ class Pancake
 		GameManager.scene.input.setDraggable(this.img);
 
 		this.img.on('dragstart', function(pointer,dragX,dragY){
+			GameManager.tapSound.play();
 		})
 
         this.img.on('drag', function(pointer, dragX, dragY){
@@ -534,7 +724,6 @@ class Pancake
 		this.img.on('dragend',() => {
 			pancake.dragEndBehaviour();	
        	})
-		
 	}
 
 	/* Method called when the pancake img has been dropped by the user */
@@ -544,7 +733,7 @@ class Pancake
 		{
 			this.trashCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.trashCanImgPancake, this.throwFood, null, this);
 			this.hovering = false;
-			if(!this.burnt) this.dishCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.dragToDish, null, this);
+			if(!this.burnt)	this.dishCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.dragToDish, null, this);
 		}
 		else
 		{
@@ -575,8 +764,8 @@ class Pancake
 		// If the dish already is created the is no need to create another dish, just add the pancake and update the dish
 		if(container.dish == null)
 		{
-			container.dish = new Dish(this.index);
-			makeDishInteractive(container);	
+			container.dish = new Dish([this.index,-1,1,0]);
+			makeDishInteractive(container,"pancakeDish");	
 		}
 		else
 		{
@@ -585,8 +774,11 @@ class Pancake
 		container.dishContainer.add(food);	
 	}
 
+	
+
 	throwFood(food, trashCan)
 	{
+		this.trashSound.play();
 		trashCan.setAlpha(1);
 		food.disableBody(true,true);
 		this.freeGriddle();		
@@ -605,7 +797,7 @@ class Pancake
 	// ●	0: Champiñones ●	1: Huevo ●	2: Naruto ●	3: Apio
 class Topping
 {
-	constructor(index, pancake)
+	constructor(index, pancake, toppingSound)
 	{
 		this.index = index;
 		this.img;
@@ -614,6 +806,7 @@ class Topping
 		this.posx;
 		this.posy;
 		this.collider;
+		this.toppingSound = toppingSound;
 		var imgKey;
 		var offset = pancake ? offset = config.width : offset = 0;
 		switch(this.index)
@@ -650,7 +843,7 @@ class Topping
 				console.log("No img assigned");
 			break;
 		}
-		makeImgInteractive("topping", this.img, this);
+		makeImgInteractive("topping", this.img, this, null);
 	}
 
 	dragEndBehaviour()
@@ -669,6 +862,7 @@ class Topping
 
 	dragToDish(toppingImg, dishImg)
 	{
+		this.toppingSound.play();
 		this.collider.destroy();
 		var container = GameManager.collidingObject;
 		container.dishContainer.iterate(function(child){
@@ -689,7 +883,7 @@ class Topping
 
 class Syrup
 {
-	constructor(index, offset)
+	constructor(index, offset, syrupSound)
 	{
 		this.index = index;
 		this.img;
@@ -698,7 +892,7 @@ class Syrup
 		this.posy;
 		this.collider;
 		this.servingTimer;
-
+		this.syrupSound = syrupSound;
 		this.dishContainer;
 		switch(this.index)
 		{
@@ -718,7 +912,7 @@ class Syrup
 				console.log("No img assigned");
 			break;
 		}
-		makeImgInteractive("syrup", this.img, this);
+		makeImgInteractive("syrup", this.img, this, null);
 	}
 
 	dragEndBehaviour()
@@ -737,6 +931,7 @@ class Syrup
 
 	serveSauce(sauceImg, dishImg)
 	{
+		this.syrupSound.play();
 		var container = GameManager.collidingObject;
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(1);
@@ -758,9 +953,10 @@ class Syrup
 
 	sauceServed()
 	{
+		this.syrupSound.stop();
 		this.img.setPosition(this.posx,this.posy);
-		makeImgInteractive("syrup", this.img, this);
-		makeDishInteractive(this.dishContainer);
+		makeImgInteractive("syrup", this.img, this, null);
+		makeDishInteractive(this.dishContainer,"pancakeDish");
 		console.log("syrup served");
 	}
 }
@@ -768,7 +964,7 @@ class Syrup
 class Sauce
 {
 	static servingTime = 3; //4
-	constructor(index)
+	constructor(index, fillingSound)
 	{
 		this.index = index;
 		this.img;
@@ -777,7 +973,7 @@ class Sauce
 		this.posy;
 		this.collider;
 		this.servingTimer;
-
+		this.fillingSound = fillingSound;
 		this.dishContainer;
 		switch(this.index)
 		{
@@ -797,7 +993,7 @@ class Sauce
 				console.log("No img assigned");
 			break;
 		}
-		makeImgInteractive("sauce", this.img, this);
+		makeImgInteractive("sauce", this.img, this, null);
 	}
 
 	dragEndBehaviour()
@@ -829,14 +1025,16 @@ class Sauce
 		container.dish.sauce = this.index;
 		this.dishContainer = container;
 		container.img.removeInteractive();
+		this.fillingSound.play();
 		//container.dishContainer.add(food); add sauce sprite to noodle
 	}
 
 	sauceServed()
 	{
+		this.fillingSound.stop();
 		this.img.setPosition(this.posx,this.posy);
-		makeImgInteractive("sauce", this.img, this);
-		makeDishInteractive(this.dishContainer);
+		makeImgInteractive("sauce", this.img, this, null);
+		makeDishInteractive(this.dishContainer,"noodleDish");
 		console.log("sauce served");
 	}
 }
@@ -848,18 +1046,18 @@ class Strainer extends Machine
 	{
 		super(img, upgradeLVL);
 		var offset = 15;
-		Strainer.slots.add(new Slot(img.x-offset,img.y-offset,false));
-		Strainer.slots.add(new Slot(img.x+offset,img.y-offset,false));
-		Strainer.slots.add(new Slot(img.x-offset,img.y+offset,false));
-		Strainer.slots.add(new Slot(img.x+offset,img.y+offset,false));
+		Strainer.slots.add(new Slot(img.x-offset,img.y-offset));
+		Strainer.slots.add(new Slot(img.x+offset,img.y-offset));
+		Strainer.slots.add(new Slot(img.x-offset,img.y+offset));
+		Strainer.slots.add(new Slot(img.x+offset,img.y+offset));
 	}
 }
 
 class Noodles
 {
 	static doneTime = 0.5; //10
-	static burnTime = 5; //17
-	constructor(assignedSlot)
+	static burnTime = 3; //17
+	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound)
 	{
 		this.index = 2;
 		this.assignedSlot = assignedSlot;
@@ -873,12 +1071,20 @@ class Noodles
 
 		this.doneTimer = GameManager.scene.time.addEvent({ delay: this.noodleTime*1000, callback: this.noodlesDone, callbackScope: this });
         this.burnTimer = GameManager.scene.time.addEvent({ delay: this.noodleBurnTime*1000, callback: this.noodlesBurnt, callbackScope: this });
+	
+		this.trashSound = trashSound;
+        this.cookingSound = cookingSound;
+        this.burntSound = burntSound;
+        this.readySound = readySound;
+        this.cookingSound.play();
 	}
 
 	noodlesDone()
 	{
+		this.readySound.play();
+		this.cookingSound.setMute(true);
 		var noodles = this;
-		makeImgInteractive("noodles",this.img, this);
+		makeImgInteractive("noodles",this.img, this, this.cookingSound);
 
 		this.img.on('dragstart', function(pointer,dragX,dragY){
 			noodles.doneTimer.paused = true;
@@ -890,6 +1096,9 @@ class Noodles
 
 	noodlesBurnt()
 	{
+		this.cookingSound.stop();
+		this.cookingSound.setMute(true);
+		this.burntSound.play();
 		this.img.setTexture('spr_noodles_burnt');
 		this.img.setScale(0.05);
 		this.burnt = true;
@@ -918,6 +1127,7 @@ class Noodles
 
 	throwFood(food, trashCan)
 	{
+		this.trashSound.play();
 		console.log("noodle to trash");
 		trashCan.setAlpha(1);
 		food.disableBody(true,true);
@@ -950,9 +1160,9 @@ class Noodles
 		/* Update dish and create sprite according to the dish */
 		if(container.dish == null)
 		{
-			container.dish = new Dish(this.index);
+			container.dish = new Dish([this.index,-1,0]);
 			container.dishContainer.add(food);
-			makeDishInteractive(container);
+			makeDishInteractive(container,"noodleDish");
 		}	
 	}
 }
@@ -961,94 +1171,287 @@ class Noodles
 what order is in the dish we are colliding with. */
 class DishImgContainer
 {
-	constructor(dishImg)
+	constructor(dishImg, coffee)
 	{
+		this.posx;
+		this.posy;
+		this.hovering = false;
 		this.img = dishImg; //Img of the dish
 		this.dish; //Object from the class Dish
-		this.dishContainer = GameManager.scene.add.container(dishImg.x, dishImg.y); // Container of all the images that belong to the dish
+		if(coffee) this.dishContainer = GameManager.scene.add.container(0, 0); // Container of all the images that belong to the dish
+		else{ this.dishContainer = GameManager.scene.add.container(dishImg.x, dishImg.y); }
 		this.img.setPosition(0,0); //If this is not done, then the image would not appear in the scene
 		this.dishContainer.add(this.img);
+		this.clientCollider;
+	}
+
+	dragEndBehaviour()
+	{
+		if(this.hovering == true)
+		{
+			this.hovering = false;
+			this.clientCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.dragToClient, null, this);
+		}
+		else
+		{
+			this.dishContainer.setPosition(this.posx,this.posy);
+		}
+		grabItem("", null, null);
+	}
+
+	//IMPLEMENT ALL THE LOGIC, this works for the pancakes and the noodles
+	dragToClient()
+	{
+		//Lucia rellena esta parte?¿ Solo faltaría hacer la lógica de compareDish
+		var dish = this.dish; // aquí te dejo al objeto de la clase Dish
+		var client = GameManager.collidingObject; //El cliente con el que ha colisionado, objeto de la clase Client
+
+		//Esta no
+		GameManager.scene.physics.world.removeCollider(this.clientCollider);
+		coffee.disableBody(true,true);
+		GameManager.coffeeDishes.remove(this);
+		GameManager.coffeeMachine.occupiedSlots--;
+		CoffeeMachine.slots.getAt(this.assignedSlot).occupied = false;
 	}
 }
 
 class Client{
-	static clientList = new Phaser.Structs.List();
-	static clientSlots = new Phaser.Structs.List();
-	static maxClients= 3;
-	constructor(scene){
-		this.clientImg = scene.physics.add.sprite(100,100, 'client');
-		this.clientImg.setScale(0.2);
-		this.order=0;//this.generateOrder()
-		this.happiness=90;
-		Client.clientList.add(this);
-	}
-	changePosition(x, y)
-	{
-		this.clientImg.setPosition(x, y);
-	}
-	generateOrder(){
-		//generar un pedido
-	}
+  static clientList = new Phaser.Structs.List();
+  static clientsInRestaurant= new Phaser.Structs.List();
+  static streetSlots = new Phaser.Structs.List();
+  static streetOccupiedSlots=0;
+  static restaurantSlots=new Phaser.Structs.List();
+  static restaurantOccupiedSlots=0;
+  static maxClients= 3;
+  static maxSlots=3;
+  constructor(index,favDish,noodles, pancake){
+    if(index==0){
+      for(var i=0; i<Client.maxSlots; i++)
+      {
+        Client.streetSlots.add(new Slot(config.width+config.width*0.2+(60*i),config.height*0.2));
+      }
+      for(var i=0; i<Client.maxSlots; i++)
+      {
+        Client.restaurantSlots.add(new Slot(config.width*0.2+(60*i),config.height*0.2));
+      }
+    }
+    this.index=index;
+    this.place=0;
+    //this.clientImg = GameManager.scene.physics.add.sprite(100,100, 'client');
+    this.clientImg;
+    this.favDish=favDish;//index of the fav dish
+    this.favNoodles=noodles;
+    this.favPancake=pancake;
+    this.order=0;
+    this.happiness=90;
+    Client.clientList.add(this);
+  }
+
+  findFreeSlot(id)
+  {
+    var i=0;
+    var slot;
+    var slotId = -1;
+    var found = false;
+    var maxSlots=3;
+    if(id==1){//restaurant
+      console.log(Client.restaurantSlots)
+      while(i<maxSlots && !found)
+      {
+        slot = Client.restaurantSlots.getAt(i);
+        if(!slot.occupied)
+        {  
+          Client.restaurantOccupiedSlots++;
+          slot.occupied = true;
+          slotId = i;
+          found = true;
+        }
+        i++;
+      } 
+      return slotId;
+    }
+    if(id==2){//street
+      console.log(Client.streetSlots)
+      while(i<maxSlots && !found)
+      {
+        slot = Client.streetSlots.getAt(i);
+        if(!slot.occupied)
+        {  
+          Client.streetOccupiedSlots++;
+          slot.occupied = true;
+          slotId = i;
+          found = true;
+        }
+        i++;
+      } 
+      return slotId;
+    }
+    
+  }
+
+
+  changePosition(x, y)
+  {
+    this.clientImg.setPosition(x, y);
+  }
+
+  generateOrder(){
+    //elegir si pide una dos o tres cosas y cuales pide
+    //diferenciar entre gatos de fuera o dentro
+    //CAMBIAR
+    if(this.place==1){
+      var numDishes=Math.floor(Math.random()*3+1);
+      var nums=new Phaser.Structs.List();
+      while(nums.length<numDishes){
+        var num=Math.floor(Math.random()*2);
+        nums.add(num);
+      }
+      this.order = new Order(numDishes, nums, this);
+    }
+    else if(this.place==2){
+      var nums= new Phaser.Structs.List();
+      nums.add(2);
+      this.order = new Order(1,nums,this);
+    }
+
+  }
+
+  goToRestaurant(place){
+    this.place=place;
+    var slotId=this.findFreeSlot(place);
+    if(place==1){
+      var pos=Client.restaurantSlots.getAt(slotId);
+    }
+    else if(place==2){
+      var pos=Client.streetSlots.getAt(slotId);
+    }
+    this.generateOrder();
+    this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'client'); this.clientImg.setScale(0.05);
+  }
 }
 
 class Order{
-	constructor(numDishes, scene){
-		this.scene=scene;
-		this.dishes = new Phaser.Structs.List();
-		this.receivedDishes=0;
-		this.numDishes=numDishes;
-	}
+  constructor(numDishes,nums,client){
+    this.dishes = new Phaser.Structs.List();
+    this.addDishesToOrder(numDishes,nums,client);
+    this.receivedDishes=0;
+    this.numDishes=numDishes;
+  }
 
-	addDishToOrder(dish){
-		this.dish.add(dish);
-	}
+  addDishesToOrder(numDishes,nums,client){
+    for (var i=0;i<numDishes;i++){
+      if(nums[i]==0){
+        this.dishes.add(new Dish([0]));
+      }
+      else if(nums[i]==1){
+        this.dishes.add(new Dish(client.favPancake));
+      }
+      else if(nums[i]==2){
+        this.dishes.add(new Dish(client.favNoodles));
+      }
+      
+    }
+  }
 
-	compareDish(dish){
-		for (var i=0; i< this.numDishes-this.receivedDishes;i++){
-			if(dish.index==this.dishes.getAt(i).index){
-				return true;
-			}
-			//comparar toppings
-		}
-	}
+  compareDish(received){
+    var minusPoints=0;
+    received.toppings.sort();
+    for (var i=0; i< this.numDishes;i++){
+      var dish = this.dishes.getAt(i);
+      if(received.index==dish.index){
+        if(received.index==0){ //coffee
+          this.receivedDishes++;
+          this.dishes.removeAt(i);
+          return 0;
+        }
+        else if(received.index==1){ //pancake
+          if (received.sauce!=dish.sauce){
+            minusPoints+=20;
+          }
+          if (received.numPancakes!=dish.numPancakes){
+            minusPoints+=20;
+          }
+          if(!received.numToppings==dish.numToppings){
+            minusPoints+=20;
+          }
+          else{
+            var i=0;
+            var different=false;
+            while(i<numToppings && different==false){
+              if(received.toppings.getAt(i)!=dish.getAt(i)){
+                different=true;
+                minusPoints+=20;
+              }
+              i++;
+            }
+            
+          }
+        }  
+        else if(received.index==2){
+          if (received.sauce!=dish.sauce){
+            minusPoints+=20;
+          }
+          if(!received.numToppings==dish.numToppings){
+            minusPoints+=20;
+          }
+          else{
+            var i=0;
+            var different=false;
+            while(i<numToppings && different==false){
+              if(received.toppings.getAt(i)!=dish.getAt(i)){
+                different=true;
+                minusPoints+=20;
+              }
+              i++;
+            }
+            
+          }
+        }
+      }
+      //comparar toppings
+    }
+  }
 }
 
 class Dish{
-  constructor(index){
-    this.index=index; //0 coffee, 1 pancakes, 2 noodles
+  constructor(listSettings){
+    this.index=listSettings[0]; //0 coffee, 1 pancakes, 2 noodles
     this.toppings = new Phaser.Structs.List();
     this.sauce = -1;
-    this.numPancakes=-1;
-    if(index==1 || index==2){   
-      for (var i=0; i<4; i++)
+    this.numToppings = 0;
+  	this.numPancakes=-1;
+  	if (this.index==1){
+    	this.sauce=listSettings[1];
+    	this.numPancakes==listSettings[2];
+    	for (var i=0; i<listSettings[3]; i++)
+    	{ 
+          this.toppings.add(listSettings[4]+i);
+    	}
+  	}
+
+    if(this.index==2){   
+      this.sauce=listSettings[1];
+      for (var i=0; i<listSettings[2]; i++)
       { 
-        this.toppings.add(-100+i); //Initialize with negative values
+      	this.toppings.add(listSettings[3]+i);
       }
-      if(index==1){
-        this.numPancakes=1;
-      }
+    
     }
   }
 
   addTopping(toppingType)
   {
-  	for(var i=0; i<this.toppings.length; i++)
-  	{
-  		var topping = this.toppings.getAt(i);
-  		if(topping < 0)
-  		{
-  			this.toppings.replace(topping, toppingType);
-  			return true;
-  		}
-  	}
-  	return false;
-  }
-
-  addPancake()
+    for(var i=0; i<this.toppings.length; i++)
     {
-    	this.numPancakes++;
-    	console.log("numPancakes: " + this.numPancakes);
-    }  
+      var topping = this.toppings.getAt(i);
+      if(topping < 0)
+      {
+        this.toppings.replace(topping, toppingType);
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 function findFreeSlot(machine, slots)
@@ -1111,7 +1514,7 @@ function checkHoverWithDishes()
 	if(GameManager.grabbedItem.burnt) return;
 	/* var collision is needed so that the food can only collide with one dish at a time */
 	var container;
-	if(GameManager.grabbedItemClass == "pancake") container = GameManager.dishImgContainerCoffee;
+	if(GameManager.grabbedItemClass == "pancake") container = GameManager.dishImgContainerPancake;
 	else{ container = GameManager.dishImgContainerNoodles;}
 
 	var collision = false;
@@ -1140,11 +1543,11 @@ function checkToppingHoverWithDish()
 {
 	var container;
 	/*
-	if(GameManager.coffeeScreen == true)  container = GameManager.dishImgContainerCoffee;
+	if(GameManager.coffeeScreen == true)  container = GameManager.dishImgContainerPancake;
 	else{ container = GameManager.dishImgContainerNoodles;}
 	*/
 	if(GameManager.grabbedItemImg.x >= 800){ container = GameManager.dishImgContainerNoodles;} // Esto es un apaño
-	else{ container = GameManager.dishImgContainerCoffee;}
+	else{ container = GameManager.dishImgContainerPancake;}
 
 	var collision = false;
 	for(var i=0; i < container.length; i++)
@@ -1180,33 +1583,55 @@ function toppingsEmpty(dish)
 	return true;
 }
 
+
 function checkHoverWithClient()
 {
-	if(GameManager.grabbedItemClass == "coffee")
+	var clients = getClientsInRestaurant();
+	var collision = false;
+	for(var i=0; i<clients.length; i++)
 	{
+		var client = clients.getAt(i);
+		var clientImg = client.clientImg;
+		if(!clientImg) continue;
 
-	}
-	else
-	{
-
-	}
-
-	var dish = GameManager.grabbedItem;
-	for(var i=0; i< GameManager.clients; i++)
-	{	
-		var client = GameManager.clients.getAt(i);
-		if(checkOverlap(GameManager.grabbedItemImg, client) && !collision)
+		var clientHasMyItem = false;
+		//Check si el cliente tiene un pedido que coincide con lo que estoy agarrando.
+		// Añadir check extra de si ya ha recibido un pedido, ese pedido no se debería comparar
+		// Lucia necesito saber cómo comprobar que ya ha sido entregado un pedido a un cliente -> Ahora mismo podría entregar 2 veces un café por ejemplo
+		for(var i=0; i<client.order.numDishes; i++)
 		{
+			if(client.order.dishes.getAt(i) == GameManager.grabbedItem.index) clientHasMyItem = true;
+		}
+
+		if(!clientHasMyItem) continue;
+
+		if(checkOverlap(GameManager.grabbedItemImg, clientImg) && ! collision)
+		{
+			GameManager.collidingObjectImg = clientImg;
+			GameManager.collidingObject = clients.getAt(i);
+			GameManager.grabbedItem.hovering = true;
+			clientImg.setAlpha(0.5);
 			collision = true;
-			//dish.hovering = true;
-			GameManager.collidingObjectImg = client;
-			client.setAlpha(0.5);
 		}
 		else
 		{
-			client.setAlpha(1);
+			clientImg.setAlpha(1);
+			collision = false;
 		}
 	}
+}
+// This is the way to get the items from the class Client that are inside the restaurant
+function getClientsInRestaurant()
+{
+	var clients = new Phaser.Structs.List();;
+	for(var i=0; i<Client.clientList.length; i++)
+	{
+		for(var j=0; j<Client.clientsInRestaurant.length; j++)
+		{
+			if(Client.clientsInRestaurant.getAt(j) == Client.clientList.getAt(i).index) clients.add(Client.clientList.getAt(i));
+		}
+	}
+	return clients;
 }
 
 function checkSauceAndSyrupHover()
@@ -1214,7 +1639,7 @@ function checkSauceAndSyrupHover()
 	var container;
 
 	if(GameManager.grabbedItemClass == "sauce"){ container = GameManager.dishImgContainerNoodles;}
-	else{ container = GameManager.dishImgContainerCoffee;}
+	else{ container = GameManager.dishImgContainerPancake;}
 
 	var collision = false;
 	for(var i=0; i < container.length; i++)
@@ -1276,47 +1701,70 @@ function checkOverlap(spriteA, spriteB)
 	return Phaser.Geom.Rectangle.Overlaps(boundsA, boundsB);
 }
 
-function makeDishInteractive(container)
+function makeDishInteractive(container, dishClass)
 {
 	dishImg = container.img;
 	dish = container.dish;
 	dishContainer = container.dishContainer;
 
-	var contPosx, contPosy;
-
 	dishImg.setInteractive({ draggable: true });
 
 	dishImg.on('dragstart', function(pointer,dragX,dragY){
-		contPosx = dishContainer.x;
-		contPosy = dishContainer.y;
+		GameManager.tapSound.play();
+		container.posx = dishContainer.x;
+		container.posy = dishContainer.y;
 	})
 
     dishImg.on('drag', function(pointer, dragX, dragY){
-     	dishContainer.setPosition(dragX+contPosx, dragY+contPosy);
-     	grabItem("dish", this, dish);
+     	dishContainer.setPosition(dragX+container.posx , dragY+container.posy);
+     	grabItem(dishClass, this, dish);
     })	
 		
 	dishImg.on('dragend',() => {
 		grabItem("", null, null);
-		dishContainer.setPosition(contPosx,contPosy);
+		container.dragEndBehaviour();
     })
 }
 
-function makeImgInteractive(itemClass, itemImg, item)
+function makeImgInteractive(itemClass, itemImg, item, cookingSound)
 {
     itemImg.setInteractive({ draggable: true });
 
 	itemImg.on('dragstart', function(pointer,dragX,dragY){
+		GameManager.tapSound.play();
 		item.posx = this.x;
 		item.posy = this.y;	
 	})
 
     itemImg.on('drag', function(pointer, dragX, dragY){
     	this.setPosition(dragX, dragY);
+    	if(cookingSound) cookingSound.stop();
     	grabItem(itemClass, this, item);
     })	
 		
 	itemImg.on('dragend',() => {
+		if(cookingSound) cookingSound.play();
 		item.dragEndBehaviour();
     })
+}
+
+function callClient(place){  	
+	if(place==-1){
+    	var place= Math.floor(Math.random()*2+1);
+  	}
+  	var clientId= Math.floor(Math.random()*Client.clientList.length);
+  	var bool=Client.clientsInRestaurant.add(clientId);
+
+  	while(bool==false){
+  		console.log("bool: " + bool); //Lucia cuidado porque el add a la lista de phaser no devuelve booleano como pensabamos, igual puedes mirar la longitud de la lista para ver si se ha añadido
+    	var clientId= Math.floor(Math.random()*Client.clientList.length);
+    	var bool=Client.clientsInRestaurant.add(clientId);
+  	}
+  	Client.clientList.getAt(clientId).goToRestaurant(place);
+  	if(place==1){
+    	GameManager.waitingRestaurantClient=false;
+  	}
+  	if(place==2){
+    	GameManager.waitingStreetClient=false;
+  	} 
 }
