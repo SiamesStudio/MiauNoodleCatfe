@@ -26,6 +26,7 @@ var config = {
 
 window.onload = function()
 {
-    game = new Phaser.Game(config);
     window.focus();
+    game = new Phaser.Game(config);
+    
 }

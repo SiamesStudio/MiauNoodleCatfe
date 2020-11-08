@@ -136,11 +136,7 @@ class Loading extends Phaser.Scene {
         //this.load.spritesheet('anim_olla_strainers', 'assets/animaciones/JWRRSS_anim_olla_strainers.png',
         //{frameWidth: 48,frameHeight: 76}
         //);
-        this.load.atlas('strainer_atlas', 'assets/animaciones/JWRRSS_olla_strainers.png', 'strainers_atlas.json')
-
-        this.load.multiatlas('assets_atlas', 'assets/assets.json', 'assets')
-
-        //
+        this.load.multiatlas('assets_atlas', 'assets/assets.json', 'assets');
 
         this.loadCoffeeScreen();
 		this.loadNoodleScreen();
@@ -248,8 +244,8 @@ class Loading extends Phaser.Scene {
 		this.load.audio('snd_music_rainyDay', 'assets/music/snd_music_rainyDay.mp3');
         this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3'); 
         
-		this.load.audio('snd_noodles_cooking', 'assets/sound/snd_noodles_cooking.mp3'); //Used
-		this.load.audio('snd_pancake_cooking', 'assets/sound/snd_pancake_cooking.mp3'); //Used
+		this.load.audio('snd_noodles_cooking', 'assets/sound/snd_noodles_cooking.wav'); //Used
+		this.load.audio('snd_pancake_cooking', 'assets/sound/snd_pancake_cooking.wav'); //Used
 		this.load.audio('snd_ready', 'assets/sound/snd_ready.wav'); //Used
 		this.load.audio('snd_tap', 'assets/sound/snd_tap.wav'); //Used
 		this.load.audio('snd_trash', 'assets/sound/snd_trash.wav'); //Used
