@@ -81,7 +81,7 @@ class Inicio extends Phaser.Scene {
 
         setTimeout(function(){
             scene.cameras.main.fadeOut(1000);
-             }, 2000);
+             }, 2000); //2000
              
         
     }

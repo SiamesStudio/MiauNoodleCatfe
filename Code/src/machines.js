@@ -56,11 +56,10 @@ class Griddle extends Machine
 	constructor(img, upgradeLVL)
 	{
 		super(img, upgradeLVL);
-		var offset = 15;
-		Griddle.slots.add(new Slot(img.x-offset,img.y-offset));
-		Griddle.slots.add(new Slot(img.x+offset,img.y-offset));
-		Griddle.slots.add(new Slot(img.x-offset,img.y+offset));
-		Griddle.slots.add(new Slot(img.x+offset,img.y+offset));
+		Griddle.slots.add(new Slot(config.width*0.51,config.height*0.537));
+		Griddle.slots.add(new Slot(config.width*0.61,config.height*0.537));
+		Griddle.slots.add(new Slot(config.width*0.495,config.height*0.66));
+		Griddle.slots.add(new Slot(config.width*0.623,config.height*0.66));
 	}
 }
 
