@@ -491,7 +491,7 @@ class DishImgContainer
 
 		var dish = this.dish; // aquí te dejo al objeto de la clase Dish
 		var client = GameManager.collidingObject; //El cliente con el que ha colisionado, objeto de la clase Client
-		client.order.compareDish(dish);
+		client.compareOrderWithDish(dish);
 		grabItem("", null, null);
 	}
 }
@@ -640,7 +640,7 @@ function checkHoverWithClient()
 		var order = client.order;
 		var dishes = order.dishes;
 
-		for(var j=0; j<order.numDishes-order.receivedDishes; j++)
+		for(var j=0; j<order.dishes.length; j++)
 		{
 			if(dishes.getAt(j).index == GameManager.grabbedItem.dish.index) clientHasMyItem = true;
 		}
