@@ -32,12 +32,12 @@ class Menu extends Phaser.Scene {
         //COIN
         this.add.sprite(config.width/4,config.height/12,'banner').setScale(0.5)
         this.add.sprite(config.width/5,config.height/12,'spr_ui_icon_coin').setScale(0.05)
-        this.numCoins = this.add.text(2*config.width/7,config.height/12, this.playerSettings.coins, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5);
+        this.numCoins = this.add.text(2*config.width/7,config.height/12, this.playerSettings.coins, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
 
         //DIAMONDS
         this.add.sprite(config.width/2,config.height/12,'banner').setScale(0.5)
         this.add.sprite(2*config.width/5,config.height/12,'spr_ui_icon_gem').setScale(0.05)
-        this.numDiamonds = this.add.text(3.5*config.width/7,config.height/12, this.playerSettings.diamonds, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5);
+        this.numDiamonds = this.add.text(3.5*config.width/7,config.height/12, this.playerSettings.diamonds, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
 
         //CHEF POINTS
         this.add.sprite(3*config.width/4 ,config.height/12,'banner').setScale(0.5)
@@ -106,9 +106,16 @@ class Menu extends Phaser.Scene {
         this.expButton = this.add.sprite(config.width/12, config.height/2,'banner_light').setScale(0.5).setTint(0x123456)
         this.expButton.setInteractive().on('pointerdown', () => {
             
-            this.playerSettings.level = this.uploadPlayerLevel(5)
+            this.prevPlayerLevel = this.playerSettings.level
+            console.log(this.prevPlayerLevel)
+            this.currentPlayerLevel = this.uploadPlayerLevel(5)
+            this.playerSettings.level = this.currentPlayerLevel;
             this.numPlayerLevel.setText(this.playerSettings.level)
             this.savePlayerSettings()
+            console.log(this.currentPlayerLevel)
+            if(this.prevPlayerLevel < this.currentPlayerLevel){
+                this.levelUpPanel()
+            }
         })
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -260,7 +267,14 @@ class Menu extends Phaser.Scene {
             this.upgradesPanelDescription(this.UpgradeSelected);
         })
 
-        
+        //LEVEL UP PANEL
+        this.levelUpPanelTitle = this.add.text(config.width/2, config.height/4 , this.gameStrings.LevelUpTitle ,{ font: "30px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto titulo
+        this.levelUpPanelDesc = this.add.text(config.width/2, 1.15*config.height/3 , this.gameStrings.LevelUpDesc ,{ font: "20px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto descripcion
+        this.levelUpPanelRewardTitle = this.add.text(1.3*config.width/5, config.height/2 , this.gameStrings.LevelUpReward ,{ font: "20px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setVisible(false)//Texto descripcion
+        this.levelUpCoinReward = this.add.sprite(1.6*config.width/5, 2*config.height/3,'spr_ui_icon_coin').setScale(0.05).setOrigin(1,0.5).setVisible(false)
+        this.levelUpCoinRewardText = this.add.text(1.6*config.width/5, 2*config.height/3, 200 ,{ font: "30px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setVisible(false)//Texto titulo
+        this.levelUpDiamondReward = this.add.sprite(2.6*config.width/5, 2*config.height/3,'spr_ui_icon_gem').setScale(0.05).setOrigin(0,0.5).setVisible(false)
+        this.levelUpDiamondRewardText = this.add.text(3*config.width/5, 2*config.height/3, 200 ,{ font: "30px Arial", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setVisible(false)//Texto titulo
     }
 
 
@@ -370,6 +384,25 @@ class Menu extends Phaser.Scene {
     })
     }
 
+    levelUpPanel(){
+        this.disableAllButtons();
+        this.levelUpPanelTitle.setVisible(true)
+        this.levelUpPanelDesc.setVisible(true)
+        this.levelUpCoinReward.setVisible(true)
+        this.levelUpDiamondReward.setVisible(true)
+        this.levelUpCoinRewardText.setVisible(true)
+        this.levelUpDiamondRewardText.setVisible(true)
+        this.levelUpPanelRewardTitle.setVisible(true)
+        this.levelUpPanelDesc.setText(this.gameStrings.LevelUpDesc + this.playerSettings.level)
+        this.levelUpCoinRewardText.setText(this.playerSettings.level * 100)
+        this.levelUpDiamondRewardText.setText(this.playerSettings.level * 10)
+        this.playerSettings.coins += this.playerSettings.level * 100
+        this.playerSettings.diamonds += this.playerSettings.level * 10
+        this.savePlayerSettings()
+        this.numCoins.setText(this.playerSettings.coins)
+        this.numDiamonds.setText(this.playerSettings.diamonds)
+    }
+
     optionsPanel(){
         this.disableAllButtons()
         this.titleOptions.setVisible(true)
@@ -458,6 +491,8 @@ class Menu extends Phaser.Scene {
         this.playButton.disableInteractive()
         this.extraBanner.setVisible(true)//Pintar panel -> Mismo para todas las acciones
         this.crossButton.setVisible(true)//Pintar boton de cerrar panel
+        this.expButton.disableInteractive()
+        this.upgradesTextButton.disableInteractive()
     }
 
     enableAllButtons(){
@@ -496,6 +531,7 @@ class Menu extends Phaser.Scene {
         this.languageOptions.setVisible(false)
 
         //Upgrades
+        this.upgradesTextButton.setInteractive()
         this.upgradeSlot1.setVisible(false)
         this.upgradeSlotText1.setVisible(false)
         this.upgradeDescriptionBanner.setVisible(false)
@@ -508,6 +544,16 @@ class Menu extends Phaser.Scene {
         this.buySlot.setVisible(false)
         this.buyUpgradeCoin.setVisible(false)
         this.buySlotText.setVisible(false)
+
+        //EXP
+        this.expButton.setInteractive()
+        this.levelUpPanelTitle.setVisible(false)
+        this.levelUpPanelDesc.setVisible(false)
+        this.levelUpCoinReward.setVisible(false)
+        this.levelUpDiamondReward.setVisible(false)
+        this.levelUpCoinRewardText.setVisible(false)
+        this.levelUpDiamondRewardText.setVisible(false)
+        this.levelUpPanelRewardTitle.setVisible(false)
 
     }
 

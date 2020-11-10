@@ -38,7 +38,16 @@ class Loading extends Phaser.Scene {
 
         this.load.on('progress', function (value) {
             //console.log(value);
-            loading_Text.setText("Loading... "+ parseInt(value * 100) +"%")
+            if(localStorage.getItem('playerSettings') === null){
+                loading_Text.setText("Loading... "+ parseInt(value * 99) +"%")
+            }else{
+                this.playerSettings_previo = JSON.parse(localStorage.getItem('playerSettings'))
+                if(this.playerSettings_previo.language){
+                    loading_Text.setText("Cargando... "+ parseInt(value * 99) +"%")
+                }else{
+                    loading_Text.setText("Loading... "+ parseInt(value * 99) +"%")
+                }
+            }
             progressBar.destroy();
             sceneRef.add.rectangle(config.width/4, config.height/2, config.width/2 * value, 20, 0xff6699).setOrigin(0,0.5);
         });
@@ -258,6 +267,7 @@ class Loading extends Phaser.Scene {
         this.add.text(config.width/2 ,3*config.height/4, this.score, { font: "20px Arial", fill: "#ffffff", align: "center" });
 
         //localStorage.removeItem('playerSettings')
+        
         if(localStorage.getItem('playerSettings') === null){ //Si no se ha creado el almacenamiento, lo crea
             console.log("if")
             localStorage.setItem('playerSettings', JSON.stringify(this.defaultPlayer))

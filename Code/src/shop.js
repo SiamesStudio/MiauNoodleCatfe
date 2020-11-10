@@ -172,9 +172,8 @@ class Shop extends Phaser.Scene {
     buy_Slot(number){
         this.negationButton.setVisible(false)
         this.confirmationButton.setVisible(false)
-        //console.log("He entrado "+ number)
         if(this.CoinsSelected){
-            this.playerSettings.coins += number
+            this.playerSettings.coins += number*100
             this.savePlayerSettings()
             if(this.playerSettings.language){
                 this.confirmationText.setText('¡Has obtenido '+number*100+' monedas!');
@@ -185,7 +184,7 @@ class Shop extends Phaser.Scene {
             
         }
         else{
-            this.playerSettings.diamonds += number
+            this.playerSettings.diamonds += number*100
             this.savePlayerSettings()
             if(this.playerSettings.language){
                 this.confirmationText.setText('¡Has obtenido '+number*100+' diamantes!');

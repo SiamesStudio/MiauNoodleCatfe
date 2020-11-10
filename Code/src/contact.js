@@ -24,7 +24,7 @@ class Contact extends Phaser.Scene {
         this.add.text(config.width/2, 6*config.height/10, 'Mariam Baradi Del Álamo : '+this.gameStrings.ContactArtist, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
         this.add.text(config.width/2, 7*config.height/10, 'Daniel Brenlla Gómez : '+this.gameStrings.ContactProgrammer, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
         
-
+        
         //----------------------------------------------------------------------------
         //----------------------------------------------------------------------------
 

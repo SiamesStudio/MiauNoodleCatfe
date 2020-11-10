@@ -25,6 +25,11 @@ class MenuStrings {
     this.upgradesCoffeMachineDescription = '+1 cofee machine\ncapacity\nLevel: '
     this.upgradesPancakeTimeDescription = '-2 sec pancake time\nLevel: '
 
+    //LevelUp
+    this.LevelUpTitle = "Level up!"
+    this.LevelUpDesc = "Raised to level "
+    this.LevelUpReward = 'Reward:'
+
     }
 
 
@@ -49,6 +54,10 @@ convertToSpanish(){
     this.upgradesCoffeTimeDescription = '-2 seg tiempo café\nNivel: '
     this.upgradesCoffeMachineDescription = '+1 espacio\ncafetera\nNivel: '
     this.upgradesPancakeTimeDescription = '-2 seg tiempo tortita\nNivel: '
+
+    this.LevelUpTitle = "¡Subida de nivel!"
+    this.LevelUpDesc = "Has subido al nivel "
+    this.LevelUpReward = 'Recompensa:'
     
 }
 
@@ -72,6 +81,10 @@ convertToEnglish(){
     this.upgradesCoffeTimeDescription = '-2 sec coffee time\nLevel: '
     this.upgradesCoffeMachineDescription = '+1 cofee machine\ncapacity\nLevel: '
     this.upgradesPancakeTimeDescription = '-2 sec pancake time\nLevel: '
+
+    this.LevelUpTitle = "Level up!"
+    this.LevelUpDesc = "Raised to level "
+    this.LevelUpReward = 'Reward:'
     
 }
 

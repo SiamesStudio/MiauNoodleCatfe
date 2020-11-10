@@ -55,7 +55,10 @@ class Inicio extends Phaser.Scene {
         logo_2_seconds.displayWidth = config.width;
         logo_2_seconds.displayHeight = config.height;
 
-        playButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {playerInfo: this.playerSettings }); })
+        playButton.setInteractive().on('pointerdown', () => {
+            this.music.stop()
+             this.scene.start("Menu", {playerInfo: this.playerSettings }); 
+            })
         playButton.disableInteractive();
 
         this.music = this.sound.add('snd_music_biscuit');
@@ -68,6 +71,7 @@ class Inicio extends Phaser.Scene {
             //var url = 'https://siamesstudio.github.io/'
             //var s = window.open(url, '_blank');
             //window.location.href = url;
+            this.music.stop();
             this.scene.start("Contacto", {playerInfo: this.playerSettings });
         })
         contactButton.disableInteractive();
