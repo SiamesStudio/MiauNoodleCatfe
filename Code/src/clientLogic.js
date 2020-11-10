@@ -20,6 +20,7 @@ class Client{
     }
     this.index=index;
     this.place=0;
+    this.slot=-1;
     //this.clientImg = GameManager.scene.physics.add.sprite(100,100, 'client');
     this.clientImg;
     this.favDish=favDish;//index of the fav dish
@@ -38,7 +39,6 @@ class Client{
     var found = false;
     var maxSlots=3;
     if(id==1){//restaurant
-      console.log(Client.restaurantSlots)
       while(i<maxSlots && !found)
       {
         slot = Client.restaurantSlots.getAt(i);
@@ -105,13 +105,39 @@ class Client{
 	//console.log(Client.restaurantOccupiedSlots)
 	//console.log(Client.streetOccupiedSlots)
     if(place==1){
-	  var pos=Client.restaurantSlots.getAt(slotId);
+    var pos=Client.restaurantSlots.getAt(slotId);
+    this.slot=slotId;
     }
     else if(place==2){
       var pos=Client.streetSlots.getAt(slotId);
+      this.slot=slotId;
     }
     this.generateOrder();
     this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'client'); this.clientImg.setScale(0.05);
+  }
+
+  compareOrderWithDish(dish){
+    console.log(this.order.dishes)
+    this.order.compareDish(dish);
+    console.log(this.order.dishes)
+    if(this.order.dishes.length==0){
+      this.exitRestaurant();
+    }
+  }
+
+  exitRestaurant(){
+    Client.clientsInRestaurant.remove(this.index);
+    this.clientImg.disableBody(true,true);
+    if(this.place==1){
+      this.place=0;
+      Client.restaurantSlots.getAt(this.slot).occupied=false;
+      Client.restaurantOccupiedSlots--;
+    }
+    if(this.place==2){
+      place=0;
+      Client.streetSlots.getAt(this.slot).occupied=false;
+      Client.streetOccupiedSlots--;
+    }
   }
 }
 
@@ -155,11 +181,11 @@ class Order{
       var dish = this.dishes.getAt(i);
       if(received.index==dish.index){
         if(received.index==0){ //coffee
-          this.receivedDishes++;
           this.dishes.removeAt(i);
           return 0;
         }
         else if(received.index==1){ //pancake
+          console.log("quiero pancake y recibo pancake")
           if (received.sauce!=dish.sauce){
             minusPoints+=20;
           }
@@ -170,17 +196,20 @@ class Order{
             minusPoints+=20;
           }
           else{
-            var i=0;
+            var j=0;
             var different=false;
-            while(i<this.numToppings && different==false){
+            while(j<this.numToppings && different==false){
               if(received.toppings.getAt(i)!=dish.getAt(i)){
                 different=true;
                 minusPoints+=20;
               }
-              i++;
+              j++;
             }
             
           }
+          console.log("borro pancake")
+          this.dishes.removeAt(i);
+          return 0;
         }  
         else if(received.index==2){
           if (received.sauce!=dish.sauce){
@@ -201,6 +230,8 @@ class Order{
             }
             
           }
+          this.dishes.removeAt(i);
+          return 0;
         }
       }
       //comparar toppings

@@ -62,7 +62,7 @@ class Coffee
 		
 		var dish = this.dish; 
 		var client = GameManager.collidingObject; //El cliente con el que ha colisionado, objeto de la clase Client
-		client.order.compareDish(dish);
+		client.compareOrderWithDish(dish);
 		grabItem("", null, null);
 	}
 }
