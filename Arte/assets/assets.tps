@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename></filename>
+                <filename>assets.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -221,6 +221,24 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">spr_strainer_0.png</key>
+            <key type="filename">spr_strainer_1.png</key>
+            <key type="filename">spr_strainer_2.png</key>
+            <key type="filename">spr_strainer_3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>21,21,42,43</rect>
+                <key>scale9Paddings</key>
+                <rect>21,21,42,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -236,6 +254,10 @@
             <filename>spr_topping_mushroom.png</filename>
             <filename>spr_topping_naruto.png</filename>
             <filename>spr_topping_springonion.png</filename>
+            <filename>spr_strainer_0.png</filename>
+            <filename>spr_strainer_1.png</filename>
+            <filename>spr_strainer_2.png</filename>
+            <filename>spr_strainer_3.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
