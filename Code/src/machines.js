@@ -14,10 +14,32 @@ class CoffeeMachine extends Machine
 	constructor(img, upgradeLVL)
 	{
 		super(img, upgradeLVL);
-		for(var i=0; i<upgradeLVL+1; i++)
+		switch(upgradeLVL)
 		{
-			CoffeeMachine.slots.add(new Slot(img.x+(i*8),img.y));
-		}
+			case 0:
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.001,img.y+config.height*0.08));
+			break;
+
+			case 1:
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.015,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.015,img.y+config.height*0.08));
+			break;
+				
+			case 2:
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.052,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.028,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.034,img.y+config.height*0.08));
+			break;
+
+			case 3:
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.052,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.028,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.028,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.052,img.y+config.height*0.08));
+			break;
+		}	
+			
+		
 	}
 }
 

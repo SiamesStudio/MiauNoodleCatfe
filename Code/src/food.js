@@ -37,6 +37,7 @@ class Coffee
 	{
 		if(this.hovering)
 		{
+			console.log("COFFEE drag end AND WAS HOVERING WITH CLIENT");
 			this.hovering = false;
 			this.clientCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.deliverCoffee, null, this);
 		}
@@ -83,7 +84,7 @@ class Pancake
 		this.trashCollider;
 		this.dishCollider;
 		this.doneTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeTime - Pancake.time);
-		this.burnTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeBurnTime - (Pancake.time*2));
+		this.burnTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeBurnTime - (Pancake.time*20));
 
 		var pancake = this;
 
@@ -214,22 +215,24 @@ class Pancake
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(1);
 		});
-		//dishImg.setAlpha(1);
-		food.setPosition(0,0);
 		food.removeInteractive();
+		food.setPosition(0,0);
 		//food.disableBody(true,true);
 		this.freeGriddle();
 		// If the dish already is created the is no need to create another dish, just add the pancake and update the dish
 		if(container.dish == null)
 		{
 			container.dish = new Dish([this.index,-1,1,0]);
-			makeDishInteractive(container,"pancakeDish");	
+			makeDishInteractive(container,"pancakeDish");
+			container.dishContainer.add(food);
 		}
 		else
 		{
-			dish.addPancake();
+			container.dish.numPancakes++;
+			if(container.dish.numPancakes == 2) container.addToContainer(food,3,-2);
+			if(container.dish.numPancakes >= 3) container.addToContainer(food,-2,-4);
 		}
-		container.dishContainer.add(food);	
+			
 	}
 
 	
@@ -485,7 +488,7 @@ class Topping
 
 	dragToDish(toppingImg, dishImg)
 	{
-		//this.toppingSound.play();
+		this.toppingSound.play();
 		this.collider.destroy();
 		var container = GameManager.collidingObject;
 		container.dishContainer.iterate(function(child){
@@ -493,19 +496,33 @@ class Topping
 		});
 		toppingImg.setPosition(this.posx,this.posy);
 
-		var dish = container.dish;
-
-		if(dish.addTopping(this.index))
+		var numToppings = container.dish.numToppings;
+		if(container.dish.addTopping(this.index))
 		{
-			var clonedImg = GameManager.scene.add.sprite(0, 0, toppingImg.texture);
-			container.dishContainer.add(clonedImg);
+			var clonedImg = GameManager.scene.add.image(0, 0, toppingImg.texture);
+			clonedImg.setScale(0.5);
+			switch(numToppings)
+			{
+				case 0:
+					container.addToContainer(clonedImg,0,0);
+				break;
+				case 1:
+					container.addToContainer(clonedImg,2,-1.5);
+				break;
+				case 2:
+					container.addToContainer(clonedImg,-3,-3);
+				break;
+				case 3:
+					container.addToContainer(clonedImg,2,-5);
+				break;
+			}	
 		}	
 	}
 }
 
 class Syrup
 {
-	constructor(index, offset, syrupSound)
+	constructor(index, syrupSound)
 	{
 		this.index = index;
 		this.img;
@@ -519,15 +536,15 @@ class Syrup
 		switch(this.index)
 		{
 			case 0:
-				this.img = GameManager.scene.physics.add.sprite(config.width * 0.25 + offset,config.height * 0.43,'spr_syrup_strawberry'); 
+				this.img = GameManager.scene.physics.add.sprite(config.width * 0.25,config.height * 0.43,'spr_syrup_strawberry'); 
 			break;
 
 			case 1:
-				this.img = GameManager.scene.physics.add.sprite(config.width * 0.31 + offset,config.height * 0.43,'spr_syrup_chocolate'); 
+				this.img = GameManager.scene.physics.add.sprite(config.width * 0.31 ,config.height * 0.43,'spr_syrup_chocolate'); 
 			break;
 
 			case 2:
-				this.img = GameManager.scene.physics.add.sprite(config.width * 0.37 + offset,config.height * 0.43,'spr_syrup_caramel'); 
+				this.img = GameManager.scene.physics.add.sprite(config.width * 0.37 ,config.height * 0.43,'spr_syrup_caramel'); 
 			break;
 
 			default:

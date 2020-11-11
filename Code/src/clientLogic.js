@@ -248,7 +248,7 @@ class Dish{
   	this.numPancakes=-1;
   	if (this.index==1){
     	this.sauce=listSettings[1];
-    	this.numPancakes==listSettings[2];
+    	this.numPancakes=listSettings[2];
     	for (var i=0; i<listSettings[3]; i++)
     	{ 
           this.toppings.add(listSettings[4]+i);
@@ -265,6 +265,7 @@ class Dish{
     }
   }
 
+/*
   addTopping(toppingType)
   {
     for(var i=0; i<this.toppings.length; i++)
@@ -272,10 +273,20 @@ class Dish{
       var topping = this.toppings.getAt(i);
       if(topping < 0)
       {
+        this.numToppings++;
         this.toppings.replace(topping, toppingType);
         return true;
       }
     }
     return false;
+  }
+*/
+  addTopping(toppingType)
+  {
+    var originalSize = this.toppings.length;
+    this.toppings.add(toppingType);
+
+    if(originalSize != this.toppings.length){this.numToppings++; return true;}
+    else return false;
   }
 }
