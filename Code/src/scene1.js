@@ -20,14 +20,14 @@ class scene1 extends Phaser.Scene {
             moneySpent: 0,
             upgrades : {
                 cofeeTime : 0,
-                coffeeMachineLevel : 0,
+                coffeeMachineLevel : 3,
                 pancakeTime : 0,
                 pancakeBurnTime : 0,
                 pancakePanLevel : 3,
                 noodleTime : 0,
                 noodleBurnTime : 0,
                 noodleLevel :0,
-                tableClothPancakeLevel :1,
+                tableClothPancakeLevel :3,
                 tableClothNoodleLevel :0, 
             	}
         	}
@@ -93,24 +93,7 @@ class scene1 extends Phaser.Scene {
 		}
 		this.add.image(config.width*0.83,config.height*0.24,'spr_radio');
 		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.915, 'spr_glasses');
-		/*
-		var coffeeMachineLvl = GameManager.scene.playerSettings.upgrades.coffeeMachineLevel;
-		switch(coffeeMachineLvl)
-		{
-			case 0:
 
-			break;
-			case 1:
-
-			break;
-			case 2:
-
-			break;
-			case 3:
-	
-			break;
-		}
-		*/
 		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, coffeeMachineLvl);
 		GameManager.coffeeMachine = coffeeMachine;
 		coffeeSpawnerImg.setInteractive();
@@ -181,8 +164,35 @@ class scene1 extends Phaser.Scene {
 
 		var pancakeSpawnerImg = this.add.image(config.width*0.85, config.height*0.91, 'spr_pancake_bottle');
         var griddleImg = this.add.image(config.width*0.56, config.height*0.625,'spr_griddle');
-        var griddle = new Griddle(griddleImg, this.playerSettings.upgrades.pancakePanLevel);
+        var griddleUpgradeLvl = this.playerSettings.upgrades.pancakePanLevel;
+        var griddle = new Griddle(griddleImg, griddleUpgradeLvl);
         GameManager.griddle = griddle;
+
+        for(var i=0; i<4; i++)
+        {
+        	var slotGriddleImg;
+        	switch(i)
+        	{
+        		case 0:
+        		    slotGriddleImg = this.add.image(config.width*0.51, config.height*0.535, 'spr_griddle_0');
+        		break;
+
+        		case 1:
+        			slotGriddleImg = this.add.image(config.width*0.615, config.height*0.535, 'spr_griddle_1');
+        		break;
+
+        		case 2:
+        			slotGriddleImg = this.add.image(config.width*0.495, config.height*0.662, 'spr_griddle_2');	
+        		break;
+
+        		case 3:
+        			slotGriddleImg = this.add.image(config.width*0.625, config.height*0.662, 'spr_griddle_3');
+        		break;
+
+        	}
+        	if(griddleUpgradeLvl < i) slotGriddleImg.setAlpha(0.3);
+        }
+
        	var trashCanImg = this.physics.add.sprite(config.width*0.105, config.height*0.915,'spr_trashCan');
        	GameManager.trashCanImgPancake = trashCanImg;
         pancakeSpawnerImg.setInteractive();
@@ -203,14 +213,14 @@ class scene1 extends Phaser.Scene {
         this.add.image(config.width*0.42, config.height*0.895, 'spr_topping_posters');
         for(var i=0; i<4; i++)
 		{
-			//var toppingSound = GameManager.scene.sound.add('snd_toppingSound');
-			var topping = new Topping(i, true, null);
+			var toppingSound = GameManager.scene.sound.add('snd_topping');
+			var topping = new Topping(i, true, toppingSound);
 		}
 		
 		for(var i=0; i<3; i++)
 		{
-			//var syrupSound = GameManager.scene.sound.add('snd_syrup');
-			var syrup = new Syrup(i,null);
+			var syrupSound = GameManager.scene.sound.add('snd_topping');
+			var syrup = new Syrup(i,syrupSound);
 		}
 	}
 
@@ -308,8 +318,8 @@ class scene1 extends Phaser.Scene {
     	}
 
     	
-    	var maxTime = 10;
-    	var minTime = 3;
+    	var maxTime = 9;
+    	var minTime = 2;
     	
     	if(Client.clientsInRestaurant.length==0){
       		callClient(-1);
@@ -342,44 +352,44 @@ class scene1 extends Phaser.Scene {
 		switch(GameManager.grabbedItemClass)
 		{
 			case "pancake":
-				console.log("Pancake grabbed");
+				//console.log("Pancake grabbed");
 				if(checkHoverWithTrashCan()) return;
 				checkHoverWithDishes();
 			break;
 
 			case "noodles":
-				console.log("Noodles grabbed");
+				//console.log("Noodles grabbed");
 				if(checkHoverWithTrashCan()) return;
 				checkHoverWithDishes();
 			break;
 
 			case "topping":
-				console.log("Topping grabbed");
+				//console.log("Topping grabbed");
 				checkToppingHoverWithDish();
 			break;
 
 			case "syrup":
-				console.log("Syrup grabbed");
+				//console.log("Syrup grabbed");
 				checkSauceAndSyrupHover();
 			break;
 
 			case "pancakeDish":
-				console.log("pancakeDish grabbed");
+				//console.log("pancakeDish grabbed");
 				checkHoverWithClient();
 			break;
 
 			case "noodleDish":
-				console.log("noodleDish grabbed");
+				//console.log("noodleDish grabbed");
 				checkHoverWithClient();
 			break;
 
 			case "coffeeDish":
-				console.log("coffeeDish grabbed");
+				//console.log("coffeeDish grabbed");
 				checkHoverWithClient();
 			break;
 
 			case "sauce":
-				console.log("Sauce grabbed");
+				//console.log("Sauce grabbed");
 				checkSauceAndSyrupHover();
 			break;
 
@@ -452,10 +462,17 @@ class DishImgContainer
 		this.clientCollider;
 	}
 
+	addToContainer(img, xOffset, yOffset)
+	{
+		img.setPosition(img.x + xOffset, img.y + yOffset);
+		this.dishContainer.add(img);
+	}
+
 	dragEndBehaviour()
 	{
 		if(this.hovering == true)
 		{
+			console.log("DISH drag end AND WAS HOVERING WITH CLIENT");
 			this.hovering = false;
 			this.clientCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.dragToClient, null, this);
 		}
@@ -470,8 +487,8 @@ class DishImgContainer
 	//IMPLEMENT ALL THE LOGIC, this works for the pancakes and the noodles
 	dragToClient(dishImg, clientImg)
 	{
-		GameManager.scene.physics.world.removeCollider(this.clientCollider);
 		console.log("dish dragged to client");
+		GameManager.scene.physics.world.removeCollider(this.clientCollider);
 		
 		if(GameManager.grabbedItemClass = "pancakeDish"){
 			GameManager.dishImgContainerPancake.remove(this);
@@ -485,7 +502,8 @@ class DishImgContainer
 		} 
 		
 		this.dishContainer.iterate(function(child){
-			child.disableBody(true,true);
+			//child.disableBody(true,true);
+			child.setAlpha(0);
 		});
 		clientImg.setAlpha(1);
 
@@ -494,6 +512,7 @@ class DishImgContainer
 		client.compareOrderWithDish(dish);
 		grabItem("", null, null);
 	}
+
 }
 
 
@@ -525,9 +544,9 @@ function changePosition(object, x, y)
 
 function grabItem(type, img, item)
 {
-	GameManager.grabbedItem = item;
-	GameManager.grabbedItemImg = img;
 	GameManager.grabbedItemClass = type;
+	GameManager.grabbedItemImg = img;
+	GameManager.grabbedItem = item;
 }
 
 function checkHoverWithTrashCan()
@@ -566,12 +585,14 @@ function checkHoverWithDishes()
 		var dishContainer = container.getAt(i);
 		var dish = dishContainer.dish;
 
-		if(dish)
+		if(dish != null)
 		{
+			console.log("hay plato bro");
 			if(GameManager.grabbedItemClass == "pancake")
 			{
+				console.log("dish.numPancakes: " + dish.numPancakes);
 				// Can't add a pancake to the dish if there are already 3, or a topping or syrup has been added
-				if(dish.numPancakes >= 3 || !toppingsEmpty(dish) || dish.sauce != -1) continue;
+				if(dish.numPancakes > 2 || !toppingsEmpty(dish) || dish.sauce != -1) continue;
 			}
 			else
 			{ // If the dish has already been created, that means that there is noodles
@@ -596,7 +617,7 @@ function checkToppingHoverWithDish()
 
 		if(dish)
 		{
-			if(containsTopping(GameManager.grabbedItem, dish) || dish.sauce != -1) continue;
+			if(containsTopping(GameManager.grabbedItem, dish) || dish.sauce != -1 || dish.numToppings>=4) continue;
 			collision = overlappingLogic(dishContainer, collision);
 		}
 	}
@@ -615,11 +636,15 @@ function containsTopping(topping,dish)
 // This function checks if a dish has no toppings, if the index is 0 or greater there is a topping assigned, if it is negative then there is no topping
 function toppingsEmpty(dish)
 {
+	if(dish.numToppings <= 0) return true;
+	else return false;
+	/*
 	for(var i=0; i<dish.toppings.length; i++)
 	{
 		if(dish.toppings.getAt(i) >= 0) return false;
 	}
 	return true;
+	*/
 }
 
 
@@ -627,15 +652,12 @@ function checkHoverWithClient()
 {
 	var clients = getClientsInRestaurant();
 	var collision = false;
-	
 	for(var i=0; i<clients.length; i++)
 	{
 		var client = clients.getAt(i);
 		var clientImg = client.clientImg;
 		if(!clientImg) continue;
 
-		// GameManager.grabbedItem = container
-		// GameManager.grabbedItemImg = container.dishImg;
 		var clientHasMyItem = false;
 		var order = client.order;
 		var dishes = order.dishes;
@@ -648,7 +670,7 @@ function checkHoverWithClient()
 		if(!clientHasMyItem) continue;
 
 		
-		if(checkOverlap(GameManager.grabbedItemImg, clientImg) && ! collision)
+		if(checkOverlap(GameManager.grabbedItemImg, clientImg) && !collision)
 		{
 			GameManager.collidingObjectImg = clientImg;
 			GameManager.collidingObject = client;
@@ -658,12 +680,8 @@ function checkHoverWithClient()
 		}
 		else
 		{
-			GameManager.grabbedItem.hovering = false;
 			clientImg.setAlpha(1);
-			collision = false;
 		}
-		
-		
 	}
 }
 // This is the way to get the items from the class Client that are inside the restaurant
@@ -805,6 +823,7 @@ function callClient(place){
 		var clientId= Math.floor(Math.random()*Client.clientList.length);
     	Client.clientsInRestaurant.add(clientId);
   	}
+  	console.log("callClient() -> place: " + place);
   	Client.clientList.getAt(clientId).goToRestaurant(place);
   	if(place==1){
     	GameManager.waitingRestaurantClient=false;

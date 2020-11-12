@@ -1,0 +1,69 @@
+SPRITES NOMBRES:
+
+spr_coffeeMachine_0
+spr_coffeeMachine_1
+spr_coffeeMachine_2
+spr_coffeeMachine_3
+spr_dish
+spr_dishes
+spr_glass_empty
+spr_glass_filled
+spr_glasses
+spr_griddle
+spr_griddle_0
+spr_griddle_1
+spr_griddle_2
+spr_griddle_3
+spr_pancake_ bottle
+spr_pancake_0
+spr_pancake_1
+spr_pancake_2
+spr_pancake_banana
+spr_pancake_burnt
+spr_pancake_coconut
+spr_pancake_cooked
+spr_pancake_cooking
+spr_pancake_cooking
+spr_pancake_strawberry
+spr_radio
+spr_syrup_caramel
+spr_syrup_chocolate
+spr_syrup_strawberry
+spr_tablecloth_0
+spr_tablecloth_1
+spr_tablecloth_2
+spr_tablecloth_3
+spr_topping_banana
+spr_topping_coconut
+spr_topping_lacasitos
+spr_topping_posters
+spr_topping_strawberry
+spr_trashCan
+
+
+SPRITES TAMAÑO: ancho x alto
+
+Sirope de chocolate:12x28
+Sirope de fresa: 13x28
+Sirope de caramelo:12x28
+Basura:65 x 30
+Vasos:13x27
+Platos:50x24
+Jarra de masa: 38x27
+Plancha: 109x 58
+Tortita sin hacer:19x12
+Tortita una cara hecha:19x12
+Tortita quemada: 19X12
+Cafetera:90x77
+Radio:40x38
+Manteles: 137x49
+Toppings:120x27
+Plato sin tortita, con una, dos o tres :42x16
+Todas las convinaciones de toppings:20X7
+
+
+
+
+
+
+

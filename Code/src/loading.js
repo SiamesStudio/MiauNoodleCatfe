@@ -162,6 +162,10 @@ class Loading extends Phaser.Scene {
 		this.load.image('spr_coffeeMachine_3','spr_coffeeMachine_3.png');
 		this.load.image('spr_coffeeMachine_4','spr_coffeeMachine_4.png');
         this.load.image('spr_griddle','spr_griddle.png');
+        this.load.image('spr_griddle_0','spr_griddle_0.png');
+        this.load.image('spr_griddle_1','spr_griddle_1.png');
+        this.load.image('spr_griddle_2','spr_griddle_2.png');
+        this.load.image('spr_griddle_3','spr_griddle_3.png');
         this.load.image('spr_topping_posters','spr_topping_posters.png');
 		this.load.image('spr_glasses','spr_glasses.png');
 		this.load.image('spr_dishes','spr_dishes.png');
@@ -231,7 +235,7 @@ class Loading extends Phaser.Scene {
 		this.load.audio('snd_filling_catfe', 'assets/sound/snd_filling_catfe.wav'); //Used
 		this.load.audio('snd_gameOver', 'assets/sound/snd_gameOver.wav'); 
 		this.load.audio('snd_levelUp', 'assets/sound/snd_levelUp.wav');
-		
+		this.load.audio('snd_topping', 'assets/sound/snd_topping.wav');
 		this.load.audio('snd_music_alone', 'assets/music/snd_music_alone.mp3');
 		this.load.audio('snd_music_biscuit', 'assets/music/snd_music_biscuit.mp3');
 		this.load.audio('snd_music_bobaTea', 'assets/music/snd_music_bobaTea.mp3');
