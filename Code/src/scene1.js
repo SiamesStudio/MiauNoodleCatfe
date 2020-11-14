@@ -43,8 +43,8 @@ class scene1 extends Phaser.Scene {
 	
 
 	create(){
-		this.clientsSettings();		
 		var gm = new GameManager(this);
+		this.clientsSettings();
         this.coffeeSetting();
         this.pancakesSetting();
         this.noodlesSetting();
@@ -60,7 +60,7 @@ class scene1 extends Phaser.Scene {
     	new Client(2, 0, [2,2,1,0], [1,1,1,0]);
     	new Client(3, 2, [2,3,1,3], [1,2,1,1,0]);
 		new Client(4, 2, [2,2,1,1], [1,0,2,0]);
-		new Client(5,1,[2,0,2,1,2],[1,0,2,0])
+		new Client(5, 1, [2,0,2,1,2], [1,0,2,0])
     	console.log(Client.clientList)
     	//añadir clientes a mano
   	}
@@ -325,7 +325,7 @@ class scene1 extends Phaser.Scene {
       		callClient(-1);
     	}
     	else {
-      		if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 3){
+      		if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 1){
         		//console.log("esperando a cliente en coffee")
         		GameManager.waitingRestaurantClient=true;
         		var restaurantTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
@@ -334,7 +334,7 @@ class scene1 extends Phaser.Scene {
            		}, restaurantTime);
       		}
       
-      		if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 3){
+      		if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 1){
       		    //console.log("esperando a cliente en calle")
       		    GameManager.waitingStreetClient=true;
       		    var streetTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
@@ -427,6 +427,9 @@ class GameManager
 	static tapSound;
 	static waitingRestaurantClient = false;
 	static waitingStreetClient = false;
+	
+	static levelEarnedCoins=0;
+
 	constructor(scene)
 	{
 		GameManager.scene = scene;

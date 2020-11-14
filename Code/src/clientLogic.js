@@ -21,14 +21,27 @@ class Client{
     this.index=index;
     this.place=0;
     this.slot=-1;
+    this.time;
     //this.clientImg = GameManager.scene.physics.add.sprite(100,100, 'client');
     this.clientImg;
     this.favDish=favDish;//index of the fav dish
     this.favNoodles=noodles;
     this.favPancake=pancake;
     this.order=0;
-    this.happiness=90;
+    this.dishesFinalPoints=[];
     Client.clientList.add(this);
+  }
+
+  subtractTime(){
+    if(this.time){
+      console.log(this.index+ "in "+this.place+" left: "+this.time);
+      this.time--;
+    }
+    else{
+      this.timeLeft.paused=true;
+      this.exitRestaurant();
+      
+    }
   }
 
   findFreeSlot(id)
@@ -96,11 +109,12 @@ class Client{
       nums.add(2);
       this.order = new Order(1,nums,this);
     }
-
   }
 
   goToRestaurant(place){
     this.place=place;
+    this.time=10;
+    this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
 	var slotId=this.findFreeSlot(place);
 	//console.log(Client.restaurantOccupiedSlots)
 	//console.log(Client.streetOccupiedSlots)
@@ -118,7 +132,8 @@ class Client{
 
   compareOrderWithDish(dish){
     console.log(this.order.dishes)
-    this.order.compareDish(dish);
+    var points=this.order.compareDish(dish);
+    this.dishesFinalPoints.push(points);
     console.log(this.order.dishes)
     if(this.order.dishes.length==0){
       this.exitRestaurant();
@@ -127,6 +142,7 @@ class Client{
 
   exitRestaurant(){
     Client.clientsInRestaurant.remove(this.index);
+    this.timeLeft.paused=true;
     this.clientImg.disableBody(true,true);
     if(this.place==1){
       this.place=0;
@@ -134,7 +150,7 @@ class Client{
       Client.restaurantOccupiedSlots--;
     }
     if(this.place==2){
-      place=0;
+      this.place=0;
       Client.streetSlots.getAt(this.slot).occupied=false;
       Client.streetOccupiedSlots--;
     }
@@ -182,10 +198,11 @@ class Order{
       if(received.index==dish.index){
         if(received.index==0){ //coffee
           this.dishes.removeAt(i);
+          GameManager.levelEarnedCoins+=5;
+          console.log(GameManager.levelEarnedCoins)
           return 0;
         }
         else if(received.index==1){ //pancake
-          console.log("quiero pancake y recibo pancake")
           if (received.sauce!=dish.sauce){
             minusPoints+=20;
           }
@@ -199,7 +216,7 @@ class Order{
             var j=0;
             var different=false;
             while(j<this.numToppings && different==false){
-              if(received.toppings.getAt(i)!=dish.getAt(i)){
+              if(received.toppings.getAt(j)!=dish.getAt(j)){
                 different=true;
                 minusPoints+=20;
               }
@@ -207,11 +224,12 @@ class Order{
             }
             
           }
-          console.log("borro pancake")
+          GameManager.levelEarnedCoins+=20;
+          console.log(GameManager.levelEarnedCoins)
           this.dishes.removeAt(i);
-          return 0;
+          return minusPoints;
         }  
-        else if(received.index==2){
+        else if(received.index==2){ //noodles
           if (received.sauce!=dish.sauce){
             minusPoints+=20;
           }
@@ -219,19 +237,21 @@ class Order{
             minusPoints+=20;
           }
           else{
-            var i=0;
+            var k=0;
             var different=false;
-            while(i<this.numToppings && different==false){
-              if(received.toppings.getAt(i)!=dish.getAt(i)){
+            while(k<this.numToppings && different==false){
+              if(received.toppings.getAt(k)!=dish.getAt(k)){
                 different=true;
                 minusPoints+=20;
               }
-              i++;
+              k++;
             }
             
           }
+          GameManager.levelEarnedCoins+=30;
+          console.log(GameManager.levelEarnedCoins)
           this.dishes.removeAt(i);
-          return 0;
+          return minusPoints;
         }
       }
       //comparar toppings
@@ -245,7 +265,9 @@ class Dish{
     this.toppings = new Phaser.Structs.List();
     this.sauce = -1;
     this.numToppings = 0;
-  	this.numPancakes=-1;
+    this.numPancakes=-1;
+    this.pointsTimer = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractPoints, callbackScope: this });
+    this.points=105;
   	if (this.index==1){
     	this.sauce=listSettings[1];
     	this.numPancakes=listSettings[2];
@@ -262,6 +284,15 @@ class Dish{
       	this.toppings.add(listSettings[3]+i);
       }
     
+    }
+  }
+
+  subtractPoints(){
+    if(this.points>0){
+      this.points-=1;
+    }
+    else{
+      this.pointsTimer.paused=true;
     }
   }
 
