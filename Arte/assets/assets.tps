@@ -102,7 +102,7 @@
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -205,6 +205,135 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">spr_coffeeMachine_0.png</key>
+            <key type="filename">spr_coffeeMachine_1.png</key>
+            <key type="filename">spr_coffeeMachine_2.png</key>
+            <key type="filename">spr_coffeeMachine_3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,19,45,39</rect>
+                <key>scale9Paddings</key>
+                <rect>22,19,45,39</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_dish.png</key>
+            <key type="filename">spr_pancake_0.png</key>
+            <key type="filename">spr_pancake_1.png</key>
+            <key type="filename">spr_pancake_2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,4,21,8</rect>
+                <key>scale9Paddings</key>
+                <rect>10,4,21,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_dishes.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,6,25,12</rect>
+                <key>scale9Paddings</key>
+                <rect>13,6,25,12</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_glass_empty.png</key>
+            <key type="filename">spr_glass_filled.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,5,7,11</rect>
+                <key>scale9Paddings</key>
+                <rect>3,5,7,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_glasses.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,7,7,13</rect>
+                <key>scale9Paddings</key>
+                <rect>4,7,7,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_griddle.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>27,15,55,29</rect>
+                <key>scale9Paddings</key>
+                <rect>27,15,55,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_griddle_0.png</key>
+            <key type="filename">spr_griddle_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,5,15,9</rect>
+                <key>scale9Paddings</key>
+                <rect>8,5,15,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_griddle_2.png</key>
+            <key type="filename">spr_griddle_3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,6,19,11</rect>
+                <key>scale9Paddings</key>
+                <rect>9,6,19,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">spr_noodles_burnt.png</key>
             <key type="filename">spr_noodles_cooked.png</key>
             <struct type="IndividualSpriteSettings">
@@ -218,6 +347,98 @@
                 <rect>7,6,15,12</rect>
                 <key>scale9Paddings</key>
                 <rect>7,6,15,12</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_pancake_banana.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,5,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,5,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_pancake_burnt.png</key>
+            <key type="filename">spr_pancake_cooked.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,3,9,6</rect>
+                <key>scale9Paddings</key>
+                <rect>5,3,9,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_pancake_coconut.png</key>
+            <key type="filename">spr_pancake_strawberry.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,1,7,3</rect>
+                <key>scale9Paddings</key>
+                <rect>4,1,7,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_pancake_cooking.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,3,9,7</rect>
+                <key>scale9Paddings</key>
+                <rect>5,3,9,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_pancake_lacasitos.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,2,9,3</rect>
+                <key>scale9Paddings</key>
+                <rect>5,2,9,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_radio.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,20,19</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,20,19</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -236,6 +457,173 @@
                 <rect>21,21,42,43</rect>
                 <key>scale9Paddings</key>
                 <rect>21,21,42,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_syrup_caramel.png</key>
+            <key type="filename">spr_syrup_chocolate.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,7,6,15</rect>
+                <key>scale9Paddings</key>
+                <rect>3,7,6,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_syrup_strawberry.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,7,7,15</rect>
+                <key>scale9Paddings</key>
+                <rect>3,7,7,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_tablecloth_0.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,6,32,11</rect>
+                <key>scale9Paddings</key>
+                <rect>16,6,32,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_tablecloth_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,6,27,11</rect>
+                <key>scale9Paddings</key>
+                <rect>14,6,27,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_tablecloth_2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,7,38,13</rect>
+                <key>scale9Paddings</key>
+                <rect>19,7,38,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_tablecloth_3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,7,33,13</rect>
+                <key>scale9Paddings</key>
+                <rect>17,7,33,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_topping_banana.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,4,13,8</rect>
+                <key>scale9Paddings</key>
+                <rect>6,4,13,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_topping_coconut.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,4,12,8</rect>
+                <key>scale9Paddings</key>
+                <rect>6,4,12,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_topping_lacasitos.png</key>
+            <key type="filename">spr_topping_strawberry.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,5,13,9</rect>
+                <key>scale9Paddings</key>
+                <rect>7,5,13,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_topping_posters.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>30,8,59,17</rect>
+                <key>scale9Paddings</key>
+                <rect>30,8,59,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_trashCan.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,8,33,15</rect>
+                <key>scale9Paddings</key>
+                <rect>16,8,33,15</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -258,6 +646,44 @@
             <filename>spr_strainer_1.png</filename>
             <filename>spr_strainer_2.png</filename>
             <filename>spr_strainer_3.png</filename>
+            <filename>spr_coffeeMachine_0.png</filename>
+            <filename>spr_coffeeMachine_1.png</filename>
+            <filename>spr_coffeeMachine_2.png</filename>
+            <filename>spr_coffeeMachine_3.png</filename>
+            <filename>spr_dish.png</filename>
+            <filename>spr_dishes.png</filename>
+            <filename>spr_glass_empty.png</filename>
+            <filename>spr_glass_filled.png</filename>
+            <filename>spr_glasses.png</filename>
+            <filename>spr_griddle.png</filename>
+            <filename>spr_griddle_0.png</filename>
+            <filename>spr_griddle_1.png</filename>
+            <filename>spr_griddle_2.png</filename>
+            <filename>spr_griddle_3.png</filename>
+            <filename>spr_pancake_0.png</filename>
+            <filename>spr_pancake_1.png</filename>
+            <filename>spr_pancake_2.png</filename>
+            <filename>spr_pancake_banana.png</filename>
+            <filename>spr_pancake_burnt.png</filename>
+            <filename>spr_pancake_coconut.png</filename>
+            <filename>spr_pancake_cooked.png</filename>
+            <filename>spr_pancake_cooking.png</filename>
+            <filename>spr_pancake_lacasitos.png</filename>
+            <filename>spr_pancake_strawberry.png</filename>
+            <filename>spr_radio.png</filename>
+            <filename>spr_syrup_caramel.png</filename>
+            <filename>spr_syrup_chocolate.png</filename>
+            <filename>spr_syrup_strawberry.png</filename>
+            <filename>spr_tablecloth_0.png</filename>
+            <filename>spr_tablecloth_1.png</filename>
+            <filename>spr_tablecloth_2.png</filename>
+            <filename>spr_tablecloth_3.png</filename>
+            <filename>spr_topping_banana.png</filename>
+            <filename>spr_topping_coconut.png</filename>
+            <filename>spr_topping_lacasitos.png</filename>
+            <filename>spr_topping_posters.png</filename>
+            <filename>spr_topping_strawberry.png</filename>
+            <filename>spr_trashCan.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
