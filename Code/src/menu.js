@@ -25,8 +25,9 @@ class Menu extends Phaser.Scene {
     create(){
         var scene = this;
         var background = this.add.image(config.width/2,config.height/2,'spr_bck_mainMenu')//fondo
+        var widthRatio = config.width / background.displayWidth
         background.displayWidth = config.width;
-        background.displayHeight = config.height;
+        background.displayHeight = background.displayHeight * widthRatio
 
 
         //COIN
@@ -78,17 +79,17 @@ class Menu extends Phaser.Scene {
         //LEVEL SELECTION
         this.add.sprite(2*config.width/5, 4*config.height/7,'banner_long').setScale(0.2)
 
-        this.kitchenCustom = this.add.sprite(config.width/4, 2*config.height/5,'banner_light').setScale(0.5)
-        this.add.text(config.width/4, 2*config.height/5, 'Kitchen', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.kitchenCustom.setInteractive().on('pointerdown', () => {console.log("Vamos a cambiar la cocina"); this.kitchenCustomPanel();})
+        //this.kitchenCustom = this.add.sprite(config.width/4, 2*config.height/5,'banner_light').setScale(0.5)
+        //this.add.text(config.width/4, 2*config.height/5, 'Kitchen', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.kitchenCustom.setInteractive().on('pointerdown', () => {console.log("Vamos a cambiar la cocina"); this.kitchenCustomPanel();})
 
-        this.interiorCustom = this.add.sprite(config.width/4, 3*config.height/5,'banner_light').setScale(0.5)
-        this.add.text(config.width/4, 3*config.height/5, 'Interior', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.interiorCustom.setInteractive().on('pointerdown', () => {console.log("Igual meto mas mesas"); this.interiorCustomPanel();})
+        //this.interiorCustom = this.add.sprite(config.width/4, 3*config.height/5,'banner_light').setScale(0.5)
+        //this.add.text(config.width/4, 3*config.height/5, 'Interior', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.interiorCustom.setInteractive().on('pointerdown', () => {console.log("Igual meto mas mesas"); this.interiorCustomPanel();})
 
-        this.taskButton = this.add.sprite(config.width/4, 4*config.height/5,'banner_light').setScale(0.5)
-        this.add.text(config.width/4, 4*config.height/5, 'Tasks', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.taskButton.setInteractive().on('pointerdown', () => {console.log("Vamos a hacer las tareaas"); this.taskPanel();})
+        //this.taskButton = this.add.sprite(config.width/4, 4*config.height/5,'banner_light').setScale(0.5)
+        //this.add.text(config.width/4, 4*config.height/5, 'Tasks', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.taskButton.setInteractive().on('pointerdown', () => {console.log("Vamos a hacer las tareaas"); this.taskPanel();})
         
 
         this.add.sprite(9*config.width/17, 4*config.height/7,'banner_big').setScale(0.1)
@@ -465,18 +466,6 @@ class Menu extends Phaser.Scene {
         })
     }
 
-    kitchenCustomPanel(){
-        this.disableAllButtons()
-    }
-
-    interiorCustomPanel(){
-        this.disableAllButtons()
-    }
-
-    taskPanel(){
-        this.disableAllButtons()
-    }
-
 
     disableAllButtons(){
         this.blackScreen.setVisible(true)//Oscurecer la pantalla de fondo
@@ -484,9 +473,9 @@ class Menu extends Phaser.Scene {
         this.rouletteButton.disableInteractive()
         this.shopButton.disableInteractive()
         this.options.disableInteractive()
-        this.kitchenCustom.disableInteractive()
-        this.interiorCustom.disableInteractive()
-        this.taskButton.disableInteractive()
+        //this.kitchenCustom.disableInteractive()
+        //this.interiorCustom.disableInteractive()
+        //this.taskButton.disableInteractive()
         this.backButton.disableInteractive()
         this.playButton.disableInteractive()
         this.extraBanner.setVisible(true)//Pintar panel -> Mismo para todas las acciones
@@ -500,9 +489,9 @@ class Menu extends Phaser.Scene {
         this.rouletteButton.setInteractive()
         this.shopButton.setInteractive()
         this.options.setInteractive()
-        this.kitchenCustom.setInteractive()
-        this.interiorCustom.setInteractive()
-        this.taskButton.setInteractive()
+        //this.kitchenCustom.setInteractive()
+        //this.interiorCustom.setInteractive()
+        //this.taskButton.setInteractive()
         this.backButton.setInteractive()
         this.playButton.setInteractive()
         this.blackScreen.setVisible(false)//Desoscurecer la pantalla

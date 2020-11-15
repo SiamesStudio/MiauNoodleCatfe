@@ -130,6 +130,12 @@ class ContactStrings{
         this.ContactProgrammerF = 'Programmer'
         this.ContactArtist = '2D Artist'
         this.ContactDesigner = 'Game Designer'
+
+        this.ContactProgrammingRole = 'PROGRAMMING'
+        this.ContactDesignRole = 'GAME DESIGN'
+        this.ContactArtRole = 'ART'
+        this.ContactGameBy = 'GAME BY'
+
     }
     convertToSpanish(){
         this.ContactTitle = 'Contacto'
@@ -137,6 +143,11 @@ class ContactStrings{
         this.ContactProgrammerF = 'Programadora'
         this.ContactArtist = 'Artista 2D'
         this.ContactDesigner = 'Diseñador'
+
+        this.ContactProgrammingRole = 'PROGRAMACIÓN'
+        this.ContactDesignRole = 'DISEÑO'
+        this.ContactArtRole = 'ARTE'
+        this.ContactGameBy = 'JUEGO\nREALIZADO POR'
     }
 
     convertToEnglish(){
@@ -145,5 +156,10 @@ class ContactStrings{
         this.ContactProgrammerF = 'Programmer'
         this.ContactArtist = '2D Artist'
         this.ContactDesigner = 'Game Designer'
+
+        this.ContactProgrammingRole = 'PROGRAMMING'
+        this.ContactDesignRole = 'GAME DESIGN'
+        this.ContactArtRole = 'ART'
+        this.ContactGameBy = 'GAME BY'
     }
 }

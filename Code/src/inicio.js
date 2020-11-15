@@ -50,10 +50,13 @@ class Inicio extends Phaser.Scene {
         var logo2 = this.add.image(4*config.width/5,4*config.height/5,'logo2').setScale(0.15);
         var contactButton = this.add.image(config.width/2,3*config.height/4,'contactButton').setScale(0.15)
         var playButton = this.add.image(config.width/2,config.height/2,'playButton').setScale(0.3)
-        var text = this.add.text(config.width/4 ,config.height/4, 'Miau Noodle Catfe', { font: "20px Arial", fill: "#ffffff", align: "center" });
+        var text = this.add.bitmapText(config.width/2 ,config.height/4, 'BitPap','Miau Noodle Catfe',20).setOrigin(0.5);
+
+        
         var logo_2_seconds = this.add.image(config.width/2,config.height/2,'spr_logoTeam_Inicio');
+        var widthRatio = config.width / logo_2_seconds.displayWidth
         logo_2_seconds.displayWidth = config.width;
-        logo_2_seconds.displayHeight = config.height;
+        logo_2_seconds.displayHeight = logo_2_seconds.displayHeight * widthRatio
 
         playButton.setInteractive().on('pointerdown', () => {
             this.music.stop()
