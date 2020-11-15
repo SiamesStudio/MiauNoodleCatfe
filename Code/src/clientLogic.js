@@ -29,12 +29,13 @@ class Client{
     this.favPancake=pancake;
     this.order=0;
     this.dishesFinalPoints=[];
+    this.tutorial = false;
     Client.clientList.add(this);
   }
 
   subtractTime(){
     if(this.time){
-      console.log(this.index+ "in "+this.place+" left: "+this.time);
+      //console.log(this.index+ "in "+this.place+" left: "+this.time);
       this.time--;
     }
     else{
@@ -108,6 +109,19 @@ class Client{
     }
   }
 
+  generateTutorialPancakeOrder()
+  {
+    if(this.place==1){
+      var numDishes=2;
+      var nums=new Phaser.Structs.List();
+      while(nums.length<numDishes){
+        var num=Math.floor(Math.random()*2);
+        nums.add(num);
+      }
+      this.order = new Order(numDishes, nums, this);
+    }
+  }
+
   goToRestaurant(place){
     this.place=place;
     
@@ -122,7 +136,8 @@ class Client{
       var pos=Client.streetSlots.getAt(slotId);
       this.slot=slotId;
     }
-    this.generateOrder();
+    if(!this.tutorial) this.generateOrder();
+    else {this.generateTutorialPancakeOrder();}
     this.time=0;
     for(var i=0;i< this.order.dishes.length;i++){
       if(this.order.dishes.getAt(i).index==0){
@@ -138,6 +153,7 @@ class Client{
     console.log(this.time)
     this.time+=GameManager.levelSeconds[Math.floor(GameManager.scene.playerSettings.level/5)]
     console.log("cliente "+this.index+": "+this.time)
+
     this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
     this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'client'); this.clientImg.setScale(0.05);
   }

@@ -36,9 +36,7 @@ class scene1 extends Phaser.Scene {
 		{
 			this.playerSettings = gameData.playerInfo;
         	console.log(this.playerSettings);
-		}
-
-		
+		}		
 	}
 	
 
@@ -379,11 +377,13 @@ class scene1 extends Phaser.Scene {
 
 			case "pancakeDish":
 				//console.log("pancakeDish grabbed");
+				if(checkHoverWithTrashCan()) return;
 				checkHoverWithClient();
 			break;
 
 			case "noodleDish":
 				//console.log("noodleDish grabbed");
+				if(checkHoverWithTrashCan()) return;
 				checkHoverWithClient();
 			break;
 
@@ -402,6 +402,7 @@ class scene1 extends Phaser.Scene {
 			break;
 		}
 	}
+
 	savePlayerSettings(){
         localStorage.setItem('playerSettings', JSON.stringify(this.playerSettings))
     }
@@ -445,7 +446,6 @@ class GameManager
 	{
 		GameManager.scene = scene;
 	}
-
 }
 
 class Slot
@@ -471,6 +471,7 @@ class DishImgContainer
 		this.img = dishImg; //Img of the dish
 		this.dish; //Object from the class Dish
 		this.dishContainer = GameManager.scene.add.container(dishImg.x, dishImg.y);
+		this.dishContainer.setDepth(1);
 		this.img.setPosition(0,0); //If this is not done, then the image would not appear in the scene
 		this.dishContainer.add(this.img);
 		this.clientCollider;
@@ -480,20 +481,28 @@ class DishImgContainer
 	{
 		img.setPosition(img.x + xOffset, img.y + yOffset);
 		this.dishContainer.add(img);
+
 	}
 
 	dragEndBehaviour()
 	{
 		if(this.hovering == true)
 		{
-			console.log("DISH drag end AND WAS HOVERING WITH CLIENT");
+			console.log("DISH drag end AND WAS HOVERING");
+			//this.clientCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.dragToClient, null, this);
+			var trashCanImg = GameManager.grabbedItemClass == "pancakeDish" ? GameManager.trashCanImgPancake : GameManager.trashCanImgNoodles;
+
+			if(checkOverlap(this.img, trashCanImg)) this.dragToTrash(this.img,trashCanImg);
+			else
+			{
+				if(checkOverlap(this.img,GameManager.collidingObjectImg)) this.dragToClient(this.img,GameManager.collidingObjectImg);
+			}
 			this.hovering = false;
-			this.clientCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.dragToClient, null, this);
 		}
 		else
 		{
-			this.dishContainer.setPosition(this.posx,this.posy);
 			grabItem("", null, null);
+			this.dishContainer.setPosition(this.posx,this.posy);
 		}
 		
 	}
@@ -502,31 +511,36 @@ class DishImgContainer
 	dragToClient(dishImg, clientImg)
 	{
 		console.log("dish dragged to client");
-		GameManager.scene.physics.world.removeCollider(this.clientCollider);
-		
-		if(GameManager.grabbedItemClass = "pancakeDish"){
-			GameManager.dishImgContainerPancake.remove(this);
-			GameManager.tableclothsPancake.occupiedSlots--;
-			TableclothsPancake.slots.getAt(this.assignedSlot).occupied = false;
-		}
-		else if(GameManager.grabbedItemClass = "noodleDish"){ //Free the tablecloth, remove the order img, remo
-			GameManager.dishImgContainerNoodles.remove(this);
-			GameManager.tableclothsNoodle.occupiedSlots--;
-			TableclothsNoodle.slots.getAt(this.assignedSlot).occupied = false;
-		} 
-		
-		this.dishContainer.iterate(function(child){
-			//child.disableBody(true,true);
-			child.setAlpha(0);
-		});
+		//GameManager.scene.physics.world.removeCollider(this.clientCollider);	
+		this.freeTableCloth();		
 		clientImg.setAlpha(1);
-
 		var dish = this.dish; // aquí te dejo al objeto de la clase Dish
 		var client = GameManager.collidingObject; //El cliente con el que ha colisionado, objeto de la clase Client
 		client.compareOrderWithDish(dish);
 		grabItem("", null, null);
 	}
 
+	dragToTrash(dishImg, trashImg)
+	{
+		console.log("dish dragged to trash");
+		this.freeTableCloth();
+		trashImg.setAlpha(1);
+	}
+
+	freeTableCloth()
+	{
+		if(GameManager.grabbedItemClass == "pancakeDish"){
+			GameManager.dishImgContainerPancake.remove(this);
+			GameManager.tableclothsPancake.occupiedSlots--;
+			TableclothsPancake.slots.getAt(this.assignedSlot).occupied = false;
+		}
+		else if(GameManager.grabbedItemClass == "noodleDish"){ //Free the tablecloth, remove the order img, remo
+			GameManager.dishImgContainerNoodles.remove(this);
+			GameManager.tableclothsNoodle.occupiedSlots--;
+			TableclothsNoodle.slots.getAt(this.assignedSlot).occupied = false;
+		}
+		this.dishContainer.destroy();
+	}
 }
 
 
@@ -566,7 +580,7 @@ function grabItem(type, img, item)
 function checkHoverWithTrashCan()
 {
 	var trashCanImg;
-	if(GameManager.grabbedItemClass == "pancake") trashCanImg = GameManager.trashCanImgPancake;
+	if(GameManager.grabbedItemClass == "pancake" || GameManager.grabbedItemClass=="pancakeDish") trashCanImg = GameManager.trashCanImgPancake;
 	else { trashCanImg = GameManager.trashCanImgNoodles ;}
 
 	if(checkOverlap(GameManager.grabbedItemImg, trashCanImg))
@@ -578,6 +592,7 @@ function checkHoverWithTrashCan()
 	}
 	else 
 	{
+		GameManager.grabbedItem.hovering = false;
 		trashCanImg.setAlpha(1);
 	}
 
@@ -594,6 +609,7 @@ function checkHoverWithDishes()
 	else{ container = GameManager.dishImgContainerNoodles;}
 
 	var collision = false;
+	var numCollisions = 0;
 	for(var i=0; i<container.length; i++)
 	{
 		var dishContainer = container.getAt(i);
@@ -601,10 +617,8 @@ function checkHoverWithDishes()
 
 		if(dish != null)
 		{
-			console.log("hay plato bro");
 			if(GameManager.grabbedItemClass == "pancake")
 			{
-				console.log("dish.numPancakes: " + dish.numPancakes);
 				// Can't add a pancake to the dish if there are already 3, or a topping or syrup has been added
 				if(dish.numPancakes > 2 || !toppingsEmpty(dish) || dish.sauce != -1) continue;
 			}
@@ -613,8 +627,10 @@ function checkHoverWithDishes()
 				continue;
 			}		
 		}
-		collision = overlappingLogic(dishContainer, collision);
+		collision = overlappingLogic(dishContainer, numCollisions);
+		if(collision == true) numCollisions++;
 	}
+	if(numCollisions==0) GameManager.grabbedItem.hovering = false;
 }
 
 function checkToppingHoverWithDish()
@@ -623,6 +639,7 @@ function checkToppingHoverWithDish()
 	if(GameManager.grabbedItemImg.x >= 320){ container = GameManager.dishImgContainerNoodles;} // Esto es un apaño
 	else{ container = GameManager.dishImgContainerPancake;}
 
+	var numCollisions=0;
 	var collision = false;
 	for(var i=0; i < container.length; i++)
 	{
@@ -632,9 +649,11 @@ function checkToppingHoverWithDish()
 		if(dish)
 		{
 			if(containsTopping(GameManager.grabbedItem, dish) || dish.sauce != -1 || dish.numToppings>=4) continue;
-			collision = overlappingLogic(dishContainer, collision);
+			collision = overlappingLogic(dishContainer, numCollisions);
+			if(collision == true) numCollisions++;
 		}
 	}
+	if(numCollisions==0) GameManager.grabbedItem.hovering = false;
 }
 
 // This function checks if a dish contains the received topping
@@ -666,6 +685,7 @@ function checkHoverWithClient()
 {
 	var clients = getClientsInRestaurant();
 	var collision = false;
+	var numCollisions=0;
 	for(var i=0; i<clients.length; i++)
 	{
 		var client = clients.getAt(i);
@@ -680,7 +700,7 @@ function checkHoverWithClient()
 		{
 			if(dishes.getAt(j).index == GameManager.grabbedItem.dish.index) clientHasMyItem = true;
 		}
-		
+
 		if(!clientHasMyItem) continue;
 
 		
@@ -691,12 +711,14 @@ function checkHoverWithClient()
 			GameManager.grabbedItem.hovering = true;
 			clientImg.setAlpha(0.5);
 			collision = true;
+			numCollisions++;
 		}
 		else
 		{
 			clientImg.setAlpha(1);
 		}
 	}
+	if(numCollisions==0)GameManager.grabbedItem.hovering = false;
 }
 // This is the way to get the items from the class Client that are inside the restaurant
 function getClientsInRestaurant()
@@ -719,6 +741,7 @@ function checkSauceAndSyrupHover()
 	else{ container = GameManager.dishImgContainerPancake;}
 
 	var collision = false;
+	var numCollisions=0;
 	for(var i=0; i < container.length; i++)
 	{
 		var dishContainer = container.getAt(i);
@@ -727,22 +750,23 @@ function checkSauceAndSyrupHover()
 		if(dish)
 		{
 			if(dish.sauce != -1) continue;
-			collision = overlappingLogic(dishContainer, collision);
+			collision = overlappingLogic(dishContainer, numCollisions);
+			if(collision == true) numCollisions++;
 		}
 	}
+	console.log("numCollisions: " + numCollisions);
+	if(numCollisions == 0) GameManager.grabbedItem.hovering = false;
 }
 
 // function created to avoid the code repetition
-function overlappingLogic(container, collision)
+function overlappingLogic(container, numCollisions)
 {
 	var dishImg = container.img;
-	if(checkOverlap(GameManager.grabbedItemImg, dishImg) && !collision)
+	if(checkOverlap(GameManager.grabbedItemImg, dishImg) && numCollisions==0)
 	{
 		GameManager.collidingObjectImg = dishImg;
 		GameManager.collidingObject = container;
 		GameManager.grabbedItem.hovering = true;
-		//apply the alpha to all the items in the container
-		//dishImg.setAlpha(0.5);
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(0.5);
 		});
@@ -750,7 +774,6 @@ function overlappingLogic(container, collision)
 	}
 	else
 	{
-		//dishImg.setAlpha(1);
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(1);
 		});
