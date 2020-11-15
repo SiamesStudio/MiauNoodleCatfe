@@ -44,11 +44,11 @@ class scene1 extends Phaser.Scene {
 
 	create(){
 		var gm = new GameManager(this);
+		this.gameTimer = this.time.addEvent({ delay: GameManager.gameMinutes*60*1000, callback: finishGame, callbackScope: this });
 		this.clientsSettings();
         this.coffeeSetting();
         this.pancakesSetting();
-        this.noodlesSetting();
-
+		this.noodlesSetting();
         this.cursors = this.input.keyboard.createCursorKeys();
 	}
 
@@ -320,30 +320,34 @@ class scene1 extends Phaser.Scene {
     	
     	var maxTime = 9;
     	var minTime = 2;
+    	if(GameManager.gameOn){
+			if(Client.clientsInRestaurant.length==0){
+				callClient(-1);
+		  }
+		  else {
+				if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 1){
+				  //console.log("esperando a cliente en coffee")
+				  GameManager.waitingRestaurantClient=true;
+				  var restaurantTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
+				  setTimeout(function(){
+						callClient(1);
+					 }, restaurantTime);
+				}
+		
+				if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 1){
+					//console.log("esperando a cliente en calle")
+					GameManager.waitingStreetClient=true;
+					var streetTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
+					setTimeout(function(){
+						callClient(2);
+					}, streetTime);
+				}
+		  }
+		}
     	
-    	if(Client.clientsInRestaurant.length==0){
-      		callClient(-1);
-    	}
-    	else {
-      		if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 1){
-        		//console.log("esperando a cliente en coffee")
-        		GameManager.waitingRestaurantClient=true;
-        		var restaurantTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
-        		setTimeout(function(){
-          			callClient(1);
-           		}, restaurantTime);
-      		}
-      
-      		if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 1){
-      		    //console.log("esperando a cliente en calle")
-      		    GameManager.waitingStreetClient=true;
-      		    var streetTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
-      		    setTimeout(function(){
-      		    	callClient(2);
-      		    }, streetTime);
-      		}
-    	}
-    	
+    	if(!GameManager.gameOn && Client.clientsInRestaurant.length==0){
+			//terminar el juego
+		}
 
 		if(!GameManager.grabbedItemImg) return;
 		
@@ -398,6 +402,9 @@ class scene1 extends Phaser.Scene {
 			break;
 		}
 	}
+	savePlayerSettings(){
+        localStorage.setItem('playerSettings', JSON.stringify(this.playerSettings))
+    }
 	
 }
 
@@ -428,6 +435,10 @@ class GameManager
 	static waitingRestaurantClient = false;
 	static waitingStreetClient = false;
 	
+	static levelSeconds=[10,8,6,4,2,1];
+	static gameMinutes=10;
+	static gameOn=true;
+
 	static levelEarnedCoins=0;
 
 	constructor(scene)
@@ -447,7 +458,7 @@ class Slot
 	}	
 }
 
-/* This class is needed so that there is a relation between the dishImg and the object from the class Dish represented in the dishImg. Otherwise we could not know 
+/* This class is needed so that there is a relation between the dishImg and the object from the eh represented in the dishImg. Otherwise we could not know 
 what order is in the dish we are colliding with. */
 class DishImgContainer
 {
@@ -834,4 +845,8 @@ function callClient(place){
   	if(place==2){
     	GameManager.waitingStreetClient=false;
   	} 
+}
+
+function finishGame(){
+	GameManager.gameOn=false;
 }

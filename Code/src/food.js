@@ -1,6 +1,6 @@
 class Coffee
 {
-	static coffeeTime = 0.3; //8 
+	static coffeeTime = 1; //8 
 	constructor(assignedSlot, fillingSound, readySound)
 	{
 		this.index = 0;

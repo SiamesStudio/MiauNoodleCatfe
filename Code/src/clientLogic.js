@@ -92,14 +92,11 @@ class Client{
   }
 
   generateOrder(){
-    //elegir si pide una dos o tres cosas y cuales pide
-    //diferenciar entre gatos de fuera o dentro
-    //CAMBIAR
     if(this.place==1){
-	  var numDishes=Math.floor(Math.random()*2+1);
+	    var numDishes=Math.floor(Math.random()*2+1);
       var nums=new Phaser.Structs.List();
       while(nums.length<numDishes){
-		var num=Math.floor(Math.random()*2);
+		    var num=Math.floor(Math.random()*2);
         nums.add(num);
       }
       this.order = new Order(numDishes, nums, this);
@@ -113,11 +110,10 @@ class Client{
 
   goToRestaurant(place){
     this.place=place;
-    this.time=10;
-    this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
-	var slotId=this.findFreeSlot(place);
-	//console.log(Client.restaurantOccupiedSlots)
-	//console.log(Client.streetOccupiedSlots)
+    
+	  var slotId=this.findFreeSlot(place);
+	  //console.log(Client.restaurantOccupiedSlots)
+	  //console.log(Client.streetOccupiedSlots)
     if(place==1){
     var pos=Client.restaurantSlots.getAt(slotId);
     this.slot=slotId;
@@ -127,6 +123,22 @@ class Client{
       this.slot=slotId;
     }
     this.generateOrder();
+    this.time=0;
+    for(var i=0;i< this.order.dishes.length;i++){
+      if(this.order.dishes.getAt(i).index==0){
+        this.time+=Coffee.coffeeTime;
+      }
+      else if(this.order.dishes.getAt(i).index==1){
+        this.time+=((Pancake.time)*2);
+      }
+      else if(this.order.dishes.getAt(i).index==2){
+        this.time+=Noodles.doneTime;
+      }
+    }
+    console.log(this.time)
+    this.time+=GameManager.levelSeconds[Math.floor(GameManager.scene.playerSettings.level/5)]
+    console.log("cliente "+this.index+": "+this.time)
+    this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
     this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'client'); this.clientImg.setScale(0.05);
   }
 
@@ -143,6 +155,12 @@ class Client{
   exitRestaurant(){
     Client.clientsInRestaurant.remove(this.index);
     this.timeLeft.paused=true;
+    var exp=0;
+    for (var i=0;i< this.dishesFinalPoints.length;i++){
+      exp+=this.dishesFinalPoints[i]*(1/this.dishesFinalPoints.length)
+    }
+    GameManager.scene.playerSettings.experience += exp;
+    GameManager.scene.savePlayerSettings();
     this.clientImg.disableBody(true,true);
     if(this.place==1){
       this.place=0;
@@ -196,11 +214,18 @@ class Order{
     for (var i=0; i< this.numDishes;i++){
       var dish = this.dishes.getAt(i);
       if(received.index==dish.index){
+        this.dishes.getAt(i).pointsTimer.paused=true;
         if(received.index==0){ //coffee
+          var points= this.dishes.getAt(i).points;
           this.dishes.removeAt(i);
           GameManager.levelEarnedCoins+=5;
           console.log(GameManager.levelEarnedCoins)
-          return 0;
+          if(points >100){
+            return 100;
+          }else{
+            return points;
+          }
+          
         }
         else if(received.index==1){ //pancake
           if (received.sauce!=dish.sauce){
@@ -226,8 +251,19 @@ class Order{
           }
           GameManager.levelEarnedCoins+=20;
           console.log(GameManager.levelEarnedCoins)
+          var finalPoints=this.dishes.getAt(i).points-minusPoints
           this.dishes.removeAt(i);
-          return minusPoints;
+          console.log("finalpoints="+finalPoints)
+          if (finalPoints<0){
+            return 0;
+          }
+          else if(points >100){
+            return 100;
+          }
+          else{
+            return minusPoints;
+          }
+          
         }  
         else if(received.index==2){ //noodles
           if (received.sauce!=dish.sauce){
@@ -250,11 +286,20 @@ class Order{
           }
           GameManager.levelEarnedCoins+=30;
           console.log(GameManager.levelEarnedCoins)
+          var finalPoints=this.dishes.getAt(i).points-minusPoints
           this.dishes.removeAt(i);
-          return minusPoints;
+          console.log("finalpoints="+finalPoints)
+          if (finalPoints<0){
+            return 0;
+          }
+          else if(points >100){
+            return 100;
+          }
+          else{
+            return minusPoints;
+          }
         }
       }
-      //comparar toppings
     }
   }
 }
@@ -288,12 +333,7 @@ class Dish{
   }
 
   subtractPoints(){
-    if(this.points>0){
-      this.points-=1;
-    }
-    else{
-      this.pointsTimer.paused=true;
-    }
+    this.points-=1;
   }
 
 /*
@@ -320,4 +360,5 @@ class Dish{
     if(originalSize != this.toppings.length){this.numToppings++; return true;}
     else return false;
   }
+  
 }
