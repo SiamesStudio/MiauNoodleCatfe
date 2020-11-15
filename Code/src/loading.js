@@ -35,19 +35,22 @@ class Loading extends Phaser.Scene {
         var lastAssetLoaded = this.add.text(config.width/2 ,2*config.height/3, 'Asset: ', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
         var progressBox = this.add.rectangle(config.width/2, config.height/2, 3.7*config.width/7, 25, 0xa4b0af).setOrigin(0.5);
         var progressBar = this.add.rectangle(config.width/4, config.height/2, 0, 20, 0xff6699);
+        var loadingText = "Loading... ";
+
+        if(localStorage.getItem('playerSettings') === null){
+            loadingText = "Loading... "
+        }else{
+            this.playerSettings_previo = JSON.parse(localStorage.getItem('playerSettings'))
+            if(this.playerSettings_previo.language){
+                loadingText = "Cargando... "
+            }else{
+                loadingText = "Loading... "
+            }
+        }
 
         this.load.on('progress', function (value) {
             //console.log(value);
-            if(localStorage.getItem('playerSettings') === null){
-                loading_Text.setText("Loading... "+ parseInt(value * 99) +"%")
-            }else{
-                this.playerSettings_previo = JSON.parse(localStorage.getItem('playerSettings'))
-                if(this.playerSettings_previo.language){
-                    loading_Text.setText("Cargando... "+ parseInt(value * 99) +"%")
-                }else{
-                    loading_Text.setText("Loading... "+ parseInt(value * 99) +"%")
-                }
-            }
+            loading_Text.setText(loadingText+ parseInt(value * 99) +"%")
             progressBar.destroy();
             sceneRef.add.rectangle(config.width/4, config.height/2, config.width/2 * value, 20, 0xff6699).setOrigin(0,0.5);
         });
@@ -112,6 +115,9 @@ class Loading extends Phaser.Scene {
         this.load.image('diamond_5','assets/UI/diamond_5.png');
         this.load.image('diamond_6','assets/UI/diamond_6.png');
 
+        //RADIO
+        this.load.image('spr_radioSpin','assets/UI/radio_spin.png');
+
 
         //ANIMATIONS
         this.load.spritesheet('anim_ladle_0', 'assets/animaciones/JWRRSS_ladle_animation_0.png',
@@ -142,14 +148,13 @@ class Loading extends Phaser.Scene {
         {frameWidth: 84,frameHeight: 85}
         );
         
-        //this.load.spritesheet('anim_olla_strainers', 'assets/animaciones/JWRRSS_anim_olla_strainers.png',
-        //{frameWidth: 48,frameHeight: 76}
-        //);
         this.load.multiatlas('assets_atlas', 'assets/assets.json', 'assets');
 
         this.loadCoffeeScreen();
 		this.loadNoodleScreen();
-		this.loadAudio();
+        this.loadAudio();
+        
+        this.load.bitmapFont('BitPap', 'assets/font/CafeFont.png', 'assets/font/CafeFont.xml')
     }
 
     loadCoffeeScreen()
@@ -203,24 +208,24 @@ class Loading extends Phaser.Scene {
 		
 	}
 
-	loadNoodleScreen()
-	{
+    loadNoodleScreen()
+    {
         this.load.path = '';
-		// Animación de hervir: nombrado dependiente de la implementación.
-		// REPEATED?¿ this.load.image('spr_tableCloth','assets/spr_tableCloth.png');
-		this.load.image('spr_bowls','assets/spr_bowls.jpg');
-		this.load.image('spr_ladre','assets/spr_ladre.jpg');
-		// Animación del cucharón echando cada salsa. (3 en total): nombrado dependiente de la implementación
+    	// Animación de hervir: nombrado dependiente de la implementación.
+    	// REPEATED?¿ this.load.image('spr_tableCloth','assets/spr_tableCloth.png');
+    	this.load.image('spr_bowls','assets/spr_bowls.jpg');
+    	this.load.image('spr_ladre','assets/spr_ladre.jpg');
+    	// Animación del cucharón echando cada salsa. (3 en total): nombrado dependiente de la implementación
 
-		/* 
-		Todas las combinaciones de noodles posibles ya cocinados: spr_noodles_Salsa_Topping1..
-		Fondo animado de calle: animación de gente caminando por la calle: nombrado dependiente de la implementación.
-		Fondo animado de calle: animación de la iluminación desde la mañana hasta la noche:
-		nombrado dependiente de la implementación.
-		Animación de parpadeo del cartel de open neón: nombrado dependiente de la implementación
-		*/
-	}
-
+    	/* 
+    	Todas las combinaciones de noodles posibles ya cocinados: spr_noodles_Salsa_Topping1..
+    	Fondo animado de calle: animación de gente caminando por la calle: nombrado dependiente de la implementación.
+    	Fondo animado de calle: animación de la iluminación desde la mañana hasta la noche:
+    	nombrado dependiente de la implementación.
+    	Animación de parpadeo del cartel de open neón: nombrado dependiente de la implementación
+    	*/
+    }
+//
 	loadAudio()
 	{
 		/* Estos no van en esta escena
@@ -251,7 +256,7 @@ class Loading extends Phaser.Scene {
 		this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3');
 		this.load.audio('snd_music_pancake', 'assets/music/snd_music_pancake.mp3');
 		this.load.audio('snd_music_rainyDay', 'assets/music/snd_music_rainyDay.mp3');
-        this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3'); 
+      this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3'); 
         
 		this.load.audio('snd_noodles_cooking', 'assets/sound/snd_noodles_cooking.wav'); //Used
 		this.load.audio('snd_pancake_cooking', 'assets/sound/snd_pancake_cooking.wav'); //Used
