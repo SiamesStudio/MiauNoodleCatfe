@@ -34,7 +34,7 @@ class Loading extends Phaser.Scene {
         var loading_Text = this.add.text(config.width/2 ,config.height/3, 'Loading... 0%', { font: "30px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
         var lastAssetLoaded = this.add.text(config.width/2 ,2*config.height/3, 'Asset: ', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
         var progressBox = this.add.rectangle(config.width/2, config.height/2, 3.7*config.width/7, 25, 0xa4b0af).setOrigin(0.5);
-        var progressBar = this.add.rectangle(config.width/4, config.height/2, 0, 20, 0xff6699);
+        var progressBar = this.add.rectangle(config.width/4, config.height/2, 0, 20, 0x9e616e);
         var loadingText = "Loading... ";
 
         if(localStorage.getItem('playerSettings') === null){
@@ -52,7 +52,7 @@ class Loading extends Phaser.Scene {
             //console.log(value);
             loading_Text.setText(loadingText+ parseInt(value * 99) +"%")
             progressBar.destroy();
-            sceneRef.add.rectangle(config.width/4, config.height/2, config.width/2 * value, 20, 0xff6699).setOrigin(0,0.5);
+            sceneRef.add.rectangle(config.width/4, config.height/2, config.width/2 * value, 20, 0x9e616e).setOrigin(0,0.5);
         });
                     
         this.load.on('fileprogress', function (file) {
@@ -155,6 +155,43 @@ class Loading extends Phaser.Scene {
         this.loadAudio();
         
         this.load.bitmapFont('BitPap', 'assets/font/CafeFont.png', 'assets/font/CafeFont.xml')
+
+        //UI_TEMPORAL
+        this.load.image('spr_borde_pantalla','assets/UI/UI_temporal/borde de pantalla.png');
+        this.load.image('spr_cristal_volumen_cancion','assets/UI/UI_temporal/cristal del volumen y la cancion.png');
+        this.load.image('spr_cristal_canciones','assets/UI/UI_temporal/cristal para canciones.png');
+        this.load.image('spr_espaniol','assets/UI/UI_temporal/espaniol.png');
+        this.load.image('spr_ingles','assets/UI/UI_temporal/ingles.png');
+        this.load.image('spr_palito_cancion_volumen','assets/UI/UI_temporal/palito de volumen y canciom.png');
+        this.load.image('spr_pantalla_canciones','assets/UI/UI_temporal/pantalla para canciones.png');
+        this.load.image('spr_indicador_cancion','assets/UI/UI_temporal/por que canciuon voy.png');
+        this.load.image('spr_pantalla_volumen_cancion','assets/UI/UI_temporal/pantalla de volumen y pasar cancion.png');
+        this.load.image('spr_porcentaje_volumen_pantalla_juego','assets/UI/UI_temporal/porcentaje de volumen pantalla de juego.png');
+        this.load.image('spr_porcentaje_volumen_pantalla_juego_2','assets/UI/UI_temporal/porcentaje volumen para pantalla de juego.png');
+        this.load.image('spr_porcentaje_volumen','assets/UI/UI_temporal/porcentaje de volumen.png');
+        this.load.image('spr_back','assets/UI/UI_temporal/spr_back.png');
+        this.load.image('spr_bck_mainMenu','assets/UI/UI_temporal/spr_bck_mainMenu.png');
+        this.load.image('spr_closeWindow','assets/UI/UI_temporal/spr_closeWindow.png');
+        this.load.image('spr_radio_zoomed','assets/UI/UI_temporal/spr_radio_zoomed.png');
+        this.load.image('spr_ui_arrow','assets/UI/UI_temporal/spr_ui_arrow.png');
+        this.load.image('spr_ui_chefLvl','assets/UI/UI_temporal/spr_ui_chefLvl.png');
+        this.load.image('spr_ui_icon_coin','assets/UI/UI_temporal/spr_ui_icon_coin.png');
+        this.load.image('spr_ui_icon_gem','assets/UI/UI_temporal/spr_ui_icon_gem.png');
+        this.load.image('spr_ui_icon_happy','assets/UI/UI_temporal/spr_ui_icon_happy.png');
+        this.load.image('spr_ui_icon_meh','assets/UI/UI_temporal/spr_ui_icon_meh.png');
+        this.load.image('spr_ui_icon_no_volumen','assets/UI/UI_temporal/spr_ui_icon_no_volumen.png');
+        this.load.image('spr_ui_icon_reload','assets/UI/UI_temporal/spr_ui_icon_reload.png');
+        this.load.image('spr_ui_icon_sad','assets/UI/UI_temporal/spr_ui_icon_sad.png');
+        this.load.image('spr_ui_icon_shop','assets/UI/UI_temporal/spr_ui_icon_shop.png');
+        this.load.image('spr_ui_icon_volume','assets/UI/UI_temporal/spr_ui_icon_volume.png');
+        this.load.image('spr_ui_scrollBar','assets/UI/UI_temporal/spr_ui_scrollBar.png');
+        this.load.image('spr_ui_scrollBar_bckg','assets/UI/UI_temporal/spr_ui_scrollBar_bckg.png');
+        this.load.image('spr_ui_slider','assets/UI/UI_temporal/spr_ui_slider.png');
+        this.load.image('spr_ui_slider2','assets/UI/UI_temporal/spr_ui_slider2.png');
+        this.load.image('spr_ui_volumen','assets/UI/UI_temporal/spr_ui_volumen.png');
+        this.load.image('spr_radio_zoomed_vol_song','assets/UI/UI_temporal/spr_radio_zoomed_vol_song.png');
+
+
     }
 
     loadCoffeeScreen()
@@ -226,7 +263,7 @@ class Loading extends Phaser.Scene {
 		this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3');
 		this.load.audio('snd_music_pancake', 'assets/music/snd_music_pancake.mp3');
 		this.load.audio('snd_music_rainyDay', 'assets/music/snd_music_rainyDay.mp3');
-      this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3'); 
+        this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3'); 
         
 		this.load.audio('snd_noodles_cooking', 'assets/sound/snd_noodles_cooking.wav'); //Used
 		this.load.audio('snd_pancake_cooking', 'assets/sound/snd_pancake_cooking.wav'); //Used
@@ -235,7 +272,8 @@ class Loading extends Phaser.Scene {
 		this.load.audio('snd_trash', 'assets/sound/snd_trash.wav'); //Used
 		this.load.audio('snd_ui_back', 'assets/sound/snd_ui_back.wav');
 		this.load.audio('snd_ui_pop', 'assets/sound/snd_ui_pop.wav');
-		this.load.audio('snd_victory', 'assets/sound/snd_victory.wav');
+        this.load.audio('snd_victory', 'assets/sound/snd_victory.wav');
+        this.load.audio('snd_radio_interference', 'assets/sound/snd_radio_interference.mp3');
     }
     
 

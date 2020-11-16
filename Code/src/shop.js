@@ -102,7 +102,10 @@ class Shop extends Phaser.Scene {
 
         this.confirmationText = this.add.text(config.width/2, config.height/2, '', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false);
         this.confirmationButton = this.add.image(2.4*config.width/5, 2*config.height/3,'banner_light').setScale(0.5).setVisible(false).setTint(0x32a852).setOrigin(1,0.5)
+        this.yes_Text = this.add.text(1.85*config.width/5, 2*config.height/3, this.gameStrings.Shop_yes, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false);
+        
         this.negationButton = this.add.image(2.6*config.width/5, 2*config.height/3,'banner_light').setScale(0.5).setVisible(false).setTint(0xeb4034).setOrigin(0,0.5)
+        this.no_Text = this.add.text(3.15*config.width/5, 2*config.height/3, this.gameStrings.Shop_no, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false);
         this.number = 0
 
         this.confirmationButton.setInteractive().on('pointerdown', () => {this.buy_Slot(this.number);})
@@ -163,6 +166,8 @@ class Shop extends Phaser.Scene {
         this.crossButton.setVisible(true)
         this.confirmationText.setVisible(true)
         this.confirmationText.setText(this.gameStrings.Shop_buyConfirmation)
+        this.no_Text.setVisible(true)
+        this.yes_Text.setVisible(true)
         this.confirmationButton.setVisible(true)
         this.negationButton.setVisible(true)
         this.disableAllButtons()
@@ -172,6 +177,8 @@ class Shop extends Phaser.Scene {
     buy_Slot(number){
         this.negationButton.setVisible(false)
         this.confirmationButton.setVisible(false)
+        this.no_Text.setVisible(false)
+        this.yes_Text.setVisible(false)
         if(this.CoinsSelected){
             this.playerSettings.coins += number*100
             this.savePlayerSettings()
@@ -210,6 +217,8 @@ class Shop extends Phaser.Scene {
         this.confirmationText.setVisible(false)
         this.confirmationButton.setVisible(false)
         this.negationButton.setVisible(false)
+        this.no_Text.setVisible(false)
+        this.yes_Text.setVisible(false)
     }
 
     disableAllButtons(){

@@ -15,32 +15,6 @@ class Inicio extends Phaser.Scene {
     }
 
     create(){
-    
-        //Anims
-        //this.anims.create({
-        //    key: 'ladle_0',
-        //    frames: this.anims.generateFrameNumbers('anim_ladle_0', { start: 0, end: 11 }),
-        //    frameRate: 10,
-        //    repeat: -1
-        //});
-        //this.anims.create({
-        //    key: 'ladle_1',
-        //    frames: this.anims.generateFrameNumbers('anim_ladle_1', { start: 0, end: 11 }),
-        //    frameRate: 10,
-        //    repeat: -1
-        //});
-        //this.anims.create({
-        //    key: 'ladle_2',
-        //    frames: this.anims.generateFrameNumbers('anim_ladle_2', { start: 0, end: 11 }),
-        //    frameRate: 10,
-        //    repeat: -1
-        //});
-        //this.anims.create({
-        //    key: 'ladle_3',
-        //    frames: this.anims.generateFrameNumbers('anim_ladle_3', { start: 0, end: 11 }),
-        //    frameRate: 10,
-        //    repeat: -1
-        //});
 
         
         //Inicio
@@ -71,9 +45,6 @@ class Inicio extends Phaser.Scene {
         
 
         contactButton.setInteractive().on('pointerdown', () => {
-            //var url = 'https://siamesstudio.github.io/'
-            //var s = window.open(url, '_blank');
-            //window.location.href = url;
             this.music.stop();
             this.scene.start("Contacto", {playerInfo: this.playerSettings });
         })
@@ -88,7 +59,7 @@ class Inicio extends Phaser.Scene {
 
         setTimeout(function(){
             scene.cameras.main.fadeOut(1000);
-             }, 2000); //2000
+             }, 2000); 
              
         
     }

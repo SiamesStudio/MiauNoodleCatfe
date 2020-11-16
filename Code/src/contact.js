@@ -50,7 +50,14 @@ class Contact extends Phaser.Scene {
         
 
 
+        this.add.image(config.width/2,config.height/2,'spr_radio_zoomed').setOrigin(0.5)
+        this.interferenceSound = this.sound.add('snd_radio_interference')
+        this.interferenceSound.play()
+        this.interferenceVolume = 0.9
+        this.interferenceSound.setVolume(this.interferenceVolume)
+        this.interferenceSound.setLoop(true)
 
+        
 
         this.songs = new Phaser.Structs.List();
         this.songs.add(this.sound.add('snd_music_biscuit'));
@@ -71,89 +78,54 @@ class Contact extends Phaser.Scene {
         *
         */
         this.globalIndex = 0;
-        this.volume = 1;
+        this.volume = 0.9;
 //
         this.currentSong = this.songs.getAt(this.globalIndex)
         this.currentSong.play()
-        this.currentSong.setVolume(this.volume / 100)
+        this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
         this.currentSong.setLoop(true)
-//
-        this.radioNextButton = this.add.sprite(2*config.width/3, 2*config.height/3, 'banner_light').setScale(0.5).setTint(0xb0b0b0)
-        this.radioPreviousButton = this.add.sprite(config.width/3, 2*config.height/3, 'banner_light').setScale(0.5)
+
+        this.radioFrecuencyBox_positionX = 2.16*config.width/4
+        this.radioFrecuencyBox_positionY = 4.03*config.height/6
+        this.radioFrecuencyBox = this.add.sprite(this.radioFrecuencyBox_positionX, this.radioFrecuencyBox_positionY, 'spr_pantalla_volumen_cancion').setOrigin(0.5)
+        this.radioFrecuencyBox_margin = this.add.sprite(this.radioFrecuencyBox_positionX, this.radioFrecuencyBox_positionY, 'spr_borde_pantalla').setOrigin(0.5)
+
+        this.radioFrecuencyBar = this.add.sprite((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2), this.radioFrecuencyBox_positionY, 'spr_indicador_cancion').setOrigin(0,0.5);
+
+        this.radioFrecuencyBar0 = this.add.sprite((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.49), this.radioFrecuencyBox_positionY, 'spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBar1 = this.add.sprite((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.82), this.radioFrecuencyBox_positionY, 'spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBar2 = this.add.sprite((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.16), this.radioFrecuencyBox_positionY, 'spr_palito_cancion_volumen').setOrigin(0.5);
         
-        //this.radioVolumeUpButton = this.add.sprite(2*config.width/3, config.height/3, 'banner_light').setScale(0.5).setTint(0xb0b0b0)
-        //this.radioVolumeDownButton = this.add.sprite(config.width/3, config.height/3, 'banner_light').setScale(0.5)
-//
-        this.radioFrecuencyBox = this.add.rectangle(0.925*config.width/4, config.height/4, 3.7*config.width/7, 25, 0xa4b0af).setOrigin(0,0.5);
-        this.radioFrecuencyBar = this.add.rectangle(0.925*config.width/4, config.height/4, 3, 21, 0xff6699).setOrigin(0,0.5);
-//
-        this.radioVolumeBox2 = this.add.rectangle(7*config.width/8, config.height/3, 25, config.width/7, 0xa4b0af).setOrigin(0.5,1);
-        this.radioVolumeBar2 = this.add.rectangle(7*config.width/8, config.height/3 - 3, 21, 3, 0xff6699).setOrigin(0.5,1);
-        this.radioVolumeBar2.y = (config.height/3 - 3) - (this.volume / 100) * (0.8*config.width/7)
         
-        this.radioSongPanel = this.add.rectangle(0.925*config.width/4, config.height/2, 3.7*config.width/7, 25, 0xa4b0af).setOrigin(0,0.5);
-        this.radioSongText = this.add.text(0.925*config.width/4, config.height/2, this.titleSongs.getAt(this.globalIndex), { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0,0.5);
-        this.radioSongTitleStartPosition = 0.925*config.width/4 - this.radioSongText.width
+//
+        this.radioVolumeBox_positionX = 2.16*config.width/4
+        this.radioVolumeBox_positionY = 4.55*config.height/6
+        this.radioVolumeBox2 = this.add.sprite(this.radioVolumeBox_positionX, this.radioVolumeBox_positionY,'spr_pantalla_volumen_cancion').setOrigin(0.5);
+        this.radioVolumeBar2 = this.add.rectangle((this.radioVolumeBox_positionX - this.radioVolumeBox2.width/2), this.radioVolumeBox_positionY + 1, (this.volume * this.radioVolumeBox2.width), 6, 0x9e616e).setOrigin(0,0.5);
+        
+        for(var i = 1; i<10; i++){
+                this.add.sprite((this.radioVolumeBox_positionX - this.radioVolumeBox2.width/2) + (this.radioVolumeBox2.width * 0.1 * i ), this.radioVolumeBox_positionY, 'spr_palito_cancion_volumen').setOrigin(0.5);
+        }
+
+        
+
+        this.radioSongText = this.add.text(1.55*config.width/4, 2.95*config.height/5, this.titleSongs.getAt(this.globalIndex), { font: "8px Arial", fill: "#000000", align: "center" }).setOrigin(0,0.5);
+        this.radioSongTitleStartPosition = 1.55*config.width/4 - this.radioSongText.width
+        this.radioSongPanelCrystal = this.add.sprite(1.55*config.width/4, 2.95*config.height/5,'spr_cristal_canciones').setOrigin(0,0.5)
         
 //
         this.radioSongText.x = this.radioSongTitleStartPosition
         console.log(this.titleSongs.getAt(this.globalIndex))
-//
-        this.radioNextButton.setInteractive().on('pointerdown', () => {
-                this.currentSong.stop()
-                this.globalIndex = (this.globalIndex + 1) % this.songs.length;
-                this.currentSong = this.songs.getAt(this.globalIndex)
-                this.currentSong.play()
-                this.currentSong.setVolume(this.volume)
-                this.currentSong.setLoop(true)
-//
-                this.radioSongText.x = this.radioSongTitleStartPosition
-                this.radioSongText.setText(this.titleSongs.getAt(this.globalIndex))
-        })
-//
-        this.radioPreviousButton.setInteractive().on('pointerdown', () => {
-                this.currentSong.stop()
-                this.globalIndex = this.globalIndex - 1 
-                if(this.globalIndex<0) this.globalIndex = this.songs.length -1
-                this.currentSong = this.songs.getAt(this.globalIndex)
-                this.currentSong.play()
-                this.currentSong.setVolume(this.volume)
-                this.currentSong.setLoop(true)
-//
-                this.radioSongText.x = this.radioSongTitleStartPosition
-                this.radioSongText.setText(this.titleSongs.getAt(this.globalIndex))
-        })
-        
-        //this.radioVolumeUpButton.setInteractive().on('pointerdown', () => {
-        //        if(this.volume <100){
-        //                this.volume += 10
-        //        }
-        //        this.currentSong.setVolume(this.volume / 100)
-        //        this.radioVolumeBar.destroy()
-        //        this.radioVolumeBar = this.add.rectangle(config.width/8, config.height/3 - 3, 21, 0.9*config.width/7 * this.volume / 100, 0xff6699).setOrigin(0.5,1);
-        //        //this.radioVolumeBar2.y = (config.height/3 - 3) - (this.volume / 100) * (0.8*config.width/7) ; //punto de inicio - volume*altura final
-        //})
-////
-        //this.radioVolumeDownButton.setInteractive().on('pointerdown', () => {
-        //        if(this.volume > 0){
-        //                this.volume -= 10
-        //        }
-        //        this.currentSong.setVolume(this.volume / 100)
-        //        this.radioVolumeBar.destroy()
-        //        this.radioVolumeBar = this.add.rectangle(config.width/8, config.height/3 - 3, 21, 0.9*config.width/7 * this.volume / 100, 0xff6699).setOrigin(0.5,1);
-        //        //this.radioVolumeBar2.y = (config.height/3 - 3) - (this.volume / 100) * (0.8*config.width/7) ; //punto de inicio - volume*altura final
-        //})
-//
 
 
-
+//----------------------------------------------------------------------------------------------------
 //FRECUENCIA
 
         this.vectorA = new Phaser.Math.Vector2(1,0)
         this.vectorB = new Phaser.Math.Vector2(1,0)
-        this.radioFrecSpinPositionX = 8*config.width/10
-        this.radioFrecSpinPositionY = 8*config.height/10
-        this.radioFrecSpin = this.add.sprite(this.radioFrecSpinPositionX, this.radioFrecSpinPositionY,'spr_radioSpin').setOrigin(0.5)
+        this.radioFrecSpinPositionX = 3.58*config.width/10
+        this.radioFrecSpinPositionY = 7.5*config.height/10
+        this.radioFrecSpin = this.add.sprite(this.radioFrecSpinPositionX, this.radioFrecSpinPositionY,'spr_radio_zoomed_vol_song').setOrigin(0.5)
         this.radioFrecSpin.setInteractive({ draggable: true })
         var currentScene = this;
 
@@ -177,16 +149,17 @@ class Contact extends Phaser.Scene {
         })
 
 
-
-        //VOLUMEN
-        this.radioVolumeSpinPositionX = 4*config.width/10
-        this.radioVolumeSpinPositionY = 8*config.height/10
-        this.radioVolumeSpin = this.add.sprite(this.radioVolumeSpinPositionX, this.radioVolumeSpinPositionY,'spr_radioSpin').setOrigin(0.5).setTint(0xe9e01c)
+//----------------------------------------------------------------------------------------------------
+//VOLUMEN
+        this.radioVolumeSpinPositionX = 7.2*config.width/10 
+        this.radioVolumeSpinPositionY = 7.5*config.height/10
+        this.radioVolumeSpin = this.add.sprite(this.radioVolumeSpinPositionX, this.radioVolumeSpinPositionY,'spr_radio_zoomed_vol_song').setOrigin(0.5)
+        this.radioVolumeSpin.angle -=5
         this.radioVolumeSpin.setInteractive({ draggable: true })
 
 
         this.radioVolumeSpin.on('dragstart', function(pointer,dragX,dragY){
-                console.log("vecToPointer : "+ dragX, dragY)
+                //console.log("vecToPointer : "+ dragX, dragY)
                 this.modB = Math.sqrt(dragX*dragX + dragY*dragY)
                 this.vectorB = new Phaser.Math.Vector2(dragX/this.modB , dragY/this.modB)
                 this.currentAngle = 180 * (this.vectorB.angle()) / Math.PI
@@ -207,13 +180,16 @@ class Contact extends Phaser.Scene {
         
         //BACK 
         this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'spr_back').setScale(0.08)
-        this.backButton.setInteractive().on('pointerdown', () => {this.scene.start("Inicio", { playerInfo: this.playerSettings });})
+        this.backButton.setInteractive().on('pointerdown', () => {
+                this.currentSong.stop()
+                this.interferenceSound.stop()
+                this.scene.start("Inicio", { playerInfo: this.playerSettings });})
 
     }
 
     update(){
         this.radioSongText.x +=0.5
-        if(this.radioSongText.x > (0.925*config.width/4 + 3.7*config.width/7) ){//Posicion inicial + ancho del rectangulo
+        if(this.radioSongText.x > (1.55*config.width/4 + this.radioSongPanelCrystal.width) ){//Posicion inicial + ancho del rectangulo
                 this.radioSongText.x = this.radioSongTitleStartPosition //Se reinicia la posicion
         } 
     }
@@ -226,8 +202,10 @@ class Contact extends Phaser.Scene {
             this.angle = this.radioFrecSpin.angle
         }
         this.frec = (this.angle - 0) / (360 - 0)
-        console.log(this.frec)
-        this.radioFrecuencyBar.x = 0.925*config.width/4 + (this.frec * (3.7*config.width/7 - 3))
+        //console.log(this.frec)
+        this.radioFrecuencyBar.x = (this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.frec * (this.radioFrecuencyBox.width))
+
+        this.changeSong(this.frec);
     }
 
     changeRadioVolume(){
@@ -238,10 +216,53 @@ class Contact extends Phaser.Scene {
             this.angle = this.radioVolumeSpin.angle
         }
         this.vol = (this.angle - 0) / (360 - 0)
-        console.log(this.vol)
-        this.radioVolumeBar2.y = config.height/3 - (this.vol * (config.width/7 - 3))
+        //console.log(this.vol)
+        //this.radioVolumeBar2.destroy()
         this.volume = this.vol
+        this.radioVolumeBar2.width = this.volume * this.radioVolumeBox2.width
+        //console.log("Volume: "+ this.volume * (1-this.interferenceVolume))
+        this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+    }
+
+    changeSong(number){
+
+        if(number < 0.33 && this.globalIndex != 0){
+                this.globalIndex = 0
+                //console.log("cambio a frec 0")
+                this.playNewSong()
+        }
+        if(number > 0.33 && number < 0.66 && this.globalIndex != 1){
+                this.globalIndex = 1
+                //console.log("cambio a frec 1")
+                this.playNewSong()
+        }
+        if(number > 0.66 && this.globalIndex !=2){
+                this.globalIndex = 2
+                //console.log("cambio a frec 2")
+                this.playNewSong()
+        }
+
+        if( (number < 0.1) || (number > 0.25 && number < 0.45) || (number > 0.55 && number < 0.75) || (number > 0.87 && number < 1)){
+                this.interferenceSound.setVolume(0.9)
+                this.interferenceVolume = 0.9
+                this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+        }else{
+                this.interferenceSound.setVolume(0.05)
+                this.interferenceVolume = 0.05
+                this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+        }
+    }
+
+    playNewSong(){
+        this.currentSong.stop()
+
+        this.currentSong = this.songs.getAt(this.globalIndex)
+        this.currentSong.play()
         this.currentSong.setVolume(this.volume)
+        this.currentSong.setLoop(true)
+//
+        this.radioSongText.x = this.radioSongTitleStartPosition
+        this.radioSongText.setText(this.titleSongs.getAt(this.globalIndex))
     }
 
 }
