@@ -149,6 +149,12 @@ class Loading extends Phaser.Scene {
         );
         
         this.load.multiatlas('assets_atlas', 'assets/assets.json', 'assets');
+        this.load.image('spr_cristal_canciones','assets/UI/UI_temporal/spr_cristal_canciones.png');
+        this.load.image('bg_radio_zoomed','assets/bg_radio_zoomed.png');
+        this.load.image('bg_maintitle_on','assets/bg_maintitle_on.png');
+        this.load.image('bg_maintitle_off','assets/bg_maintitle_off.png');
+        this.load.image('bg_maintitle_light','assets/bg_maintitle_light.png');
+
 
         this.loadCoffeeScreen();
 		this.loadNoodleScreen();
@@ -157,39 +163,39 @@ class Loading extends Phaser.Scene {
         this.load.bitmapFont('BitPap', 'assets/font/CafeFont.png', 'assets/font/CafeFont.xml')
 
         //UI_TEMPORAL
-        this.load.image('spr_borde_pantalla','assets/UI/UI_temporal/borde de pantalla.png');
-        this.load.image('spr_cristal_volumen_cancion','assets/UI/UI_temporal/cristal del volumen y la cancion.png');
-        this.load.image('spr_cristal_canciones','assets/UI/UI_temporal/cristal para canciones.png');
-        this.load.image('spr_espaniol','assets/UI/UI_temporal/espaniol.png');
-        this.load.image('spr_ingles','assets/UI/UI_temporal/ingles.png');
-        this.load.image('spr_palito_cancion_volumen','assets/UI/UI_temporal/palito de volumen y canciom.png');
-        this.load.image('spr_pantalla_canciones','assets/UI/UI_temporal/pantalla para canciones.png');
-        this.load.image('spr_indicador_cancion','assets/UI/UI_temporal/por que canciuon voy.png');
-        this.load.image('spr_pantalla_volumen_cancion','assets/UI/UI_temporal/pantalla de volumen y pasar cancion.png');
-        this.load.image('spr_porcentaje_volumen_pantalla_juego','assets/UI/UI_temporal/porcentaje de volumen pantalla de juego.png');
-        this.load.image('spr_porcentaje_volumen_pantalla_juego_2','assets/UI/UI_temporal/porcentaje volumen para pantalla de juego.png');
-        this.load.image('spr_porcentaje_volumen','assets/UI/UI_temporal/porcentaje de volumen.png');
-        this.load.image('spr_back','assets/UI/UI_temporal/spr_back.png');
-        this.load.image('spr_bck_mainMenu','assets/UI/UI_temporal/spr_bck_mainMenu.png');
-        this.load.image('spr_closeWindow','assets/UI/UI_temporal/spr_closeWindow.png');
-        this.load.image('spr_radio_zoomed','assets/UI/UI_temporal/spr_radio_zoomed.png');
-        this.load.image('spr_ui_arrow','assets/UI/UI_temporal/spr_ui_arrow.png');
-        this.load.image('spr_ui_chefLvl','assets/UI/UI_temporal/spr_ui_chefLvl.png');
-        this.load.image('spr_ui_icon_coin','assets/UI/UI_temporal/spr_ui_icon_coin.png');
-        this.load.image('spr_ui_icon_gem','assets/UI/UI_temporal/spr_ui_icon_gem.png');
-        this.load.image('spr_ui_icon_happy','assets/UI/UI_temporal/spr_ui_icon_happy.png');
-        this.load.image('spr_ui_icon_meh','assets/UI/UI_temporal/spr_ui_icon_meh.png');
-        this.load.image('spr_ui_icon_no_volumen','assets/UI/UI_temporal/spr_ui_icon_no_volumen.png');
-        this.load.image('spr_ui_icon_reload','assets/UI/UI_temporal/spr_ui_icon_reload.png');
-        this.load.image('spr_ui_icon_sad','assets/UI/UI_temporal/spr_ui_icon_sad.png');
-        this.load.image('spr_ui_icon_shop','assets/UI/UI_temporal/spr_ui_icon_shop.png');
-        this.load.image('spr_ui_icon_volume','assets/UI/UI_temporal/spr_ui_icon_volume.png');
-        this.load.image('spr_ui_scrollBar','assets/UI/UI_temporal/spr_ui_scrollBar.png');
-        this.load.image('spr_ui_scrollBar_bckg','assets/UI/UI_temporal/spr_ui_scrollBar_bckg.png');
-        this.load.image('spr_ui_slider','assets/UI/UI_temporal/spr_ui_slider.png');
-        this.load.image('spr_ui_slider2','assets/UI/UI_temporal/spr_ui_slider2.png');
-        this.load.image('spr_ui_volumen','assets/UI/UI_temporal/spr_ui_volumen.png');
-        this.load.image('spr_radio_zoomed_vol_song','assets/UI/UI_temporal/spr_radio_zoomed_vol_song.png');
+        //this.load.image('spr_borde_pantalla','assets/UI/UI_temporal/borde de pantalla.png');
+        //this.load.image('spr_cristal_volumen_cancion','assets/UI/UI_temporal/cristal del volumen y la cancion.png');
+        //this.load.image('spr_cristal_canciones','assets/UI/UI_temporal/cristal para canciones.png');
+        //this.load.image('spr_espaniol','assets/UI/UI_temporal/espaniol.png');
+        //this.load.image('spr_ingles','assets/UI/UI_temporal/ingles.png');
+        //this.load.image('spr_palito_cancion_volumen','assets/UI/UI_temporal/palito de volumen y canciom.png');
+        //this.load.image('spr_pantalla_canciones','assets/UI/UI_temporal/pantalla para canciones.png');
+        //this.load.image('spr_indicador_cancion','assets/UI/UI_temporal/por que canciuon voy.png');
+        //this.load.image('spr_pantalla_volumen_cancion','assets/UI/UI_temporal/pantalla de volumen y pasar cancion.png');
+        //this.load.image('spr_porcentaje_volumen_pantalla_juego','assets/UI/UI_temporal/porcentaje de volumen pantalla de juego.png');
+        //this.load.image('spr_porcentaje_volumen_pantalla_juego_2','assets/UI/UI_temporal/porcentaje volumen para pantalla de juego.png');
+        //this.load.image('spr_porcentaje_volumen','assets/UI/UI_temporal/porcentaje de volumen.png');
+        //this.load.image('spr_back','assets/UI/UI_temporal/spr_back.png');
+        //this.load.image('spr_bck_mainMenu','assets/UI/UI_temporal/spr_bck_mainMenu.png');
+        //this.load.image('spr_closeWindow','assets/UI/UI_temporal/spr_closeWindow.png');
+        
+        //this.load.image('spr_ui_arrow','assets/UI/UI_temporal/spr_ui_arrow.png');
+        //this.load.image('spr_ui_chefLvl','assets/UI/UI_temporal/spr_ui_chefLvl.png');
+        //this.load.image('spr_ui_icon_coin','assets/UI/UI_temporal/spr_ui_icon_coin.png');
+        //this.load.image('spr_ui_icon_gem','assets/UI/UI_temporal/spr_ui_icon_gem.png');
+        //this.load.image('spr_ui_icon_happy','assets/UI/UI_temporal/spr_ui_icon_happy.png');
+        //this.load.image('spr_ui_icon_meh','assets/UI/UI_temporal/spr_ui_icon_meh.png');
+        //this.load.image('spr_ui_icon_no_volumen','assets/UI/UI_temporal/spr_ui_icon_no_volumen.png');
+        //this.load.image('spr_ui_icon_reload','assets/UI/UI_temporal/spr_ui_icon_reload.png');
+        //this.load.image('spr_ui_icon_sad','assets/UI/UI_temporal/spr_ui_icon_sad.png');
+        //this.load.image('spr_ui_icon_shop','assets/UI/UI_temporal/spr_ui_icon_shop.png');
+        //this.load.image('spr_ui_icon_volume','assets/UI/UI_temporal/spr_ui_icon_volume.png');
+        //this.load.image('spr_ui_scrollBar','assets/UI/UI_temporal/spr_ui_scrollBar.png');
+        //this.load.image('spr_ui_scrollBar_bckg','assets/UI/UI_temporal/spr_ui_scrollBar_bckg.png');
+        //this.load.image('spr_ui_slider','assets/UI/UI_temporal/spr_ui_slider.png');
+        //this.load.image('spr_ui_slider2','assets/UI/UI_temporal/spr_ui_slider2.png');
+        //this.load.image('spr_ui_volumen','assets/UI/UI_temporal/spr_ui_volumen.png');
+        //this.load.image('spr_radio_zoomed_vol_song','assets/UI/UI_temporal/spr_radio_zoomed_vol_song.png');
 
 
     }
@@ -274,6 +280,7 @@ class Loading extends Phaser.Scene {
 		this.load.audio('snd_ui_pop', 'assets/sound/snd_ui_pop.wav');
         this.load.audio('snd_victory', 'assets/sound/snd_victory.wav');
         this.load.audio('snd_radio_interference', 'assets/sound/snd_radio_interference.mp3');
+        this.load.audio('snd_opening_door', 'assets/sound/snd_opening_door.mp3');
     }
     
 
@@ -295,8 +302,26 @@ class Loading extends Phaser.Scene {
             this.playerSettings = JSON.parse(localStorage.getItem('playerSettings'))
         }
 
+        var logo_2_seconds = this.add.image(config.width/2,config.height/2,'spr_logoTeam_Inicio');
+        var widthRatio = config.width / logo_2_seconds.displayWidth
+        logo_2_seconds.displayWidth = config.width;
+        logo_2_seconds.displayHeight = logo_2_seconds.displayHeight * widthRatio
+        var currentScene = this;
 
-        this.scene.start("Inicio",{playerInfo: this.playerSettings})
+        this.cameras.main.once('camerafadeoutcomplete', function (camera) {
+            //logo_2_seconds.destroy()
+            camera.fadeIn(1000);
+            //playButton.setInteractive()
+            //contactButton.setInteractive()   
+            currentScene.scene.start("Inicio",{playerInfo: currentScene.playerSettings})         
+        });
+
+        setTimeout(function(){
+            currentScene.cameras.main.fadeOut(1000);
+             }, 2000); 
+
+
+        
         
     }
 
