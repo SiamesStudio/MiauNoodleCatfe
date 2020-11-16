@@ -1,6 +1,6 @@
 class tutorial extends Phaser.Scene {
 	constructor() {
-		super("Tutorial");
+		super("tutorial");
 	}
 
 	preload()
@@ -46,10 +46,10 @@ class tutorial extends Phaser.Scene {
 		var posx= config.width*0.86;
 		var posy= config.height*0.5;
 
-		var coffeeMachineImg = this.add.image(posx, posy, 'spr_coffeeMachine_1'); 
+		var coffeeMachineImg = this.add.image(posx, posy, 'assets_atlas','spr_coffeeMachine_0'); 
 
-		this.add.image(config.width*0.83,config.height*0.24,'spr_radio');
-		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.915, 'spr_glasses');
+		this.add.image(config.width*0.83,config.height*0.24,'assets_atlas','spr_radio');
+		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.915, 'assets_atlas', 'spr_glasses');
 
 		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, 0);
 		GameManager.coffeeMachine = coffeeMachine;
@@ -73,19 +73,19 @@ class tutorial extends Phaser.Scene {
         	switch(i)
         	{
         		case 0:
-        		    tableclothImg = this.add.image(config.width*0.194, config.height*0.575, tableclothKey);
+        		    tableclothImg = this.add.image(config.width*0.194, config.height*0.575,'assets_atlas', tableclothKey);
         		break;
 
         		case 1:
-        			tableclothImg = this.add.image(config.width*0.3405, config.height*0.575, tableclothKey);
+        			tableclothImg = this.add.image(config.width*0.3405, config.height*0.575,'assets_atlas', tableclothKey);
         		break;
 
         		case 2:
-        			tableclothImg = this.add.image(config.width*0.125, config.height*0.714, tableclothKey);	
+        			tableclothImg = this.add.image(config.width*0.125, config.height*0.714,'assets_atlas', tableclothKey);	
         		break;
 
         		case 3:
-        			tableclothImg = this.add.image(config.width*0.297, config.height*0.714, tableclothKey);
+        			tableclothImg = this.add.image(config.width*0.297, config.height*0.714,'assets_atlas', tableclothKey);
         		break;
 
         	}
@@ -95,13 +95,13 @@ class tutorial extends Phaser.Scene {
         }
 
         var tableclothsPancake = new TableclothsPancake(tableclothImgList, 0);
-        var dishPileImg = this.add.image(config.width*0.7, config.height*0.92,'spr_dishes');
+        var dishPileImg = this.add.image(config.width*0.7, config.height*0.92,'assets_atlas', 'spr_dishes');
         TutorialManager.dishPileImg = dishPileImg;  
         GameManager.tableclothsPancake = tableclothsPancake; 
        
 		var pancakeSpawnerImg = this.add.image(config.width*0.85, config.height*0.91, 'spr_pancake_bottle');
         TutorialManager.pancakeBottleImg = pancakeSpawnerImg;
-        var griddleImg = this.add.image(config.width*0.56, config.height*0.625,'spr_griddle');
+        var griddleImg = this.add.image(config.width*0.56, config.height*0.625,'assets_atlas', 'spr_griddle');
         var griddle = new Griddle(griddleImg, 0);
         GameManager.griddle = griddle;
 
@@ -111,29 +111,29 @@ class tutorial extends Phaser.Scene {
         	switch(i)
         	{
         		case 0:
-        		    slotGriddleImg = this.add.image(config.width*0.51, config.height*0.535, 'spr_griddle_0');
+        		    slotGriddleImg = this.add.image(config.width*0.51, config.height*0.535,'assets_atlas', 'spr_griddle_0');
         		break;
 
         		case 1:
-        			slotGriddleImg = this.add.image(config.width*0.615, config.height*0.535, 'spr_griddle_1');
+        			slotGriddleImg = this.add.image(config.width*0.615, config.height*0.535,'assets_atlas', 'spr_griddle_1');
         		break;
 
         		case 2:
-        			slotGriddleImg = this.add.image(config.width*0.495, config.height*0.662, 'spr_griddle_2');	
+        			slotGriddleImg = this.add.image(config.width*0.495, config.height*0.662,'assets_atlas', 'spr_griddle_2');	
         		break;
 
         		case 3:
-        			slotGriddleImg = this.add.image(config.width*0.625, config.height*0.662, 'spr_griddle_3');
+        			slotGriddleImg = this.add.image(config.width*0.625, config.height*0.662,'assets_atlas', 'spr_griddle_3');
         		break;
 
         	}
         	if(0 < i) slotGriddleImg.setAlpha(0.3);
         }
 
-       	var trashCanImg = this.physics.add.sprite(config.width*0.105, config.height*0.915,'spr_trashCan');
+       	var trashCanImg = this.physics.add.sprite(config.width*0.105, config.height*0.915,'assets_atlas', 'spr_trashCan');
        	GameManager.trashCanImgPancake = trashCanImg;
         
-        this.add.image(config.width*0.42, config.height*0.895, 'spr_topping_posters');
+        this.add.image(config.width*0.42, config.height*0.895,'assets_atlas', 'spr_topping_posters');
         for(var i=0; i<4; i++)
 		{
 			var toppingSound = GameManager.scene.sound.add('snd_topping');
@@ -172,7 +172,7 @@ class tutorial extends Phaser.Scene {
 		}
         var strainer = new Strainer(strainerImg, strainerLvl);
         GameManager.strainer = strainer;
-       	var trashCanImgNoodles = this.physics.add.sprite(config.width*0.9 + config.width, config.height*0.12,'spr_trashCan');
+       	var trashCanImgNoodles = this.physics.add.sprite(config.width*0.9 + config.width, config.height*0.12,'assets_atlas','spr_trashCan');
        	
        	GameManager.trashCanImgNoodles = trashCanImgNoodles;
         noodleSpawnerImg.setInteractive();
@@ -240,7 +240,7 @@ class tutorial extends Phaser.Scene {
             yoyo: true
         }); 
         */
-        callClient(1);
+        //callClient(1);
 		new TutorialManager(this);
 		var numSteps = 29;
 		for(var i=0; i<numSteps; i++)
@@ -763,7 +763,7 @@ class TipLogic
         		GameManager.scene.sound.play('snd_dish');
         		var slotId = findFreeSlot(GameManager.tableclothsPancake, TableclothsPancake.slots);
         		var pos = TableclothsPancake.slots.getAt(slotId);
-        		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'spr_dish');
+        		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_dish');
         		var dishImgContainer = new TutorialDishContainer(dishImg, slotId);
         		GameManager.dishImgContainerPancake.add(dishImgContainer);
         		selfRef.endDishPileInteractivity(img);

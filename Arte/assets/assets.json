@@ -10,7 +10,7 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "spr_pancake_banana",
+					"filename": "spr_topping_banana",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -35,7 +35,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_coconut",
+					"filename": "spr_topping_coconut",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -60,7 +60,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_strawberry",
+					"filename": "spr_topping_strawberry",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -85,7 +85,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_lacasitos",
+					"filename": "spr_topping_lacasitos",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {

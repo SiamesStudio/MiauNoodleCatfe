@@ -161,49 +161,12 @@ class Loading extends Phaser.Scene {
 	{
         this.load.image('client','assets/client.jpg');
         this.load.path = 'assets/SpritesPatri/';
-		this.load.image('spr_trashCan','spr_trashCan.png');
-		this.load.image('spr_coffeeMachine_1','spr_coffeeMachine_1.png');
-		this.load.image('spr_coffeeMachine_2','spr_coffeeMachine_2.png');
-		this.load.image('spr_coffeeMachine_3','spr_coffeeMachine_3.png');
-		this.load.image('spr_coffeeMachine_4','spr_coffeeMachine_4.png');
-        this.load.image('spr_griddle','spr_griddle.png');
-        this.load.image('spr_griddle_0','spr_griddle_0.png');
-        this.load.image('spr_griddle_1','spr_griddle_1.png');
-        this.load.image('spr_griddle_2','spr_griddle_2.png');
-        this.load.image('spr_griddle_3','spr_griddle_3.png');
-        this.load.image('spr_topping_posters','spr_topping_posters.png');
-		this.load.image('spr_glasses','spr_glasses.png');
-		this.load.image('spr_dishes','spr_dishes.png');
-		this.load.image('spr_glass_filled','spr_glass_filled.png');
-		this.load.image('spr_glass_empty','spr_glass_empty.png');
-		this.load.image('spr_dish','spr_dish.png');
-		this.load.image('spr_tablecloth_0','spr_tablecloth_0.png');
-        this.load.image('spr_tablecloth_1','spr_tablecloth_1.png');
-        this.load.image('spr_tablecloth_2','spr_tablecloth_2.png');
-        this.load.image('spr_tablecloth_3','spr_tablecloth_3.png');
+
 		// Animación de la cafetera dispensando el café (individual por cada dispensador): nombrado dependiente de la implementación.
 		this.load.image('spr_pancake_bottle','spr_pancake_bottle.png');
 		// Botes de siropes: spr_syrup_tipoDeSirope.
-		this.load.image('spr_pancake_cooking','spr_pancake_cooking.png');
 		// Animación masa haciéndose por una cara: nombrado dependiente de la implementación.
 		// Animación de masa haciéndose por la otra cara: nombrado dependiente de la implementación
-		
-		this.load.image('spr_pancake_cooked','spr_pancake_cooked.png');
-		this.load.image('spr_pancake_burnt','spr_pancake_burnt.png');
-		// this.load.image('spr_topDown_pancake', 'spr_topDown_pancake.png');
-		// cada sirope visto desde arriba (pantalla de echar sirope) spr_topDown_syrup_tipoDeSirope.
-		// Máscaras de sirope (tantas como personajes): spr_syrup_mask_idDeLaMascara
-		this.load.image('spr_topping_lacasitos','spr_topping_lacasitos.png');
-		this.load.image('spr_topping_coconut','spr_topping_coconut.png');
-		this.load.image('spr_topping_strawberry','spr_topping_strawberry.png');
-		this.load.image('spr_topping_banana','spr_topping_banana.png');
-		this.load.image('spr_syrup_caramel','spr_syrup_caramel.png');
-		this.load.image('spr_syrup_chocolate','spr_syrup_chocolate.png');
-		this.load.image('spr_syrup_strawberry','spr_syrup_strawberry.png');
-		/* Todas las combinaciones de tortitas posibles teniendo en cuenta las máscaras (diferentes
-			formas de sirope): spr_pancake_TipoDeSirope_idDeLaMascara_Topping1.. */
-		// this.load.image('spr_Catfe_background','spr_Catfe_background.png');
-		this.load.image('spr_radio','spr_radio.png');
 		// this.load.image('spr_radio_zoomed','spr_radio_zoomed.png');
 		
 	}
@@ -212,13 +175,20 @@ class Loading extends Phaser.Scene {
     {
         this.load.path = '';
     	// Animación de hervir: nombrado dependiente de la implementación.
-    	// REPEATED?¿ this.load.image('spr_tableCloth','assets/spr_tableCloth.png');
-    	this.load.image('spr_bowls','assets/spr_bowls.jpg');
-    	this.load.image('spr_ladre','assets/spr_ladre.jpg');
+        this.load.image('spr_bowls','assets/spr_bowls.png');
+        this.load.image('spr_ui_arrow','assets/spr_ui_arrow.png');
+        this.load.image('spr_noodlesSpawner','assets/spr_noodlesSpawner.png');
+        this.load.image('spr_sauces_posters','assets/spr_sauces_posters.png');
+        this.load.image('spr_strainer','assets/spr_strainer.png');
+        this.load.image('spr_topping_egg','assets/spr_topping_egg.png');
+        this.load.image('spr_topping_naruto','assets/spr_topping_naruto.png');
+        this.load.image('spr_topping_mushroom','assets/spr_topping_mushroom.png');
+        this.load.image('spr_topping_springonion','assets/spr_topping_springonion.png');
+        this.load.image('spr_background_noodles','assets/spr_background_noodles.png');
+
     	// Animación del cucharón echando cada salsa. (3 en total): nombrado dependiente de la implementación
 
     	/* 
-    	Todas las combinaciones de noodles posibles ya cocinados: spr_noodles_Salsa_Topping1..
     	Fondo animado de calle: animación de gente caminando por la calle: nombrado dependiente de la implementación.
     	Fondo animado de calle: animación de la iluminación desde la mañana hasta la noche:
     	nombrado dependiente de la implementación.
