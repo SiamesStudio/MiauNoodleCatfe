@@ -163,11 +163,11 @@ class Loading extends Phaser.Scene {
         this.load.spritesheet('anim_coffee', 'assets/animaciones/anim_coffee.png',
         {frameWidth: 13,frameHeight: 21}
         );
-        /*
+        
         this.load.spritesheet('anim_coffeeMachine', 'assets/animaciones/anim_coffeeMachine.png',
         {frameWidth: 20,frameHeight: 29}
         );
-        */
+        
         
         this.load.multiatlas('assets_atlas', 'assets/assets.json', 'assets');
         this.load.image('spr_cristal_canciones','assets/UI/UI_temporal/spr_cristal_canciones.png');

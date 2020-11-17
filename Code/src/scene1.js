@@ -207,8 +207,7 @@ class scene1 extends Phaser.Scene {
         		var burntSound = GameManager.scene.sound.add('snd_burnt');
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
-        		var pancake = new Pancake(slotId, trashSound, cookingSound, burntSound, readySound);
-      			changePosition(pancake, pos.x,pos.y);
+        		var pancake = new Pancake(slotId, trashSound, cookingSound, burntSound, readySound, pos.x,pos.y);
         	} 
         })
         
@@ -233,8 +232,8 @@ class scene1 extends Phaser.Scene {
 		//var saucesPosters = this.add.image(config.width*0.42+config.width, config.height*0.895,'spr_sauces_posters'); saucesPosters.setScale(0.22);
 		var noodleSpawnerImg = this.add.image(config.width*0.882 + config.width, config.height*0.91,'assets_atlas','spr_bg_noodles');
 		var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
+		GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
 		var strainerLvl = GameManager.scene.playerSettings.upgrades.noodleLevel;
-		
 		var cam = this.cameras.main;	
 		var goToCoffeeButton = this.add.image(config.width*0.06+config.width,config.height*0.08, 'spr_ui_arrow');
 		goToCoffeeButton.setInteractive().on('pointerdown', function(pointer){
@@ -264,6 +263,13 @@ class scene1 extends Phaser.Scene {
 			}
         }
 		
+        this.anims.create({
+    		key: 'potCooking',
+    		frames: GameManager.scene.anims.generateFrameNumbers('anim_pot_bubbles', { start: 0, end: 4}),
+    		frameRate: 7,
+    		repeat: -1
+		});
+
         var strainer = new Strainer(bigStrainerImg, strainerLvl);
         GameManager.strainer = strainer;
        	var trashCanImg = this.physics.add.sprite(config.width*0.085+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
@@ -457,6 +463,7 @@ class GameManager
 	static grabbedItemClass;
 	static trashCanImgPancake;
 	static trashCanImgNoodles;
+	static animatedStrainerImg;
 
 	static collidingObjectImg;
 	static collidingObject;

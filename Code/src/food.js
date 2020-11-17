@@ -82,20 +82,22 @@ class Coffee
 class Pancake
 {
 	static time = 1;
-	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound)
+	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound, posx, posy)
 	{
 		this.index = 1;
+		this.posx = posx;
+		this.posy = posy;
 		this.side1Done = false;
 		this.side2Done = false;
 		this.flipped = false;
 		this.burnt = false;
 		this.hovering = false;
 		this.assignedSlot = assignedSlot;
-		this.img = GameManager.scene.physics.add.sprite(0,0,'assets_atlas','spr_pancake_cooking');
+		this.img = GameManager.scene.physics.add.sprite(posx,posy,'assets_atlas','spr_pancake_cooking');
 		this.trashCollider;
 		this.dishCollider;
 		this.doneTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeTime - Pancake.time);
-		this.burnTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeBurnTime - (Pancake.time*20));
+		this.burnTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeBurnTime - (Pancake.time*2));
 
 		var pancake = this;
 		this.img.setDepth(2);
@@ -113,6 +115,17 @@ class Pancake
         this.burntSound = burntSound;
         this.readySound = readySound;
         this.cookingSound.play();
+
+        this.animImg = GameManager.scene.physics.add.sprite(posx,posy-config.height*0.04,'anim_pancake');
+        
+        var animation = GameManager.scene.anims.create({
+    		key: 'doPancake',
+    		frames: GameManager.scene.anims.generateFrameNumbers('anim_pancake', { start: 0, end: 4}),
+    		frameRate: 8,
+    		repeat: -1
+		});
+
+		this.animImg.anims.play('doPancake');
 	}
 
 	/* Called when the current side of the pancake is done */
@@ -134,6 +147,7 @@ class Pancake
 			this.img.on('dragstart', function(pointer,dragX,dragY){
 				GameManager.tapSound.play();
 				this.setDepth(this.depth+5);
+				pancake.animImg.setAlpha(0);
 				pancake.sideTimer.paused = true;
         		pancake.burnTimer.paused = true;	
 			})
@@ -146,6 +160,7 @@ class Pancake
 			
 			this.img.on('dragend',() => {
 				pancake.img.setDepth(pancake.img.depth-5);
+				pancake.animImg.setAlpha(1);
 				pancake.cookingSound.play();	
 				pancake.dragEndBehaviour();		
        		})
@@ -171,6 +186,7 @@ class Pancake
 	/* Method called when the pancake has spent too much time in the griddle */
 	burnPancake()
 	{
+		this.animImg.destroy();
 		this.cookingSound.stop();
 		this.cookingSound.setMute(true);
 		this.burntSound.play();
@@ -223,6 +239,7 @@ class Pancake
 
 	dragToDish(food, dishImg)
 	{
+		this.animImg.destroy();
 		GameManager.scene.physics.world.removeCollider(this.trashCollider);
 		GameManager.scene.physics.world.removeCollider(this.dishCollider);
 		var container = GameManager.collidingObject;
@@ -249,13 +266,13 @@ class Pancake
 			
 	}
 
-	
-
 	throwFood(food, trashCan)
 	{
+		this.animImg.destroy();
 		this.trashSound.play();
 		trashCan.setAlpha(1);
-		food.disableBody(true,true);
+		food.destroy();
+		//food.disableBody(true,true);
 		this.freeGriddle();		
 	}
 
@@ -270,6 +287,7 @@ class Pancake
 
 class Noodles
 {
+	static noodlesList = new Phaser.Structs.List();
 	static doneTime = 3; //10
 	static burnTime = 5; //17
 	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound)
@@ -293,6 +311,10 @@ class Noodles
         this.burntSound = burntSound;
         this.readySound = readySound;
         this.cookingSound.play();
+
+        GameManager.animatedStrainerImg.anims.play('potCooking');
+        GameManager.animatedStrainerImg.setAlpha(1);
+        Noodles.noodlesList.add(this);
 	}
 
 	noodlesDone()
@@ -308,6 +330,8 @@ class Noodles
 		})    
 
 		this.img.setTexture('assets_atlas','spr_noodles_cooked');
+
+
 	}
 
 	noodlesBurnt()
@@ -317,6 +341,7 @@ class Noodles
 		this.burntSound.play();
 		this.img.setTexture('assets_atlas','spr_noodles_burnt');
 		this.burnt = true;
+		this.checkOtherNoodles();
 	}
 
 	dragEndBehaviour()
@@ -351,6 +376,8 @@ class Noodles
 
 	freeStrainer()
 	{
+		Noodles.noodlesList.remove(this);
+		this.checkOtherNoodles();
 		this.doneTimer.remove(false);
         this.burnTimer.remove(false);
 		GameManager.strainer.occupiedSlots--;
@@ -386,6 +413,16 @@ class Noodles
 			makeDishInteractive(container,"noodleDish");
 			console.log("dish num toppings: " + container.toppings.length);
 		}	
+	}
+
+	checkOtherNoodles()
+	{
+		var numDone=0;
+		for(var i=0; i<Noodles.noodlesList.length; i++)
+		{
+			if(Noodles.noodlesList.getAt(i).burnt==true) numDone++;
+		}
+		if(numDone == Noodles.noodlesList.length) GameManager.animatedStrainerImg.setAlpha(0);
 	}
 }
 
