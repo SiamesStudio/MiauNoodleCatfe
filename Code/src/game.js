@@ -4,7 +4,7 @@ var config = {
         type: Phaser.AUTO,
         width: 320,
         height: 180,
-        backgroundColor: 0x000000,
+        backgroundColor: 0x262626,
         pixelArt: true, //Prevent pixel art from becoming blurred when scaled.
         //antialias: true,
         scene: [Loading,Inicio,tutorial,scene1,scene2,Menu,Shop,Contact],

@@ -207,8 +207,7 @@ class scene1 extends Phaser.Scene {
         		var burntSound = GameManager.scene.sound.add('snd_burnt');
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
-        		var pancake = new Pancake(slotId, trashSound, cookingSound, burntSound, readySound);
-      			changePosition(pancake, pos.x,pos.y);
+        		var pancake = new Pancake(slotId, trashSound, cookingSound, burntSound, readySound, pos.x,pos.y);
         	} 
         })
         
@@ -228,44 +227,52 @@ class scene1 extends Phaser.Scene {
 
 	noodlesSetting()
 	{
-		var background = this.add.image(config.width*0.5+config.width, config.height*0.5, 'spr_background_noodles'); background.setScale(0.3);
-		var saucesPosters = this.add.image(config.width*0.42+config.width, config.height*0.895, 'spr_sauces_posters'); saucesPosters.setScale(0.22);
-		var noodleSpawnerImg = this.add.image(config.width*0.87 + config.width, config.height*0.9,'spr_noodlesSpawner'); noodleSpawnerImg.setScale(0.22);
-		var bigStrainerImg = this.add.image(config.width*0.85 + config.width, config.height*0.6,'spr_strainer'); bigStrainerImg.setScale(0.22);
+		var background = this.add.image(config.width*0.506+config.width, config.height*0.5085, 'bg_noodles'); background.setScale(0.25);
+		
+		//var saucesPosters = this.add.image(config.width*0.42+config.width, config.height*0.895,'spr_sauces_posters'); saucesPosters.setScale(0.22);
+		var noodleSpawnerImg = this.add.image(config.width*0.882 + config.width, config.height*0.91,'assets_atlas','spr_bg_noodles');
+		var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
+		GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
 		var strainerLvl = GameManager.scene.playerSettings.upgrades.noodleLevel;
-
 		var cam = this.cameras.main;	
 		var goToCoffeeButton = this.add.image(config.width*0.06+config.width,config.height*0.08, 'spr_ui_arrow');
 		goToCoffeeButton.setInteractive().on('pointerdown', function(pointer){
 			cam.centerOnX(config.width/2);
             GameManager.scene.cameras.main.fadeOut(25);
 		})
- 
+ 		
         for(var i=0; i<4; i++)
         {
         	var strainerImg;
         	switch(i)
 			{
 				case 0:
-					strainerImg = this.add.image(config.width*0.76 + config.width, config.height*0.5,'assets_atlas','spr_strainer_0'); 
+					strainerImg = this.add.image(config.width*0.78 + config.width, config.height*0.4,'assets_atlas','spr_strainer_0'); 
 				break;
 				case 1:
-					strainerImg = this.add.image(config.width*0.81 + config.width, config.height*0.5,'assets_atlas','spr_strainer_1'); 
+					strainerImg = this.add.image(config.width*0.83 + config.width, config.height*0.4,'assets_atlas','spr_strainer_1'); 
 				break;
 				case 2:
-					strainerImg = this.add.image(config.width*0.76 + config.width, config.height*0.67,'assets_atlas','spr_strainer_2'); 
+					strainerImg = this.add.image(config.width*0.78 + config.width, config.height*0.55,'assets_atlas','spr_strainer_2'); 
 				break;
 				case 3:
-					strainerImg = this.add.image(config.width*0.81 + config.width, config.height*0.67,'assets_atlas','spr_strainer_3'); 
+					strainerImg = this.add.image(config.width*0.83 + config.width, config.height*0.55,'assets_atlas','spr_strainer_3'); 
 				break;
 
 			if(strainerLvl < i) strainerImg.setAlpha(0.3);
 			}
         }
 		
+        this.anims.create({
+    		key: 'potCooking',
+    		frames: GameManager.scene.anims.generateFrameNumbers('anim_pot_bubbles', { start: 0, end: 4}),
+    		frameRate: 7,
+    		repeat: -1
+		});
+
         var strainer = new Strainer(bigStrainerImg, strainerLvl);
         GameManager.strainer = strainer;
-       	var trashCanImg = this.physics.add.sprite(config.width*0.105+config.width, config.height*0.915,'assets_atlas','spr_trashCan');
+       	var trashCanImg = this.physics.add.sprite(config.width*0.085+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
        	GameManager.trashCanImgNoodles = trashCanImg;
         noodleSpawnerImg.setInteractive();
         noodleSpawnerImg.on('pointerdown', function(pointer){
@@ -281,7 +288,7 @@ class scene1 extends Phaser.Scene {
       			changePosition(noodles, pos.x,pos.y);
         	} 
         })
-
+        
         var numTablecloth = this.playerSettings.upgrades.tableClothPancakeLevel + 1;
 
 		var tableclothImgList = new Phaser.Structs.List();
@@ -292,19 +299,19 @@ class scene1 extends Phaser.Scene {
         	switch(i)
         	{
         		case 0:
-        		    tableclothImg = this.add.image(config.width*0.194+config.width, config.height*0.575,'assets_atlas', 'spr_tablecloth_0');
+        		    tableclothImg = this.add.image(config.width*0.194+config.width, config.height*0.56,'assets_atlas', 'spr_tablecloth_0');
         		break;
 
         		case 1:
-        			tableclothImg = this.add.image(config.width*0.3405+config.width, config.height*0.575,'assets_atlas', 'spr_tablecloth_1');
+        			tableclothImg = this.add.image(config.width*0.341+config.width, config.height*0.56,'assets_atlas', 'spr_tablecloth_1');
         		break;
 
         		case 2:
-        			tableclothImg = this.add.image(config.width*0.125+config.width, config.height*0.714,'assets_atlas', 'spr_tablecloth_2');	
+        			tableclothImg = this.add.image(config.width*0.126+config.width, config.height*0.7,'assets_atlas', 'spr_tablecloth_2');	
         		break;
 
         		case 3:
-        			tableclothImg = this.add.image(config.width*0.297+config.width, config.height*0.714,'assets_atlas', 'spr_tablecloth_3');
+        			tableclothImg = this.add.image(config.width*0.3+config.width, config.height*0.7,'assets_atlas', 'spr_tablecloth_3');
         		break;
 
         	}
@@ -314,9 +321,9 @@ class scene1 extends Phaser.Scene {
         }
 
         var tableclothsNoodle = new TableclothsNoodle(tableclothImgList, this.playerSettings.upgrades.tableClothNoodleLevel);
-
+        
         GameManager.tableclothsNoodle = tableclothsNoodle;
-        var dishPileImg = this.add.image(config.width*0.72 + config.width, config.height*0.92,'spr_bowls');dishPileImg.setScale(0.25);
+        var dishPileImg = this.add.image(config.width*0.72 + config.width, config.height*0.92,'assets_atlas','spr_bowl');
         dishPileImg.setInteractive();
         dishPileImg.on('pointerdown', function(pointer){
         	if(GameManager.dishImgContainerNoodles.length < numTablecloth)
@@ -329,13 +336,12 @@ class scene1 extends Phaser.Scene {
         		GameManager.dishImgContainerNoodles.add(dishImgContainer);
         	} 
         })
-
+        
         for(var i = 0; i<4; i++)
 		{
 			var toppingSound = GameManager.scene.sound.add('snd_topping');
 			var topping = new Topping(i, false, toppingSound);
 		}
-
 		for(var i=0; i<4; i++)
 		{
 			var fillingSound = GameManager.scene.sound.add('snd_filling_catfe');
@@ -457,6 +463,7 @@ class GameManager
 	static grabbedItemClass;
 	static trashCanImgPancake;
 	static trashCanImgNoodles;
+	static animatedStrainerImg;
 
 	static collidingObjectImg;
 	static collidingObject;
@@ -745,9 +752,10 @@ function checkHoverWithClient()
 	var numCollisions=0;
 	for(var i=0; i<clients.length; i++)
 	{
+
 		var client = clients.getAt(i);
 		var clientImg = client.clientImg;
-		if(!clientImg) continue;
+		if(!clientImg || GameManager.grabbedItem.dish == null) continue;
 
 		var clientHasMyItem = false;
 		var order = client.order;
@@ -884,6 +892,7 @@ function makeDishInteractive(container, dishClass)
 
 	dishImg.on('dragstart', function(pointer,dragX,dragY){
 		GameManager.tapSound.play();
+		dishContainer.setDepth(5);
 		container.posx = dishContainer.x;
 		container.posy = dishContainer.y;
 	})
@@ -894,6 +903,7 @@ function makeDishInteractive(container, dishClass)
     })	
 		
 	dishImg.on('dragend',() => {
+		dishContainer.setDepth(1);
 		container.dragEndBehaviour();	
     })
 }
@@ -904,6 +914,7 @@ function makeImgInteractive(itemClass, itemImg, item, cookingSound)
 
 	itemImg.on('dragstart', function(pointer,dragX,dragY){
 		GameManager.tapSound.play();
+		itemImg.setDepth(itemImg.depth+5);
 		item.posx = this.x;
 		item.posy = this.y;	
 	})
@@ -916,6 +927,7 @@ function makeImgInteractive(itemClass, itemImg, item, cookingSound)
 		
 	itemImg.on('dragend',() => {
 		if(cookingSound) cookingSound.play();
+		itemImg.setDepth(itemImg.depth-5);
 		item.dragEndBehaviour();
     })
 }
