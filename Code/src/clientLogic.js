@@ -180,6 +180,9 @@ class Client{
     GameManager.scene.playerSettings.level=lvl;
     GameManager.scene.savePlayerSettings();
     GameManager.scene.numPlayerLevel.setText(lvl)
+    GameManager.customerCounter++;
+    GameManager.totalHappiness+=exp;
+    GameManager.globalHappiness=Math.floor(GameManager.totalHappiness*(1/GameManager.customerCounter))
 
     this.clientImg.disableBody(true,true);
     

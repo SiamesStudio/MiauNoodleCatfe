@@ -16,7 +16,8 @@ class scene1 extends Phaser.Scene {
             level: 1,
             experience: 0,
             language: false,
-            audioMuted: false,
+			audioMuted: false,
+			gameLevel:1,
             moneySpent: 0,
             upgrades : {
                 coffeeTime : 0,
@@ -546,6 +547,9 @@ class GameManager
 	static gameOn=true;
 
 	static levelEarnedCoins=0;
+	static globalHappiness=50;
+	static customerCounter=1;
+	static totalHappiness=50;
 
 	constructor(scene)
 	{
