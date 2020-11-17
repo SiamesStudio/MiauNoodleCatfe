@@ -30,7 +30,9 @@ class Menu extends Phaser.Scene {
         background.displayHeight = background.displayHeight * widthRatio
         this.menuMusic = this.sound.add('snd_music_rainyDay')
         this.menuMusic.play()
+        this.menuMusic.setVolume(0.7)
 
+        
         //COIN
         this.add.sprite(config.width/4,config.height/12,'banner').setScale(0.5)
         this.add.sprite(config.width/5,config.height/12,'assets_atlas','spr_ui_icon_coin')
@@ -55,10 +57,12 @@ class Menu extends Phaser.Scene {
         this.freeDiamondsButton.setInteractive().on('pointerdown', () => {console.log("Free diamonds"); this.freeDiamondsPanel();})
 
         //UPGRADES
+        this.UpgradeGroupSelected = 0; //0 = cafe, 1 = pancake, 2= noodle
         this.upgradesButton = this.add.sprite(5.2*config.width/6, config.height/2,'banner').setScale(0.5)
         this.add.sprite(4.8*config.width/6, config.height/2,'assets_atlas','spr_ui_icon_gem')
         this.upgradesTextButton = this.add.text(5.3*config.width/6, config.height/2, this.gameStrings.upgradesButtonText, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.upgradesTextButton.setInteractive().on('pointerdown', () => {console.log("Upgrades"); this.upgradesPanel();})
+        this.upgradesTextButton.setInteractive().on('pointerdown', () => {console.log("Upgrades"); this.upgradesPanel(this.UpgradeGroupSelected);})
+        
 
         //ROULETTE
         //this.rouletteButton = this.add.sprite(5.2*config.width/6, 5*config.height/7,'banner').setScale(0.5)
@@ -135,9 +139,9 @@ class Menu extends Phaser.Scene {
         //EXTRAS (Free gems, roulette, options, kitchen custom, interior custom, tasks)
         this.blackScreen = this.add.image(config.width/2, config.height/2, 'blackScreen').setAlpha(0.5);
         this.blackScreen.setVisible(false)
-        this.extraBanner = this.add.sprite(config.width/2, config.height/2,'banner_long').setScale(0.2)
+        this.extraBanner = this.add.sprite(config.width/2, config.height/2,'assets_atlas','spr_bck_improvementMenu')
         this.extraBanner.setVisible(false)
-        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow').setScale(0.03)
+        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow')
         this.crossButton.setVisible(false)
         this.crossButton.setInteractive().on('pointerdown', () => {this.enableAllButtons();})
 
@@ -185,23 +189,53 @@ class Menu extends Phaser.Scene {
 
 
         //Upgrade Panel
-        this.UpgradeSelected = 1;
-        this.upgradeSlot1 = this.add.sprite(config.width/3, 2*config.height/6, 'banner_light').setVisible(false).setScale(0.5)//Panel opcion
+        this.UpgradeSelected = 1; 
+        
+        this.upgradeSlot1 = this.add.sprite(config.width/3, 2*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false)//Panel opcion
         this.upgradeSlotText1 = this.add.text(config.width/3, 2*config.height/6,'Mejora 1',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
-        this.upgradeSlot2 = this.add.sprite(config.width/3, 3*config.height/6, 'banner_light').setVisible(false).setScale(0.5).setTint(0xb0b0b0)//Panel opcion
+        this.upgradeSlot2 = this.add.sprite(config.width/3, 3*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
         this.upgradeSlotText2 = this.add.text(config.width/3, 3*config.height/6,'Mejora 2',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
-        this.upgradeSlot3 = this.add.sprite(config.width/3, 4*config.height/6, 'banner_light').setVisible(false).setScale(0.5).setTint(0xb0b0b0)//Panel opcion
-        this.upgradeSlotText3 = this.add.text(config.width/3, 4*config.height/6,'Mejora 3',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
-
+        
+        this.upgradeSlot3 = this.add.sprite(config.width/3, 2*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
+        this.upgradeSlotText3 = this.add.text(config.width/3, 2*config.height/6,'Mejora 3',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
+        this.upgradeSlot4 = this.add.sprite(config.width/3, 3*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
+        this.upgradeSlotText4 = this.add.text(config.width/3, 3*config.height/6,'Mejora 4',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
+        this.upgradeSlot5 = this.add.sprite(config.width/3, 4*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
+        this.upgradeSlotText5 = this.add.text(config.width/3, 4*config.height/6,'Mejora 5',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
+        this.upgradeSlot6 = this.add.sprite(config.width/3, 5*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
+        this.upgradeSlotText6 = this.add.text(config.width/3, 5*config.height/6,'Mejora 6',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
+        
+        this.upgradeSlot7 = this.add.sprite(config.width/3, 2*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
+        this.upgradeSlotText7 = this.add.text(config.width/3, 2*config.height/6,'Mejora 7',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
+        this.upgradeSlot8 = this.add.sprite(config.width/3, 3*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
+        this.upgradeSlotText8 = this.add.text(config.width/3, 3*config.height/6,'Mejora 8',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
+        this.upgradeSlot9 = this.add.sprite(config.width/3, 4*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
+        this.upgradeSlotText9 = this.add.text(config.width/3, 4*config.height/6,'Mejora 9',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
+        this.upgradeSlot10 = this.add.sprite(config.width/3, 5*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
+        this.upgradeSlotText10 = this.add.text(config.width/3, 5*config.height/6,'Mejora 10',{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto opcion
         
         
-        this.upgradeDescriptionBanner = this.add.sprite(1.8*config.width/3, config.height/2,'banner_big').setScale(0.1).setVisible(false)//Panel descripcion
+        this.upgradeDescriptionBanner = this.add.sprite(1.8*config.width/3, config.height/2,'assets_atlas','spr_bck_improvementDescription').setVisible(false)//Panel descripcion
         this.upgradeTitleSlotText1 = this.add.text(1.8*config.width/3, config.height/3 , this.gameStrings.upgradesCoffeTime ,{ font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto descripcion
         this.upgradeDescriptionSlotText1 = this.add.text(1.8*config.width/3, config.height/2 , this.gameStrings.upgradesCoffeTimeDescription + this.playerSettings.upgrades.cofeeTime,{ font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto descripcion
-        this.buySlot = this.add.sprite(1.8*config.width/3, 2*config.height/3, 'banner_light').setVisible(false).setScale(0.5).setTint(0x32a852)//Boton comprar
+        this.buySlot = this.add.sprite(1.8*config.width/3, 2*config.height/3, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0x32a852)//Boton comprar
         this.buyUpgradeCoin = this.add.sprite(1.5*config.width/3, 2*config.height/3, 'assets_atlas','spr_ui_icon_coin').setVisible(false)
         this.buySlotText = this.add.text(1.8*config.width/3, 2*config.height/3,500 + 500*this.playerSettings.upgrades.cofeeTime ,{ font: "20px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)
         
+        this.upgradeChangeSection = this.add.sprite(config.width/3, config.height/6, 'assets_atlas','spr_ui_arrow').setVisible(false)//Panel opcion
+        this.upgradeChangeSection.setInteractive().on('pointerdown', () => {
+            this.UpgradeGroupSelected = (this.UpgradeGroupSelected + 1) % 3
+            this.showCurrentUpgrades(this.UpgradeGroupSelected)
+        })
+        this.upgradeChangeSectionMinus = this.add.sprite(2*config.width/3, config.height/6, 'assets_atlas','spr_ui_arrow').setVisible(false)//Panel opcion
+        this.upgradeChangeSectionMinus.angle = 180
+        this.upgradeChangeSectionMinus.setInteractive().on('pointerdown', () => {
+            this.UpgradeGroupSelected = this.UpgradeGroupSelected - 1
+            if(this.UpgradeGroupSelected < 0) this.UpgradeGroupSelected = 2
+            this.showCurrentUpgrades(this.UpgradeGroupSelected)
+        })
+        
+
 
         this.buySlot.setInteractive().on('pointerdown', () => {
             switch(this.UpgradeSelected){
@@ -252,32 +286,8 @@ class Menu extends Phaser.Scene {
         })
 
 
-
-        this.upgradeSlot1.setInteractive().on('pointerdown', () => {
-            this.upgradeSlot1.setTint(0xffffff)
-            this.upgradeSlot2.setTint(0xb0b0b0)
-            this.upgradeSlot3.setTint(0xb0b0b0)
-            this.UpgradeSelected = 1;
-            this.upgradesPanelDescription(this.UpgradeSelected);
-        })
-
-        this.upgradeSlot2.setInteractive().on('pointerdown', () => {
-            this.upgradeSlot1.setTint(0xb0b0b0)
-            this.upgradeSlot2.setTint(0xffffff)
-            this.upgradeSlot3.setTint(0xb0b0b0)
-            this.UpgradeSelected = 2;
-            this.upgradesPanelDescription(this.UpgradeSelected);
-        })
-
-
-        this.upgradeSlot3.setInteractive().on('pointerdown', () => {
-            this.upgradeSlot1.setTint(0xb0b0b0)
-            this.upgradeSlot2.setTint(0xb0b0b0)
-            this.upgradeSlot3.setTint(0xffffff)
-            this.UpgradeSelected = 3;
-            this.upgradesPanelDescription(this.UpgradeSelected);
-        })
-
+        this.makeUpgradesSlotsInteractive();
+        
         //LEVEL UP PANEL
         this.levelUpPanelTitle = this.add.text(config.width/2, config.height/4 , this.gameStrings.LevelUpTitle ,{ font: "30px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto titulo
         this.levelUpPanelDesc = this.add.text(config.width/2, 1.15*config.height/3 , this.gameStrings.LevelUpDesc ,{ font: "20px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false)//Texto descripcion
@@ -311,20 +321,41 @@ class Menu extends Phaser.Scene {
         
     }
 
-    upgradesPanel(){
+    upgradesPanel(number){
         this.disableAllButtons()
-        this.upgradeSlot1.setVisible(true)
-        this.upgradeSlotText1.setVisible(true)
+        this.upgradeSlot1.setVisible(false)
+        this.upgradeSlotText1.setVisible(false)
         this.upgradeDescriptionBanner.setVisible(true)
         this.upgradeTitleSlotText1.setVisible(true)
         this.upgradeDescriptionSlotText1.setVisible(true)
+        
         this.upgradeSlot2.setVisible(true)
         this.upgradeSlotText2.setVisible(true)
-        this.upgradeSlot3.setVisible(true)
-        this.upgradeSlotText3.setVisible(true)
+        this.upgradeSlot3.setVisible(false)
+        this.upgradeSlotText3.setVisible(false)
+        this.upgradeSlot4.setVisible(false)
+        this.upgradeSlotText4.setVisible(false)
+        this.upgradeSlot5.setVisible(false)
+        this.upgradeSlotText5.setVisible(false)
+        this.upgradeSlot6.setVisible(false)
+        this.upgradeSlotText6.setVisible(false)
+        this.upgradeSlot7.setVisible(false)
+        this.upgradeSlotText7.setVisible(false)
+        this.upgradeSlot8.setVisible(false)
+        this.upgradeSlotText8.setVisible(false)
+        this.upgradeSlot9.setVisible(false)
+        this.upgradeSlotText9.setVisible(false)
+        this.upgradeSlot10.setVisible(false)
+        this.upgradeSlotText10.setVisible(false)
+
+        this.upgradeChangeSection.setVisible(true)
+        this.upgradeChangeSectionMinus.setVisible(true)
+
         this.buySlot.setVisible(true)
         this.buyUpgradeCoin.setVisible(true)
         this.buySlotText.setVisible(true)
+
+        this.showCurrentUpgrades(number)
     }
 
     upgradesPanelDescription(number){
@@ -375,6 +406,119 @@ class Menu extends Phaser.Scene {
             }
             
         }
+
+        if(number==4){
+            
+            this.upgradeTitleSlotText1.setText(this.gameStrings.upgradesPancakeBurn)
+            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesPancakeBurnDescription + this.playerSettings.upgrades.pancakeBurnTime)
+            if(this.playerSettings.upgrades.pancakeBurnTime != 3){
+                this.buySlot.setInteractive()
+                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeBurnTime)
+                this.buySlot.setTint(0x32a852);
+            }else{
+                this.buySlotText.setText("MAX")
+                this.buySlot.disableInteractive()
+                this.buySlot.setTint(0x566b5b);
+            }
+            
+        }
+
+        if(number==5){
+            
+            this.upgradeTitleSlotText1.setText(this.gameStrings.upgradesPancakePan)
+            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesPancakePanDescription + this.playerSettings.upgrades.pancakePanLevel)
+            if(this.playerSettings.upgrades.pancakePanLevel != 3){
+                this.buySlot.setInteractive()
+                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakePanLevel)
+                this.buySlot.setTint(0x32a852);
+            }else{
+                this.buySlotText.setText("MAX")
+                this.buySlot.disableInteractive()
+                this.buySlot.setTint(0x566b5b);
+            }
+            
+        }
+
+        if(number==6){
+            
+            this.upgradeTitleSlotText1.setText(this.gameStrings.upgradesPancakeCloth)
+            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesPancakeClothDescription + this.playerSettings.upgrades.tableClothPancakeLevel)
+            if(this.playerSettings.upgrades.tableClothPancakeLevel != 3){
+                this.buySlot.setInteractive()
+                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.tableClothPancakeLevel)
+                this.buySlot.setTint(0x32a852);
+            }else{
+                this.buySlotText.setText("MAX")
+                this.buySlot.disableInteractive()
+                this.buySlot.setTint(0x566b5b);
+            }
+            
+        }
+
+        if(number==7){
+            
+            this.upgradeTitleSlotText1.setText(this.gameStrings.upgradesNoodleTime)
+            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesNoodleTimeDescription + this.playerSettings.upgrades.noodleTime)
+            if(this.playerSettings.upgrades.noodleTime != 3){
+                this.buySlot.setInteractive()
+                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.noodleTime)
+                this.buySlot.setTint(0x32a852);
+            }else{
+                this.buySlotText.setText("MAX")
+                this.buySlot.disableInteractive()
+                this.buySlot.setTint(0x566b5b);
+            }
+            
+        }
+
+        if(number==8){
+            
+            this.upgradeTitleSlotText1.setText(this.gameStrings.upgradesNoodleBurn)
+            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesNoodleBurnDescription + this.playerSettings.upgrades.noodleBurnTime)
+            if(this.playerSettings.upgrades.noodleBurnTime != 3){
+                this.buySlot.setInteractive()
+                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.noodleBurnTime)
+                this.buySlot.setTint(0x32a852);
+            }else{
+                this.buySlotText.setText("MAX")
+                this.buySlot.disableInteractive()
+                this.buySlot.setTint(0x566b5b);
+            }
+            
+        }
+
+        if(number==9){
+            
+            this.upgradeTitleSlotText1.setText(this.gameStrings.upgradesNoodleBoilLvl)
+            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesNoodleBoilLvlDescription + this.playerSettings.upgrades.noodleLevel)
+            if(this.playerSettings.upgrades.noodleLevel != 3){
+                this.buySlot.setInteractive()
+                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.noodleLevel)
+                this.buySlot.setTint(0x32a852);
+            }else{
+                this.buySlotText.setText("MAX")
+                this.buySlot.disableInteractive()
+                this.buySlot.setTint(0x566b5b);
+            }
+            
+        }
+
+        if(number==10){
+            
+            this.upgradeTitleSlotText1.setText(this.gameStrings.upgradesNoodleCloth)
+            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesNoodleClothDescription + this.playerSettings.upgrades.tableClothNoodleLevel)
+            if(this.playerSettings.upgrades.tableClothNoodleLevel != 3){
+                this.buySlot.setInteractive()
+                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.tableClothNoodleLevel)
+                this.buySlot.setTint(0x32a852);
+            }else{
+                this.buySlotText.setText("MAX")
+                this.buySlot.disableInteractive()
+                this.buySlot.setTint(0x566b5b);
+            }
+            
+        }
+        
     }
 
     roulettePanel(){
@@ -540,6 +684,25 @@ class Menu extends Phaser.Scene {
         this.upgradeSlotText2.setVisible(false)
         this.upgradeSlot3.setVisible(false)
         this.upgradeSlotText3.setVisible(false)
+        this.upgradeSlot4.setVisible(false)
+        this.upgradeSlotText4.setVisible(false)
+        this.upgradeSlot5.setVisible(false)
+        this.upgradeSlotText5.setVisible(false)
+        this.upgradeSlot6.setVisible(false)
+        this.upgradeSlotText6.setVisible(false)
+        this.upgradeSlot7.setVisible(false)
+        this.upgradeSlotText7.setVisible(false)
+        this.upgradeSlot8.setVisible(false)
+        this.upgradeSlotText8.setVisible(false)
+        this.upgradeSlot9.setVisible(false)
+        this.upgradeSlotText9.setVisible(false)
+        this.upgradeSlot10.setVisible(false)
+        this.upgradeSlotText10.setVisible(false)
+
+        this.upgradeChangeSection.setVisible(false)
+        this.upgradeChangeSectionMinus.setVisible(false)
+
+
         this.buySlot.setVisible(false)
         this.buyUpgradeCoin.setVisible(false)
         this.buySlotText.setVisible(false)
@@ -556,10 +719,150 @@ class Menu extends Phaser.Scene {
 
     }
 
+    showCurrentUpgrades(number){
+        this.upgradeSlot1.setVisible(false)
+        this.upgradeSlotText1.setVisible(false)
+        this.upgradeSlot2.setVisible(false)
+        this.upgradeSlotText2.setVisible(false)
+        this.upgradeSlot3.setVisible(false)
+        this.upgradeSlotText3.setVisible(false)
+        this.upgradeSlot4.setVisible(false)
+        this.upgradeSlotText4.setVisible(false)
+        this.upgradeSlot5.setVisible(false)
+        this.upgradeSlotText5.setVisible(false)
+        this.upgradeSlot6.setVisible(false)
+        this.upgradeSlotText6.setVisible(false)
+        this.upgradeSlot7.setVisible(false)
+        this.upgradeSlotText7.setVisible(false)
+        this.upgradeSlot8.setVisible(false)
+        this.upgradeSlotText8.setVisible(false)
+        this.upgradeSlot9.setVisible(false)
+        this.upgradeSlotText9.setVisible(false)
+        this.upgradeSlot10.setVisible(false)
+        this.upgradeSlotText10.setVisible(false)
+
+        if(number == 0){
+            this.upgradeSlot1.setVisible(true)
+            this.upgradeSlotText1.setVisible(true)
+            this.upgradeSlot2.setVisible(true)
+            this.upgradeSlotText2.setVisible(true)
+        }
+        if(number == 1){
+            this.upgradeSlot3.setVisible(true)
+            this.upgradeSlotText3.setVisible(true)
+            this.upgradeSlot4.setVisible(true)
+            this.upgradeSlotText4.setVisible(true)
+            this.upgradeSlot5.setVisible(true)
+            this.upgradeSlotText5.setVisible(true)
+            this.upgradeSlot6.setVisible(true)
+            this.upgradeSlotText6.setVisible(true)
+        }
+        if(number == 2){
+            this.upgradeSlot7.setVisible(true)
+            this.upgradeSlotText7.setVisible(true)
+            this.upgradeSlot8.setVisible(true)
+            this.upgradeSlotText8.setVisible(true)
+            this.upgradeSlot9.setVisible(true)
+            this.upgradeSlotText9.setVisible(true)
+            this.upgradeSlot10.setVisible(true)
+            this.upgradeSlotText10.setVisible(true)
+        }
+    }
+
+    makeUpgradesSlotsInteractive(){
+        this.upgradeSlot1.setInteractive().on('pointerdown', () => {
+            this.upgradeSlot1.setTint(0xffffff)
+            this.upgradeSlot2.setTint(0xb0b0b0)
+            this.UpgradeSelected = 1;
+            this.upgradesPanelDescription(this.UpgradeSelected);
+        })
+
+        this.upgradeSlot2.setInteractive().on('pointerdown', () => {
+            this.upgradeSlot1.setTint(0xb0b0b0)
+            this.upgradeSlot2.setTint(0xffffff)
+            this.UpgradeSelected = 2;
+            this.upgradesPanelDescription(this.UpgradeSelected);
+        })
+
+
+        this.upgradeSlot3.setInteractive().on('pointerdown', () => {
+            this.upgradeSlot3.setTint(0xffffff)
+            this.upgradeSlot4.setTint(0xb0b0b0)
+            this.upgradeSlot5.setTint(0xb0b0b0)
+            this.upgradeSlot6.setTint(0xb0b0b0)
+            this.UpgradeSelected = 3;
+            this.upgradesPanelDescription(this.UpgradeSelected);
+        })
+
+        this.upgradeSlot4.setInteractive().on('pointerdown', () => {
+            this.upgradeSlot3.setTint(0xb0b0b0)
+            this.upgradeSlot4.setTint(0xffffff)
+            this.upgradeSlot5.setTint(0xb0b0b0)
+            this.upgradeSlot6.setTint(0xb0b0b0)
+            this.UpgradeSelected = 4;
+            this.upgradesPanelDescription(this.UpgradeSelected);
+        })
+
+        this.upgradeSlot5.setInteractive().on('pointerdown', () => {
+            this.upgradeSlot3.setTint(0xb0b0b0)
+            this.upgradeSlot4.setTint(0xb0b0b0)
+            this.upgradeSlot5.setTint(0xffffff)
+            this.upgradeSlot6.setTint(0xb0b0b0)
+            this.UpgradeSelected = 5;
+            this.upgradesPanelDescription(this.UpgradeSelected);
+        })
+
+        this.upgradeSlot6.setInteractive().on('pointerdown', () => {
+            this.upgradeSlot3.setTint(0xb0b0b0)
+            this.upgradeSlot4.setTint(0xb0b0b0)
+            this.upgradeSlot5.setTint(0xb0b0b0)
+            this.upgradeSlot6.setTint(0xffffff)
+            this.UpgradeSelected = 6;
+            this.upgradesPanelDescription(this.UpgradeSelected);
+        })
+
+        this.upgradeSlot7.setInteractive().on('pointerdown', () => {
+            this.upgradeSlot7.setTint(0xffffff)
+            this.upgradeSlot8.setTint(0xb0b0b0)
+            this.upgradeSlot9.setTint(0xb0b0b0)
+            this.upgradeSlot10.setTint(0xb0b0b0)
+            this.UpgradeSelected = 7;
+            this.upgradesPanelDescription(this.UpgradeSelected);
+        })
+
+        this.upgradeSlot8.setInteractive().on('pointerdown', () => {
+            this.upgradeSlot7.setTint(0xb0b0b0)
+            this.upgradeSlot8.setTint(0xffffff)
+            this.upgradeSlot9.setTint(0xb0b0b0)
+            this.upgradeSlot10.setTint(0xb0b0b0)
+            this.UpgradeSelected = 8;
+            this.upgradesPanelDescription(this.UpgradeSelected);
+        })
+
+        this.upgradeSlot9.setInteractive().on('pointerdown', () => {
+            this.upgradeSlot7.setTint(0xb0b0b0)
+            this.upgradeSlot8.setTint(0xb0b0b0)
+            this.upgradeSlot9.setTint(0xffffff)
+            this.upgradeSlot10.setTint(0xb0b0b0)
+            this.UpgradeSelected = 9;
+            this.upgradesPanelDescription(this.UpgradeSelected);
+        })
+
+        this.upgradeSlot10.setInteractive().on('pointerdown', () => {
+            this.upgradeSlot7.setTint(0xb0b0b0)
+            this.upgradeSlot8.setTint(0xb0b0b0)
+            this.upgradeSlot9.setTint(0xb0b0b0)
+            this.upgradeSlot10.setTint(0xffffff)
+            this.UpgradeSelected = 10;
+            this.upgradesPanelDescription(this.UpgradeSelected);
+        })
+
+    }
+
+
     changeAllText(){
         //Menu
         this.freeGemsTextButton.text = this.gameStrings.freeGemsText
-        this.rouletteTextButton.text = this.gameStrings.spinButtonText
         this.shopTextButton.text = this.gameStrings.shopButton
         //AD
         this.textAd.text = this.gameStrings.FreeGems_Button
