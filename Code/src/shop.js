@@ -27,20 +27,21 @@ class Shop extends Phaser.Scene {
         background.displayHeight = config.height;
 
 
-        this.shopBanner = this.add.sprite(config.width/2, config.height/2,'banner_long').setScale(0.3)
+        this.shopBanner = this.add.sprite(config.width/2, config.height/2,'assets_atlas', 'spr_bck_shopMenu')
 
-        this.slot1 = this.add.sprite(config.width/4, 2*config.height/5,'banner_big').setScale(0.065)
-        this.slot2 = this.add.sprite(2*config.width/4, 2*config.height/5,'banner_big').setScale(0.065)
-        this.slot3 = this.add.sprite(3*config.width/4, 2*config.height/5,'banner_big').setScale(0.065)
 
-        this.slot4 = this.add.sprite(config.width/4, 4*config.height/5,'banner_big').setScale(0.065)
-        this.slot5 = this.add.sprite(2*config.width/4, 4*config.height/5,'banner_big').setScale(0.065)
-        this.slot6 = this.add.sprite(3*config.width/4, 4*config.height/5,'banner_big').setScale(0.065)
+        this.slot1 = this.add.sprite(config.width/4, 2*config.height/5,'assets_atlas', 'spr_bck_subShopMenu')
+        this.slot2 = this.add.sprite(2*config.width/4, 2*config.height/5,'assets_atlas', 'spr_bck_subShopMenu')
+        this.slot3 = this.add.sprite(3*config.width/4, 2*config.height/5,'assets_atlas', 'spr_bck_subShopMenu')
 
-        this.bannerCoins = this.add.sprite(config.width/4, config.height/7,'banner_light').setScale(0.5)
-        this.coinsText = this.add.text(config.width/4, config.height/7, this.gameStrings.Shop_coinsText, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5)
-        this.bannerDiamonds = this.add.sprite(config.width/2, config.height/7,'banner_light').setScale(0.5).setTint(0xb0b0b0)
-        this.diamondsText = this.add.text(config.width/2, config.height/7, this.gameStrings.Shop_diamondsText, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setTint(0xb0b0b0);;
+        this.slot4 = this.add.sprite(config.width/4, 4*config.height/5,'assets_atlas', 'spr_bck_subShopMenu')
+        this.slot5 = this.add.sprite(2*config.width/4, 4*config.height/5,'assets_atlas', 'spr_bck_subShopMenu')
+        this.slot6 = this.add.sprite(3*config.width/4, 4*config.height/5,'assets_atlas', 'spr_bck_subShopMenu')
+
+        this.bannerCoins = this.add.sprite(config.width/4, config.height/7,'assets_atlas','spr_buttomMenu')
+        this.coinsText = this.add.text(config.width/4, config.height/7, this.gameStrings.Shop_coinsText, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10)
+        this.bannerDiamonds = this.add.sprite(config.width/2, config.height/7,'assets_atlas','spr_buttomMenu').setTint(0xb0b0b0)
+        this.diamondsText = this.add.text(config.width/2, config.height/7, this.gameStrings.Shop_diamondsText, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setTint(0xb0b0b0).setResolution(10);
 
         this.bannerCoins.setInteractive().on('pointerdown', () => {this.selectCoins();})
         this.bannerCoins.disableInteractive()
@@ -48,35 +49,35 @@ class Shop extends Phaser.Scene {
 
         
 
-        this.bannerSlot1 = this.add.sprite(config.width/4, 2.6*config.height/5,'banner_light').setScale(0.5).setTint(0x32a852)
-        this.bannerDlot1Text = this.add.text(config.width/4, 2.6*config.height/5, this.gameStrings.Shop_freeText, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.diamond_1 = this.add.sprite(config.width/4, 1.8*config.height/5,'diamond_1').setVisible(false)
-        this.coin_1 = this.add.sprite(config.width/4, 1.8*config.height/5,'coin_1')
+        this.bannerSlot1 = this.add.sprite(config.width/4, 2.6*config.height/5,'assets_atlas','spr_buttomMenu')
+        this.bannerDlot1Text = this.add.text(config.width/4, 2.6*config.height/5, this.gameStrings.Shop_freeText, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_1 = this.add.sprite(config.width/4, 1.9*config.height/5,'diamond_1').setVisible(false).setOrigin(0.5)
+        this.coin_1 = this.add.sprite(config.width/4, 1.9*config.height/5,'coin_1')
 
-        this.bannerSlot2 = this.add.sprite(2*config.width/4, 2.6*config.height/5,'banner_light').setScale(0.5).setTint(0x32a852)
-        this.bannerDlot2Text = this.add.text(2*config.width/4, 2.6*config.height/5, '1.99 €', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.diamond_2 = this.add.sprite(2*config.width/4, 1.8*config.height/5,'diamond_2').setVisible(false)
-        this.coin_2 = this.add.sprite(2*config.width/4, 1.8*config.height/5,'coin_2')
+        this.bannerSlot2 = this.add.sprite(2*config.width/4, 2.6*config.height/5,'assets_atlas','spr_buttomMenu')
+        this.bannerDlot2Text = this.add.text(2*config.width/4, 2.6*config.height/5, '1.99 €', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_2 = this.add.sprite(2*config.width/4, 1.9*config.height/5,'diamond_2').setVisible(false).setOrigin(0.5)
+        this.coin_2 = this.add.sprite(2*config.width/4, 1.9*config.height/5,'coin_2')
 
-        this.bannerSlot3 = this.add.sprite(3*config.width/4, 2.6*config.height/5,'banner_light').setScale(0.5).setTint(0x32a852)
-        this.bannerDlot3Text = this.add.text(3*config.width/4, 2.6*config.height/5, '4.99 €', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.diamond_3 = this.add.sprite(3*config.width/4, 1.8*config.height/5,'diamond_3').setVisible(false)
-        this.coin_3 = this.add.sprite(3*config.width/4, 1.8*config.height/5,'coin_3')
+        this.bannerSlot3 = this.add.sprite(3*config.width/4, 2.6*config.height/5,'assets_atlas','spr_buttomMenu')
+        this.bannerDlot3Text = this.add.text(3*config.width/4, 2.6*config.height/5, '4.99 €', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_3 = this.add.sprite(3*config.width/4, 1.9*config.height/5,'diamond_3').setVisible(false).setOrigin(0.5)
+        this.coin_3 = this.add.sprite(3*config.width/4, 1.9*config.height/5,'coin_3')
         
-        this.bannerSlot4 = this.add.sprite(config.width/4, 4.6*config.height/5,'banner_light').setScale(0.5).setTint(0x32a852)
-        this.bannerDlot4Text = this.add.text(config.width/4, 4.6*config.height/5, '9.99 €', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.diamond_4 = this.add.sprite(config.width/4, 3.8*config.height/5,'diamond_4').setVisible(false)
-        this.coin_4 = this.add.sprite(config.width/4, 3.8*config.height/5,'coin_4')
+        this.bannerSlot4 = this.add.sprite(config.width/4, 4.6*config.height/5,'assets_atlas','spr_buttomMenu')
+        this.bannerDlot4Text = this.add.text(config.width/4, 4.6*config.height/5, '9.99 €', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_4 = this.add.sprite(config.width/4, 3.9*config.height/5,'diamond_4').setVisible(false).setOrigin(0.5)
+        this.coin_4 = this.add.sprite(config.width/4, 3.9*config.height/5,'coin_4')
 
-        this.bannerSlot5 = this.add.sprite(2*config.width/4, 4.6*config.height/5,'banner_light').setScale(0.5).setTint(0x32a852)
-        this.bannerDlot5Text = this.add.text(2*config.width/4, 4.6*config.height/5, '49.99 €', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.diamond_5 = this.add.sprite(2*config.width/4, 3.8*config.height/5,'diamond_5').setVisible(false)
-        this.coin_5 = this.add.sprite(2*config.width/4, 3.8*config.height/5,'coin_5')
+        this.bannerSlot5 = this.add.sprite(2*config.width/4, 4.6*config.height/5,'assets_atlas','spr_buttomMenu')
+        this.bannerDlot5Text = this.add.text(2*config.width/4, 4.6*config.height/5, '49.99 €', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_5 = this.add.sprite(2*config.width/4, 3.9*config.height/5,'diamond_5').setVisible(false).setOrigin(0.5)
+        this.coin_5 = this.add.sprite(2*config.width/4, 3.9*config.height/5,'coin_5')
 
-        this.bannerSlot6 = this.add.sprite(3*config.width/4, 4.6*config.height/5,'banner_light').setScale(0.5).setTint(0x32a852)
-        this.bannerDlot6Text = this.add.text(3*config.width/4, 4.6*config.height/5, '99.99 €', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.diamond_6 = this.add.sprite(3*config.width/4, 3.8*config.height/5,'diamond_6').setVisible(false)
-        this.coin_6 = this.add.sprite(3*config.width/4, 3.8*config.height/5,'coin_6')
+        this.bannerSlot6 = this.add.sprite(3*config.width/4, 4.6*config.height/5,'assets_atlas','spr_buttomMenu')
+        this.bannerDlot6Text = this.add.text(3*config.width/4, 4.6*config.height/5, '99.99 €', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_6 = this.add.sprite(3*config.width/4, 3.9*config.height/5,'diamond_6').setVisible(false).setOrigin(0.5)
+        this.coin_6 = this.add.sprite(3*config.width/4, 3.9*config.height/5,'coin_6')
 
 
         this.bannerSlot1.setInteractive().on('pointerdown', () => {console.log(1), this.buyScreen(1);})
@@ -92,20 +93,20 @@ class Shop extends Phaser.Scene {
         this.backButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {playerInfo: this.playerSettings});})
 
         //EXTRA
-        this.blackScreen = this.add.image(config.width/2, config.height/2, 'blackScreen').setAlpha(0.5);
+        this.blackScreen = this.add.sprite(config.width/2, config.height/2,'blackScreen').setAlpha(0.5)
         this.blackScreen.setVisible(false)
-        this.extraBanner = this.add.sprite(config.width/2, config.height/2,'banner_long').setScale(0.2)
+        this.extraBanner = this.add.sprite(config.width/2, config.height/2,'assets_atlas','spr_bck_improvementMenu')
         this.extraBanner.setVisible(false)
-        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow').setScale(0.03)
+        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow')
         this.crossButton.setVisible(false)
         this.crossButton.setInteractive().on('pointerdown', () => {this.enableAllButtons();})
 
-        this.confirmationText = this.add.text(config.width/2, config.height/2, '', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false);
-        this.confirmationButton = this.add.image(2.4*config.width/5, 2*config.height/3,'banner_light').setScale(0.5).setVisible(false).setTint(0x32a852).setOrigin(1,0.5)
-        this.yes_Text = this.add.text(1.85*config.width/5, 2*config.height/3, this.gameStrings.Shop_yes, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false);
+        this.confirmationText = this.add.text(config.width/2, config.height/2, '', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
+        this.confirmationButton = this.add.image(2.4*config.width/5, 2*config.height/3,'assets_atlas','spr_buttomMenu').setVisible(false).setOrigin(1,0.5)
+        this.yes_Text = this.add.text(1.85*config.width/5, 2*config.height/3, this.gameStrings.Shop_yes, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
         
-        this.negationButton = this.add.image(2.6*config.width/5, 2*config.height/3,'banner_light').setScale(0.5).setVisible(false).setTint(0xeb4034).setOrigin(0,0.5)
-        this.no_Text = this.add.text(3.15*config.width/5, 2*config.height/3, this.gameStrings.Shop_no, { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false);
+        this.negationButton = this.add.image(2.6*config.width/5, 2*config.height/3,'assets_atlas','spr_buttomMenu').setVisible(false).setOrigin(0,0.5)
+        this.no_Text = this.add.text(3.15*config.width/5, 2*config.height/3, this.gameStrings.Shop_no, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
         this.number = 0
 
         this.confirmationButton.setInteractive().on('pointerdown', () => {this.buy_Slot(this.number);})

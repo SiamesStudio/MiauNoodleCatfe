@@ -8,6 +8,13 @@ class Inicio extends Phaser.Scene {
     init(/*gameStrings*/gameData){
         this.playerSettings = gameData.playerInfo
         console.log(this.playerSettings)
+        this.gameStrings = new InicioStrings();
+
+        if(this.playerSettings.language){
+            this.gameStrings.convertToSpanish()
+        }else{
+            this.gameStrings.convertToEnglish()
+        }
     }
 
     preload(){
@@ -25,6 +32,8 @@ class Inicio extends Phaser.Scene {
         var contactButton = this.add.image(config.width/2, 1.6*config.height/2, 'assets_atlas','main_title_button_contact')
         
         var playButton = this.add.image(config.width/2, 1.1*config.height/2,'assets_atlas','main_title_button_play')
+        var textPlay = this.add.text(config.width/2, 1.2*config.height/2,this.gameStrings.playText,{ font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        var textContact = this.add.text(config.width/2, 1.6*config.height/2,this.gameStrings.contactText,{ font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         //var text = this.add.bitmapText(config.width/2 ,config.height/4, 'BitPap','Miau Noodle Catfe',20).setOrigin(0.5);
         var currentScene = this;
         
@@ -36,7 +45,7 @@ class Inicio extends Phaser.Scene {
         
         playButton.setInteractive().on('pointerdown', () => {
             contactButton.disableInteractive()
-            contactButton.disableInteractive()
+            playButton.disableInteractive()
             setTimeout(function(){
                 currentScene.backgroundMenuOn.setVisible(true)
                 currentScene.backgroundMenuLight.setVisible(true)
@@ -60,7 +69,8 @@ class Inicio extends Phaser.Scene {
                                 currentScene.snd_door.play()                      
                                 setTimeout(function(){                                    
                                     currentScene.music.stop()
-                                    currentScene.cameras.main.fadeOut(1000,0xffffff, 0xffffff,0xffffff,);
+                                    //currentScene.cameras.main.fadeOut(1000,0xffffff, 0xffffff,0xffffff,);
+                                    currentScene.scene.start("Menu", {playerInfo: currentScene.playerSettings });
                                     //setTimeout(function(){
                                     //    currentScene.scene.start("Menu", {playerInfo: currentScene.playerSettings });
                                     //}, 2000);

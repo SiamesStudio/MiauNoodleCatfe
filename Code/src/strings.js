@@ -5,7 +5,7 @@ class MenuStrings {
     this.freeGemsText = 'Free'
     this.spinButtonText = 'Spin'
     this.shopButton = 'Shop'
-    this.upgradesButtonText = 'Upgrades'
+    this.upgradesButtonText = 'Upgrade'
 
     //Options Menu
     this.OptionMenu_title = 'Settings'
@@ -18,6 +18,9 @@ class MenuStrings {
     this.FreeGems_Button = 'FREE'
     
     //Upgrades
+    this.upgradesCoffee = 'Coffee' 
+    this.upgradesPancake = 'Pancake' 
+    this.upgradesNoodles = 'Noodles' 
     this.upgradesCoffeTime = 'Coffee Time'
     this.upgradesCoffeMachine = 'Coffee Machine Lvl'
     this.upgradesPancakeTime = 'Pancake Time'
@@ -63,12 +66,15 @@ convertToSpanish(){
     this.FreeGems_Text = 'Mira este anuncion para \nrecibir gemas extra!'
     this.FreeGems_Button = 'GRATIS'
 
+    this.upgradesCoffee = 'Café' 
+    this.upgradesPancake = 'Tortitas' 
+    this.upgradesNoodles = 'Noodles' 
     this.upgradesCoffeTime = 'Tiempo café'
     this.upgradesCoffeMachine = 'Nivel cafetera'
     this.upgradesPancakeTime = 'Tiempo tortita'
     this.upgradesPancakeBurn = 'Tortita quemada'
-    this.upgradesPancakePan = 'Nivel plancha tortita'
-    this.upgradesPancakeCloth = 'Mantel Tortita'
+    this.upgradesPancakePan = 'Nivel plancha'// tortita'
+    this.upgradesPancakeCloth = 'Mantel tortita'
     this.upgradesNoodleTime = 'Tiempo noodle'
     this.upgradesNoodleBurn = 'Noodle quemado'
     this.upgradesNoodleBoilLvl = 'Nivel noodle'
@@ -78,10 +84,10 @@ convertToSpanish(){
     this.upgradesCoffeMachineDescription = '+1 espacio\ncafetera\nNivel: '
     this.upgradesPancakeTimeDescription = '-2 seg tiempo tortita\nNivel: '
 
-    this.upgradesPancakeBurnDescription = '+2 seg tortitas quemadas\nNivel: '
+    this.upgradesPancakeBurnDescription = '+2 seg tortitas\nquemadas\nNivel: '
     this.upgradesPancakePanDescription = '+1 plancha tortitas\nNivel: '
     this.upgradesPancakeClothDescription = '+1 mantel tortitas\nNivel: '
-    this.upgradesNoodleTimeDescription = '-1 seg tiempo noodles\nNivel: '
+    this.upgradesNoodleTimeDescription = '-1 seg tiempo\nnoodles\nNivel: '
     this.upgradesNoodleBurnDescription = '+2 seg noodles quemados\nNivel: '
     this.upgradesNoodleBoilLvlDescription = '+1 colador noodles\nNivel: '
     this.upgradesNoodleClothDescription ='+1 mantel noodles\nNivel: '
@@ -96,7 +102,7 @@ convertToEnglish(){
     this.freeGemsText = 'Free'
     this.spinButtonText = 'Spin'
     this.shopButton = 'Shop'
-    this.upgradesButtonText = 'Upgrades'
+    this.upgradesButtonText = 'Upgrade'
 
     this.OptionMenu_title = 'Settings'
     this.OptionsMenu_text = 'Mute music:'
@@ -106,6 +112,9 @@ convertToEnglish(){
     this.FreeGems_Text = 'Watch a video to recieve \nextra gems!'
     this.FreeGems_Button = 'FREE'
 
+    this.upgradesCoffee = 'Coffee' 
+    this.upgradesPancake = 'Pancake' 
+    this.upgradesNoodles = 'Noodles' 
     this.upgradesCoffeTime = 'Coffee time'
     this.upgradesCoffeMachine = 'Coffee machine Lvl'
     this.upgradesPancakeTime = 'Pancake time'
@@ -213,5 +222,22 @@ class ContactStrings{
         this.ContactDesignRole = 'GAME DESIGN'
         this.ContactArtRole = 'ART'
         this.ContactGameBy = 'GAME BY'
+    }
+}
+
+class InicioStrings{
+    constructor(){
+        this.playText = "Play"
+        this.contactText = "Contact"
+
+    }
+    convertToSpanish(){
+        this.playText = "Jugar"
+        this.contactText = "Contacto"
+    }
+
+    convertToEnglish(){
+        this.playText = "Play"
+        this.contactText = "Contact"
     }
 }

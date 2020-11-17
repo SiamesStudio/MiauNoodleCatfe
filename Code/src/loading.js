@@ -32,8 +32,8 @@ class Loading extends Phaser.Scene {
     preload(){
         //this.load.image('loading','assets/UI/loading.jpg');
         var sceneRef = this;
-        var loading_Text = this.add.text(config.width/2 ,config.height/3, 'Loading... 0%', { font: "30px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        var lastAssetLoaded = this.add.text(config.width/2 ,2*config.height/3, 'Asset: ', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        var loading_Text = this.add.text(config.width/2 ,config.height/3, 'Loading... 0%', { font: "30px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        var lastAssetLoaded = this.add.text(config.width/2 ,2*config.height/3, 'Asset: ', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         var progressBox = this.add.rectangle(config.width/2, config.height/2, 3.7*config.width/7, 25, 0xa4b0af).setOrigin(0.5);
         var progressBar = this.add.rectangle(config.width/4, config.height/2, 0, 20, 0x9e616e);
         var loadingText = "Loading... ";
@@ -176,6 +176,7 @@ class Loading extends Phaser.Scene {
         this.load.image('bg_maintitle_on','assets/bg_maintitle_on.png');
         this.load.image('bg_maintitle_off','assets/bg_maintitle_off.png');
         this.load.image('bg_maintitle_light','assets/bg_maintitle_light.png');
+        this.load.image('bg_interior','assets/bg_interior.png');
 
 
         this.loadCoffeeScreen();
@@ -308,7 +309,7 @@ class Loading extends Phaser.Scene {
         
         this.score = parseInt(localStorage.getItem('score')) || 0
         localStorage.setItem('score', this.score + 1)
-        this.add.text(config.width/2 ,3*config.height/4, this.score, { font: "20px Arial", fill: "#ffffff", align: "center" });
+        this.add.text(config.width/2 ,3*config.height/4, this.score, { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setResolution(10);
 
         //localStorage.removeItem('playerSettings')
         

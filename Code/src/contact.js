@@ -17,19 +17,19 @@ class Contact extends Phaser.Scene {
 
     create(){
 
-        //this.add.text(config.width/3, 1.5*config.height/12, this.gameStrings.ContactDesignRole, { font: "12px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        //this.add.text(config.width/3, 2.5*config.height/12, 'Álvaro Roger Zapata', { font: "12px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.add.text(config.width/3, 1.5*config.height/12, this.gameStrings.ContactDesignRole, { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.add.text(config.width/3, 2.5*config.height/12, 'Álvaro Roger Zapata', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
         //
-        //this.add.text(config.width/3, 4*config.height/12, this.gameStrings.ContactProgrammingRole, { font: "12px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        //this.add.text(config.width/3, 5*config.height/12, 'Jose Luis Murcia Gamez', { font: "12px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        //this.add.text(config.width/3, 6*config.height/12, 'Lucía Ortuño Guisado', { font: "12px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        //this.add.text(config.width/3, 7*config.height/12, 'Daniel Brenlla Gómez', { font: "12px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.add.text(config.width/3, 4*config.height/12, this.gameStrings.ContactProgrammingRole, { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.add.text(config.width/3, 5*config.height/12, 'Jose Luis Murcia Gamez', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.add.text(config.width/3, 6*config.height/12, 'Lucía Ortuño Guisado', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.add.text(config.width/3, 7*config.height/12, 'Daniel Brenlla Gómez', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
 
-        //this.add.text(config.width/3, 8.5*config.height/12, this.gameStrings.ContactArtRole, { font: "12px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        //this.add.text(config.width/3, 9.5*config.height/12, 'Patricia Ruiz Bermejo', { font: "12px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        //this.add.text(config.width/3, 10.5*config.height/12, 'Mariam Baradi Del Álamo', { font: "12px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.add.text(config.width/3, 8.5*config.height/12, this.gameStrings.ContactArtRole, { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.add.text(config.width/3, 9.5*config.height/12, 'Patricia Ruiz Bermejo', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.add.text(config.width/3, 10.5*config.height/12, 'Mariam Baradi Del Álamo', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
 
-        //this.add.text(3*config.width/4, 4*config.height/12, this.gameStrings.ContactGameBy, { font: "12px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        //this.add.text(3*config.width/4, 4*config.height/12, this.gameStrings.ContactGameBy, { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
         //var logo = this.add.image(3*config.width/4, 7*config.height/12,'spr_logoTeam_Inicio').setScale(0.15).setOrigin(0.5);
 
 
@@ -92,8 +92,8 @@ class Contact extends Phaser.Scene {
 
 
         this.radioSongPanel = this.add.image(1.55*config.width/4, 2.95*config.height/5,'assets_atlas','spr_pantalla_canciones').setOrigin(0,0.5)
-        //this.radioSongText = this.add.bitmapText(1.55*config.width/4, 2.95*config.height/5, this.titleSongs.getAt(this.globalIndex), { font: "8px Arial", fill: "#000000", align: "center" }).setOrigin(0,0.5);
-        this.radioSongText = this.add.bitmapText(1.55*config.width/4, 2.95*config.height/5, 'BitPap' ,this.titleSongs.getAt(this.globalIndex),8).setOrigin(0,0.5);
+        this.radioSongText = this.add.text(1.55*config.width/4, 2.95*config.height/5, this.titleSongs.getAt(this.globalIndex), { font: "8px PixelFont", fill: "#000000", align: "center" }).setOrigin(0,0.5).setResolution(10);
+        //this.radioSongText = this.add.bitmapText(1.55*config.width/4, 2.95*config.height/5, 'BitPap' ,this.titleSongs.getAt(this.globalIndex),8).setOrigin(0,0.5);
         
         this.radioSongTitleStartPosition = 1.55*config.width/4 - this.radioSongText.width
         this.radioSongPanelCrystal = this.add.image(1.55*config.width/4, 2.95*config.height/5,'spr_cristal_canciones').setOrigin(0,0.5)
