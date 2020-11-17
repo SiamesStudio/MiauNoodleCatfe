@@ -1,4 +1,4 @@
-var joselu = true;
+var joselu = false;
 
 class scene1 extends Phaser.Scene {
 	constructor() {
@@ -16,7 +16,8 @@ class scene1 extends Phaser.Scene {
             level: 1,
             experience: 0,
             language: false,
-            audioMuted: false,
+			audioMuted: false,
+			gameLevel:1,
             moneySpent: 0,
             upgrades : {
                 coffeeTime : 0,
@@ -43,11 +44,69 @@ class scene1 extends Phaser.Scene {
 	create(){
 		var gm = new GameManager(this);
 		this.gameTimer = this.time.addEvent({ delay: GameManager.gameMinutes*60*1000, callback: finishGame, callbackScope: this });
+		this.resetVariables();
 		this.clientsSettings();
         this.coffeeSetting();
         this.pancakesSetting();
 		this.noodlesSetting();
+		this.interfaceSettings();
         this.cursors = this.input.keyboard.createCursorKeys();
+	}
+
+	resetVariables(){
+		GameManager.globalHappiness=50;
+		GameManager.totalHappiness=50;
+		GameManager.customerCounter=1;
+		GameManager.gameOn=true;
+		GameManager.levelEarnedCoins=0;
+	}
+
+
+	interfaceSettings(){
+		this.coinSlider=this.add.sprite(config.width*0.5,config.height/13,'assets_atlas','spr_ui_slider')
+        this.coinIcon=this.add.sprite(config.width*0.4,config.height/11,'assets_atlas','spr_ui_icon_coin')
+        this.numCoins = this.add.text(config.width*0.5,config.height/13, GameManager.levelEarnedCoins, { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+		
+		this.chefLevelSlider=this.add.sprite(3*config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
+        this.add.sprite(config.width*0.65,config.height/11,'assets_atlas','spr_ui_chefLvl')
+        this.numPlayerLevel = this.add.text(config.width*0.65,config.height/11, this.playerSettings.level, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
+        this.numChefPoints = this.add.text(this.chefLevelSlider.x+6,config.height/13, "", { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5);
+		
+		this.progressBarPosX=(0.88*config.width/2)+1;
+		this.slider=this.add.sprite(config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
+		this.progressBar=this.add.rectangle(this.progressBarPosX, config.height/8.5, 3.7*config.width/7, 25, 0xd1c0ff)
+		this.falseProgressBar=this.add.rectangle(config.width/6+3, config.height/13-2, 2,2, 0xd1c0ff)
+		this.littleSlider=this.add.sprite(config.width/4+5 ,config.height/13,'assets_atlas','spr_ui_volumen')
+		this.progressBar.height=this.littleSlider.height;
+		this.progressBar.width=(this.littleSlider.width-3)/2;
+		this.falseProgressBar.height=this.progressBar.height-4
+		this.add.sprite(config.width*0.145,config.height/11,'assets_atlas','spr_ui_icon_happy')
+		
+		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings')
+
+
+		this.coinSlider=this.add.sprite(config.width*0.5+config.width,config.height/13,'assets_atlas','spr_ui_slider')
+        this.coinIcon=this.add.sprite(config.width*0.4+config.width,config.height/11,'assets_atlas','spr_ui_icon_coin')
+        this.noodlenumCoins = this.add.text(config.width*0.5+config.width,config.height/13, GameManager.levelEarnedCoins, { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+		
+		this.chefLevelSlider=this.add.sprite(3*config.width/4 +config.width,config.height/13,'assets_atlas','spr_ui_slider')
+        this.add.sprite(config.width*0.65+config.width,config.height/11,'assets_atlas','spr_ui_chefLvl')
+        this.noodlenumPlayerLevel = this.add.text(config.width*0.65+config.width,config.height/11, this.playerSettings.level, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
+        this.noodlenumChefPoints = this.add.text(this.chefLevelSlider.x+6,config.height/13, "aaaaaaaaa", { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5);
+		GameManager.scene.uploadPlayerLevel(0)
+		
+		this.progressBarPosX=(0.88*config.width/2)+1+config.width;
+		this.slider=this.add.sprite(config.width/4 +config.width,config.height/13,'assets_atlas','spr_ui_slider')
+		this.noodleprogressBar=this.add.rectangle(this.progressBarPosX, config.height/8.5, 3.7*config.width/7, 25, 0xd1c0ff)
+		this.falseProgressBar=this.add.rectangle(config.width/6+3+config.width, config.height/13-2, 2,2, 0xd1c0ff)
+		this.littleSlider=this.add.sprite(config.width/4+5 +config.width,config.height/13,'assets_atlas','spr_ui_volumen')
+		this.noodleprogressBar.height=this.littleSlider.height;
+		this.noodleprogressBar.width=(this.littleSlider.width-3)/2;
+		this.falseProgressBar.height=this.progressBar.height-4
+		this.add.sprite(config.width*0.145+config.width,config.height/11,'assets_atlas','spr_ui_icon_happy')
+		
+		this.options = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings')
+        
 	}
 
 	clientsSettings(){
@@ -58,8 +117,9 @@ class scene1 extends Phaser.Scene {
     	new Client(2, 0, [2,2,1,0], [1,1,1,0]);
     	new Client(3, 2, [2,3,1,3], [1,2,1,1,0]);
 		new Client(4, 2, [2,2,1,1], [1,0,2,0]);
-		new Client(5, 1, [2,0,2,1,2], [1,0,2,0])
-    	console.log(Client.clientList)
+		new Client(5, 1, [2,0,2,1,2], [1,0,2,0]);
+		new Client(6, 1, [2,1,2,2,3], [1,2,2,1,1]);
+		new Client(7, 1, [2,3,2,0,2], [1,3,1,0]);
     	//añadir clientes a mano
   	}
 
@@ -72,7 +132,7 @@ class scene1 extends Phaser.Scene {
 		var goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.08, 'spr_ui_arrow');
 		goToNoodlesButton.setInteractive().on('pointerdown', function(pointer){
 			cam.centerOnX(config.width + config.width/2);
-    	    GameManager.scene.cameras.main.fadeOut(25);
+			GameManager.scene.cameras.main.fadeOut(25);
 		})
 
 		var coffeeMachineLvl = GameManager.scene.playerSettings.upgrades.coffeeMachineLevel;
@@ -379,8 +439,16 @@ class scene1 extends Phaser.Scene {
 		  }
 		}
     	
-    	if(!GameManager.gameOn && Client.clientsInRestaurant.length==0){
-			//terminar el juego
+		if(!GameManager.gameOn && Client.clientsInRestaurant.length==0){ //condicion de victoria
+			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
+			this.savePlayerSettings();
+			GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
+		}
+
+		if(GameManager.globalHappiness < 20){
+			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
+			this.savePlayerSettings();
+			GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		}
 
 		if(!GameManager.grabbedItemImg) return;
@@ -441,6 +509,60 @@ class scene1 extends Phaser.Scene {
 
 	savePlayerSettings(){
         localStorage.setItem('playerSettings', JSON.stringify(this.playerSettings))
+	}
+	
+	uploadPlayerLevel(number){
+        var expPerLevel = [0,200,1200,6200,21200,46200,96200]
+        //if(this.playerSettings.experience < expPerLevel[expPerLevel.length - 1]){//Comprobamos que 
+            if(this.playerSettings.experience + number > expPerLevel[expPerLevel.length - 1]){
+                this.playerSettings.experience =  expPerLevel[expPerLevel.length - 1];
+            }else{
+                this.playerSettings.experience += number;
+            }
+            
+        //}
+        
+
+        var currentLevel = this.getLevel(expPerLevel,0,expPerLevel.length, this.playerSettings.experience)
+        
+        if(currentLevel+1 < expPerLevel.length && currentLevel >0){
+			this.numChefPoints.setText( (this.playerSettings.experience - expPerLevel[currentLevel]) +"/"+ (expPerLevel[currentLevel+1] - expPerLevel[currentLevel]) )
+			this.noodlenumChefPoints.setText( (this.playerSettings.experience - expPerLevel[currentLevel]) +"/"+ (expPerLevel[currentLevel+1] - expPerLevel[currentLevel]) )
+        }
+        else if(currentLevel == 0){
+			this.numChefPoints.setText( (this.playerSettings.experience - expPerLevel[currentLevel]) +"/"+ expPerLevel[currentLevel+1] )
+			this.noodlenumChefPoints.setText( (this.playerSettings.experience - expPerLevel[currentLevel]) +"/"+ expPerLevel[currentLevel+1] )
+		}
+
+        else{
+			this.numChefPoints.setText( (expPerLevel[expPerLevel.length - 1] - expPerLevel[expPerLevel.length - 2]) +"/50000" )
+			this.noodlenumChefPoints.setText( (expPerLevel[expPerLevel.length - 1] - expPerLevel[expPerLevel.length - 2]) +"/50000" )
+        }
+		
+        return currentLevel + 1;
+    }
+
+    getLevel(expArray,ini, fin, playerExp){
+
+        var mitad =  Math.floor((ini+fin) /2)
+
+        if (ini>fin){
+            return mitad
+        }
+        else{
+            if(expArray[mitad] == playerExp){
+                return mitad;
+            }
+            else{
+                if(playerExp < expArray[mitad]){
+                    return this.getLevel(expArray, ini , mitad-1, playerExp)
+                }
+                else{
+                    return this.getLevel(expArray, mitad+1, fin, playerExp)
+                }
+            }
+        }
+
     }
 	
 }
@@ -478,6 +600,9 @@ class GameManager
 	static gameOn=true;
 
 	static levelEarnedCoins=0;
+	static globalHappiness=50;
+	static customerCounter=1;
+	static totalHappiness=50;
 
 	constructor(scene)
 	{

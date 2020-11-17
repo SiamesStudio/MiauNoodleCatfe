@@ -12,6 +12,7 @@ class Loading extends Phaser.Scene {
             experience: 0,
             language: false,
             audioMuted: false,
+            gameLevel:1,
             moneySpent: 0,
             upgrades : {
                 cofeeTime : 0,

@@ -19,11 +19,12 @@ class Inicio extends Phaser.Scene {
         var scene = this;
         this.backgroundMenuOff = this.add.sprite(config.width/2,config.height/2,'bg_maintitle_off')
         this.backgroundMenuOn = this.add.sprite(config.width/2,config.height/2,'bg_maintitle_on').setVisible(false)
+        this.backgroundMenuLight = this.add.sprite(config.width/2,config.height/2,'bg_maintitle_light').setVisible(false).setBlendMode(Phaser.BlendModes.SOFT_LIGHT).setAlpha(0.6)
         //var logo = this.add.image(config.width/2,config.height/4,'logo').setScale(0.4);
         //var logo2 = this.add.image(4*config.width/5,4*config.height/5,'logo2').setScale(0.15);
-        var contactButton = this.add.image(config.width/2, 1.5*config.height/3, 'assets_atlas','main_title_button_contact')
+        var contactButton = this.add.image(config.width/2, 1.6*config.height/2, 'assets_atlas','main_title_button_contact')
         
-        var playButton = this.add.image(config.width/2, config.height/2,'assets_atlas','main_title_button_play')
+        var playButton = this.add.image(config.width/2, 1.1*config.height/2,'assets_atlas','main_title_button_play')
         //var text = this.add.bitmapText(config.width/2 ,config.height/4, 'BitPap','Miau Noodle Catfe',20).setOrigin(0.5);
         var currentScene = this;
         
@@ -35,20 +36,26 @@ class Inicio extends Phaser.Scene {
         
         playButton.setInteractive().on('pointerdown', () => {
             contactButton.disableInteractive()
+            contactButton.disableInteractive()
             setTimeout(function(){
                 currentScene.backgroundMenuOn.setVisible(true)
+                currentScene.backgroundMenuLight.setVisible(true)
                 currentScene.backgroundMenuOff.setVisible(false)
                 setTimeout(function(){
                     currentScene.backgroundMenuOn.setVisible(false)
+                    currentScene.backgroundMenuLight.setVisible(false)
                     currentScene.backgroundMenuOff.setVisible(true)
                     setTimeout(function(){
                         currentScene.backgroundMenuOn.setVisible(true)
+                        currentScene.backgroundMenuLight.setVisible(true)
                         currentScene.backgroundMenuOff.setVisible(true)
                         setTimeout(function(){
                             currentScene.backgroundMenuOn.setVisible(false)
+                            currentScene.backgroundMenuLight.setVisible(false)
                             currentScene.backgroundMenuOff.setVisible(true)
                             setTimeout(function(){
                                 currentScene.backgroundMenuOn.setVisible(true)
+                                currentScene.backgroundMenuLight.setVisible(true)
                                 currentScene.backgroundMenuOff.setVisible(false)    
                                 currentScene.snd_door.play()                      
                                 setTimeout(function(){                                    
