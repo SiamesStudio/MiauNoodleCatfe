@@ -167,6 +167,7 @@ class Client{
       this.exitRestaurant();
     }
     GameManager.scene.numCoins.setText(GameManager.levelEarnedCoins);
+    GameManager.scene.noodlenumCoins.setText(GameManager.levelEarnedCoins);
   }
 
   exitRestaurant(){
@@ -180,10 +181,12 @@ class Client{
     GameManager.scene.playerSettings.level=lvl;
     GameManager.scene.savePlayerSettings();
     GameManager.scene.numPlayerLevel.setText(lvl)
+    GameManager.scene.noodlenumPlayerLevel.setText(lvl)
     GameManager.customerCounter++;
     GameManager.totalHappiness+=exp;
     GameManager.globalHappiness=Math.floor(GameManager.totalHappiness*(1/GameManager.customerCounter))
-
+    GameManager.scene.progressBar.width=GameManager.scene.littleSlider.width*(GameManager.globalHappiness/100)
+    GameManager.scene.noodleprogressBar.width=GameManager.scene.littleSlider.width*(GameManager.globalHappiness/100)
     this.clientImg.disableBody(true,true);
     
     if(this.place==1){
