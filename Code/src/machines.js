@@ -64,10 +64,30 @@ class TableclothsNoodle extends Machine
 	constructor(img, upgradeLVL)
 	{
 		super(img, upgradeLVL);
-		for(var i=0; i<this.upgradeLVL+1; i++)
+		var heightOffset=0.045;
+		switch(upgradeLVL)
 		{
-			var _img = this.img.getAt(i);	
-			TableclothsNoodle.slots.add(new Slot(_img.x,_img.y));
+			case 0:
+				TableclothsNoodle.slots.add(new Slot(this.img.getAt(0).x,this.img.getAt(0).y-config.height*heightOffset));
+			break;
+
+			case 1:
+				TableclothsNoodle.slots.add(new Slot(this.img.getAt(0).x,this.img.getAt(0).y-config.height*heightOffset));
+				TableclothsNoodle.slots.add(new Slot(this.img.getAt(1).x,this.img.getAt(1).y-config.height*heightOffset));
+			break;
+
+			case 2:
+				TableclothsNoodle.slots.add(new Slot(this.img.getAt(0).x,this.img.getAt(0).y-config.height*heightOffset));
+				TableclothsNoodle.slots.add(new Slot(this.img.getAt(1).x,this.img.getAt(1).y-config.height*heightOffset));
+				TableclothsNoodle.slots.add(new Slot(this.img.getAt(2).x,this.img.getAt(2).y-config.height*heightOffset));
+			break;
+
+			case 3:
+				TableclothsNoodle.slots.add(new Slot(this.img.getAt(0).x,this.img.getAt(0).y-config.height*heightOffset));
+				TableclothsNoodle.slots.add(new Slot(this.img.getAt(1).x,this.img.getAt(1).y-config.height*heightOffset));
+				TableclothsNoodle.slots.add(new Slot(this.img.getAt(2).x,this.img.getAt(2).y-config.height*heightOffset));
+				TableclothsNoodle.slots.add(new Slot(this.img.getAt(3).x,this.img.getAt(3).y-config.height*heightOffset));
+			break;
 		}
 	}
 }
@@ -86,7 +106,7 @@ class Griddle extends Machine
 }
 
 
-class Strainer extends Machine
+class Strainer extends Machine //arregla joselu
 {
 	static slots = new Phaser.Structs.List();
 	constructor(img, upgradeLVL)

@@ -13,10 +13,8 @@ class Inicio extends Phaser.Scene {
     preload(){
         
     }
-
+    
     create(){
-
-        
         //Inicio
         var scene = this;
         this.backgroundMenuOff = this.add.sprite(config.width/2,config.height/2,'bg_maintitle_off')
@@ -88,16 +86,8 @@ class Inicio extends Phaser.Scene {
             camera.fadeIn(1000,0xffffff,0xffffff,0xffffff);
             currentScene.scene.start("Menu", {playerInfo: currentScene.playerSettings });          
         });
-        //currentScene.cameras.main.onFadeComplete.add(this.nextScene(), this);
-
-
-//
-
-    
-             
-        
-    }
-
+        //currentScene.cameras.main.onFadeComplete.add(this.nextScene(), this);  
+    } 
 
     nextScene(){
         currentScene.scene.start("Menu", {playerInfo: currentScene.playerSettings });

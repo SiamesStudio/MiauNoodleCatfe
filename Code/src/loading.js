@@ -120,33 +120,54 @@ class Loading extends Phaser.Scene {
 
 
         //ANIMATIONS
-        this.load.spritesheet('anim_ladle_0', 'assets/animaciones/JWRRSS_ladle_animation_0.png',
+        this.load.spritesheet('anim_ladle_kimuchi', 'assets/animaciones/anim_ladle_kimuchi.png',
         {frameWidth: 48,frameHeight: 75}
         );
         
-        this.load.spritesheet('anim_ladle_1', 'assets/animaciones/JWRRSS_ladle_animation_1.png',
+        this.load.spritesheet('anim_ladle_miso', 'assets/animaciones/anim_ladle_miso.png',
         {frameWidth: 48,frameHeight: 75}
         );
 
-        this.load.spritesheet('anim_ladle_2', 'assets/animaciones/JWRRSS_ladle_animation_2.png',
+        this.load.spritesheet('anim_ladle_shio', 'assets/animaciones/anim_ladle_shio.png',
         {frameWidth: 48,frameHeight: 75}
         );
 
-        this.load.spritesheet('anim_ladle_3', 'assets/animaciones/JWRRSS_ladle_animation_3.png',
+        this.load.spritesheet('anim_ladle_shoyu', 'assets/animaciones/anim_ladle_shoyu.png',
         {frameWidth: 48,frameHeight: 75}
         );
 
-        this.load.spritesheet('anim_olla_burbujas', 'assets/animaciones/JWRRSS_olla_burbujas.png',
+        this.load.spritesheet('anim_pot_bubbles', 'assets/animaciones/anim_pot_bubbles.png',
         {frameWidth: 84,frameHeight: 85}
         );
 
-        this.load.spritesheet('anim_olla_noodles_burnt', 'assets/animaciones/JWRRSS_olla_noodles_burnt.png',
+        this.load.spritesheet('anim_pot_noodles_burnt', 'assets/animaciones/anim_pot_noodles_burnt.png',
         {frameWidth: 84,frameHeight: 85}
         );
 
-        this.load.spritesheet('anim_olla_noodles_cooking', 'assets/animaciones/JWRRSS_olla_noodles_cooking.png',
-        {frameWidth: 84,frameHeight: 85}
+        this.load.spritesheet('anim_syrup_caramel', 'assets/animaciones/anim_syrup_caramel.png',
+        {frameWidth: 26,frameHeight: 77}
         );
+
+        this.load.spritesheet('anim_syrup_chocolate', 'assets/animaciones/anim_syrup_chocolate.png',
+        {frameWidth: 26,frameHeight: 77}
+        );
+
+        this.load.spritesheet('anim_syrup_strawberry', 'assets/animaciones/anim_syrup_strawberry.png',
+        {frameWidth: 26,frameHeight: 77}
+        );
+
+        this.load.spritesheet('anim_pancake', 'assets/animaciones/anim_pancake.png',
+        {frameWidth: 20,frameHeight: 29}
+        );
+
+        this.load.spritesheet('anim_coffee', 'assets/animaciones/anim_coffee.png',
+        {frameWidth: 13,frameHeight: 21}
+        );
+        /*
+        this.load.spritesheet('anim_coffeeMachine', 'assets/animaciones/anim_coffeeMachine.png',
+        {frameWidth: 20,frameHeight: 29}
+        );
+        */
         
         this.load.multiatlas('assets_atlas', 'assets/assets.json', 'assets');
         this.load.image('spr_cristal_canciones','assets/UI/UI_temporal/spr_cristal_canciones.png');
@@ -220,15 +241,13 @@ class Loading extends Phaser.Scene {
     	// Animación de hervir: nombrado dependiente de la implementación.
         this.load.image('spr_bowls','assets/spr_bowls.png');
         this.load.image('spr_ui_arrow','assets/spr_ui_arrow.png');
-        this.load.image('spr_noodlesSpawner','assets/spr_noodlesSpawner.png');
         this.load.image('spr_sauces_posters','assets/spr_sauces_posters.png');
-        this.load.image('spr_strainer','assets/spr_strainer.png');
-        this.load.image('spr_topping_egg','assets/spr_topping_egg.png');
-        this.load.image('spr_topping_naruto','assets/spr_topping_naruto.png');
-        this.load.image('spr_topping_mushroom','assets/spr_topping_mushroom.png');
-        this.load.image('spr_topping_springonion','assets/spr_topping_springonion.png');
         this.load.image('spr_background_noodles','assets/spr_background_noodles.png');
-
+        this.load.image('bg_noodles','assets/bg_noodles.png');
+        this.load.image('spr_bg_topping_egg','assets/spr_bg_topping_egg.png');
+        this.load.image('spr_bg_topping_mushroom','assets/spr_bg_topping_mushroom.png');
+        this.load.image('spr_bg_topping_naruto','assets/spr_bg_topping_naruto.png');
+        this.load.image('spr_bg_topping_springonion','assets/spr_bg_topping_springonion.png');
     	// Animación del cucharón echando cada salsa. (3 en total): nombrado dependiente de la implementación
 
     	/* 

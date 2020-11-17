@@ -4,7 +4,7 @@ class Coffee
 	constructor(assignedSlot, fillingSound, readySound)
 	{
 		this.index = 0;
-		this.img = GameManager.scene.physics.add.sprite(0,0,'assets_atlas','spr_glass_empty');
+		this.img = GameManager.scene.physics.add.sprite(0,0,'anim_coffee');
 		this.posx;
 		this.posy;
 		GameManager.coffeeContainer;
@@ -19,6 +19,17 @@ class Coffee
 		this.fillingSound = fillingSound;
 		this.readySound = readySound;
 		this.fillingSound.play();
+		this.img.setDepth(3);
+		var time = this.doneTime;
+		var animation = GameManager.scene.anims.create({
+    		key: 'fillCoffee',
+    		frames: GameManager.scene.anims.generateFrameNumbers('anim_coffee', { start: 0, end: 21}),
+    		duration: 1000*time,
+    		repeat: 0
+		});
+
+		animation.duration = Coffee.coffeeTime;
+		this.img.anims.play('fillCoffee');
 	}
 
 	coffeeDone()
@@ -26,7 +37,7 @@ class Coffee
 		this.readySound.play();
 		this.fillingSound.stop();
 		this.done = true;
-		this.img.setTexture('assets_atlas', 'spr_glass_filled'); 
+		//this.img.setTexture('assets_atlas', 'spr_glass_filled'); 
 
 		this.dish = new Dish([this.index]);
 		GameManager.coffeeDishes.add(this);
@@ -110,6 +121,7 @@ class Pancake
 		var pancake = this;
 		if(!this.side1Done)
 		{
+			this.readySound.play();
 			this.side1Done = true;
 		} 
 		else if(this.side1Done) // The pancake is finally done
@@ -121,6 +133,7 @@ class Pancake
 
 			this.img.on('dragstart', function(pointer,dragX,dragY){
 				GameManager.tapSound.play();
+				this.setDepth(this.depth+5);
 				pancake.sideTimer.paused = true;
         		pancake.burnTimer.paused = true;	
 			})
@@ -132,6 +145,7 @@ class Pancake
         	})	
 			
 			this.img.on('dragend',() => {
+				pancake.img.setDepth(pancake.img.depth-5);
 				pancake.cookingSound.play();	
 				pancake.dragEndBehaviour();		
        		})
@@ -353,10 +367,8 @@ class Noodles
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(1);
 		});
-		food.setPosition(dishImg.x,dishImg.y);
+		food.setPosition(dishImg.x,dishImg.y-config.height*0.05);
 		food.removeInteractive();
-		food.setScale(0.9);
-		//food.disableBody(true,true);
 		this.freeStrainer();
 		/* Update dish and create sprite according to the dish */
 		// AQUI JOSELES ATACA JAJAJAJ
@@ -364,7 +376,8 @@ class Noodles
 		{
 			container.dish = new Dish([this.index,-1,0]);
 			container.dishContainer.add(food);
-
+			container.dishContainer.sendToBack(food);
+			container.dishContainer.sendToBack(container.img);
 			if(container.sauce != -1) container.dish.sauce = container.sauce;
 			for(var i=0; i<container.toppings.length; i++)
 			{
@@ -397,38 +410,38 @@ class Topping
 		{	
 			case 0:
 				if(pancake) { staticImgKey = 'spr_topping_lacasitos'; this.imgKey='spr_pancake_lacasitos'; xMul=0.3; yMul=0.9;}
-				else { staticImgKey = 'spr_topping_mushroom'; this.imgKey = 'spr_noodle_mushroom'; xMul=0.5; yMul=0.6;}
+				else { staticImgKey = 'spr_bg_topping_mushroom'; this.imgKey = 'spr_topping_mushroom'; xMul=0.5; yMul=0.545;}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
 				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
-				else{this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey); this.staticImg.setScale(0.22);} 
+				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
 			break;
 
 			case 1:
 				if(pancake) { staticImgKey = 'spr_topping_coconut'; this.imgKey = 'spr_pancake_coconut'; xMul=0.385; yMul=0.9;}
-				else { staticImgKey = 'spr_topping_egg'; this.imgKey = 'spr_noodle_egg'; xMul=0.5; yMul=0.7}
+				else { staticImgKey = 'spr_bg_topping_egg'; this.imgKey = 'spr_topping_egg'; xMul=0.5; yMul=0.675}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
 				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
-				else{this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey); this.staticImg.setScale(0.22);} 
+				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
 			break;
 
 			case 2:
 				if(pancake) { staticImgKey = 'spr_topping_strawberry'; this.imgKey = 'spr_pancake_strawberry'; xMul=0.47; yMul=0.9;}
-				else { staticImgKey = 'spr_topping_naruto'; this.imgKey = 'spr_noodle_naruto'; xMul=0.61; yMul=0.6}
+				else { staticImgKey = 'spr_bg_topping_naruto'; this.imgKey = 'spr_topping_naruto'; xMul=0.628; yMul=0.55}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
 				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
-				else{this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey); this.staticImg.setScale(0.22);}
+				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
 			break;
 
 			case 3:
 				if(pancake) { staticImgKey = 'spr_topping_banana'; this.imgKey = 'spr_pancake_banana'; xMul=0.56; yMul=0.9;}
-				else { staticImgKey = 'spr_topping_springonion'; this.imgKey = 'spr_noodle_springonion'; xMul=0.63; yMul=0.72}
+				else { staticImgKey = 'spr_bg_topping_springonion'; this.imgKey = 'spr_topping_springonion'; xMul=0.648; yMul=0.69}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
-				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey)
-				else{this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey); this.staticImg.setScale(0.22);}
+				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
+				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
 			break;
 			
 			default:
@@ -436,10 +449,12 @@ class Topping
 			break;
 		}
 		var selfRef = this;
-		this.img.setDepth(2);
+		this.img.setDepth(4);
 		this.img.setAlpha(0);
 		this.staticImg.setDepth(1);
-		var clonedImg = GameManager.scene.add.image(this.staticImg.x, this.staticImg.y,'assets_atlas',staticImgKey);
+		var clonedImg;
+		if(pancake)clonedImg = GameManager.scene.add.image(this.staticImg.x, this.staticImg.y,'assets_atlas',staticImgKey);
+		else{clonedImg = GameManager.scene.add.image(this.staticImg.x, this.staticImg.y,staticImgKey);}
 		clonedImg.setAlpha(0.2);
 		clonedImg.setInteractive({draggable: true});
 
@@ -515,7 +530,7 @@ class Topping
 				numToppings = container.dish.numToppings;
 			}	
 		}
-		this.addToppingToContainer(container, numToppings);
+		this.addToppingToContainer(container, numToppings-1);
 	}
 
 	addToppingToContainer(container, numToppings)
@@ -543,10 +558,12 @@ class Topping
 
 class Syrup
 {
+	static servingTime = 4;
 	constructor(index, syrupSound)
 	{
 		this.index = index;
 		this.img;
+		this.staticImg;
 		this.hovering=false;
 		this.posx;
 		this.posy;
@@ -554,18 +571,33 @@ class Syrup
 		this.servingTimer;
 		this.syrupSound = syrupSound;
 		this.dishContainer;
+		this.animIdleKey;
+		this.animPlayKey; 
+		this.animKey; 
 		switch(this.index)
 		{
 			case 0:
-				this.img = GameManager.scene.physics.add.sprite(config.width * 0.25,config.height * 0.43,'assets_atlas','spr_syrup_strawberry'); 
+				this.animPlayKey = 'anim_syrup_strawberry_play'; 
+				this.animKey = 'anim_syrup_strawberry'; 
+				this.animIdleKey = 'anim_syrup_strawberry_idle';
+				this.img = GameManager.scene.physics.add.sprite(config.width * 0.25,config.height * 0.435,'anim_syrup_strawberry'); 
+				this.staticImg = GameManager.scene.physics.add.sprite(config.width * 0.25,config.height * 0.435,'assets_atlas','spr_syrup_strawberry');  
 			break;
 
 			case 1:
-				this.img = GameManager.scene.physics.add.sprite(config.width * 0.31 ,config.height * 0.43,'assets_atlas','spr_syrup_chocolate'); 
+				this.animPlayKey = 'anim_syrup_chocolate_play'; 
+				this.animKey = 'anim_syrup_chocolate';
+				this.animIdleKey = 'anim_syrup_chocolate_idle'; 
+				this.img = GameManager.scene.physics.add.sprite(config.width * 0.31 ,config.height * 0.435,'anim_syrup_chocolate'); 
+				this.staticImg = GameManager.scene.physics.add.sprite(config.width * 0.31,config.height * 0.435,'assets_atlas','spr_syrup_chocolate');  
 			break;
 
 			case 2:
-				this.img = GameManager.scene.physics.add.sprite(config.width * 0.37 ,config.height * 0.43,'assets_atlas','spr_syrup_caramel'); 
+				this.animPlayKey = 'anim_syrup_caramel_play'; 
+				this.animKey = 'anim_syrup_caramel';
+				this.animIdleKey = 'anim_syrup_caramel_idle'; 
+				this.img = GameManager.scene.physics.add.sprite(config.width * 0.37 ,config.height * 0.435,'anim_syrup_caramel');
+				this.staticImg = GameManager.scene.physics.add.sprite(config.width * 0.37,config.height * 0.435,'assets_atlas','spr_syrup_caramel');   
 			break;
 
 			default:
@@ -573,7 +605,24 @@ class Syrup
 			break;
 		}
 		this.img.setDepth(2);
-		makeImgInteractive("syrup", this.img, this, null);
+		this.staticImg.setDepth(2);
+		makeImgInteractive("syrup", this.staticImg, this, null);
+		var _animPlayKey = this.animPlayKey;
+		var _animKey = this.animKey;
+		var _animIdleKey = this.animIdleKey;
+		GameManager.scene.anims.create({
+    		key: _animPlayKey,
+    		frames: GameManager.scene.anims.generateFrameNumbers(_animKey, { start: 0, end: 15}),
+    		duration: 1000*Syrup.servingTime,
+    		repeat: 0
+		});
+		GameManager.scene.anims.create({
+    		key: _animIdleKey,
+    		frames: [ { key: _animKey, frame: 0 } ],
+    		frameRate: 20
+		});
+
+		this.img.disableBody(true,true);
 	}
 
 	dragEndBehaviour()
@@ -581,42 +630,47 @@ class Syrup
 		if(this.hovering)
 		{
 			this.hovering = false;
-			this.collider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.serveSauce, null, this);
+			this.collider = GameManager.scene.physics.add.overlap(this.staticImg, GameManager.collidingObjectImg, this.serveSauce, null, this);
 		}
 		else
 		{
-           	this.img.setPosition(this.posx, this.posy); 
+           	this.staticImg.setPosition(this.posx, this.posy); 
 		}
 		grabItem("", null, null); 
 	}
 
 	serveSauce(sauceImg, dishImg)
-	{
+	{	
 		this.syrupSound.play();
 		var container = GameManager.collidingObject;
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(1);
 		});
-		//dishImg.setAlpha(1);
+
+		this.img.enableBody(true,container.dishContainer.x,container.dishContainer.y-config.height*0.2,true,true);
+		this.img.anims.play(this.animPlayKey);
+
 		this.collider.destroy();
-		this.servingTimer = GameManager.scene.time.addEvent({ delay: Sauce.servingTime*1000, callback: this.syrupServed, callbackScope: this });
-		this.img.removeInteractive();
+		this.servingTimer = GameManager.scene.time.addEvent({ delay: Syrup.servingTime*1000, callback: this.syrupServed, callbackScope: this });
+		this.staticImg.removeInteractive();
 		console.log("serving syrup");
 
-		console.log("syrup: " + container.dish.sauce);
 		container.dish.sauce = this.index;
-		console.log("this.index: " + this.index);
-		console.log("syrup: " + container.dish.sauce);
 		this.dishContainer = container;
 		container.img.removeInteractive();
-		//container.dishContainer.add(food); add sauce sprite to noodle
+		this.staticImg.disableBody(true,true);
+		//container.dishContainer.add(food); add syrup sprite to noodle
 	}
 
 	syrupServed()
 	{
+		this.staticImg
+		this.img.anims.play(this.animIdleKey);
+		this.staticImg.enableBody(true,this.posx,this.posy,true,true);
+		this.img.disableBody(true,true);
 		this.syrupSound.stop();
 		this.img.setPosition(this.posx,this.posy);
-		makeImgInteractive("syrup", this.img, this, null);
+		makeImgInteractive("syrup", this.staticImg, this, null);
 		makeDishInteractive(this.dishContainer,"pancakeDish");
 		console.log("syrup served");
 	}
@@ -624,7 +678,7 @@ class Syrup
 
 class Sauce
 {
-	static servingTime = 3; //4
+	static servingTime = 4;
 	constructor(index, fillingSound)
 	{
 		this.index = index;
@@ -636,29 +690,65 @@ class Sauce
 		this.servingTimer;
 		this.fillingSound = fillingSound;
 		this.dishContainer;
+		this.animIdleKey;
+		this.animPlayKey; 
+		this.animKey;
+		this.addedSauceImgKey;
 		switch(this.index)
 		{
 			case 0:
-				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.25,config.height*0.9,'assets_atlas','spr_sauce_kimuchi');
+				this.animPlayKey = 'anim_ladle_shoyu_play'; 
+				this.animKey = 'anim_ladle_shoyu'; 
+				this.animIdleKey = 'anim_ladle_shoyu_idle';
+				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.28, config.height*0.94,'anim_ladle_shoyu');
+				this.addedSauceImgKey = 'spr_sauce_shoyu';
 			break;
 
 			case 1:
-				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.35,config.height*0.9,'assets_atlas','spr_sauce_miso');
+				this.animPlayKey = 'anim_ladle_shio_play'; 
+				this.animKey = 'anim_ladle_shio'; 
+				this.animIdleKey = 'anim_ladle_shio_idle';
+				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.4, config.height*0.94,'anim_ladle_shio');
+				this.addedSauceImgKey = 'spr_sauce_shio';
 			break;
 
 			case 2:
-				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.45, config.height*0.9,'assets_atlas','spr_sauce_shio');
+				this.animPlayKey = 'anim_ladle_kimuchi_play'; 
+				this.animKey = 'anim_ladle_kimuchi'; 
+				this.animIdleKey = 'anim_ladle_kimuchi_idle';
+				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.52,config.height*0.94,'anim_ladle_kimuchi');
+				this.addedSauceImgKey = 'spr_sauce_kimuchi';
 			break;
 
 			case 3:
-				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.55, config.height*0.9,'assets_atlas','spr_sauce_shoyu');
+				this.animPlayKey = 'anim_ladle_miso_play'; 
+				this.animKey = 'anim_ladle_miso'; 
+				this.animIdleKey = 'anim_ladle_miso_idle';
+				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.64,config.height*0.94,'anim_ladle_miso');
+				this.addedSauceImgKey = 'spr_sauce_miso';
 			break;
 
 			default:
 				console.log("No img assigned");
 			break;
 		}
+		this.img.setDepth(2);
 		makeImgInteractive("sauce", this.img, this, null);
+		var _animPlayKey = this.animPlayKey;
+		var _animKey = this.animKey;
+		var _animIdleKey = this.animIdleKey;
+		GameManager.scene.anims.create({
+    		key: _animPlayKey,
+    		frames: GameManager.scene.anims.generateFrameNumbers(_animKey, { start: 0, end: 11}),
+    		duration: 1000*Sauce.servingTime,
+    		repeat: 0
+		});
+
+		GameManager.scene.anims.create({
+    		key: _animIdleKey,
+    		frames: [ { key: _animKey, frame: 0 } ],
+    		frameRate: 20
+		});
 	}
 
 	dragEndBehaviour()
@@ -677,11 +767,15 @@ class Sauce
 
 	serveSauce(sauceImg, dishImg)
 	{
+		this.fillingSound.play();
 		var container = GameManager.collidingObject;
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(1);
 		});
-		//dishImg.setAlpha(1);
+		sauceImg.x = container.dishContainer.x+config.width*0.04;
+		sauceImg.y = container.dishContainer.y-config.height*0.2;
+		this.img.anims.play(this.animPlayKey);
+
 		this.collider.destroy();
 		this.servingTimer = GameManager.scene.time.addEvent({ delay: Sauce.servingTime*1000, callback: this.sauceServed, callbackScope: this });
 		this.img.removeInteractive();
@@ -697,12 +791,13 @@ class Sauce
 		}
 		this.dishContainer = container;
 		container.img.removeInteractive();
-		this.fillingSound.play();
-		//container.dishContainer.add(food); add sauce sprite to noodle
 	}
 
 	sauceServed()
 	{
+		var addedSauceImg = GameManager.scene.add.image(0,0,'assets_atlas',this.addedSauceImgKey);
+		this.dishContainer.dishContainer.add(addedSauceImg); 
+		this.img.anims.play(this.animIdleKey);
 		this.fillingSound.stop();
 		this.img.setPosition(this.posx,this.posy);
 		makeImgInteractive("sauce", this.img, this, null);
