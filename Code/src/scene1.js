@@ -19,7 +19,7 @@ class scene1 extends Phaser.Scene {
             audioMuted: false,
             moneySpent: 0,
             upgrades : {
-                cofeeTime : 0,
+                coffeeTime : 0,
                 coffeeMachineLevel : 3,
                 pancakeTime : 0,
                 pancakeBurnTime : 0,
@@ -233,6 +233,7 @@ class scene1 extends Phaser.Scene {
 		var noodleSpawnerImg = this.add.image(config.width*0.882 + config.width, config.height*0.91,'assets_atlas','spr_bg_noodles');
 		var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
 		GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
+		GameManager.animatedStrainerImg.setAlpha(0);
 		var strainerLvl = GameManager.scene.playerSettings.upgrades.noodleLevel;
 		var cam = this.cameras.main;	
 		var goToCoffeeButton = this.add.image(config.width*0.06+config.width,config.height*0.08, 'spr_ui_arrow');
@@ -247,16 +248,16 @@ class scene1 extends Phaser.Scene {
         	switch(i)
 			{
 				case 0:
-					strainerImg = this.add.image(config.width*0.78 + config.width, config.height*0.4,'assets_atlas','spr_strainer_0'); 
+					strainerImg = this.add.image(config.width*0.8215 + config.width, config.height*0.475,'assets_atlas','spr_strainer_2'); 
 				break;
 				case 1:
-					strainerImg = this.add.image(config.width*0.83 + config.width, config.height*0.4,'assets_atlas','spr_strainer_1'); 
+					strainerImg = this.add.image(config.width*0.825 + config.width, config.height*0.475,'assets_atlas','spr_strainer_3'); 
 				break;
 				case 2:
-					strainerImg = this.add.image(config.width*0.78 + config.width, config.height*0.55,'assets_atlas','spr_strainer_2'); 
+					strainerImg = this.add.image(config.width*0.8215 + config.width, config.height*0.477,'assets_atlas','spr_strainer_0'); 
 				break;
 				case 3:
-					strainerImg = this.add.image(config.width*0.83 + config.width, config.height*0.55,'assets_atlas','spr_strainer_3'); 
+					strainerImg = this.add.image(config.width*0.825 + config.width, config.height*0.477,'assets_atlas','spr_strainer_1'); 
 				break;
 
 			if(strainerLvl < i) strainerImg.setAlpha(0.3);
@@ -272,7 +273,7 @@ class scene1 extends Phaser.Scene {
 
         var strainer = new Strainer(bigStrainerImg, strainerLvl);
         GameManager.strainer = strainer;
-       	var trashCanImg = this.physics.add.sprite(config.width*0.085+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
+       	var trashCanImg = this.physics.add.sprite(config.width*0.09+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
        	GameManager.trashCanImgNoodles = trashCanImg;
         noodleSpawnerImg.setInteractive();
         noodleSpawnerImg.on('pointerdown', function(pointer){
@@ -908,13 +909,13 @@ function makeDishInteractive(container, dishClass)
     })
 }
 
-function makeImgInteractive(itemClass, itemImg, item, cookingSound)
+function makeImgInteractive(itemClass, itemImg, item, cookingSound, _pixelPerfect)
 {
-    itemImg.setInteractive({ draggable: true });
+    if(_pixelPerfect == true) itemImg.setInteractive({ draggable: true});
 
 	itemImg.on('dragstart', function(pointer,dragX,dragY){
 		GameManager.tapSound.play();
-		itemImg.setDepth(itemImg.depth+5);
+		item.img.setDepth(5);
 		item.posx = this.x;
 		item.posy = this.y;	
 	})
@@ -927,7 +928,7 @@ function makeImgInteractive(itemClass, itemImg, item, cookingSound)
 		
 	itemImg.on('dragend',() => {
 		if(cookingSound) cookingSound.play();
-		itemImg.setDepth(itemImg.depth-5);
+		itemImg.setDepth(2);
 		item.dragEndBehaviour();
     })
 }

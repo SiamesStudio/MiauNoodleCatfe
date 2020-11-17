@@ -10,36 +10,104 @@ class Machine
 
 class CoffeeMachine extends Machine
 {
+	static animTime;
 	static slots = new Phaser.Structs.List();
+	static animImgs = new Phaser.Structs.List();
+	static anims = new Phaser.Structs.List();
 	constructor(img, upgradeLVL)
 	{
 		super(img, upgradeLVL);
+		CoffeeMachine.animTime = Math.abs(GameManager.scene.playerSettings.upgrades.coffeeTime - Coffee.coffeeTime);
 		switch(upgradeLVL)
 		{
 			case 0:
 				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.001,img.y+config.height*0.08));
+				
+				CoffeeMachine.animImgs.add(GameManager.scene.physics.add.sprite(
+				CoffeeMachine.slots.getAt(0).x,CoffeeMachine.slots.getAt(0).y-config.height*0.07,'anim_coffeeMachine'));
 			break;
 
 			case 1:
-				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.015,img.y+config.height*0.08));
-				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.015,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.011,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.007,img.y+config.height*0.08));
+				
+				CoffeeMachine.animImgs.add(GameManager.scene.physics.add.sprite(
+				CoffeeMachine.slots.getAt(0).x,CoffeeMachine.slots.getAt(0).y-config.height*0.05,'anim_coffeeMachine'));
+				CoffeeMachine.animImgs.add(GameManager.scene.physics.add.sprite(
+				CoffeeMachine.slots.getAt(1).x,CoffeeMachine.slots.getAt(1).y-config.height*0.05,'anim_coffeeMachine'));
 			break;
 				
 			case 2:
-				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.052,img.y+config.height*0.08));
-				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.028,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.05,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.029,img.y+config.height*0.08));
 				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.034,img.y+config.height*0.08));
+			
+				CoffeeMachine.animImgs.add(GameManager.scene.physics.add.sprite(
+				CoffeeMachine.slots.getAt(0).x,CoffeeMachine.slots.getAt(0).y-config.height*0.05,'anim_coffeeMachine'));
+				CoffeeMachine.animImgs.add(GameManager.scene.physics.add.sprite(
+				CoffeeMachine.slots.getAt(1).x,CoffeeMachine.slots.getAt(1).y-config.height*0.05,'anim_coffeeMachine'));
+				CoffeeMachine.animImgs.add(GameManager.scene.physics.add.sprite(
+				CoffeeMachine.slots.getAt(2).x,CoffeeMachine.slots.getAt(2).y-config.height*0.07,'anim_coffeeMachine'));
 			break;
 
 			case 3:
+			/*
 				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.052,img.y+config.height*0.08));
 				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.028,img.y+config.height*0.08));
 				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.028,img.y+config.height*0.08));
-				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.052,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.052,img.y+config.height*0.08));*/
+
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.05,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.029,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.0267,img.y+config.height*0.08));
+				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.046,img.y+config.height*0.08));
+
+				CoffeeMachine.animImgs.add(GameManager.scene.physics.add.sprite(
+				CoffeeMachine.slots.getAt(0).x,CoffeeMachine.slots.getAt(0).y-config.height*0.05,'anim_coffeeMachine'));
+				CoffeeMachine.animImgs.add(GameManager.scene.physics.add.sprite(
+				CoffeeMachine.slots.getAt(1).x,CoffeeMachine.slots.getAt(1).y-config.height*0.05,'anim_coffeeMachine'));
+				CoffeeMachine.animImgs.add(GameManager.scene.physics.add.sprite(
+				CoffeeMachine.slots.getAt(2).x,CoffeeMachine.slots.getAt(2).y-config.height*0.05,'anim_coffeeMachine'));
+				CoffeeMachine.animImgs.add(GameManager.scene.physics.add.sprite(
+				CoffeeMachine.slots.getAt(3).x,CoffeeMachine.slots.getAt(3).y-config.height*0.05,'anim_coffeeMachine'));
 			break;
 		}	
-			
 		
+		for(var i=0; i<CoffeeMachine.slots.length; i++)
+		{
+			var animationKey = 'coffeeStream_' + i;
+			var animation = GameManager.scene.anims.create({
+    			key: animationKey,
+    			frames: GameManager.scene.anims.generateFrameNumbers('anim_coffeeMachine', { start: 0, end: 19}),
+    			duration: 1000*CoffeeMachine.animTime,
+    			//frameRate: 10,
+    			repeat: -1
+			});
+
+			var animIdleKey = 'coffeeStreamIdle_' + i;
+			GameManager.scene.anims.create({
+    			key: animIdleKey,
+    			frames: [ { key: 'anim_coffeeMachine', frame: 0 } ],
+    			frameRate: 20
+			});
+
+			CoffeeMachine.animImgs.getAt(i).setAlpha(0);
+		}
+		
+	}
+
+	static playAnim(coffeeId)
+	{
+		var animKey = 'coffeeStream_' + coffeeId;
+		CoffeeMachine.animImgs.getAt(coffeeId).setAlpha(1);
+		CoffeeMachine.animImgs.getAt(coffeeId).anims.play(animKey); 
+	}
+
+	static stopAnim(coffeeId)
+	{
+		var animKey = 'coffeeStreamIdle_' + coffeeId;
+		CoffeeMachine.animImgs.getAt(coffeeId).setAlpha(0);
+		CoffeeMachine.animImgs.getAt(coffeeId).anims.play(animKey); 
 	}
 }
 
@@ -112,10 +180,9 @@ class Strainer extends Machine //arregla joselu
 	constructor(img, upgradeLVL)
 	{
 		super(img, upgradeLVL);
-		var offset = 15;
-		Strainer.slots.add(new Slot(img.x-offset,img.y-offset));
-		Strainer.slots.add(new Slot(img.x+offset,img.y-offset));
-		Strainer.slots.add(new Slot(img.x-offset,img.y+offset));
-		Strainer.slots.add(new Slot(img.x+offset,img.y+offset));
+		Strainer.slots.add(new Slot(img.x-config.width*0.06,img.y-config.height*0.11));
+		Strainer.slots.add(new Slot(img.x+config.width*0.027,img.y-config.height*0.11));
+		Strainer.slots.add(new Slot(img.x-config.width*0.04,img.y-config.height*0.055));
+		Strainer.slots.add(new Slot(img.x+config.width*0.055,img.y-config.height*0.055));
 	}
 }

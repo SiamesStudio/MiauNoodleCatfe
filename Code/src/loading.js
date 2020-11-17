@@ -165,7 +165,7 @@ class Loading extends Phaser.Scene {
         );
         
         this.load.spritesheet('anim_coffeeMachine', 'assets/animaciones/anim_coffeeMachine.png',
-        {frameWidth: 20,frameHeight: 29}
+        {frameWidth: 1,frameHeight: 10}
         );
         
         
