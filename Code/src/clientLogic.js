@@ -166,6 +166,7 @@ class Client{
     if(this.order.dishes.length==0){
       this.exitRestaurant();
     }
+    GameManager.scene.numCoins.setText(GameManager.levelEarnedCoins);
   }
 
   exitRestaurant(){
@@ -175,9 +176,13 @@ class Client{
     for (var i=0;i< this.dishesFinalPoints.length;i++){
       exp+=this.dishesFinalPoints[i]*(1/this.dishesFinalPoints.length)
     }
-    GameManager.scene.playerSettings.experience += exp;
+    var lvl= GameManager.scene.uploadPlayerLevel(exp);
+    GameManager.scene.playerSettings.level=lvl;
     GameManager.scene.savePlayerSettings();
+    GameManager.scene.numPlayerLevel.setText(lvl)
+
     this.clientImg.disableBody(true,true);
+    
     if(this.place==1){
       this.place=0;
       Client.restaurantSlots.getAt(this.slot).occupied=false;

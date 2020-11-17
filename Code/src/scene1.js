@@ -43,11 +43,31 @@ class scene1 extends Phaser.Scene {
 	create(){
 		var gm = new GameManager(this);
 		this.gameTimer = this.time.addEvent({ delay: GameManager.gameMinutes*60*1000, callback: finishGame, callbackScope: this });
+		this.interfaceSettings();
 		this.clientsSettings();
         this.coffeeSetting();
         this.pancakesSetting();
 		this.noodlesSetting();
         this.cursors = this.input.keyboard.createCursorKeys();
+	}
+
+	interfaceSettings(){
+		this.add.sprite(config.width*0.5,config.height/13,'assets_atlas','spr_ui_slider')
+        this.add.sprite(config.width*0.4,config.height/11,'assets_atlas','spr_ui_icon_coin')
+        this.numCoins = this.add.text(config.width*0.5,config.height/13, GameManager.levelEarnedCoins, { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+		
+		this.slider=this.add.sprite(3*config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
+        this.add.sprite(config.width*0.65,config.height/11,'assets_atlas','spr_ui_chefLvl')
+        this.numPlayerLevel = this.add.text(config.width*0.65,config.height/11, this.playerSettings.level, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
+        this.numChefPoints = this.add.text(this.slider.x+6,config.height/13, "", { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5);
+		GameManager.scene.uploadPlayerLevel(0)
+		
+		this.slider=this.add.sprite(config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
+		this.slider=this.add.sprite(config.width/4+5 ,config.height/13,'assets_atlas','spr_ui_volumen')
+		this.add.sprite(config.width*0.145,config.height/11,'assets_atlas','spr_ui_icon_happy')
+		
+		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings')
+        
 	}
 
 	clientsSettings(){
@@ -58,8 +78,7 @@ class scene1 extends Phaser.Scene {
     	new Client(2, 0, [2,2,1,0], [1,1,1,0]);
     	new Client(3, 2, [2,3,1,3], [1,2,1,1,0]);
 		new Client(4, 2, [2,2,1,1], [1,0,2,0]);
-		new Client(5, 1, [2,0,2,1,2], [1,0,2,0])
-    	console.log(Client.clientList)
+		new Client(5, 1, [2,0,2,1,2], [1,0,2,0]);
     	//añadir clientes a mano
   	}
 
@@ -441,6 +460,55 @@ class scene1 extends Phaser.Scene {
 
 	savePlayerSettings(){
         localStorage.setItem('playerSettings', JSON.stringify(this.playerSettings))
+	}
+	
+	uploadPlayerLevel(number){
+        var expPerLevel = [0,200,1200,6200,21200,46200,96200]
+        //if(this.playerSettings.experience < expPerLevel[expPerLevel.length - 1]){//Comprobamos que 
+            if(this.playerSettings.experience + number > expPerLevel[expPerLevel.length - 1]){
+                this.playerSettings.experience =  expPerLevel[expPerLevel.length - 1];
+            }else{
+                this.playerSettings.experience += number;
+            }
+            
+        //}
+        
+
+        var currentLevel = this.getLevel(expPerLevel,0,expPerLevel.length, this.playerSettings.experience)
+        
+        if(currentLevel+1 < expPerLevel.length && currentLevel >0){
+            this.numChefPoints.setText( (this.playerSettings.experience - expPerLevel[currentLevel]) +"/"+ (expPerLevel[currentLevel+1] - expPerLevel[currentLevel]) )
+        }
+        else if(currentLevel == 0){this.numChefPoints.setText( (this.playerSettings.experience - expPerLevel[currentLevel]) +"/"+ expPerLevel[currentLevel+1] )}
+
+        else{
+            this.numChefPoints.setText( (expPerLevel[expPerLevel.length - 1] - expPerLevel[expPerLevel.length - 2]) +"/50000" )
+        }
+		
+        return currentLevel + 1;
+    }
+
+    getLevel(expArray,ini, fin, playerExp){
+
+        var mitad =  Math.floor((ini+fin) /2)
+
+        if (ini>fin){
+            return mitad
+        }
+        else{
+            if(expArray[mitad] == playerExp){
+                return mitad;
+            }
+            else{
+                if(playerExp < expArray[mitad]){
+                    return this.getLevel(expArray, ini , mitad-1, playerExp)
+                }
+                else{
+                    return this.getLevel(expArray, mitad+1, fin, playerExp)
+                }
+            }
+        }
+
     }
 	
 }
