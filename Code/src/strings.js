@@ -179,7 +179,6 @@ class ShopStrings{
         this.Shop_no = 'No'
         this.Shop_selected = 'Selected'
     }
-
 }
 
 class GameStrings{
@@ -267,19 +266,22 @@ class TutorialStrings{
         this.case13 = "Recoge las monedas dejadas por el cliente.";
         this.case14 = "Cambiemos la música, que esta canción ya la he escuchado.";
         this.case15 = "Puedes cambiar el volumen y la canción. Cambia la canción.";
-        this.case16 = "";
-        this.case17 = "";
-        this.case18 = "";
-        this.case19 = "";
-        this.case20 = "";
-        this.case21 = "";
-        this.case22 = "";
-        this.case23 = "";
-        this.case24 = "";
-        this.case25 = "";
-        this.case26 = "";
-        this.case27 = "";
-        this.case28 = "";
+        this.case16 = "Los clientes podrán dar información sobre sus gustos... o sobre cosas no tan interesantes.";
+        this.case17 = "Parece ser que un cliente ha llegado. Veamos si es para pedir noodles";
+        this.case18 = "¡Pero si es el mismo cliente! Seguro que es atleta de élite, cuida bien de clientela de tal embergadura.";
+        this.case19 = "Menos mal que antes hemos escuchado cómo le gustan los noodles.";
+        this.case20 = "Toca la pila de boles para colocar uno sobre el mantel.";
+        this.case21 = "Toca la caja de noodles para comiaunzar a hacer un rico ramen.";
+        this.case22 = "Mientras se hacen los noodles,podemos adelantar trabajo. Arrastra su salsa favorita al bol";
+        this.case23 = "Mira, ya están hechos. Arrastralos al bol antes de que se quemen.";
+        this.case24 = "Por último, arrastra su topping favorito al bol";
+        this.case25 = "Ya está hecho. Arrastra el plato al cliente.";
+        this.case26 = "Recoge las monedas dejadas por el cliente.";
+        this.case27_0 = "Y eso es todo. Ya sabes todo lo que debes para que la felicidad del local no decaiga.";
+        this.case27_1 = "Ya conoces los gustos de este cliente, pero recuerda que deberá descubrir el del resto de clientes.";
+        this.case27_2 = "Para ello, fíjate en sus reacciones, en su aporte a la felicidad global y en sus conversaciones.";
+        this.case27_3 = "Estoy seguro de que dejo el catfé en buenas patas. ¡MIAUCHA SUERTE!";
+
     }
     convertToSpanish(){
         this.case0_0 = "¡Bienvenido a Miau Noodle Catfé! Aquí preparamos de todo! Bueno, sólo tortitas y noodles y y y catfé! Pero está todo buenísimo";
@@ -302,6 +304,21 @@ class TutorialStrings{
         this.case13 = "Recoge las monedas dejadas por el cliente.";
         this.case14 = "Cambiemos la música, que esta canción ya la he escuchado.";
         this.case15 = "Puedes cambiar el volumen y la canción. Cambia la canción.";
+        this.case16 = "Los clientes podrán dar información sobre sus gustos... o sobre cosas no tan interesantes.";
+        this.case17 = "Parece ser que un cliente ha llegado. Veamos si es para pedir noodles";
+        this.case18 = "¡Pero si es el mismo cliente! Seguro que es atleta de élite, cuida bien de clientela de tal embergadura.";
+        this.case19 = "Menos mal que antes hemos escuchado cómo le gustan los noodles.";
+        this.case20 = "Toca la pila de boles para colocar uno sobre el mantel.";
+        this.case21 = "Toca la caja de noodles para comiaunzar a hacer un rico ramen.";
+        this.case22 = "Mientras se hacen los noodles,podemos adelantar trabajo. Arrastra su salsa favorita al bol";
+        this.case23 = "Mira, ya están hechos. Arrastralos al bol antes de que se quemen.";
+        this.case24 = "Por último, arrastra su topping favorito al bol";
+        this.case25 = "Ya está hecho. Arrastra el plato al cliente.";
+        this.case26 = "Recoge las monedas dejadas por el cliente.";
+        this.case27_0 = "Y eso es todo. Ya sabes todo lo que debes para que la felicidad del local no decaiga.";
+        this.case27_1 = "Ya conoces los gustos de este cliente, pero recuerda que deberá descubrir el del resto de clientes.";
+        this.case27_2 = "Para ello, fíjate en sus reacciones, en su aporte a la felicidad global y en sus conversaciones.";
+        this.case27_3 = "Estoy seguro de que dejo el catfé en buenas patas. ¡MIAUCHA SUERTE!";
     }
 
     convertToEnglish(){
@@ -325,5 +342,21 @@ class TutorialStrings{
         this.case13 = "Collect the coins left by the customer.";
         this.case14 = "Let's change the music, I've already heard this song.";
         this.case15 = "You can change the volume and the song. Change the song.";
+        //Joselu
+        this.case16 = "Customers will be able to give information about their tastes ... or about things not so interesting.";
+        this.case17 = "It seems that a customer has arrived. Let's see if it's to order noodles";
+        this.case18 = "It is the same customer! He is surely an elite athlete, taking good care of such a large clientele.";
+        this.case19 = "Luckily we've heard before how he likes noodles.";
+        this.case20 = "Touch the stack of bowls to place one on the tablecloth.";
+        this.case21 = "Touch the box of noodles to start making a delicious ramen.";
+        this.case22 = "While the noodles are being made, we can get work done. Drag your favorite sauce to the bowl";
+        this.case23 = "Look, they are done. Drag them to the bowl before they burn.";
+        this.case24 = "Lastly, drag his favorite topping to the bowl";
+        this.case25 = "Ya está hecho. Arrastra el plato al cliente.";
+        this.case26 = "It is done. Drag the plate to the customer.";
+        this.case27_0 = "And that's it. You already know everything you owe so that the happiness of the place does not decline.";
+        this.case27_1 = "You already know the tastes of this client, but remember that you must discover that of the rest of the clients.";
+        this.case27_2 = "To do this, look at their reactions, their contribution to global happiness and their conversations.";
+        this.case27_3 = "I am sure that I left the catfé on good feet. GOOD LUCK!";
     }
 }

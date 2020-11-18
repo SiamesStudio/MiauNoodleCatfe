@@ -726,11 +726,15 @@ class TutorialManager
 
 	static showNext()
 	{
-		console.log("TutorialManager.currentTip: " + TutorialManager.currentTip );
-		if(TutorialManager.currentTip >= TutorialManager.tipLogicContainer.length) TutorialManager.endTutorial();
-
-		TutorialManager.tipLogicContainer.getAt(TutorialManager.currentTip).display();
-		TutorialManager.currentTip++;
+		if(TutorialManager.currentTip >= TutorialManager.tipLogicContainer.length)
+		{
+			TutorialManager.endTutorial();
+		} 
+		else
+		{
+			TutorialManager.tipLogicContainer.getAt(TutorialManager.currentTip).display();
+			TutorialManager.currentTip++;
+		}
 	}
 
 	static endTutorial()
@@ -1079,7 +1083,7 @@ class TipLogic
 						//To do
 						//Enable interactivity with coins
 						//End if click on coins
-						var coins = TutorialManager.scene.add.image(config.width*0.5+offset, config.height*0.4,'assets_atlas', 'spr_bowl');
+						var coins = TutorialManager.coins;
 						coins.setPipeline('GlowFilter');
 						coins.setInteractive().on('pointerdown', () => {
 							coins.resetPipeline();

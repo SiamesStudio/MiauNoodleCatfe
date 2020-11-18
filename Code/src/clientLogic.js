@@ -123,6 +123,16 @@ class Client{
     }
   }
 
+  generateTutorialNoodleOrder()
+  {
+    if(this.place==2)
+    {
+      var nums = new Phaser.Structs.List();
+      nums.add(2);
+      this.order = new Order(1,nums,this);
+    }
+  }
+
   goToRestaurant(place){
     this.place=place;
     this.orderCoins=0;
@@ -139,7 +149,10 @@ class Client{
       this.slot=slotId;
     }
     if(!this.tutorial) this.generateOrder();
-    else {this.generateTutorialPancakeOrder();}
+    else {
+      if(place==1) this.generateTutorialPancakeOrder();
+      else if(place==2) {this.generateTutorialNoodleOrder();}
+    }
     this.time=0;
     for(var i=0;i< this.order.dishes.length;i++){
       if(this.order.dishes.getAt(i).index==0){
@@ -193,6 +206,7 @@ class Client{
     GameManager.scene.noodleprogressBar.width=GameManager.scene.littleSlider.width*(GameManager.globalHappiness/100)
     if(this.orderCoins>0){
       this.coinsImg=GameManager.scene.add.image(this.clientImg.x,this.clientImg.y+45,'spr_coins')
+      TutorialManager.coins = this.coinsImg;
       console.log("PONGO BOLSITA")
       this.coinsImg.setInteractive().on('pointerdown', () => {
         this.coinsImg.destroy();
