@@ -185,14 +185,16 @@ class Menu extends Phaser.Scene {
 
 
         //ViweConfig
-        this.titleOptions = this.add.text(config.width/2, config.height/4, this.gameStrings.OptionMenu_title ,{ font: "30px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
-        this.volumeOptions = this.add.text(3*config.width/7, config.height/2,this.gameStrings.OptionsMenu_text,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        this.titleOptions = this.add.text(config.width/2, config.height/4, this.gameStrings.OptionMenu_title ,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        this.volumeOptions = this.add.text(3*config.width/7, config.height/2,this.gameStrings.OptionsMenu_text,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
         this.empty_Selection = this.add.sprite(2*config.width/3, config.height/2,'tick_empty_button').setVisible(false).setScale(0.5)
         this.tick_Selection = this.add.sprite(2*config.width/3, config.height/2,'tick_button').setVisible(false).setScale(0.5)
 
-        this.languageOptions = this.add.text(3*config.width/7, 2*config.height/3,this.gameStrings.OptionsMenu_language,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
-        this.language_empty_Selection = this.add.sprite(2*config.width/3, 2*config.height/3,'tick_empty_button').setVisible(false).setScale(0.5)
-        this.language_tick_Selection = this.add.sprite(2*config.width/3, 2*config.height/3,'tick_button').setVisible(false).setScale(0.5)
+        this.languageOptions = this.add.text(3*config.width/7, 2*config.height/3,this.gameStrings.OptionsMenu_language,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        //this.language_empty_Selection = this.add.sprite(2*config.width/3, 2*config.height/3,'tick_empty_button').setVisible(false).setScale(0.5)
+        //this.language_tick_Selection = this.add.sprite(2*config.width/3, 2*config.height/3,'tick_button').setVisible(false).setScale(0.5)
+        this.language_spanish = this.add.sprite(2*config.width/3, 2*config.height/3,'assets_atlas','spr_espaniol').setVisible(false)
+        this.language_english = this.add.sprite(2.2*config.width/3, 2*config.height/3,'assets_atlas','spr_ingles').setVisible(false)
 
 
         //Upgrade Panel
@@ -297,13 +299,13 @@ class Menu extends Phaser.Scene {
         this.makeUpgradesSlotsInteractive();
         
         //LEVEL UP PANEL
-        this.levelUpPanelTitle = this.add.text(config.width/2, config.height/4 , this.gameStrings.LevelUpTitle ,{ font: "30px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto titulo
-        this.levelUpPanelDesc = this.add.text(config.width/2, 1.15*config.height/3 , this.gameStrings.LevelUpDesc ,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto descripcion
-        this.levelUpPanelRewardTitle = this.add.text(1.3*config.width/5, config.height/2 , this.gameStrings.LevelUpReward ,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setVisible(false).setResolution(10)//Texto descripcion
+        this.levelUpPanelTitle = this.add.text(config.width/2, config.height/4 , this.gameStrings.LevelUpTitle ,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto titulo
+        this.levelUpPanelDesc = this.add.text(config.width/2, 1.15*config.height/3 , this.gameStrings.LevelUpDesc ,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto descripcion
+        this.levelUpPanelRewardTitle = this.add.text(1.3*config.width/5, config.height/2 , this.gameStrings.LevelUpReward ,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setVisible(false).setResolution(10)//Texto descripcion
         this.levelUpCoinReward = this.add.sprite(1.6*config.width/5, 2*config.height/3,'assets_atlas','spr_ui_icon_coin').setOrigin(1,0.5).setVisible(false)
-        this.levelUpCoinRewardText = this.add.text(1.6*config.width/5, 2*config.height/3, 200 ,{ font: "30px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setVisible(false).setResolution(10)//Texto titulo
+        this.levelUpCoinRewardText = this.add.text(1.6*config.width/5, 2*config.height/3, 200 ,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setVisible(false).setResolution(10)//Texto titulo
         this.levelUpDiamondReward = this.add.sprite(2.6*config.width/5, 2*config.height/3,'assets_atlas','spr_ui_icon_gem').setOrigin(0,0.5).setVisible(false)
-        this.levelUpDiamondRewardText = this.add.text(3*config.width/5, 2*config.height/3, 200 ,{ font: "30px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setVisible(false).setResolution(10)//Texto titulo
+        this.levelUpDiamondRewardText = this.add.text(3*config.width/5, 2*config.height/3, 200 ,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setVisible(false).setResolution(10)//Texto titulo
     }
 
 
@@ -574,14 +576,16 @@ class Menu extends Phaser.Scene {
         this.titleOptions.setVisible(true)
         this.volumeOptions.setVisible(true)
         this.languageOptions.setVisible(true)
+        this.language_spanish.setVisible(true)
+        this.language_english.setVisible(true)
         
         
         if(this.playerSettings.language){
-            this.language_empty_Selection.setVisible(false)
-            this.language_tick_Selection.setVisible(true)
+            this.language_spanish.setTint(0xffffff)
+            this.language_english.setTint(0xb0b0b0)
         }else{
-            this.language_empty_Selection.setVisible(true)
-            this.language_tick_Selection.setVisible(false)
+            this.language_spanish.setTint(0xb0b0b0)
+            this.language_english.setTint(0xffffff)
         }
 
         if(this.playerSettings.audioMuted){
@@ -607,25 +611,21 @@ class Menu extends Phaser.Scene {
             this.tick_Selection.setVisible(false)
         })
 
-        this.language_empty_Selection.setInteractive().on('pointerdown', () => {
-            this.language_empty_Selection.setVisible(false)
-            //this.currentLanguage = true;
+        this.language_spanish.setInteractive().on('pointerdown', () => {
+            this.language_spanish.setTint(0xffffff)
+            this.language_english.setTint(0xb0b0b0)
             this.playerSettings.language = true;
             this.savePlayerSettings()
-            this.language_tick_Selection.setVisible(true)
             this.gameStrings.convertToSpanish()
             this.changeAllText()
-            //this.titleOptions.text = OptionMenu_title
         })
 
-        this.language_tick_Selection.setInteractive().on('pointerdown', () => {
-            this.language_tick_Selection.setVisible(false)
-            //this.currentLanguage = false;
+        this.language_english.setInteractive().on('pointerdown', () => {
+            this.language_spanish.setTint(0xb0b0b0)
+            this.language_english.setTint(0xffffff)
             this.playerSettings.language = false;
             this.savePlayerSettings()
-            this.language_empty_Selection.setVisible(true)
             this.gameStrings.convertToEnglish()
-            //this.titleOptions.text = OptionMenu_title
             this.changeAllText()
             
         })
@@ -680,9 +680,9 @@ class Menu extends Phaser.Scene {
         this.volumeOptions.setVisible(false)
         this.empty_Selection.setVisible(false)
         this.tick_Selection.setVisible(false)
-        this.language_empty_Selection.setVisible(false)
-        this.language_tick_Selection.setVisible(false)
         this.languageOptions.setVisible(false)
+        this.language_spanish.setVisible(false)
+        this.language_english.setVisible(false)
 
         //Upgrades
         this.upgradesTextButton.setInteractive()
@@ -918,7 +918,7 @@ class Menu extends Phaser.Scene {
     }
 
     uploadPlayerLevel(number){
-        var expPerLevel = [0,10,50,100,200,500]
+        var expPerLevel = [0,200,1200,6200,21200,46200,96200]//[0,10,50,100,200,500]
         //if(this.playerSettings.experience < expPerLevel[expPerLevel.length - 1]){//Comprobamos que 
             if(this.playerSettings.experience + number > expPerLevel[expPerLevel.length - 1]){
                 this.playerSettings.experience =  expPerLevel[expPerLevel.length - 1];

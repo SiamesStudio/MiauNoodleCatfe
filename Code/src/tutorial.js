@@ -19,7 +19,8 @@ class tutorial extends Phaser.Scene {
         this.pancakesSetting();
         this.noodlesSetting();
         this.clientsSettings();	
-        this.tutStuff();
+		this.tutStuff();
+		this.radioSettings();
         this.cursors = this.input.keyboard.createCursorKeys();
 	}
 
@@ -40,6 +41,162 @@ class tutorial extends Phaser.Scene {
     	TutorialManager.tutorialPancakeClient.clientImg.x += config.width*0.4;
   	}
 
+	radioSettings(){
+		this.interferenceSound = this.sound.add('snd_radio_interference')
+        this.interferenceSound.play()
+        this.interferenceVolume = 0.05
+        this.interferenceSound.setVolume(this.interferenceVolume)
+        this.interferenceSound.setLoop(true)
+
+        
+
+        this.songs = new Phaser.Structs.List();
+        this.songs.add(this.sound.add('snd_music_pancake'));
+        this.songs.add(this.sound.add('snd_music_chocolate'));
+        this.songs.add(this.sound.add('snd_music_bread'));
+        this.songs.add(this.sound.add('snd_music_cafe'));
+        this.songs.add(this.sound.add('snd_music_alone'));
+        /* 
+        *
+        Incluir el resto de canciones 
+        *
+        */
+        this.titleSongs = new Phaser.Structs.List();
+        this.titleSongs.add("LuKrembo - Pancake");
+        this.titleSongs.add("LuKrembo - Chocolate");
+        this.titleSongs.add("LuKrembo - Bread");
+        this.titleSongs.add("LuKrembo - Cafe");
+        this.titleSongs.add("LuKrembo - Alone");
+
+        
+        /* 
+        *
+        Incluir el resto de canciones 
+        *
+        */
+        
+
+
+        this.globalIndex = 0;
+        this.volume = 0.9;
+
+
+        this.radioSongPanel = this.add.image(1.55*config.width/4   +  2*config.width , 2.95*config.height/5,'assets_atlas','spr_pantalla_canciones').setOrigin(0,0.5)
+        this.radioSongText = this.add.text(1.55*config.width/4   +  2*config.width, 2.95*config.height/5, this.titleSongs.getAt(this.globalIndex), { font: "8px PixelFont", fill: "#000000", align: "center" }).setOrigin(0,0.5).setResolution(10);
+        //this.radioSongText = this.add.bitmapText(1.55*config.width/4, 2.95*config.height/5, 'BitPap' ,this.titleSongs.getAt(this.globalIndex),8).setOrigin(0,0.5);
+        
+        this.radioSongTitleStartPosition = 1.55*config.width/4 - this.radioSongText.width   +  2*config.width
+        this.radioSongPanelCrystal = this.add.image(1.55*config.width/4   +  2*config.width, 2.95*config.height/5,'spr_cristal_canciones').setOrigin(0,0.5)
+        this.add.image(config.width/2  +  2*config.width ,config.height/2,'bg_radio_zoomed').setOrigin(0.5)
+
+        this.radioSongText.x = this.radioSongTitleStartPosition
+        console.log(this.titleSongs.getAt(this.globalIndex))
+
+
+//
+        this.currentSong = this.songs.getAt(this.globalIndex)
+        this.currentSong.play()
+        this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+        this.currentSong.setLoop(true)
+
+        this.radioFrecuencyBox_positionX = 2.16*config.width/4  +  2*config.width
+        this.radioFrecuencyBox_positionY = 4.03*config.height/6
+        
+        this.radioFrecuencyBox = this.add.image(this.radioFrecuencyBox_positionX, this.radioFrecuencyBox_positionY, 'assets_atlas','spr_pantalla_volumen_cancion').setOrigin(0.5)
+        this.radioFrecuencyBar = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.1), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_indicador_cancion').setOrigin(0,0.5);
+
+        this.radioFrecuencyBar0 = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.1), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBar1 = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.3), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBar2 = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.5), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBar3 = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.7), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBar4 = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.9), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBoxCristal = this.add.image(this.radioFrecuencyBox_positionX, this.radioFrecuencyBox_positionY, 'assets_atlas','spr_cristal_volumen_cancion').setOrigin(0.5)
+        this.radioFrecuencyBox_margin = this.add.image(this.radioFrecuencyBox_positionX, this.radioFrecuencyBox_positionY, 'assets_atlas','spr_borde_pantalla').setOrigin(0.5)
+        
+//
+        this.radioVolumeBox_positionX = 2.16*config.width/4  +  2*config.width
+        this.radioVolumeBox_positionY = 4.55*config.height/6
+        this.radioVolumeBox2 = this.add.image(this.radioVolumeBox_positionX, this.radioVolumeBox_positionY,'assets_atlas','spr_pantalla_volumen_cancion').setOrigin(0.5);
+        this.radioVolumeBar2 = this.add.rectangle((this.radioVolumeBox_positionX - this.radioVolumeBox2.width/2), this.radioVolumeBox_positionY + 1, (this.volume * this.radioVolumeBox2.width), 6, 0x9e616e).setOrigin(0,0.5);
+        this.radioVolumeBox2 = this.add.image(this.radioVolumeBox_positionX, this.radioVolumeBox_positionY,'assets_atlas','spr_cristal_volumen_cancion').setOrigin(0.5);
+        this.radioVolumeBox2 = this.add.image(this.radioVolumeBox_positionX, this.radioVolumeBox_positionY,'assets_atlas','spr_borde_pantalla').setOrigin(0.5);
+
+        for(var i = 1; i<10; i++){
+                this.add.image((this.radioVolumeBox_positionX - this.radioVolumeBox2.width/2) + (this.radioVolumeBox2.width * 0.1 * i ), this.radioVolumeBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        }
+
+        
+        
+        
+
+
+//----------------------------------------------------------------------------------------------------
+//FRECUENCIA
+
+        this.vectorA = new Phaser.Math.Vector2(1,0)
+        this.vectorB = new Phaser.Math.Vector2(1,0)
+        this.radioFrecSpinPositionX = 3.58*config.width/10 +  2*config.width
+        this.radioFrecSpinPositionY = 7.5*config.height/10
+        this.radioFrecSpin = this.add.image(this.radioFrecSpinPositionX, this.radioFrecSpinPositionY,'assets_atlas','spr_radio_zoomed_vol_song').setOrigin(0.5)
+        this.radioFrecSpin.setInteractive({ draggable: true })
+        var currentScene = this;
+
+
+        this.radioFrecSpin.on('dragstart', function(pointer,dragX,dragY){
+                this.modB = Math.sqrt(dragX*dragX + dragY*dragY)
+                this.vectorB = new Phaser.Math.Vector2(dragX/this.modB , dragY/this.modB)
+                this.currentAngle = 180 * (this.vectorB.angle()) / Math.PI
+
+                currentScene.radioFrecSpin.angle = this.currentAngle
+                currentScene.changeRadioFrecuency()
+                
+        })
+        this.radioFrecSpin.on('drag', function(pointer,dragX,dragY){ 
+                this.vectorB = new Phaser.Math.Vector2(pointer.worldX - currentScene.radioFrecSpinPositionX, pointer.worldY - currentScene.radioFrecSpinPositionY)
+                this.vectorB.normalize()
+                this.currentAngle = (180 * (this.vectorB.angle()) / Math.PI)// - 180
+
+                currentScene.radioFrecSpin.angle = this.currentAngle
+                currentScene.changeRadioFrecuency()
+        })
+
+
+//----------------------------------------------------------------------------------------------------
+//VOLUMEN
+        this.radioVolumeSpinPositionX = 7.2*config.width/10  +  2*config.width
+        this.radioVolumeSpinPositionY = 7.5*config.height/10
+        this.radioVolumeSpin = this.add.image(this.radioVolumeSpinPositionX, this.radioVolumeSpinPositionY,'assets_atlas','spr_radio_zoomed_vol_song').setOrigin(0.5)
+        this.radioVolumeSpin.angle -=5
+        this.radioVolumeSpin.setInteractive({ draggable: true })
+
+
+        this.radioVolumeSpin.on('dragstart', function(pointer,dragX,dragY){
+                //console.log("vecToPointer : "+ dragX, dragY)
+                this.modB = Math.sqrt(dragX*dragX + dragY*dragY)
+                this.vectorB = new Phaser.Math.Vector2(dragX/this.modB , dragY/this.modB)
+                this.currentAngle = 180 * (this.vectorB.angle()) / Math.PI
+
+                currentScene.radioVolumeSpin.angle = this.currentAngle
+                currentScene.changeRadioVolume()
+                
+        })
+        this.radioVolumeSpin.on('drag', function(pointer,dragX,dragY){                
+                this.vectorB = new Phaser.Math.Vector2(pointer.worldX - currentScene.radioVolumeSpinPositionX, pointer.worldY - currentScene.radioVolumeSpinPositionY)
+                this.vectorB.normalize()    
+                this.currentAngle = (180 * (this.vectorB.angle()) / Math.PI)// - 180
+
+                currentScene.radioVolumeSpin.angle = this.currentAngle
+                currentScene.changeRadioVolume()
+        })
+
+        
+        //BACK 
+        this.backButton = this.add.image(config.width/12   +  2*config.width , 9*config.height/10,'assets_atlas','spr_back')
+        this.backButton.setInteractive().on('pointerdown', () => {
+				this.cameras.main.centerOnX(config.width/2)
+			})
+	}
+	  
   	interfaceSettings(){
 		this.add.sprite(config.width*0.5,config.height/13,'assets_atlas','spr_ui_slider')
         this.add.sprite(config.width*0.4,config.height/11,'assets_atlas','spr_ui_icon_coin')
@@ -93,6 +250,7 @@ class tutorial extends Phaser.Scene {
 		}
 
 		var spr_radio = this.add.image(config.width*0.83,config.height*0.24,'assets_atlas','spr_radio');
+		spr_radio.setInteractive().on('pointerdown', () =>{ cam.centerOnX(2*config.width + config.width/2);})
 		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.915, 'assets_atlas', 'spr_glasses');
 
 		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, coffeeMachineLvl, true);
@@ -370,6 +528,11 @@ class tutorial extends Phaser.Scene {
     	    GameManager.scene.cameras.main.fadeOut(25);
     	}    	
 
+		this.radioSongText.x +=0.5
+        if(this.radioSongText.x > (1.55*config.width/4 + this.radioSongPanelCrystal.width +  2*config.width) ){//Posicion inicial + ancho del rectangulo
+                this.radioSongText.x = this.radioSongTitleStartPosition //Se reinicia la posicion
+		} 
+
 		if(!GameManager.grabbedItemImg) return;
 		
 		/* Here check if the current grabbed item is colliding with something 
@@ -424,6 +587,87 @@ class tutorial extends Phaser.Scene {
 		}
 
 		if(GameManager.shinningObject != null) makeImgShine();
+	}
+
+	changeRadioFrecuency(){
+        this.angle = 0
+        if(this.radioFrecSpin.angle < 0){
+                this.angle = (this.radioFrecSpin.angle + 180) + 180
+        }else{
+            this.angle = this.radioFrecSpin.angle
+        }
+        this.frec = (this.angle - 0) / (360 - 0)
+        //console.log(this.frec)
+        this.radioFrecuencyBar.x = (this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.frec * (this.radioFrecuencyBox.width))
+
+        this.changeSong(this.frec);
+    }
+
+    changeRadioVolume(){
+        this.angle = 0
+        if(this.radioVolumeSpin.angle < 0){
+                this.angle = (this.radioVolumeSpin.angle + 180) + 180
+        }else{
+            this.angle = this.radioVolumeSpin.angle
+        }
+        this.vol = (this.angle - 0) / (360 - 0)
+        //console.log(this.vol)
+        //this.radioVolumeBar2.destroy()
+        this.volume = this.vol
+        this.radioVolumeBar2.width = this.volume * this.radioVolumeBox2.width
+        //console.log("Volume: "+ this.volume * (1-this.interferenceVolume))
+        this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+    }
+
+    changeSong(number){
+
+        if(number < 0.2 && this.globalIndex != 0){
+                this.globalIndex = 0
+                //console.log("cambio a frec 0")
+                this.playNewSong()
+        }
+        if(number > 0.2 && number < 0.4 && this.globalIndex != 1){
+                this.globalIndex = 1
+                //console.log("cambio a frec 1")
+                this.playNewSong()
+        }
+        if(number > 0.4 && number < 0.6 && this.globalIndex != 2){
+                this.globalIndex = 2
+                //console.log("cambio a frec 2")
+                this.playNewSong()
+        }
+        if(number > 0.6 && number < 0.8 && this.globalIndex != 3){
+                this.globalIndex = 3
+                //console.log("cambio a frec 1")
+                this.playNewSong()
+        }
+        if(number > 0.8 && this.globalIndex !=4){
+                this.globalIndex = 4
+                //console.log("cambio a frec 2")
+                this.playNewSong()
+        }
+
+        if( (number < 0.05) || (number > 0.15 && number < 0.25) || (number > 0.35 && number < 0.45) || (number > 0.55 && number < 0.65) || (number > 0.75 && number < 0.85) || (number > 0.95 && number < 1) ){
+                this.interferenceSound.setVolume(0.9)
+                this.interferenceVolume = 0.9
+                this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+        }else{
+                this.interferenceSound.setVolume(0.05)
+                this.interferenceVolume = 0.05
+                this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+        }
+    }
+
+    playNewSong(){
+        this.currentSong.stop()
+
+        this.currentSong = this.songs.getAt(this.globalIndex)
+        this.currentSong.play()
+        this.currentSong.setVolume(this.volume)
+        this.currentSong.setLoop(true)
+//
+        this.radioSongText.x = this.radioSongTitleStartPosition
+        this.radioSongText.setText(this.titleSongs.getAt(this.globalIndex))
 	}
 	
 }
