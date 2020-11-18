@@ -14,7 +14,7 @@ class MenuStrings {
 
     //Free Gems menu
     this.FreeGems_Title = 'Gift'
-    this.FreeGems_Text = 'Watch a video to recieve \nextra gems!'
+    this.FreeGems_Text = 'Watch a video to \nrecieve extra gems!'
     this.FreeGems_Button = 'FREE'
     
     //Upgrades
@@ -109,7 +109,7 @@ convertToEnglish(){
     this.OptionsMenu_language = 'Language:'
 
     this.FreeGems_Title = 'Gift'
-    this.FreeGems_Text = 'Watch a video to recieve \nextra gems!'
+    this.FreeGems_Text = 'Watch a video to \nrecieve extra gems!'
     this.FreeGems_Button = 'FREE'
 
     this.upgradesCoffee = 'Coffee' 
@@ -150,31 +150,34 @@ class ShopStrings{
     constructor(){
         //Shop Menu
         this.Shop_coinsText = 'Coins'
-        this.Shop_diamondsText = 'Diamonds'
+        this.Shop_diamondsText = 'Gems'
         this.Shop_freeText = 'Free'
         this.Shop_buyConfirmation = 'Are you sure?'
         this.Shop_yes = 'Yes'
         this.Shop_no = 'No'
+        this.Shop_selected = 'Selected'
         
     }
 
     convertToSpanish(){
         this.Shop_coinsText = 'Monedas'
-        this.Shop_diamondsText = 'Diamantes'
+        this.Shop_diamondsText = 'Gemas'
         this.Shop_freeText = 'Gratis'
         this.Shop_buyConfirmation = '¿Estás seguro?'
         this.Shop_yes = 'Si'
         this.Shop_no = 'No'
+        this.Shop_selected = 'Has elegido'
     }
 
 
     convertToEnglish(){
         this.Shop_coinsText = 'Coins'
-        this.Shop_diamondsText = 'Diamonds'
+        this.Shop_diamondsText = 'Gems'
         this.Shop_freeText = 'Free'
         this.Shop_buyConfirmation = 'Are you sure?'
         this.Shop_yes = 'Yes'
         this.Shop_no = 'No'
+        this.Shop_selected = 'Selected'
     }
 
 }

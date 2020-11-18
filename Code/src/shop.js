@@ -22,9 +22,7 @@ class Shop extends Phaser.Scene {
     create(){
         this.CoinsSelected = true;
         var scene = this;
-        var background = this.add.image(config.width/2,config.height/2,'spr_bck_mainMenu')//fondo
-        background.displayWidth = config.width;
-        background.displayHeight = config.height;
+        var background = this.add.image(config.width/2,config.height/2,'bg_interior')
 
 
         this.shopBanner = this.add.sprite(config.width/2, config.height/2,'assets_atlas', 'spr_bck_shopMenu')
@@ -50,34 +48,47 @@ class Shop extends Phaser.Scene {
         
 
         this.bannerSlot1 = this.add.sprite(config.width/4, 2.6*config.height/5,'assets_atlas','spr_buttomMenu')
-        this.bannerDlot1Text = this.add.text(config.width/4, 2.6*config.height/5, this.gameStrings.Shop_freeText, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
-        this.diamond_1 = this.add.sprite(config.width/4, 1.9*config.height/5,'diamond_1').setVisible(false).setOrigin(0.5)
-        this.coin_1 = this.add.sprite(config.width/4, 1.9*config.height/5,'coin_1')
+        this.bannerDlot1Text = this.add.text(config.width/4, 2.6*config.height/5, "0.99 €", { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_1 = this.add.sprite(0.8*config.width/4, 1.9*config.height/5,'assets_atlas','spr_ui_icon_gem').setVisible(false).setOrigin(0.5)
+        this.diamond_ammount_1 = this.add.text( (this.diamond_1.x) + (this.bannerSlot1.width/2), this.diamond_1.y, "10", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false);
+        this.coin_1 = this.add.sprite(0.8*config.width/4, 1.9*config.height/5,'assets_atlas','spr_ui_icon_coin')
+        this.coin_ammount_1 = this.add.text( (this.coin_1.x) + (this.bannerSlot1.width/2), this.coin_1.y, "100", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+
 
         this.bannerSlot2 = this.add.sprite(2*config.width/4, 2.6*config.height/5,'assets_atlas','spr_buttomMenu')
-        this.bannerDlot2Text = this.add.text(2*config.width/4, 2.6*config.height/5, '1.99 €', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
-        this.diamond_2 = this.add.sprite(2*config.width/4, 1.9*config.height/5,'diamond_2').setVisible(false).setOrigin(0.5)
-        this.coin_2 = this.add.sprite(2*config.width/4, 1.9*config.height/5,'coin_2')
+        this.bannerDlot2Text = this.add.text(2*config.width/4, 2.6*config.height/5, '1.99 €', { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_2 = this.add.sprite(1.8*config.width/4, 1.9*config.height/5,'assets_atlas','spr_ui_icon_gem').setVisible(false).setOrigin(0.5)
+        this.diamond_ammount_2 = this.add.text( (this.diamond_2.x) + (this.bannerSlot2.width/2), this.diamond_2.y, "20", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false);
+        this.coin_2 = this.add.sprite(1.8*config.width/4, 1.9*config.height/5,'assets_atlas','spr_ui_icon_coin')
+        this.coin_ammount_2 = this.add.text( (this.coin_2.x) + (this.bannerSlot2.width/2), this.coin_2.y, "200", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
 
         this.bannerSlot3 = this.add.sprite(3*config.width/4, 2.6*config.height/5,'assets_atlas','spr_buttomMenu')
-        this.bannerDlot3Text = this.add.text(3*config.width/4, 2.6*config.height/5, '4.99 €', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
-        this.diamond_3 = this.add.sprite(3*config.width/4, 1.9*config.height/5,'diamond_3').setVisible(false).setOrigin(0.5)
-        this.coin_3 = this.add.sprite(3*config.width/4, 1.9*config.height/5,'coin_3')
+        this.bannerDlot3Text = this.add.text(3*config.width/4, 2.6*config.height/5, '4.99 €', { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_3 = this.add.sprite(2.8*config.width/4, 1.9*config.height/5,'assets_atlas','spr_ui_icon_gem').setVisible(false).setOrigin(0.5)
+        this.diamond_ammount_3 = this.add.text( (this.diamond_3.x) + (this.bannerSlot3.width/2), this.diamond_3.y, "30", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false);
+        this.coin_3 = this.add.sprite(2.8*config.width/4, 1.9*config.height/5,'assets_atlas','spr_ui_icon_coin')
+        this.coin_ammount_3 = this.add.text( (this.coin_3.x) + (this.bannerSlot3.width/2), this.coin_3.y, "300", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         
         this.bannerSlot4 = this.add.sprite(config.width/4, 4.6*config.height/5,'assets_atlas','spr_buttomMenu')
-        this.bannerDlot4Text = this.add.text(config.width/4, 4.6*config.height/5, '9.99 €', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
-        this.diamond_4 = this.add.sprite(config.width/4, 3.9*config.height/5,'diamond_4').setVisible(false).setOrigin(0.5)
-        this.coin_4 = this.add.sprite(config.width/4, 3.9*config.height/5,'coin_4')
+        this.bannerDlot4Text = this.add.text(config.width/4, 4.6*config.height/5, '9.99 €', { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_4 = this.add.sprite(0.8*config.width/4, 3.9*config.height/5,'assets_atlas','spr_ui_icon_gem').setVisible(false).setOrigin(0.5)
+        this.diamond_ammount_4 = this.add.text( (this.diamond_4.x) + (this.bannerSlot4.width/2), this.diamond_4.y, "40", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false);
+        this.coin_4 = this.add.sprite(0.8*config.width/4, 3.9*config.height/5,'assets_atlas','spr_ui_icon_coin')
+        this.coin_ammount_4 = this.add.text( (this.coin_4.x) + (this.bannerSlot4.width/2), this.coin_4.y, "400", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
 
         this.bannerSlot5 = this.add.sprite(2*config.width/4, 4.6*config.height/5,'assets_atlas','spr_buttomMenu')
-        this.bannerDlot5Text = this.add.text(2*config.width/4, 4.6*config.height/5, '49.99 €', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
-        this.diamond_5 = this.add.sprite(2*config.width/4, 3.9*config.height/5,'diamond_5').setVisible(false).setOrigin(0.5)
-        this.coin_5 = this.add.sprite(2*config.width/4, 3.9*config.height/5,'coin_5')
+        this.bannerDlot5Text = this.add.text(2*config.width/4, 4.6*config.height/5, '49.99 €', { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_5 = this.add.sprite(1.8*config.width/4, 3.9*config.height/5,'assets_atlas','spr_ui_icon_gem').setVisible(false).setOrigin(0.5)
+        this.diamond_ammount_5 = this.add.text( (this.diamond_5.x) + (this.bannerSlot5.width/2), this.diamond_5.y, "50", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false);
+        this.coin_5 = this.add.sprite(1.8*config.width/4, 3.9*config.height/5,'assets_atlas','spr_ui_icon_coin')
+        this.coin_ammount_5 = this.add.text( (this.coin_5.x) + (this.bannerSlot5.width/2), this.coin_5.y, "500", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
 
         this.bannerSlot6 = this.add.sprite(3*config.width/4, 4.6*config.height/5,'assets_atlas','spr_buttomMenu')
-        this.bannerDlot6Text = this.add.text(3*config.width/4, 4.6*config.height/5, '99.99 €', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
-        this.diamond_6 = this.add.sprite(3*config.width/4, 3.9*config.height/5,'diamond_6').setVisible(false).setOrigin(0.5)
-        this.coin_6 = this.add.sprite(3*config.width/4, 3.9*config.height/5,'coin_6')
+        this.bannerDlot6Text = this.add.text(3*config.width/4, 4.6*config.height/5, '99.99 €', { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.diamond_6 = this.add.sprite(2.8*config.width/4, 3.9*config.height/5,'assets_atlas','spr_ui_icon_gem').setVisible(false).setOrigin(0.5)
+        this.diamond_ammount_6 = this.add.text( (this.diamond_6.x) + (this.bannerSlot6.width/2), this.diamond_6.y, "60", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false);
+        this.coin_6 = this.add.sprite(2.8*config.width/4, 3.9*config.height/5,'assets_atlas','spr_ui_icon_coin')
+        this.coin_ammount_6 = this.add.text( (this.coin_6.x) + (this.bannerSlot6.width/2), this.coin_6.y, "600", { font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
 
 
         this.bannerSlot1.setInteractive().on('pointerdown', () => {console.log(1), this.buyScreen(1);})
@@ -101,12 +112,13 @@ class Shop extends Phaser.Scene {
         this.crossButton.setVisible(false)
         this.crossButton.setInteractive().on('pointerdown', () => {this.enableAllButtons();})
 
+        this.selected_Text = this.add.text(config.width/2, config.height/3, '', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
         this.confirmationText = this.add.text(config.width/2, config.height/2, '', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
         this.confirmationButton = this.add.image(2.4*config.width/5, 2*config.height/3,'assets_atlas','spr_buttomMenu').setVisible(false).setOrigin(1,0.5)
-        this.yes_Text = this.add.text(1.85*config.width/5, 2*config.height/3, this.gameStrings.Shop_yes, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
+        this.yes_Text = this.add.text((this.confirmationButton.x) - (this.confirmationButton.width/2), 2*config.height/3, this.gameStrings.Shop_yes, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
         
         this.negationButton = this.add.image(2.6*config.width/5, 2*config.height/3,'assets_atlas','spr_buttomMenu').setVisible(false).setOrigin(0,0.5)
-        this.no_Text = this.add.text(3.15*config.width/5, 2*config.height/3, this.gameStrings.Shop_no, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
+        this.no_Text = this.add.text((this.negationButton.x) + (this.negationButton.width/2), 2*config.height/3, this.gameStrings.Shop_no, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
         this.number = 0
 
         this.confirmationButton.setInteractive().on('pointerdown', () => {this.buy_Slot(this.number);})
@@ -124,6 +136,12 @@ class Shop extends Phaser.Scene {
         this.diamondsText.setTint(0xb0b0b0)
         this.CoinsSelected = true;
         this.diamond_1.setVisible(false)
+        this.diamond_ammount_1.setVisible(false)
+        this.diamond_ammount_2.setVisible(false)
+        this.diamond_ammount_3.setVisible(false)
+        this.diamond_ammount_4.setVisible(false)
+        this.diamond_ammount_5.setVisible(false)
+        this.diamond_ammount_6.setVisible(false)
         this.diamond_2.setVisible(false)
         this.diamond_3.setVisible(false)
         this.diamond_4.setVisible(false)
@@ -135,6 +153,12 @@ class Shop extends Phaser.Scene {
         this.coin_4.setVisible(true)
         this.coin_5.setVisible(true)
         this.coin_6.setVisible(true)
+        this.coin_ammount_1.setVisible(true)
+        this.coin_ammount_2.setVisible(true)
+        this.coin_ammount_3.setVisible(true)
+        this.coin_ammount_4.setVisible(true)
+        this.coin_ammount_5.setVisible(true)
+        this.coin_ammount_6.setVisible(true)
     }
 
     selectDiamonds(){
@@ -146,6 +170,12 @@ class Shop extends Phaser.Scene {
         this.bannerCoins.setTint(0xb0b0b0)
         this.coinsText.setTint(0xb0b0b0)
         this.diamond_1.setVisible(true)
+        this.diamond_ammount_1.setVisible(true)
+        this.diamond_ammount_2.setVisible(true)
+        this.diamond_ammount_3.setVisible(true)
+        this.diamond_ammount_4.setVisible(true)
+        this.diamond_ammount_5.setVisible(true)
+        this.diamond_ammount_6.setVisible(true)
         this.diamond_2.setVisible(true)
         this.diamond_3.setVisible(true)
         this.diamond_4.setVisible(true)
@@ -157,6 +187,12 @@ class Shop extends Phaser.Scene {
         this.coin_4.setVisible(false)
         this.coin_5.setVisible(false)
         this.coin_6.setVisible(false)
+        this.coin_ammount_1.setVisible(false)
+        this.coin_ammount_2.setVisible(false)
+        this.coin_ammount_3.setVisible(false)
+        this.coin_ammount_4.setVisible(false)
+        this.coin_ammount_5.setVisible(false)
+        this.coin_ammount_6.setVisible(false)
     }
 
     buyScreen(number){
@@ -165,6 +201,9 @@ class Shop extends Phaser.Scene {
         this.blackScreen.setVisible(true)
         this.extraBanner.setVisible(true)
         this.crossButton.setVisible(true)
+        this.selected_Text.setVisible(true)
+        if(this.CoinsSelected) this.selected_Text.setText(this.gameStrings.Shop_selected +' ' +number*100 +' \n' + this.gameStrings.Shop_coinsText)
+        else this.selected_Text.setText(this.gameStrings.Shop_selected +' ' +number*10 +' \n' + this.gameStrings.Shop_diamondsText) 
         this.confirmationText.setVisible(true)
         this.confirmationText.setText(this.gameStrings.Shop_buyConfirmation)
         this.no_Text.setVisible(true)
@@ -192,12 +231,16 @@ class Shop extends Phaser.Scene {
             
         }
         else{
-            this.playerSettings.diamonds += number*100
-            this.savePlayerSettings()
+            
             if(this.playerSettings.language){
-                this.confirmationText.setText('¡Has obtenido '+number*100+' diamantes!');
+                this.confirmationText.setText('¡Has obtenido '+number*10+' diamantes!');
+                this.playerSettings.diamonds += number*10
+                this.savePlayerSettings()
+
             }else{
-                this.confirmationText.setText('Obtained '+number*100+' diamonds!');
+                this.confirmationText.setText('Obtained '+number*10+' diamonds!');
+                this.playerSettings.diamonds += number*10
+                this.savePlayerSettings()
             }
             
         }
@@ -215,6 +258,7 @@ class Shop extends Phaser.Scene {
         this.blackScreen.setVisible(false)
         this.extraBanner.setVisible(false)
         this.crossButton.setVisible(false)
+        this.selected_Text.setVisible(false)
         this.confirmationText.setVisible(false)
         this.confirmationButton.setVisible(false)
         this.negationButton.setVisible(false)
@@ -232,7 +276,7 @@ class Shop extends Phaser.Scene {
     }
 
     savePlayerSettings(){
-        localStorage.setItem('playerSettings', JSON.stringify(this.playerSettings))
+        localStorage.setItem('playerSettings_PreRelease', JSON.stringify(this.playerSettings))
     }
 
     

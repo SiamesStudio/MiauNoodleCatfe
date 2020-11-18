@@ -31,6 +31,7 @@ class Menu extends Phaser.Scene {
         this.menuMusic = this.sound.add('snd_music_rainyDay')
         this.menuMusic.play()
         this.menuMusic.setVolume(0.7)
+        if(this.playerSettings.audioMuted) this.menuMusic.mute = true
 
         
         //COIN
@@ -59,17 +60,11 @@ class Menu extends Phaser.Scene {
         //UPGRADES
         this.UpgradeGroupSelected = 0; //0 = cafe, 1 = pancake, 2= noodle
         this.upgradesButton = this.add.sprite(5.2*config.width/6, 4*config.height/7,'assets_atlas','spr_buttomMenu').setScale(1.15)
-        this.add.sprite(4.8*config.width/6, 4*config.height/7,'assets_atlas','spr_ui_icon_gem')
-        this.upgradesTextButton = this.add.text(5.3*config.width/6, 4*config.height/7, this.gameStrings.upgradesButtonText, { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        //this.add.sprite(4.8*config.width/6, 4*config.height/7,'assets_atlas','spr_ui_icon_gem')
+        this.upgradesTextButton = this.add.text(5.2*config.width/6, 4*config.height/7, this.gameStrings.upgradesButtonText, { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         
         this.upgradesTextButton.setInteractive().on('pointerdown', () => {console.log("Upgrades"); this.upgradesPanel(this.UpgradeGroupSelected);})
-        
 
-        //ROULETTE
-        //this.rouletteButton = this.add.sprite(5.2*config.width/6, 5*config.height/7,'banner').setScale(0.5)
-        //this.add.sprite(5.5*config.width/7, 5*config.height/7,'assets_atlas','spr_ui_icon_spin')
-        //this.rouletteTextButton = this.add.text(5.3*config.width/6, 5*config.height/7, this.gameStrings.spinButtonText, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        //this.rouletteButton.setInteractive().on('pointerdown', () => {this.roulettePanel();})
 
         //SHOP
         this.shopButton = this.add.sprite(5.2*config.width/6, 6*config.height/7,'assets_atlas','spr_buttomMenu').setScale(1.15)
@@ -81,36 +76,23 @@ class Menu extends Phaser.Scene {
         })
 
         //OPTIONS
-        //this.add.sprite(config.width/14 - 200,config.height/10 - 10,'banner').setScale(4)
-        this.options = this.add.sprite(config.width/14,config.height/10,'assets_atlas','spr_ui_settings')
+        this.options = this.add.sprite(config.width/14,config.height/13,'assets_atlas','spr_ui_settings')
         this.options.setInteractive().on('pointerdown', () => {console.log("Options"); this.optionsPanel();})
 
         //LEVEL SELECTION
-        this.add.sprite(2*config.width/5, 4*config.height/7,'assets_atlas','spr_bck_improvementMenu').setScale(0.8)
+        this.levelSelection = this.add.sprite(2*config.width/5, 4*config.height/7,'assets_atlas','spr_bck_improvementMenu').setScale(0.8)
 
-        //this.kitchenCustom = this.add.sprite(config.width/4, 2*config.height/5,'banner_light').setScale(0.5)
-        //this.add.text(config.width/4, 2*config.height/5, 'Kitchen', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        //this.kitchenCustom.setInteractive().on('pointerdown', () => {console.log("Vamos a cambiar la cocina"); this.kitchenCustomPanel();})
-
-        //this.interiorCustom = this.add.sprite(config.width/4, 3*config.height/5,'banner_light').setScale(0.5)
-        //this.add.text(config.width/4, 3*config.height/5, 'Interior', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        //this.interiorCustom.setInteractive().on('pointerdown', () => {console.log("Igual meto mas mesas"); this.interiorCustomPanel();})
-
-        //this.taskButton = this.add.sprite(config.width/4, 4*config.height/5,'banner_light').setScale(0.5)
-        //this.add.text(config.width/4, 4*config.height/5, 'Tasks', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        //this.taskButton.setInteractive().on('pointerdown', () => {console.log("Vamos a hacer las tareaas"); this.taskPanel();})
-
-        
-        //this.add.sprite(9*config.width/17, 4*config.height/7,'banner_big').setScale(0.1)
 
         //PLAY -> No aparecera en el juego final
-        this.playButton = this.add.sprite(config.width/2,config.height/2,'playButton').setScale(0.3)
+        this.playButton = this.add.sprite(this.levelSelection.x + (this.levelSelection.width/6),this.levelSelection.y,'assets_atlas','spr_buttomMenu').setOrigin(0.5)
+        this.playButtonText = this.add.text(this.levelSelection.x + (this.levelSelection.width/6),this.levelSelection.y, "Jugar", { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         this.playButton.setInteractive().on('pointerdown', () => {
             this.menuMusic.stop()
             this.scene.start("bootGame", { playerInfo: this.playerSettings });
         })
 
-        this.tutorialButton = this.add.sprite(config.width/2,config.height*0.7,'playButton').setScale(0.3)
+        this.tutorialButton = this.add.sprite(this.levelSelection.x - (this.levelSelection.width/6),this.levelSelection.y,'assets_atlas','spr_buttomMenu').setOrigin(0.5)
+        this.tutorialButtonText = this.add.text(this.levelSelection.x - (this.levelSelection.width/6),this.levelSelection.y, "Tutorial", { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         this.tutorialButton.setInteractive().on('pointerdown', () => {
             this.menuMusic.stop()
             this.scene.start("tutorial");
@@ -163,9 +145,11 @@ class Menu extends Phaser.Scene {
 
         //View AD 
         this.ViweAdButton = this.add.sprite(config.width/2, 3*config.height/4,'assets_atlas','spr_buttomMenu').setScale(1.5).setVisible(false)
-        this.textAd = this.add.text(config.width/2, 3*config.height/4,this.gameStrings.FreeGems_Button,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
-        this.textPreAd = this.add.text(config.width/2, config.height/2,this.gameStrings.FreeGems_Text,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
-        this.titleAd = this.add.text(config.width/2, config.height/4,this.gameStrings.FreeGems_Title,{ font: "30px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        this.textAd = this.add.text(config.width/2, 3*config.height/4,this.gameStrings.FreeGems_Button,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        this.textPreAd = this.add.text(config.width/2, 1.75*config.height/4,this.gameStrings.FreeGems_Text,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        this.AdPrize = this.add.sprite(config.width/2-10, 2.5*config.height/4,'assets_atlas','spr_ui_icon_gem').setOrigin(0.5).setVisible(false)
+        this.textPrizeAd = this.add.text(config.width/2+10, 2.5*config.height/4,"3",{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        this.titleAd = this.add.text(config.width/2, config.height/4,this.gameStrings.FreeGems_Title,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
         
         this.adSprite = this.add.sprite(config.width/2, config.height/2, 'advertising_image').setVisible(false)
         this.adSprite.displayWidth = config.width;
@@ -226,8 +210,8 @@ class Menu extends Phaser.Scene {
         this.upgradesTextType = this.add.text(0.85*config.width/3, 1.25*config.height/6, "Tipo", { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
         
         this.upgradeDescriptionBanner = this.add.sprite(1.8*config.width/3, config.height/2,'assets_atlas','spr_bck_improvementDescription').setVisible(false)//Panel descripcion
-        this.upgradeTitleSlotText1 = this.add.text(1.8*config.width/3, config.height/3 , this.gameStrings.upgradesCoffeTime ,{ font: "14px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto descripcion
-        this.upgradeDescriptionSlotText1 = this.add.text(1.8*config.width/3, config.height/2 , this.gameStrings.upgradesCoffeTimeDescription + this.playerSettings.upgrades.coffeeTime,{ font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto descripcion
+        this.upgradeTitleSlotText1 = this.add.text(1.8*config.width/3, config.height/3 , this.gameStrings.upgradesCoffeTime ,{ font: "14px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//.setTint(0x2f214f)//Texto descripcion
+        this.upgradeDescriptionSlotText1 = this.add.text(1.8*config.width/3, config.height/2 , this.gameStrings.upgradesCoffeTimeDescription + this.playerSettings.upgrades.coffeeTime,{ font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//.setTint(0x2f214f)//Texto descripcion
         this.buySlot = this.add.sprite(1.8*config.width/3, 2*config.height/3, 'assets_atlas','spr_buttomMenu').setVisible(false)//Boton comprar
         this.buyUpgradeCoin = this.add.sprite(1.5*config.width/3, 2*config.height/3, 'assets_atlas','spr_ui_icon_coin').setVisible(false)
         this.buySlotText = this.add.text(1.8*config.width/3, 2*config.height/3,500 + 500*this.playerSettings.upgrades.coffeeTime ,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
@@ -288,6 +272,104 @@ class Menu extends Phaser.Scene {
                     }
                         
                     break;
+                
+                    case 4:
+                        //code
+                        if(this.playerSettings.upgrades.pancakeBurnTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.pancakeBurnTime) ){
+                            this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.pancakeBurnTime
+                            this.numCoins.setText(this.playerSettings.coins)
+                            this.playerSettings.upgrades.pancakeBurnTime += 1
+                            this.savePlayerSettings()
+                            this.upgradesPanelDescription(4);
+                            //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
+                            //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
+                        }
+                            
+                        break;
+
+                    case 5:
+                        //code
+                        if(this.playerSettings.upgrades.pancakePanLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.pancakePanLevel) ){
+                            this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.pancakePanLevel
+                            this.numCoins.setText(this.playerSettings.coins)
+                            this.playerSettings.upgrades.pancakePanLevel += 1
+                            this.savePlayerSettings()
+                            this.upgradesPanelDescription(5);
+                            //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
+                            //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
+                        }
+                            
+                        break;
+
+                    case 6:
+                        //code
+                        if(this.playerSettings.upgrades.tableClothPancakeLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.tableClothPancakeLevel) ){
+                            this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.tableClothPancakeLevel
+                            this.numCoins.setText(this.playerSettings.coins)
+                            this.playerSettings.upgrades.tableClothPancakeLevel += 1
+                            this.savePlayerSettings()
+                            this.upgradesPanelDescription(6);
+                            //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
+                            //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
+                        }
+                            
+                        break;
+
+                    case 7:
+                       //code
+                       if(this.playerSettings.upgrades.noodleTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.noodleTime) ){
+                           this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.noodleTime
+                           this.numCoins.setText(this.playerSettings.coins)
+                           this.playerSettings.upgrades.noodleTime += 1
+                           this.savePlayerSettings()
+                           this.upgradesPanelDescription(7);
+                           //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
+                           //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
+                       }
+                           
+                       break;
+
+                    case 8:
+                     //code
+                     if(this.playerSettings.upgrades.noodleBurnTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.noodleBurnTime) ){
+                         this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.noodleBurnTime
+                         this.numCoins.setText(this.playerSettings.coins)
+                         this.playerSettings.upgrades.noodleBurnTime += 1
+                         this.savePlayerSettings()
+                         this.upgradesPanelDescription(8);
+                         //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
+                         //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
+                     }
+                         
+                     break;
+
+                    case 9:
+                       //code
+                       if(this.playerSettings.upgrades.noodleLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.noodleLevel) ){
+                           this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.noodleLevel
+                           this.numCoins.setText(this.playerSettings.coins)
+                           this.playerSettings.upgrades.noodleLevel += 1
+                           this.savePlayerSettings()
+                           this.upgradesPanelDescription(9);
+                           //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
+                           //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
+                       }
+                           
+                       break;
+
+                    case 10:
+                     //code
+                     if(this.playerSettings.upgrades.tableClothNoodleLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.tableClothNoodleLevel) ){
+                         this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.tableClothNoodleLevel
+                         this.numCoins.setText(this.playerSettings.coins)
+                         this.playerSettings.upgrades.tableClothNoodleLevel += 1
+                         this.savePlayerSettings()
+                         this.upgradesPanelDescription(9);
+                         //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
+                         //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
+                     }
+                         
+                     break;
                 default:
                     //code
                     console.log("default")
@@ -315,6 +397,8 @@ class Menu extends Phaser.Scene {
         this.textAd.setVisible(true)
         this.titleAd.setVisible(true)
         this.textPreAd.setVisible(true)
+        this.textPrizeAd.setVisible(true)
+        this.AdPrize.setVisible(true)
 
         this.crossButtonAd.setInteractive().on('pointerdown', () => {//Cerrar anuncio
             this.adSprite.setVisible(false); 
@@ -599,6 +683,7 @@ class Menu extends Phaser.Scene {
         this.empty_Selection.setInteractive().on('pointerdown', () => {
             this.empty_Selection.setVisible(false)
             this.playerSettings.audioMuted = true;
+            this.menuMusic.mute = true
             this.savePlayerSettings()
             this.tick_Selection.setVisible(true)
             
@@ -607,6 +692,7 @@ class Menu extends Phaser.Scene {
         this.tick_Selection.setInteractive().on('pointerdown', () => {
             this.empty_Selection.setVisible(true)
             this.playerSettings.audioMuted = false;
+            this.menuMusic.mute = false
             this.savePlayerSettings()
             this.tick_Selection.setVisible(false)
         })
@@ -674,6 +760,8 @@ class Menu extends Phaser.Scene {
         this.textAd.setVisible(false); 
         this.titleAd.setVisible(false);
         this.textPreAd.setVisible(false);
+        this.textPrizeAd.setVisible(false)
+        this.AdPrize.setVisible(false)
 
         //Options
         this.titleOptions.setVisible(false)
@@ -914,7 +1002,7 @@ class Menu extends Phaser.Scene {
     }
 
     savePlayerSettings(){
-        localStorage.setItem('playerSettings', JSON.stringify(this.playerSettings))
+        localStorage.setItem('playerSettings_PreRelease', JSON.stringify(this.playerSettings))
     }
 
     uploadPlayerLevel(number){
