@@ -126,6 +126,7 @@ class Client{
   goToRestaurant(place){
     this.place=place;
     this.orderCoins=0;
+    this.dishesFinalPoints=[];
 	  var slotId=this.findFreeSlot(place);
 	  //console.log(Client.restaurantOccupiedSlots)
 	  //console.log(Client.streetOccupiedSlots)
@@ -178,7 +179,7 @@ class Client{
     if(!GameManager.tutorial)this.timeLeft.paused=true;
     var exp=0;
     for (var i=0;i< this.dishesFinalPoints.length;i++){
-      exp+=this.dishesFinalPoints[i]*(1/this.dishesFinalPoints.length)
+      exp+=Math.floor(this.dishesFinalPoints[i]*(1/this.dishesFinalPoints.length))
     }
     var lvl= GameManager.scene.uploadPlayerLevel(exp);
     if(!GameManager.tutorial)GameManager.scene.playerSettings.level=lvl;
@@ -192,6 +193,7 @@ class Client{
     GameManager.scene.noodleprogressBar.width=GameManager.scene.littleSlider.width*(GameManager.globalHappiness/100)
     if(this.orderCoins>0){
       this.coinsImg=GameManager.scene.add.image(this.clientImg.x,this.clientImg.y+45,'spr_coins')
+      console.log("PONGO BOLSITA")
       this.coinsImg.setInteractive().on('pointerdown', () => {
         this.coinsImg.destroy();
         GameManager.levelEarnedCoins+=this.orderCoins;
@@ -210,8 +212,18 @@ class Client{
         }
       })
     }
-    
-
+    else if(this.orderCoins==0){
+      if(this.place==1){
+        this.place=0;
+        Client.restaurantSlots.getAt(this.slot).occupied=false;
+        Client.restaurantOccupiedSlots--;
+      }
+      if(this.place==2){
+        this.place=0;
+        Client.streetSlots.getAt(this.slot).occupied=false;
+        Client.streetOccupiedSlots--;
+      }
+    }
     this.clientImg.disableBody(true,true);
   }
 }
