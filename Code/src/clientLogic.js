@@ -11,11 +11,11 @@ class Client{
     if(index==0){
       for(var i=0; i<Client.maxSlots; i++)
       {
-        Client.streetSlots.add(new Slot(config.width+config.width*0.2+(60*i),config.height*0.2));
+        Client.streetSlots.add(new Slot(config.width+config.width*0.2+(60*i),config.height*0.34-2));
       }
       for(var i=0; i<Client.maxSlots; i++)
       {
-        Client.restaurantSlots.add(new Slot(config.width*0.2+(60*i),config.height*0.2));
+        Client.restaurantSlots.add(new Slot(config.width*0.2+(60*i),config.height*0.34-2));
       }
     }
     this.index=index;
@@ -170,7 +170,36 @@ class Client{
     console.log("cliente "+this.index+": "+this.time)
 
     if(!GameManager.tutorial)this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
-    this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'client'); this.clientImg.setScale(0.05);
+    this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_basecolor');
+    if(this.index%2==0){
+      this.clientSecondImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_secondcolor_spots');
+    }
+    else{
+      this.clientSecondImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_secondcolor_stripes');
+    }
+    switch(this.index){
+      case 0: 
+        this.clientImg.setTint(0xe91c1c)
+        break
+      case 1:
+        this.clientImg.setTint(0x35e91c)
+        break
+      case 2:
+        this.clientImg.setTint(0x1c51e9)
+        break
+      case 3:
+        this.clientImg.setTint(0xe91ce3)
+        break
+      case 4:
+        this.clientImg.setTint(0x1ce9dd)
+        break
+      case 5:
+        this.clientImg.setTint(0x000000)
+        break
+      case 6:
+        this.clientImg.setTint(0xff9b00)
+        break 
+    }
   }
 
   compareOrderWithDish(dish){
@@ -188,7 +217,7 @@ class Client{
   }
 
   exitRestaurant(){
-    Client.clientsInRestaurant.remove(this.index);
+    
     if(!GameManager.tutorial)this.timeLeft.paused=true;
     var exp=0;
     for (var i=0;i< this.dishesFinalPoints.length;i++){
@@ -209,6 +238,7 @@ class Client{
       TutorialManager.coins = this.coinsImg;
       console.log("PONGO BOLSITA")
       this.coinsImg.setInteractive().on('pointerdown', () => {
+        Client.clientsInRestaurant.remove(this.index);
         this.coinsImg.destroy();
         GameManager.levelEarnedCoins+=this.orderCoins;
         console.log(GameManager.levelEarnedCoins)
@@ -227,6 +257,7 @@ class Client{
       })
     }
     else if(this.orderCoins==0){
+      Client.clientsInRestaurant.remove(this.index);
       if(this.place==1){
         this.place=0;
         Client.restaurantSlots.getAt(this.slot).occupied=false;
@@ -238,7 +269,8 @@ class Client{
         Client.streetOccupiedSlots--;
       }
     }
-    this.clientImg.disableBody(true,true);
+    this.clientImg.destroy();
+    this.clientSecondImg.destroy();
   }
 }
 

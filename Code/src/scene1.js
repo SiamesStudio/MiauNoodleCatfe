@@ -246,7 +246,7 @@ class scene1 extends Phaser.Scene {
 		this.falseProgressBar.height=this.progressBar.height-4
 		this.add.sprite(config.width*0.145,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
-		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings')
+		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5)
 
 
 		this.coinSlider=this.add.sprite(config.width*0.5+config.width,config.height/13,'assets_atlas','spr_ui_slider')
@@ -269,7 +269,7 @@ class scene1 extends Phaser.Scene {
 		this.falseProgressBar.height=this.progressBar.height-4
 		this.add.sprite(config.width*0.145+config.width,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
-		this.options = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings')
+		this.options = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5)
         
 	}
 
@@ -583,28 +583,27 @@ class scene1 extends Phaser.Scene {
     	var maxTime = 9;
     	var minTime = 2;
     	if(GameManager.gameOn){
-			if(Client.clientsInRestaurant.length==0){
-				callClient(-1);
-		  }
-		  else {
-				if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 3){
+			
+			if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 3){
+				console.log("+++++++++++ENTRO REST Y HAY "+Client.streetOccupiedSlots+" SLOTS OCUPADOS")
 				  //console.log("esperando a cliente en coffee")
 				  GameManager.waitingRestaurantClient=true;
 				  var restaurantTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
 				  setTimeout(function(){
 						callClient(1);
 					 }, restaurantTime);
-				}
-		
-				if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 3){
-					//console.log("esperando a cliente en calle")
-					GameManager.waitingStreetClient=true;
-					var streetTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
-					setTimeout(function(){
-						callClient(2);
-					}, streetTime);
-				}
-		  }
+			}
+				
+			if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 3){
+				console.log("+++++++++++ENTRO STREET Y HAY "+Client.streetOccupiedSlots+" SLOTS OCUPADOS")
+				//console.log("esperando a cliente en calle")
+				GameManager.waitingStreetClient=true;
+				var streetTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
+				setTimeout(function(){
+					callClient(2);
+				}, streetTime);
+			}
+		  
 		}
     	
 		if(!GameManager.gameOn && Client.clientsInRestaurant.length==0){ //condicion de victoria
@@ -1347,10 +1346,6 @@ function makeImgInteractive(itemClass, itemImg, item, cookingSound, _pixelPerfec
 }
 
 function callClient(place){  	
-	if(place==-1){
-    	var place= Math.floor(Math.random()*2+1);
-	  }
-	  
 	var long=Client.clientsInRestaurant.length
   	var clientId= Math.floor(Math.random()*Client.clientList.length);
   	Client.clientsInRestaurant.add(clientId);
