@@ -15,7 +15,7 @@ class Loading extends Phaser.Scene {
             gameLevel:1,
             moneySpent: 0,
             upgrades : {
-                cofeeTime : 0,
+                coffeeTime : 0,
                 coffeeMachineLevel : 0,
                 pancakeTime : 0,
                 pancakeBurnTime : 0,
@@ -32,8 +32,8 @@ class Loading extends Phaser.Scene {
     preload(){
         //this.load.image('loading','assets/UI/loading.jpg');
         var sceneRef = this;
-        var loading_Text = this.add.text(config.width/2 ,config.height/3, 'Loading... 0%', { font: "30px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        var lastAssetLoaded = this.add.text(config.width/2 ,2*config.height/3, 'Asset: ', { font: "15px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        var loading_Text = this.add.text(config.width/2 ,config.height/3, 'Loading... 0%', { font: "30px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        var lastAssetLoaded = this.add.text(config.width/2 ,2*config.height/3, 'Asset: ', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         var progressBox = this.add.rectangle(config.width/2, config.height/2, 3.7*config.width/7, 25, 0xa4b0af).setOrigin(0.5);
         var progressBar = this.add.rectangle(config.width/4, config.height/2, 0, 20, 0x9e616e);
         var loadingText = "Loading... ";
@@ -169,7 +169,6 @@ class Loading extends Phaser.Scene {
         {frameWidth: 1,frameHeight: 10}
         );
         
-        
         this.load.multiatlas('assets_atlas', 'assets/assets.json', 'assets');
         this.load.image('spr_cristal_canciones','assets/UI/UI_temporal/spr_cristal_canciones.png');
         this.load.image('bg_radio_zoomed','assets/bg_radio_zoomed.png');
@@ -225,8 +224,11 @@ class Loading extends Phaser.Scene {
     loadCoffeeScreen()
 	{
         this.load.image('client','assets/client.jpg');
+        this.load.image('bg_interior','assets/bg_interior.png');
+        this.load.image('bg_interior_window','assets/bg_interior_window.png');
         this.load.path = 'assets/SpritesPatri/';
-
+        
+        
 		// Animación de la cafetera dispensando el café (individual por cada dispensador): nombrado dependiente de la implementación.
 		this.load.image('spr_pancake_bottle','spr_pancake_bottle.png');
 		// Botes de siropes: spr_syrup_tipoDeSirope.
@@ -243,12 +245,8 @@ class Loading extends Phaser.Scene {
         this.load.image('spr_bowls','assets/spr_bowls.png');
         this.load.image('spr_ui_arrow','assets/spr_ui_arrow.png');
         this.load.image('spr_sauces_posters','assets/spr_sauces_posters.png');
-        this.load.image('spr_background_noodles','assets/spr_background_noodles.png');
-        this.load.image('bg_noodles','assets/bg_noodles.png');
-        this.load.image('spr_bg_topping_egg','assets/spr_bg_topping_egg.png');
-        this.load.image('spr_bg_topping_mushroom','assets/spr_bg_topping_mushroom.png');
-        this.load.image('spr_bg_topping_naruto','assets/spr_bg_topping_naruto.png');
-        this.load.image('spr_bg_topping_springonion','assets/spr_bg_topping_springonion.png');
+        this.load.image('bg_streetNoodles','assets/bg_streetNoodles.png');
+        this.load.image('bg_kitchen','assets/bg_kitchen.png');
     	// Animación del cucharón echando cada salsa. (3 en total): nombrado dependiente de la implementación
 
     	/* 
@@ -308,7 +306,7 @@ class Loading extends Phaser.Scene {
         
         this.score = parseInt(localStorage.getItem('score')) || 0
         localStorage.setItem('score', this.score + 1)
-        this.add.text(config.width/2 ,3*config.height/4, this.score, { font: "20px Arial", fill: "#ffffff", align: "center" });
+        this.add.text(config.width/2 ,3*config.height/4, this.score, { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setResolution(10);
 
         //localStorage.removeItem('playerSettings')
         

@@ -10,55 +10,256 @@ class tutorial extends Phaser.Scene {
 	}
 
 	create(){
-		this.clientsSettings();		
 		var gm = new GameManager(this);
+		gm.resetVars();
+		GameManager.tutorial=true;
+		this.resetVariables();
+		this.interfaceSettings();
         this.coffeeSetting();
         this.pancakesSetting();
-        //this.noodlesSetting();
-        this.tutStuff();
+        this.noodlesSetting();
+        this.clientsSettings();	
+		this.tutStuff();
+		this.radioSettings();
         this.cursors = this.input.keyboard.createCursorKeys();
+	}
+
+	resetVariables()
+	{
+		Client.clientList.removeAll();
+   		Client.clientsInRestaurant.removeAll();
+   		Client.streetSlots.removeAll();
+   		Client.restaurantSlots.removeAll();
 	}
 
 	clientsSettings(){
     	//index, salsa, nº toppings, toppings
-    	//index, salsa, nº plantas,nºtoppings, toppings
-    	var tutorialPancakeClient = new Client(0, 1,[2,0,1,0], [1,1,1,1,2]);
-    	tutorialPancakeClient.tutorial = true;
-    	//var tutorialNoodleClient = new Client(1, 2,[2,0,1,0], [1,1,1,1,2]);
-
-    	/*
-    	new Client(0, 0,[2,0,1,0], [1,-1,1,1,2]);
-    	new Client(1, 1,[2,2,0], [1,-1,1,2,2,3]);
-    	new Client(2, 0, [2,2,1,0], [1,1,1,0]);
-    	new Client(3, 2, [2,3,1,3], [1,2,1,1,0]);
-		new Client(4, 2, [2,2,1,1], [1,0,2,0]);
-		new Client(5,1,[2,0,2,1,2],[1,0,2,0]) */
-    	//console.log(Client.clientList)
-    	//añadir clientes a mano
+    	//index, sirope, nº plantas,nºtoppings, toppings 	
+    	TutorialManager.tutorialPancakeClient = new Client(0, 1,[2,0,1,0], [1,1,1,1,2]);
+    	TutorialManager.tutorialPancakeClient.tutorial = true;
+    	callClient(1);
+    	TutorialManager.tutorialPancakeClient.clientImg.x += config.width*0.4;
   	}
+
+	radioSettings(){
+		this.interferenceSound = this.sound.add('snd_radio_interference')
+        this.interferenceSound.play()
+        this.interferenceVolume = 0.05
+        this.interferenceSound.setVolume(this.interferenceVolume)
+        this.interferenceSound.setLoop(true)
+
+        
+
+        this.songs = new Phaser.Structs.List();
+        this.songs.add(this.sound.add('snd_music_pancake'));
+        this.songs.add(this.sound.add('snd_music_chocolate'));
+        this.songs.add(this.sound.add('snd_music_bread'));
+        this.songs.add(this.sound.add('snd_music_cafe'));
+        this.songs.add(this.sound.add('snd_music_alone'));
+        /* 
+        *
+        Incluir el resto de canciones 
+        *
+        */
+        this.titleSongs = new Phaser.Structs.List();
+        this.titleSongs.add("LuKrembo - Pancake");
+        this.titleSongs.add("LuKrembo - Chocolate");
+        this.titleSongs.add("LuKrembo - Bread");
+        this.titleSongs.add("LuKrembo - Cafe");
+        this.titleSongs.add("LuKrembo - Alone");
+
+        
+        /* 
+        *
+        Incluir el resto de canciones 
+        *
+        */
+        
+
+
+        this.globalIndex = 0;
+        this.volume = 0.9;
+
+
+        this.radioSongPanel = this.add.image(1.55*config.width/4   +  2*config.width , 2.95*config.height/5,'assets_atlas','spr_pantalla_canciones').setOrigin(0,0.5)
+        this.radioSongText = this.add.text(1.55*config.width/4   +  2*config.width, 2.95*config.height/5, this.titleSongs.getAt(this.globalIndex), { font: "8px PixelFont", fill: "#000000", align: "center" }).setOrigin(0,0.5).setResolution(10);
+        //this.radioSongText = this.add.bitmapText(1.55*config.width/4, 2.95*config.height/5, 'BitPap' ,this.titleSongs.getAt(this.globalIndex),8).setOrigin(0,0.5);
+        
+        this.radioSongTitleStartPosition = 1.55*config.width/4 - this.radioSongText.width   +  2*config.width
+        this.radioSongPanelCrystal = this.add.image(1.55*config.width/4   +  2*config.width, 2.95*config.height/5,'spr_cristal_canciones').setOrigin(0,0.5)
+        this.add.image(config.width/2  +  2*config.width ,config.height/2,'bg_radio_zoomed').setOrigin(0.5)
+
+        this.radioSongText.x = this.radioSongTitleStartPosition
+        console.log(this.titleSongs.getAt(this.globalIndex))
+
+
+//
+        this.currentSong = this.songs.getAt(this.globalIndex)
+        this.currentSong.play()
+        this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+        this.currentSong.setLoop(true)
+
+        this.radioFrecuencyBox_positionX = 2.16*config.width/4  +  2*config.width
+        this.radioFrecuencyBox_positionY = 4.03*config.height/6
+        
+        this.radioFrecuencyBox = this.add.image(this.radioFrecuencyBox_positionX, this.radioFrecuencyBox_positionY, 'assets_atlas','spr_pantalla_volumen_cancion').setOrigin(0.5)
+        this.radioFrecuencyBar = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.1), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_indicador_cancion').setOrigin(0,0.5);
+
+        this.radioFrecuencyBar0 = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.1), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBar1 = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.3), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBar2 = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.5), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBar3 = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.7), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBar4 = this.add.image((this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.radioFrecuencyBox.width * 0.9), this.radioFrecuencyBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        this.radioFrecuencyBoxCristal = this.add.image(this.radioFrecuencyBox_positionX, this.radioFrecuencyBox_positionY, 'assets_atlas','spr_cristal_volumen_cancion').setOrigin(0.5)
+        this.radioFrecuencyBox_margin = this.add.image(this.radioFrecuencyBox_positionX, this.radioFrecuencyBox_positionY, 'assets_atlas','spr_borde_pantalla').setOrigin(0.5)
+        
+//
+        this.radioVolumeBox_positionX = 2.16*config.width/4  +  2*config.width
+        this.radioVolumeBox_positionY = 4.55*config.height/6
+        this.radioVolumeBox2 = this.add.image(this.radioVolumeBox_positionX, this.radioVolumeBox_positionY,'assets_atlas','spr_pantalla_volumen_cancion').setOrigin(0.5);
+        this.radioVolumeBar2 = this.add.rectangle((this.radioVolumeBox_positionX - this.radioVolumeBox2.width/2), this.radioVolumeBox_positionY + 1, (this.volume * this.radioVolumeBox2.width), 6, 0x9e616e).setOrigin(0,0.5);
+        this.radioVolumeBox2 = this.add.image(this.radioVolumeBox_positionX, this.radioVolumeBox_positionY,'assets_atlas','spr_cristal_volumen_cancion').setOrigin(0.5);
+        this.radioVolumeBox2 = this.add.image(this.radioVolumeBox_positionX, this.radioVolumeBox_positionY,'assets_atlas','spr_borde_pantalla').setOrigin(0.5);
+
+        for(var i = 1; i<10; i++){
+                this.add.image((this.radioVolumeBox_positionX - this.radioVolumeBox2.width/2) + (this.radioVolumeBox2.width * 0.1 * i ), this.radioVolumeBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
+        }
+
+        
+        
+        
+
+
+//----------------------------------------------------------------------------------------------------
+//FRECUENCIA
+
+        this.vectorA = new Phaser.Math.Vector2(1,0)
+        this.vectorB = new Phaser.Math.Vector2(1,0)
+        this.radioFrecSpinPositionX = 3.58*config.width/10 +  2*config.width
+        this.radioFrecSpinPositionY = 7.5*config.height/10
+        this.radioFrecSpin = this.add.image(this.radioFrecSpinPositionX, this.radioFrecSpinPositionY,'assets_atlas','spr_radio_zoomed_vol_song').setOrigin(0.5)
+        this.radioFrecSpin.setInteractive({ draggable: true })
+        var currentScene = this;
+
+
+        this.radioFrecSpin.on('dragstart', function(pointer,dragX,dragY){
+                this.modB = Math.sqrt(dragX*dragX + dragY*dragY)
+                this.vectorB = new Phaser.Math.Vector2(dragX/this.modB , dragY/this.modB)
+                this.currentAngle = 180 * (this.vectorB.angle()) / Math.PI
+
+                currentScene.radioFrecSpin.angle = this.currentAngle
+                currentScene.changeRadioFrecuency()
+                
+        })
+        this.radioFrecSpin.on('drag', function(pointer,dragX,dragY){ 
+                this.vectorB = new Phaser.Math.Vector2(pointer.worldX - currentScene.radioFrecSpinPositionX, pointer.worldY - currentScene.radioFrecSpinPositionY)
+                this.vectorB.normalize()
+                this.currentAngle = (180 * (this.vectorB.angle()) / Math.PI)// - 180
+
+                currentScene.radioFrecSpin.angle = this.currentAngle
+                currentScene.changeRadioFrecuency()
+        })
+
+
+//----------------------------------------------------------------------------------------------------
+//VOLUMEN
+        this.radioVolumeSpinPositionX = 7.2*config.width/10  +  2*config.width
+        this.radioVolumeSpinPositionY = 7.5*config.height/10
+        this.radioVolumeSpin = this.add.image(this.radioVolumeSpinPositionX, this.radioVolumeSpinPositionY,'assets_atlas','spr_radio_zoomed_vol_song').setOrigin(0.5)
+        this.radioVolumeSpin.angle -=5
+        this.radioVolumeSpin.setInteractive({ draggable: true })
+
+
+        this.radioVolumeSpin.on('dragstart', function(pointer,dragX,dragY){
+                //console.log("vecToPointer : "+ dragX, dragY)
+                this.modB = Math.sqrt(dragX*dragX + dragY*dragY)
+                this.vectorB = new Phaser.Math.Vector2(dragX/this.modB , dragY/this.modB)
+                this.currentAngle = 180 * (this.vectorB.angle()) / Math.PI
+
+                currentScene.radioVolumeSpin.angle = this.currentAngle
+                currentScene.changeRadioVolume()
+                
+        })
+        this.radioVolumeSpin.on('drag', function(pointer,dragX,dragY){                
+                this.vectorB = new Phaser.Math.Vector2(pointer.worldX - currentScene.radioVolumeSpinPositionX, pointer.worldY - currentScene.radioVolumeSpinPositionY)
+                this.vectorB.normalize()    
+                this.currentAngle = (180 * (this.vectorB.angle()) / Math.PI)// - 180
+
+                currentScene.radioVolumeSpin.angle = this.currentAngle
+                currentScene.changeRadioVolume()
+        })
+
+        
+        //BACK 
+        this.backButton = this.add.image(config.width/12   +  2*config.width , 9*config.height/10,'assets_atlas','spr_back')
+        this.backButton.setInteractive().on('pointerdown', () => {
+				this.cameras.main.centerOnX(config.width/2)
+			})
+	}
+	  
+  	interfaceSettings(){
+		this.add.sprite(config.width*0.5,config.height/13,'assets_atlas','spr_ui_slider')
+        this.add.sprite(config.width*0.4,config.height/11,'assets_atlas','spr_ui_icon_coin')
+        this.numCoins = this.add.text(config.width*0.5,config.height/13, GameManager.levelEarnedCoins, { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+		
+		this.slider=this.add.sprite(3*config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
+        this.add.sprite(config.width*0.65,config.height/11,'assets_atlas','spr_ui_chefLvl')
+        this.numPlayerLevel = this.add.text(config.width*0.65,config.height/11, 0, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
+        this.numChefPoints = this.add.text(this.slider.x+6,config.height/13, "", { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5);
+		GameManager.scene.uploadPlayerLevel(0)
+		
+		this.slider=this.add.sprite(config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
+		this.slider=this.add.sprite(config.width/4+5 ,config.height/13,'assets_atlas','spr_ui_volumen')
+		this.add.sprite(config.width*0.145,config.height/11,'assets_atlas','spr_ui_icon_happy')
+		
+		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings')
+	}
 
 	coffeeSetting()
 	{
 		this.cameras.main.on('camerafadeoutcomplete', function (camera) {
             camera.fadeIn(100);
         });
+        var background = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior');
+		var cam = this.cameras.main;	
+		var goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.08, 'spr_ui_arrow');
+		goToNoodlesButton.setInteractive().on('pointerdown', function(pointer){
+			cam.centerOnX(config.width + config.width/2);
+    	    GameManager.scene.cameras.main.fadeOut(25);
+		})
+
+		var coffeeMachineLvl = 0;
+		var coffeeMachineImg;
 		
 		var posx= config.width*0.86;
 		var posy= config.height*0.5;
+		switch(coffeeMachineLvl)
+		{
+			case 0:
+				coffeeMachineImg = this.add.image(posx, posy,'assets_atlas', 'spr_coffeeMachine_0'); 
+			break;
+			case 1:
+				coffeeMachineImg = this.add.image(posx, posy,'assets_atlas','spr_coffeeMachine_1'); 
+			break;
+			case 2:
+				coffeeMachineImg = this.add.image(posx, posy,'assets_atlas', 'spr_coffeeMachine_2');
+			break;
+			case 3:
+				coffeeMachineImg = this.add.image(posx, posy,'assets_atlas', 'spr_coffeeMachine_3'); 
+			break;
+		}
 
-		var coffeeMachineImg = this.add.image(posx, posy, 'assets_atlas','spr_coffeeMachine_0'); 
-
-		this.add.image(config.width*0.83,config.height*0.24,'assets_atlas','spr_radio');
+		var spr_radio = this.add.image(config.width*0.83,config.height*0.24,'assets_atlas','spr_radio');
+		spr_radio.setInteractive().on('pointerdown', () =>{ cam.centerOnX(2*config.width + config.width/2);})
 		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.915, 'assets_atlas', 'spr_glasses');
 
-		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, 0);
+		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, coffeeMachineLvl, true);
 		GameManager.coffeeMachine = coffeeMachine;
 		TutorialManager.glassesImg = coffeeSpawnerImg;
 		
         GameManager.tapSound = GameManager.scene.sound.add('snd_tap');
 	}
 
-	
 	pancakesSetting()
 	{
 		var numTablecloth = 1;
@@ -147,34 +348,56 @@ class tutorial extends Phaser.Scene {
 		}
 	}
 	
-	
-	/*
 	noodlesSetting()
 	{
-		var noodleSpawnerImg = this.add.image(config.width*0.935 + config.width, config.height*0.8,'assets_atlas','spr_bowl'); 
-
+		var backgroundStreet = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_streetNoodles');
+		var background = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_kitchen');
+		
+		var noodleSpawnerImg = this.add.image(config.width*0.882 + config.width, config.height*0.91,'assets_atlas','spr_bg_noodles');
+		var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
+		GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
+		GameManager.animatedStrainerImg.setAlpha(0);
 		var strainerLvl = 0;
-        var strainerImg;
-		switch(strainerLvl)
-		{
-			case 0:
-				strainerImg = this.add.image(config.width*0.7 + config.width, config.height*0.6,'assets_atlas','spr_strainer_0'); 
-			break;
-			case 1:
-				strainerImg = this.add.image(config.width*0.7 + config.width, config.height*0.6,'assets_atlas','spr_strainer_1'); 
-			break;
-			case 2:
-				strainerImg = this.add.image(config.width*0.7 + config.width, config.height*0.6,'assets_atlas','spr_strainer_2'); 
-			break;
-			case 3:
-				strainerImg = this.add.image(config.width*0.7 + config.width, config.height*0.6,'assets_atlas','spr_strainer_3'); 
-			break;
-		}
-        var strainer = new Strainer(strainerImg, strainerLvl);
+		var cam = this.cameras.main;	
+		var goToCoffeeButton = this.add.image(config.width*0.06+config.width,config.height*0.08, 'spr_ui_arrow');
+		goToCoffeeButton.setInteractive().on('pointerdown', function(pointer){
+			cam.centerOnX(config.width/2);
+            GameManager.scene.cameras.main.fadeOut(25);
+		})
+ 		
+        for(var i=0; i<4; i++)
+        {
+        	var strainerImg;
+        	switch(i)
+			{
+				case 0:
+					strainerImg = this.add.image(config.width*0.775 + config.width, config.height*0.365,'assets_atlas','spr_strainer_2'); 
+				break;
+				case 1:
+					strainerImg = this.add.image(config.width*0.86 + config.width, config.height*0.38,'assets_atlas','spr_strainer_3'); 
+				break;
+				case 2:
+					strainerImg = this.add.image(config.width*0.775 + config.width, config.height*0.42,'assets_atlas','spr_strainer_0'); 
+				break;
+				case 3:
+					strainerImg = this.add.image(config.width*0.884 + config.width, config.height*0.422,'assets_atlas','spr_strainer_1'); 
+				break;
+
+			if(strainerLvl < i) strainerImg.setAlpha(0.3);
+			}
+        }
+		
+        this.anims.create({
+    		key: 'potCooking',
+    		frames: GameManager.scene.anims.generateFrameNumbers('anim_pot_bubbles', { start: 0, end: 4}),
+    		frameRate: 7,
+    		repeat: -1
+		});
+
+        var strainer = new Strainer(bigStrainerImg, strainerLvl);
         GameManager.strainer = strainer;
-       	var trashCanImgNoodles = this.physics.add.sprite(config.width*0.9 + config.width, config.height*0.12,'assets_atlas','spr_trashCan');
-       	
-       	GameManager.trashCanImgNoodles = trashCanImgNoodles;
+       	var trashCanImg = this.physics.add.sprite(config.width*0.09+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
+       	GameManager.trashCanImgNoodles = trashCanImg;
         noodleSpawnerImg.setInteractive();
         noodleSpawnerImg.on('pointerdown', function(pointer){
         	if(strainer.occupiedSlots < strainerLvl +1)
@@ -182,66 +405,91 @@ class tutorial extends Phaser.Scene {
         		var slotId = findFreeSlot(strainer, Strainer.slots);
         		var pos = Strainer.slots.getAt(slotId);
         		var cookingSound = GameManager.scene.sound.add('snd_noodles_cooking');
+        		var burntSound = GameManager.scene.sound.add('snd_burnt');
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
-        		var noodles = new TutorialNoodles(slotId, trashSound, cookingSound, readySound);
+        		var noodles = new Noodles(slotId, trashSound, cookingSound, burntSound, readySound);
       			changePosition(noodles, pos.x,pos.y);
         	} 
         })
-
+        
         var numTablecloth = 1;
+
 		var tableclothImgList = new Phaser.Structs.List();
-        for(var i=0; i<numTablecloth; i++)
+		
+        for(var i=0; i<4; i++)
         {
-        	var tableclothImg = this.add.image(config.width*0.075 + config.width + (i*42), config.height*0.65, 'spr_tablecloth'); tableclothImg.setScale(0.047);
+        	var tableclothImg;
+        	switch(i)
+        	{
+        		case 0:
+        		    tableclothImg = this.add.image(config.width*0.194+config.width, config.height*0.56,'assets_atlas', 'spr_tablecloth_0');
+        		break;
+
+        		case 1:
+        			tableclothImg = this.add.image(config.width*0.341+config.width, config.height*0.56,'assets_atlas', 'spr_tablecloth_1');
+        		break;
+
+        		case 2:
+        			tableclothImg = this.add.image(config.width*0.126+config.width, config.height*0.7,'assets_atlas', 'spr_tablecloth_2');	
+        		break;
+
+        		case 3:
+        			tableclothImg = this.add.image(config.width*0.3+config.width, config.height*0.7,'assets_atlas', 'spr_tablecloth_3');
+        		break;
+
+        	}
+        	if(numTablecloth-1 < i) tableclothImg.setAlpha(0.3);
+        	
         	tableclothImgList.add(tableclothImg);
         }
-        var tableclothNoodle = new TableclothsNoodle(tableclothImgList, 0);
-        GameManager.tableclothsNoodle = tableclothNoodle;
-        var dishPileImg = this.add.image(config.width*0.95 + config.width, config.height*0.6,'spr_dishes');
+
+        var tableclothsNoodle = new TableclothsNoodle(tableclothImgList, 0);
+        
+        GameManager.tableclothsNoodle = tableclothsNoodle;
+        var dishPileImg = this.add.image(config.width*0.72 + config.width, config.height*0.92,'assets_atlas','spr_bowl');
         dishPileImg.setInteractive();
         dishPileImg.on('pointerdown', function(pointer){
         	if(GameManager.dishImgContainerNoodles.length < numTablecloth)
         	{	
         		GameManager.scene.sound.play('snd_dish');
-        		var slotId = findFreeSlot(tableclothNoodle, TableclothsNoodle.slots);
+        		var slotId = findFreeSlot(tableclothsNoodle, TableclothsNoodle.slots);
         		var pos = TableclothsNoodle.slots.getAt(slotId);
-        		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'spr_dish'); dishImg.setScale(0.04);
-        		var dishImgContainer = new TutorialDishContainer(dishImg, slotId);
+        		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_bowl');
+        		var dishImgContainer = new DishImgContainer(dishImg, slotId);
         		GameManager.dishImgContainerNoodles.add(dishImgContainer);
         	} 
         })
-
+        
         for(var i = 0; i<4; i++)
 		{
-			//var toppingSound = GameManager.scene.sound.add('snd_toppingSound');
-			var topping = new Topping(i, false, null);
+			var toppingSound = GameManager.scene.sound.add('snd_topping');
+			var topping = new Topping(i, false, toppingSound);
 		}
-
 		for(var i=0; i<4; i++)
 		{
 			var fillingSound = GameManager.scene.sound.add('snd_filling_catfe');
-			var sauce = new TutorialSauce(i, fillingSound);
+			var sauce = new Sauce(i, fillingSound);
 		}   
 	}
-	*/
+	
 	tutStuff()
 	{
-		/*
-		var customPipeline = this.plugins.get('rexglowfilterpipelineplugin').add(this,'GlowFilter');
-		var platicos = this.add.image(config.width*0.5,config.height*0.2,'spr_radio').setPipeline('GlowFilter');
-
+		
+		var cm = this.plugins.get('rexglowfilterpipelineplugin').add(this,'GlowFilter');
+		//var platicos = this.add.image(config.width*0.5,config.height*0.2,'assets_atlas','spr_radio').setPipeline('GlowFilter');
 		this.tweens.add({
-            targets: customPipeline,
-            intensity: 0.02,
+            targets: cm,
+            intensity: 0.019,
             ease: 'Linear',
-            duration: 1000,
+            duration: 500,
             repeat: -1,
             yoyo: true
         }); 
-        */
+        
         //callClient(1);
 		new TutorialManager(this);
+		TutorialManager.customPipeline = cm;
 		var numSteps = 29;
 		for(var i=0; i<numSteps; i++)
 		{
@@ -253,9 +501,16 @@ class tutorial extends Phaser.Scene {
         	TutorialManager.tipLogicContainer.add(new TipLogic(i));
         }
         TutorialManager.showNext();
-
-
 	}
+
+	uploadPlayerLevel(number){
+        var expPerLevel = [0,200,1200,6200,21200,46200,96200]
+        //if(this.playerSettings.experience < expPerLevel[expPerLevel.length - 1]){//Comprobamos que 
+            
+        //}
+        this.numChefPoints.setText((0 - expPerLevel[0]) +"/"+ expPerLevel[0+1]);
+        return 1;
+    }
 
 	update(time, delta)
 	{
@@ -272,6 +527,11 @@ class tutorial extends Phaser.Scene {
     	    cam.centerOnX(config.width + config.width/2);
     	    GameManager.scene.cameras.main.fadeOut(25);
     	}    	
+
+		this.radioSongText.x +=0.5
+        if(this.radioSongText.x > (1.55*config.width/4 + this.radioSongPanelCrystal.width +  2*config.width) ){//Posicion inicial + ancho del rectangulo
+                this.radioSongText.x = this.radioSongTitleStartPosition //Se reinicia la posicion
+		} 
 
 		if(!GameManager.grabbedItemImg) return;
 		
@@ -328,6 +588,87 @@ class tutorial extends Phaser.Scene {
 
 		if(GameManager.shinningObject != null) makeImgShine();
 	}
+
+	changeRadioFrecuency(){
+        this.angle = 0
+        if(this.radioFrecSpin.angle < 0){
+                this.angle = (this.radioFrecSpin.angle + 180) + 180
+        }else{
+            this.angle = this.radioFrecSpin.angle
+        }
+        this.frec = (this.angle - 0) / (360 - 0)
+        //console.log(this.frec)
+        this.radioFrecuencyBar.x = (this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.frec * (this.radioFrecuencyBox.width))
+
+        this.changeSong(this.frec);
+    }
+
+    changeRadioVolume(){
+        this.angle = 0
+        if(this.radioVolumeSpin.angle < 0){
+                this.angle = (this.radioVolumeSpin.angle + 180) + 180
+        }else{
+            this.angle = this.radioVolumeSpin.angle
+        }
+        this.vol = (this.angle - 0) / (360 - 0)
+        //console.log(this.vol)
+        //this.radioVolumeBar2.destroy()
+        this.volume = this.vol
+        this.radioVolumeBar2.width = this.volume * this.radioVolumeBox2.width
+        //console.log("Volume: "+ this.volume * (1-this.interferenceVolume))
+        this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+    }
+
+    changeSong(number){
+
+        if(number < 0.2 && this.globalIndex != 0){
+                this.globalIndex = 0
+                //console.log("cambio a frec 0")
+                this.playNewSong()
+        }
+        if(number > 0.2 && number < 0.4 && this.globalIndex != 1){
+                this.globalIndex = 1
+                //console.log("cambio a frec 1")
+                this.playNewSong()
+        }
+        if(number > 0.4 && number < 0.6 && this.globalIndex != 2){
+                this.globalIndex = 2
+                //console.log("cambio a frec 2")
+                this.playNewSong()
+        }
+        if(number > 0.6 && number < 0.8 && this.globalIndex != 3){
+                this.globalIndex = 3
+                //console.log("cambio a frec 1")
+                this.playNewSong()
+        }
+        if(number > 0.8 && this.globalIndex !=4){
+                this.globalIndex = 4
+                //console.log("cambio a frec 2")
+                this.playNewSong()
+        }
+
+        if( (number < 0.05) || (number > 0.15 && number < 0.25) || (number > 0.35 && number < 0.45) || (number > 0.55 && number < 0.65) || (number > 0.75 && number < 0.85) || (number > 0.95 && number < 1) ){
+                this.interferenceSound.setVolume(0.9)
+                this.interferenceVolume = 0.9
+                this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+        }else{
+                this.interferenceSound.setVolume(0.05)
+                this.interferenceVolume = 0.05
+                this.currentSong.setVolume(this.volume * (1-this.interferenceVolume))
+        }
+    }
+
+    playNewSong(){
+        this.currentSong.stop()
+
+        this.currentSong = this.songs.getAt(this.globalIndex)
+        this.currentSong.play()
+        this.currentSong.setVolume(this.volume)
+        this.currentSong.setLoop(true)
+//
+        this.radioSongText.x = this.radioSongTitleStartPosition
+        this.radioSongText.setText(this.titleSongs.getAt(this.globalIndex))
+	}
 	
 }
 
@@ -349,6 +690,17 @@ class TutorialManager
 	static pancakeImg;
 	static syrupImg;
 	static clientImg;
+
+	static coffee;
+	static pancake;
+	static noodle;
+	static syrup;
+	static sauce;
+	static topping;
+
+	static tutorialPancakeClient;
+	static tutorialNoodlesClient;
+
 	constructor(_scene)
 	{
 		TutorialManager.scene = _scene;
@@ -373,6 +725,7 @@ class TipData
 	 DISHTOCLIENT: 4, FAVSAUCE: 5, NOODLEDISHTOCLIENT: 6, FAVTOPPING: 7}; 
 	constructor(_i)
 	{
+		this.tutorialStrings = new TutorialStrings();
 		this.numTexts = 1;
 		this.currentText = 0;
 		this.readCount = 0;
@@ -388,105 +741,105 @@ class TipData
 		{
 			case 0:
 				this.numTexts = 3;
-				this.text.add("¡Bienvenido a Miau Noodle Catfé! Aquí preparamos de todo! Bueno, sólo tortitas y noodles y y y catfé! Pero está todo buenísimo");
-				this.text.add("Bueno, lo importante es: este catfé funciona con felicidad. Tu trabajo se basa en que la felicidad no haya decaído para cuando amiaunezca.");
-				this.text.add("Para ello, debes conocer a tus comiaunsales. Cada uno tiene unos gustos particulares. Mira, ahí llega uno.");
+				this.text.add(this.tutorialStrings.case0_0);
+				this.text.add(this.tutorialStrings.case0_1);
+				this.text.add(this.tutorialStrings.case0_2);
 				this.type = TipData.types.WATCH;
 			break;
 
 			case 1:
-				this.text.add("La barra indica el tiempo de espera. Si se agota, el cliente se marchará triste.");
+				this.text.add(this.tutorialStrings.case1);
 				this.type = TipData.types.WATCH;
 			break;
 
 			case 2:
-				this.text.add("Toca la pila de vasos y el catfé se irá haciendo.");
+				this.text.add(this.tutorialStrings.case2);
 				this.srcImg = TutorialManager.glassesImg;
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.GLASSES;
 			break;
 
 			case 3:
-				this.text.add("Toca la pila de platos para colocar uno sobre el mantel.");
+				this.text.add(this.tutorialStrings.case3);
 				this.srcImg = TutorialManager.dishPileImg;
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.DISHES;
 			break;
 
 			case 4:
-				this.text.add("Toca la masa para vertirla sobre la plancha.");
+				this.text.add(this.tutorialStrings.case4);
 				this.type = TipData.types.TOUCH;
 				this.srcImg = TutorialManager.pancakeBottleImg;
 				this.touchType = TipData.touchTypes.PANCAKEBOTTLE;
 			break;
 
 			case 5:
-				this.text.add("Toca la plancha para dar la vuelta a la tortita.");
+				this.text.add(this.tutorialStrings.case5);
 				this.type = TipData.types.TOUCH;
 				this.srcImg = TutorialManager.pancakeImg;
 				this.touchType = TipData.touchTypes.PANCAKE;
 			break;
 
 			case 6:
-				this.text.add("Arrastra la tortita hasta el plato.");
+				this.text.add(this.tutorialStrings.case6);
 				this.type = TipData.types.DRAG;
 				this.srcImg = TutorialManager.pancakeImg;
 				this.dragType = TipData.dragTypes.PANCAKETODISH;
 			break;
 
 			case 7:
-				this.text.add("Mira, el catfé ya está hecho. Arrástralo al cliente.");
+				this.text.add(this.tutorialStrings.case7);
 				this.type = TipData.types.DRAG;
 				this.srcImg = TutorialManager.coffeeImg;
 				this.dragType = TipData.dragTypes.COFFEETOCLIENT;
 			break;
 
 			case 8:
-				this.text.add("El tiempo de espera del cliente aumenta al entregarle algo. Todo es miaus fácil con catfé en pata jeje");
+				this.text.add(this.tutorialStrings.case8);
 				this.type = TipData.types.WATCH;
 			break;
 
 			case 9:
-				this.text.add("A este cliente le gustan las fresas. Arrastra las fresas a las tortitas.");
+				this.text.add(this.tutorialStrings.case9);
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.STRAWBERRYTOP;
 				this.srcImg = TutorialManager.toppingImg;
 			break;
 
 			case 10:
-				this.text.add("También le gusta el chocolate. Arrastra el sirope a la tortita.");
+				this.text.add(this.tutorialStrings.case10);
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.CHOCSYRUP;
 				this.srcImg = TutorialManager.syrupImg;
 			break;
 
 			case 11:
-				this.text.add("Ya está hecha. Arrastra el plato al cliente.");
+				this.text.add(this.tutorialStrings.case11);
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.DISHTOCLIENT;
 			break;
 
 			case 12:
 				this.numTexts = 2;
-				this.text.add("La velocidad con la que has realizado el pedido y cuánto le ha gustado, determina cuántos puntos de chef ganas.");
-				this.text.add("También influyen en la felicidad global del restaurante. No dejes que decaiga por debajo del límite indicado o tendremos que cerrar.");
+				this.text.add(this.tutorialStrings.case12_0);
+				this.text.add(this.tutorialStrings.case12_1);
 				this.type = TipData.types.WATCH;
 			break;
 
 			case 13:
-				this.text.add("Recoge las monedas dejadas por el cliente.");
+				this.text.add(this.tutorialStrings.case13);
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.COIN;
 			break;
 
 			case 14:
-				this.text.add("Cambiemos la música, que esta canción ya la he escuchado.");
+				this.text.add(this.tutorialStrings.case14);
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.RADIO;
 			break;
 
 			case 15:
-				this.text.add("Puedes cambiar el volumen y la canción. Cambia la canción.");
+				this.text.add(this.tutorialStrings.case15);
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.RADIOSONG;
 			break;
@@ -595,7 +948,7 @@ class TipLogic
 		var textList = tipDataContainer.text;
 		messageString = textList.getAt(tipDataContainer.readCount);
 		tipDataContainer.readCount++;
-		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.1, this.textImg.y, messageString);
+		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.1, this.textImg.y, messageString,{ font: "13px PixelFont", fill: "#ffffff", align: "left" }).setResolution(10);
 
 		var selfRef = this;
 
@@ -678,7 +1031,6 @@ class TipLogic
 						//End if click on noodlesViewButton
 					break;
 
-
 				} 
 			break;
 
@@ -688,23 +1040,40 @@ class TipLogic
 				switch(tipDataContainer.dragType)
 				{
 					case TipData.dragTypes.PANCAKETODISH:
+						GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
 						 this.pancakeDraggingInteractivity(img, TutorialPancake.ref);
 					break;
 
 					case TipData.dragTypes.COFFEETOCLIENT:
-						 makeImgInteractive("coffeeDish", img, TutorialCoffee.ref)
+						TutorialManager.tutorialPancakeClient.clientImg.setPipeline('GlowFilter');
+						TutorialCoffee.ref.coffeeDone();
+						makeImgInteractive("coffeeDish", img, TutorialCoffee.ref)
 					break;
 
 					case TipData.dragTypes.CHOCSYRUP:
-						 makeImgInteractive("syrup", img, TutorialSyrup.ref, null);
+						//makeImgInteractive("syrup", img, TutorialSyrup.ref, null);
+						TutorialSyrup.ref.staticImg.setPipeline('GlowFilter');
+						GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
+						makeImgInteractive("syrup", TutorialSyrup.ref.staticImg, TutorialSyrup.ref, null, false);
 					break;
 
 					case TipData.dragTypes.STRAWBERRYTOP:
-						 makeImgInteractive("topping", img, TutorialTopping.ref, null);
+						GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
+						TutorialTopping.ref.makeToppingInteractive();
 					break;
 
 					case TipData.dragTypes.DISHTOCLIENT:
-						 makeDishInteractive(TutorialSyrup.dishContainerRef,"pancakeDish");
+						TutorialManager.tutorialPancakeClient.clientImg.setPipeline('GlowFilter');
+						TutorialSyrup.ref.dishContainer.dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
+						makeDishInteractive(TutorialSyrup.ref.dishContainer,"pancakeDish");
 					break;
 				}
 			break;
@@ -727,13 +1096,9 @@ class TipLogic
 		srcImg.removeInteractive();
 	}
 
-	completeDragTip(srcImg, dstImg)
-	{
-
-	}
-
 	glassesInteractivity(selfRef, img)
 	{
+		img.setPipeline('GlowFilter');
 		img.setInteractive();
 	    img.on('pointerdown', function(pointer){
 	    	if(GameManager.coffeeMachine.occupiedSlots < 1)
@@ -743,6 +1108,7 @@ class TipLogic
 	    		var fillingSound = GameManager.scene.sound.add('snd_filling_catfe');
 	    		var readySound = GameManager.scene.sound.add('snd_ready');
 	    		var coffee = new TutorialCoffee(slotId, fillingSound, readySound);
+	    		img.resetPipeline();
 	    		changePosition(coffee, pos.x, pos.y);
 	    	} 
 	    })
@@ -756,6 +1122,7 @@ class TipLogic
 
 	dishPileInteractivity(selfRef, img)
 	{
+		img.setPipeline('GlowFilter');
 		img.setInteractive();
         img.on('pointerdown', function(pointer){
         	if(GameManager.dishImgContainerPancake.length < 1)
@@ -766,6 +1133,7 @@ class TipLogic
         		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_dish');
         		var dishImgContainer = new TutorialDishContainer(dishImg, slotId);
         		GameManager.dishImgContainerPancake.add(dishImgContainer);
+        		img.resetPipeline();
         		selfRef.endDishPileInteractivity(img);
         	} 
         })
@@ -779,6 +1147,7 @@ class TipLogic
 
 	pancakeSpawnerInteractivity(selfRef, img)
 	{
+		img.setPipeline('GlowFilter');
 		img.setInteractive();
         img.on('pointerdown', function(pointer){
         	if(GameManager.griddle.occupiedSlots < 1)
@@ -788,8 +1157,8 @@ class TipLogic
         		var cookingSound = GameManager.scene.sound.add('snd_pancake_cooking');
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
-        		var pancake = new TutorialPancake(slotId, trashSound, cookingSound, readySound);
-      			changePosition(pancake, pos.x,pos.y);
+        		img.resetPipeline();
+        		var pancake = new TutorialPancake(slotId, trashSound, cookingSound, readySound, pos.x, pos.y);
         	} 
         })
 	}
@@ -802,8 +1171,10 @@ class TipLogic
 
 	pancakeInteractivity(selfRef, img)
 	{
+		img.setPipeline('GlowFilter');
 		img.setInteractive();
         img.on('pointerdown', function(pointer){
+        	img.resetPipeline();
         	TutorialPancake.ref.flipPancake();
         });
 	}
@@ -815,39 +1186,60 @@ class TipLogic
 
 	pancakeDraggingInteractivity(img, pancake)
 	{
+		img.setPipeline('GlowFilter');
 		TutorialManager.scene.input.setDraggable(img);
 		img.on('dragstart', function(pointer,dragX,dragY){
 			GameManager.tapSound.play();
+			GameManager.tapSound.play();
+			this.setDepth(5);
+			pancake.animImg.setAlpha(0);
 		})
 
         img.on('drag', function(pointer, dragX, dragY){
         	img.setPosition(dragX, dragY);
+        	pancake.cookingSound.stop();
         	grabItem("pancake", img, pancake);
         })	
 		
-		img.on('dragend',() => {	
+		img.on('dragend',() => {
+			pancake.img.setDepth(2);
+			pancake.animImg.setAlpha(1);
+			pancake.cookingSound.play();	
 			pancake.dragEndBehaviour();		
        	})
 	}
 
-	endPancakeDraggedToDish()
+	endPancakeDraggedToDish(img)
 	{
+		GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+			child.resetPipeline();
+		});
+		img.resetPipeline();
 		this.completeWatchTip();
 	}
 
 	endCase8()
 	{
+		TutorialManager.tutorialPancakeClient.clientImg.resetPipeline();
 		this.completeWatchTip();
 	}
 
 	endCase9()
 	{
+		GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+			child.resetPipeline();
+		});
 		TutorialManager.toppingImg.removeInteractive();
+		TutorialTopping.ref.staticImg.resetPipeline();
 		this.completeWatchTip();
 	}
 
 	endCase10()
 	{
+		GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+			child.resetPipeline();
+		});
+		TutorialSyrup.ref.staticImg.resetPipeline();
 		TutorialManager.syrupImg.removeInteractive();
 		this.completeWatchTip();
 	}
@@ -859,7 +1251,7 @@ class TipLogic
 
 	endCase13()
 	{
-
+		
 	}
 }
 
@@ -884,13 +1276,4 @@ function makeImgInteractive(itemClass, itemImg, item, cookingSound)
 		if(cookingSound) cookingSound.play();
 		item.dragEndBehaviour();
     })
-}
-
-function makeImgShine(delta)
-{
-	const maxAlpha = 1;
-	const minAlpha = 0.5;
-	var alphaValue;
-	if(GameManager.shinningObject.alpha >= 1) alphaValue = GameManager.shinningObject.alpha - delta;
-	GameManager.shinningObject.setAlpha(alphaValue);
 }

@@ -36,10 +36,10 @@ class Client{
   subtractTime(){
     if(this.time){
       //console.log(this.index+ "in "+this.place+" left: "+this.time);
-      this.time--;
+      if(!GameManager.tutorial)this.time--;
     }
     else{
-      this.timeLeft.paused=true;
+      if(!GameManager.tutorial)this.timeLeft.paused=true;
       this.exitRestaurant();
       
     }
@@ -151,10 +151,10 @@ class Client{
       }
     }
     console.log(this.time)
-    this.time+=GameManager.levelSeconds[Math.floor(GameManager.scene.playerSettings.level/5)]
+    if(!GameManager.tutorial)this.time+=GameManager.levelSeconds[Math.floor(GameManager.scene.playerSettings.level/5)]
     console.log("cliente "+this.index+": "+this.time)
 
-    this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
+    if(!GameManager.tutorial)this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
     this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'client'); this.clientImg.setScale(0.05);
   }
 
@@ -172,14 +172,14 @@ class Client{
 
   exitRestaurant(){
     Client.clientsInRestaurant.remove(this.index);
-    this.timeLeft.paused=true;
+    if(!GameManager.tutorial)this.timeLeft.paused=true;
     var exp=0;
     for (var i=0;i< this.dishesFinalPoints.length;i++){
       exp+=this.dishesFinalPoints[i]*(1/this.dishesFinalPoints.length)
     }
     var lvl= GameManager.scene.uploadPlayerLevel(exp);
-    GameManager.scene.playerSettings.level=lvl;
-    GameManager.scene.savePlayerSettings();
+    if(!GameManager.tutorial)GameManager.scene.playerSettings.level=lvl;
+    if(!GameManager.tutorial)GameManager.scene.savePlayerSettings();
     GameManager.scene.numPlayerLevel.setText(lvl)
     GameManager.scene.noodlenumPlayerLevel.setText(lvl)
     GameManager.customerCounter++;
@@ -338,7 +338,9 @@ class Dish{
     this.sauce = -1;
     this.numToppings = 0;
     this.numPancakes=-1;
-    this.pointsTimer = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractPoints, callbackScope: this });
+    this.pointsTimer;
+    if(!GameManager.tutorial)this.pointsTimer = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractPoints, callbackScope: this });
+    else{this.pointsTimer = GameManager.scene.time.addEvent({ delay: 1000, loop: false, callback: this.subtractPoints, callbackScope: this });}
     this.points=105;
   	if (this.index==1){
     	this.sauce=listSettings[1];

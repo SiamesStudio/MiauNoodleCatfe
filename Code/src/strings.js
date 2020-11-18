@@ -5,7 +5,7 @@ class MenuStrings {
     this.freeGemsText = 'Free'
     this.spinButtonText = 'Spin'
     this.shopButton = 'Shop'
-    this.upgradesButtonText = 'Upgrades'
+    this.upgradesButtonText = 'Upgrade'
 
     //Options Menu
     this.OptionMenu_title = 'Settings'
@@ -18,6 +18,9 @@ class MenuStrings {
     this.FreeGems_Button = 'FREE'
     
     //Upgrades
+    this.upgradesCoffee = 'Coffee' 
+    this.upgradesPancake = 'Pancake' 
+    this.upgradesNoodles = 'Noodles' 
     this.upgradesCoffeTime = 'Coffee Time'
     this.upgradesCoffeMachine = 'Coffee Machine Lvl'
     this.upgradesPancakeTime = 'Pancake Time'
@@ -63,12 +66,15 @@ convertToSpanish(){
     this.FreeGems_Text = 'Mira este anuncion para \nrecibir gemas extra!'
     this.FreeGems_Button = 'GRATIS'
 
+    this.upgradesCoffee = 'Café' 
+    this.upgradesPancake = 'Tortitas' 
+    this.upgradesNoodles = 'Noodles' 
     this.upgradesCoffeTime = 'Tiempo café'
     this.upgradesCoffeMachine = 'Nivel cafetera'
     this.upgradesPancakeTime = 'Tiempo tortita'
     this.upgradesPancakeBurn = 'Tortita quemada'
-    this.upgradesPancakePan = 'Nivel plancha tortita'
-    this.upgradesPancakeCloth = 'Mantel Tortita'
+    this.upgradesPancakePan = 'Nivel plancha'// tortita'
+    this.upgradesPancakeCloth = 'Mantel tortita'
     this.upgradesNoodleTime = 'Tiempo noodle'
     this.upgradesNoodleBurn = 'Noodle quemado'
     this.upgradesNoodleBoilLvl = 'Nivel noodle'
@@ -78,10 +84,10 @@ convertToSpanish(){
     this.upgradesCoffeMachineDescription = '+1 espacio\ncafetera\nNivel: '
     this.upgradesPancakeTimeDescription = '-2 seg tiempo tortita\nNivel: '
 
-    this.upgradesPancakeBurnDescription = '+2 seg tortitas quemadas\nNivel: '
+    this.upgradesPancakeBurnDescription = '+2 seg tortitas\nquemadas\nNivel: '
     this.upgradesPancakePanDescription = '+1 plancha tortitas\nNivel: '
     this.upgradesPancakeClothDescription = '+1 mantel tortitas\nNivel: '
-    this.upgradesNoodleTimeDescription = '-1 seg tiempo noodles\nNivel: '
+    this.upgradesNoodleTimeDescription = '-1 seg tiempo\nnoodles\nNivel: '
     this.upgradesNoodleBurnDescription = '+2 seg noodles quemados\nNivel: '
     this.upgradesNoodleBoilLvlDescription = '+1 colador noodles\nNivel: '
     this.upgradesNoodleClothDescription ='+1 mantel noodles\nNivel: '
@@ -96,7 +102,7 @@ convertToEnglish(){
     this.freeGemsText = 'Free'
     this.spinButtonText = 'Spin'
     this.shopButton = 'Shop'
-    this.upgradesButtonText = 'Upgrades'
+    this.upgradesButtonText = 'Upgrade'
 
     this.OptionMenu_title = 'Settings'
     this.OptionsMenu_text = 'Mute music:'
@@ -106,6 +112,9 @@ convertToEnglish(){
     this.FreeGems_Text = 'Watch a video to recieve \nextra gems!'
     this.FreeGems_Button = 'FREE'
 
+    this.upgradesCoffee = 'Coffee' 
+    this.upgradesPancake = 'Pancake' 
+    this.upgradesNoodles = 'Noodles' 
     this.upgradesCoffeTime = 'Coffee time'
     this.upgradesCoffeMachine = 'Coffee machine Lvl'
     this.upgradesPancakeTime = 'Pancake time'
@@ -213,5 +222,105 @@ class ContactStrings{
         this.ContactDesignRole = 'GAME DESIGN'
         this.ContactArtRole = 'ART'
         this.ContactGameBy = 'GAME BY'
+    }
+}
+
+class InicioStrings{
+    constructor(){
+        this.playText = "Play"
+        this.contactText = "Contact"
+
+    }
+    convertToSpanish(){
+        this.playText = "Jugar"
+        this.contactText = "Contacto"
+    }
+
+    convertToEnglish(){
+        this.playText = "Play"
+        this.contactText = "Contact"
+    }
+}
+
+class TutorialStrings{
+    constructor(){
+        this.case0_0 = "¡Bienvenido a Miau Noodle Catfé! Aquí preparamos de todo! Bueno, sólo tortitas y noodles y y y catfé! Pero está todo buenísimo";
+        this.case0_1 = "Bueno, lo importante es: este catfé funciona con felicidad. Tu trabajo se basa en que la felicidad no haya decaído para cuando amiaunezca.";
+        this.case0_2 = "Para ello, debes conocer a tus comiaunsales. Cada uno tiene unos gustos particulares. Mira, ahí llega uno.";
+
+        this.case1 = "La barra indica el tiempo de espera. Si se agota, el cliente se marchará triste.";
+        this.case2 = "Toca la pila de vasos y el catfé se irá haciendo.";
+        this.case3 = "Toca la pila de platos para colocar uno sobre el mantel.";
+        this.case4 = "Toca la masa para vertirla sobre la plancha.";
+        this.case5 = "Toca la plancha para dar la vuelta a la tortita.";
+        this.case6 = "Arrastra la tortita hasta el plato.";
+        this.case7 = "Mira, el catfé ya está hecho. Arrástralo al cliente.";
+        this.case8 = "El tiempo de espera del cliente aumenta al entregarle algo. Todo es miaus fácil con catfé en pata jeje";
+        this.case9 = "A este cliente le gustan las fresas. Arrastra las fresas a las tortitas.";
+        this.case10 = "También le gusta el chocolate. Arrastra el sirope a la tortita.";
+        this.case11 = "Ya está hecha. Arrastra el plato al cliente.";
+        this.case12_0 = "La velocidad con la que has realizado el pedido y cuánto le ha gustado, determina cuántos puntos de chef ganas.";
+        this.case12_1 = "También influyen en la felicidad global del restaurante. No dejes que decaiga por debajo del límite indicado o tendremos que cerrar.";
+        this.case13 = "Recoge las monedas dejadas por el cliente.";
+        this.case14 = "Cambiemos la música, que esta canción ya la he escuchado.";
+        this.case15 = "Puedes cambiar el volumen y la canción. Cambia la canción.";
+        this.case16 = "";
+        this.case17 = "";
+        this.case18 = "";
+        this.case19 = "";
+        this.case20 = "";
+        this.case21 = "";
+        this.case22 = "";
+        this.case23 = "";
+        this.case24 = "";
+        this.case25 = "";
+        this.case26 = "";
+        this.case27 = "";
+        this.case28 = "";
+    }
+    convertToSpanish(){
+        this.case0_0 = "¡Bienvenido a Miau Noodle Catfé! Aquí preparamos de todo! Bueno, sólo tortitas y noodles y y y catfé! Pero está todo buenísimo";
+        this.case0_1 = "Bueno, lo importante es: este catfé funciona con felicidad. Tu trabajo se basa en que la felicidad no haya decaído para cuando amiaunezca.";
+        this.case0_2 = "Para ello, debes conocer a tus comiaunsales. Cada uno tiene unos gustos particulares. Mira, ahí llega uno.";
+
+        this.case1 = "La barra indica el tiempo de espera. Si se agota, el cliente se marchará triste.";
+        this.case2 = "Toca la pila de vasos y el catfé se irá haciendo.";
+        this.case3 = "Toca la pila de platos para colocar uno sobre el mantel.";
+        this.case4 = "Toca la masa para vertirla sobre la plancha.";
+        this.case5 = "Toca la plancha para dar la vuelta a la tortita.";
+        this.case6 = "Arrastra la tortita hasta el plato.";
+        this.case7 = "Mira, el catfé ya está hecho. Arrástralo al cliente.";
+        this.case8 = "El tiempo de espera del cliente aumenta al entregarle algo. Todo es miaus fácil con catfé en pata jeje";
+        this.case9 = "A este cliente le gustan las fresas. Arrastra las fresas a las tortitas.";
+        this.case10 = "También le gusta el chocolate. Arrastra el sirope a la tortita.";
+        this.case11 = "Ya está hecha. Arrastra el plato al cliente.";
+        this.case12_0 = "La velocidad con la que has realizado el pedido y cuánto le ha gustado, determina cuántos puntos de chef ganas.";
+        this.case12_1 = "También influyen en la felicidad global del restaurante. No dejes que decaiga por debajo del límite indicado o tendremos que cerrar.";
+        this.case13 = "Recoge las monedas dejadas por el cliente.";
+        this.case14 = "Cambiemos la música, que esta canción ya la he escuchado.";
+        this.case15 = "Puedes cambiar el volumen y la canción. Cambia la canción.";
+    }
+
+    convertToEnglish(){
+        this.case0_0 = "¡Welcome to Miau Noodle Catfé! Here we prepare everything! Well, just pancakes and noodles and and and catfé! But it's all great";
+        this.case0_1 = "Well, the important thing is: this coffee works with happiness. Your work is based on happiness not having declined by the time I die.";
+        this.case0_2 = "To do this, you must know your comiaunsales. Each one has particular tastes. Look, here comes one.";
+
+        this.case1 = "The bar indicates the waiting time. If it runs out, the customer will leave sad.";
+        this.case2 = "Touch the stack of glasses and the coffee will be made.";
+        this.case3 = "Touch the stack of plates to place one on the tablecloth.";
+        this.case4 = "Touch the dough to pour it onto the griddle.";
+        this.case5 = "Touch the griddle to flip the pancake.";
+        this.case6 = "Drag the pancake onto the plate.";
+        this.case7 = "Look, the catfe is already done. Drag it to the client.";
+        this.case8 = "Customer waiting time increases when delivering something. Everything is easy meow with catfe in leg hehe";
+        this.case9 = "This customer likes strawberries. Drag the strawberries onto the pancakes.";
+        this.case10 = "He also likes chocolate. Drag the syrup onto the pancake.";
+        this.case11 = "It is already done. Drag the plate to the customer.";
+        this.case12_0 = "The speed with which you placed the order and how much they liked it determines how many Chef Points you earn.";
+        this.case12_1 = "They also influence the overall happiness of the restaurant. Don't let it drop below the stated limit or we'll have to close.";
+        this.case13 = "Collect the coins left by the customer.";
+        this.case14 = "Let's change the music, I've already heard this song.";
+        this.case15 = "You can change the volume and the song. Change the song.";
     }
 }

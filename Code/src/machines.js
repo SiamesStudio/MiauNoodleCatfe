@@ -14,10 +14,15 @@ class CoffeeMachine extends Machine
 	static slots = new Phaser.Structs.List();
 	static animImgs = new Phaser.Structs.List();
 	static anims = new Phaser.Structs.List();
-	constructor(img, upgradeLVL)
+	constructor(img, upgradeLVL, tutorial)
 	{
 		super(img, upgradeLVL);
-		CoffeeMachine.animTime = Math.abs(GameManager.scene.playerSettings.upgrades.coffeeTime - Coffee.coffeeTime);
+		this.resetVars();
+		console.log("animImgs.LENGTH: " + CoffeeMachine.animImgs.length);
+		console.log("COFFEE MACHINE CREATED: " + upgradeLVL);
+		if(!tutorial)CoffeeMachine.animTime = Math.abs(GameManager.scene.playerSettings.upgrades.coffeeTime - Coffee.coffeeTime);
+		else {CoffeeMachine.animTime = Coffee.coffeeTime;}
+
 		switch(upgradeLVL)
 		{
 			case 0:
@@ -51,11 +56,6 @@ class CoffeeMachine extends Machine
 			break;
 
 			case 3:
-			/*
-				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.052,img.y+config.height*0.08));
-				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.028,img.y+config.height*0.08));
-				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.028,img.y+config.height*0.08));
-				CoffeeMachine.slots.add(new Slot(img.x+config.width*0.052,img.y+config.height*0.08));*/
 
 				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.05,img.y+config.height*0.08));
 				CoffeeMachine.slots.add(new Slot(img.x-config.width*0.029,img.y+config.height*0.08));
@@ -96,6 +96,13 @@ class CoffeeMachine extends Machine
 		
 	}
 
+	resetVars()
+	{
+		CoffeeMachine.slots.removeAll();
+		CoffeeMachine.animImgs.removeAll();
+		CoffeeMachine.anims.removeAll();
+	}
+
 	static playAnim(coffeeId)
 	{
 		var animKey = 'coffeeStream_' + coffeeId;
@@ -117,12 +124,17 @@ class TableclothsPancake extends Machine
 	constructor(img, upgradeLVL)
 	{
 		super(img, upgradeLVL);
+		this.resetVars();
 		for(var i=0; i<upgradeLVL+1; i++)
 		{
-
 			var _img = this.img.getAt(i);	
 			TableclothsPancake.slots.add(new Slot(_img.x,_img.y));
 		}
+	}
+
+	resetVars()
+	{
+		TableclothsPancake.slots.removeAll();
 	}
 }
 
@@ -132,6 +144,7 @@ class TableclothsNoodle extends Machine
 	constructor(img, upgradeLVL)
 	{
 		super(img, upgradeLVL);
+		this.resetVars();
 		var heightOffset=0.045;
 		switch(upgradeLVL)
 		{
@@ -158,6 +171,11 @@ class TableclothsNoodle extends Machine
 			break;
 		}
 	}
+
+	resetVars()
+	{
+		TableclothsNoodle.slots.removeAll();
+	}
 }
 
 class Griddle extends Machine
@@ -166,10 +184,16 @@ class Griddle extends Machine
 	constructor(img, upgradeLVL)
 	{
 		super(img, upgradeLVL);
+		this.resetVars();
 		Griddle.slots.add(new Slot(config.width*0.51,config.height*0.537));
 		Griddle.slots.add(new Slot(config.width*0.61,config.height*0.537));
 		Griddle.slots.add(new Slot(config.width*0.495,config.height*0.66));
 		Griddle.slots.add(new Slot(config.width*0.623,config.height*0.66));
+	}
+
+	resetVars()
+	{
+		Griddle.slots.removeAll();
 	}
 }
 
@@ -180,9 +204,15 @@ class Strainer extends Machine //arregla joselu
 	constructor(img, upgradeLVL)
 	{
 		super(img, upgradeLVL);
+		this.resetVars();
 		Strainer.slots.add(new Slot(img.x-config.width*0.06,img.y-config.height*0.11));
 		Strainer.slots.add(new Slot(img.x+config.width*0.027,img.y-config.height*0.11));
 		Strainer.slots.add(new Slot(img.x-config.width*0.04,img.y-config.height*0.055));
-		Strainer.slots.add(new Slot(img.x+config.width*0.055,img.y-config.height*0.055));
+		Strainer.slots.add(new Slot(img.x+config.width*0.04,img.y-config.height*0.055));
+	}
+
+	resetVars()
+	{
+		Strainer.slots.removeAll();
 	}
 }
