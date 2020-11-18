@@ -19,9 +19,9 @@ class tutorial extends Phaser.Scene {
         this.pancakesSetting();
         this.noodlesSetting();
         this.clientsSettings();	
-		this.tutStuff();
 		this.radioSettings();
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.tutStuff();
 	}
 
 	resetVariables()
@@ -48,8 +48,6 @@ class tutorial extends Phaser.Scene {
         this.interferenceSound.setVolume(this.interferenceVolume)
         this.interferenceSound.setLoop(true)
 
-        
-
         this.songs = new Phaser.Structs.List();
         this.songs.add(this.sound.add('snd_music_pancake'));
         this.songs.add(this.sound.add('snd_music_chocolate'));
@@ -68,15 +66,12 @@ class tutorial extends Phaser.Scene {
         this.titleSongs.add("LuKrembo - Cafe");
         this.titleSongs.add("LuKrembo - Alone");
 
-        
         /* 
         *
         Incluir el resto de canciones 
         *
         */
         
-
-
         this.globalIndex = 0;
         this.volume = 0.9;
 
@@ -91,7 +86,6 @@ class tutorial extends Phaser.Scene {
 
         this.radioSongText.x = this.radioSongTitleStartPosition
         console.log(this.titleSongs.getAt(this.globalIndex))
-
 
 //
         this.currentSong = this.songs.getAt(this.globalIndex)
@@ -124,11 +118,7 @@ class tutorial extends Phaser.Scene {
         for(var i = 1; i<10; i++){
                 this.add.image((this.radioVolumeBox_positionX - this.radioVolumeBox2.width/2) + (this.radioVolumeBox2.width * 0.1 * i ), this.radioVolumeBox_positionY, 'assets_atlas','spr_palito_cancion_volumen').setOrigin(0.5);
         }
-
-        
-        
-        
-
+   
 
 //----------------------------------------------------------------------------------------------------
 //FRECUENCIA
@@ -140,7 +130,7 @@ class tutorial extends Phaser.Scene {
         this.radioFrecSpin = this.add.image(this.radioFrecSpinPositionX, this.radioFrecSpinPositionY,'assets_atlas','spr_radio_zoomed_vol_song').setOrigin(0.5)
         this.radioFrecSpin.setInteractive({ draggable: true })
         var currentScene = this;
-
+        TutorialManager.radioFrecSpin = this.radioFrecSpin;
 
         this.radioFrecSpin.on('dragstart', function(pointer,dragX,dragY){
                 this.modB = Math.sqrt(dragX*dragX + dragY*dragY)
@@ -159,6 +149,8 @@ class tutorial extends Phaser.Scene {
                 currentScene.radioFrecSpin.angle = this.currentAngle
                 currentScene.changeRadioFrecuency()
         })
+
+
 
 
 //----------------------------------------------------------------------------------------------------
@@ -194,26 +186,56 @@ class tutorial extends Phaser.Scene {
         this.backButton = this.add.image(config.width/12   +  2*config.width , 9*config.height/10,'assets_atlas','spr_back')
         this.backButton.setInteractive().on('pointerdown', () => {
 				this.cameras.main.centerOnX(config.width/2)
-			})
+		})
+		TutorialManager.radioBackButton = this.backButton;
 	}
 	  
   	interfaceSettings(){
-		this.add.sprite(config.width*0.5,config.height/13,'assets_atlas','spr_ui_slider')
-        this.add.sprite(config.width*0.4,config.height/11,'assets_atlas','spr_ui_icon_coin')
+		this.coinSlider=this.add.sprite(config.width*0.5,config.height/13,'assets_atlas','spr_ui_slider')
+        this.coinIcon=this.add.sprite(config.width*0.4,config.height/11,'assets_atlas','spr_ui_icon_coin')
         this.numCoins = this.add.text(config.width*0.5,config.height/13, GameManager.levelEarnedCoins, { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
 		
-		this.slider=this.add.sprite(3*config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
+		this.chefLevelSlider=this.add.sprite(3*config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
         this.add.sprite(config.width*0.65,config.height/11,'assets_atlas','spr_ui_chefLvl')
         this.numPlayerLevel = this.add.text(config.width*0.65,config.height/11, 0, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
-        this.numChefPoints = this.add.text(this.slider.x+6,config.height/13, "", { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5);
-		GameManager.scene.uploadPlayerLevel(0)
+        this.numChefPoints = this.add.text(this.chefLevelSlider.x+6,config.height/13, "", { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5);
 		
+		this.progressBarPosX=(0.88*config.width/2)+1;
 		this.slider=this.add.sprite(config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
-		this.slider=this.add.sprite(config.width/4+5 ,config.height/13,'assets_atlas','spr_ui_volumen')
+		this.progressBar=this.add.rectangle(this.progressBarPosX, config.height/8.5, 3.7*config.width/7, 25, 0xd1c0ff)
+		this.falseProgressBar=this.add.rectangle(config.width/6+3, config.height/13-2, 2,2, 0xd1c0ff)
+		this.littleSlider=this.add.sprite(config.width/4+5 ,config.height/13,'assets_atlas','spr_ui_volumen')
+		this.progressBar.height=this.littleSlider.height;
+		this.progressBar.width=(this.littleSlider.width-3)/2;
+		this.falseProgressBar.height=this.progressBar.height-4
 		this.add.sprite(config.width*0.145,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
 		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings')
+
+
+		this.coinSlider=this.add.sprite(config.width*0.5+config.width,config.height/13,'assets_atlas','spr_ui_slider')
+        this.coinIcon=this.add.sprite(config.width*0.4+config.width,config.height/11,'assets_atlas','spr_ui_icon_coin')
+        this.noodlenumCoins = this.add.text(config.width*0.5+config.width,config.height/13, GameManager.levelEarnedCoins, { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+		
+		this.chefLevelSlider=this.add.sprite(3*config.width/4 +config.width,config.height/13,'assets_atlas','spr_ui_slider')
+        this.add.sprite(config.width*0.65+config.width,config.height/11,'assets_atlas','spr_ui_chefLvl')
+        this.noodlenumPlayerLevel = this.add.text(config.width*0.65+config.width,config.height/11, 0, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
+        this.noodlenumChefPoints = this.add.text(this.chefLevelSlider.x+6,config.height/13, "aaaaaaaaa", { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5);
+		GameManager.scene.uploadPlayerLevel(0)
+		
+		this.progressBarPosX=(0.88*config.width/2)+1+config.width;
+		this.slider=this.add.sprite(config.width/4 +config.width,config.height/13,'assets_atlas','spr_ui_slider')
+		this.noodleprogressBar=this.add.rectangle(this.progressBarPosX, config.height/8.5, 3.7*config.width/7, 25, 0xd1c0ff)
+		this.falseProgressBar=this.add.rectangle(config.width/6+3+config.width, config.height/13-2, 2,2, 0xd1c0ff)
+		this.littleSlider=this.add.sprite(config.width/4+5 +config.width,config.height/13,'assets_atlas','spr_ui_volumen')
+		this.noodleprogressBar.height=this.littleSlider.height;
+		this.noodleprogressBar.width=(this.littleSlider.width-3)/2;
+		this.falseProgressBar.height=this.progressBar.height-4
+		this.add.sprite(config.width*0.145+config.width,config.height/11,'assets_atlas','spr_ui_icon_happy')
+		
+		this.options = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings') 
 	}
+
 
 	coffeeSetting()
 	{
@@ -222,11 +244,8 @@ class tutorial extends Phaser.Scene {
         });
         var background = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior');
 		var cam = this.cameras.main;	
-		var goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.08, 'spr_ui_arrow');
-		goToNoodlesButton.setInteractive().on('pointerdown', function(pointer){
-			cam.centerOnX(config.width + config.width/2);
-    	    GameManager.scene.cameras.main.fadeOut(25);
-		})
+		var _goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.08, 'spr_ui_arrow');
+		TutorialManager.goToNoodlesButton = _goToNoodlesButton;
 
 		var coffeeMachineLvl = 0;
 		var coffeeMachineImg;
@@ -250,7 +269,7 @@ class tutorial extends Phaser.Scene {
 		}
 
 		var spr_radio = this.add.image(config.width*0.83,config.height*0.24,'assets_atlas','spr_radio');
-		spr_radio.setInteractive().on('pointerdown', () =>{ cam.centerOnX(2*config.width + config.width/2);})
+		TutorialManager.radioImg = spr_radio;
 		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.915, 'assets_atlas', 'spr_glasses');
 
 		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, coffeeMachineLvl, true);
@@ -263,10 +282,7 @@ class tutorial extends Phaser.Scene {
 	pancakesSetting()
 	{
 		var numTablecloth = 1;
-
 		var tableclothImgList = new Phaser.Structs.List();
-		
-
         for(var i=0; i<4; i++)
         {
         	var tableclothImg;
@@ -290,11 +306,9 @@ class tutorial extends Phaser.Scene {
         		break;
 
         	}
-        	if(numTablecloth-1 < i) tableclothImg.setAlpha(0.3);
-        	
+        	if(numTablecloth-1 < i) tableclothImg.setAlpha(0.3);   	
         	tableclothImgList.add(tableclothImg);
         }
-
         var tableclothsPancake = new TableclothsPancake(tableclothImgList, 0);
         var dishPileImg = this.add.image(config.width*0.7, config.height*0.92,'assets_atlas', 'spr_dishes');
         TutorialManager.dishPileImg = dishPileImg;  
@@ -360,10 +374,6 @@ class tutorial extends Phaser.Scene {
 		var strainerLvl = 0;
 		var cam = this.cameras.main;	
 		var goToCoffeeButton = this.add.image(config.width*0.06+config.width,config.height*0.08, 'spr_ui_arrow');
-		goToCoffeeButton.setInteractive().on('pointerdown', function(pointer){
-			cam.centerOnX(config.width/2);
-            GameManager.scene.cameras.main.fadeOut(25);
-		})
  		
         for(var i=0; i<4; i++)
         {
@@ -398,6 +408,7 @@ class tutorial extends Phaser.Scene {
         GameManager.strainer = strainer;
        	var trashCanImg = this.physics.add.sprite(config.width*0.09+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
        	GameManager.trashCanImgNoodles = trashCanImg;
+       	TutorialManager.noodleSpawner = noodleSpawnerImg;
         noodleSpawnerImg.setInteractive();
         noodleSpawnerImg.on('pointerdown', function(pointer){
         	if(strainer.occupiedSlots < strainerLvl +1)
@@ -408,10 +419,12 @@ class tutorial extends Phaser.Scene {
         		var burntSound = GameManager.scene.sound.add('snd_burnt');
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
-        		var noodles = new Noodles(slotId, trashSound, cookingSound, burntSound, readySound);
+        		var noodles = new TutorialNoodles(slotId, trashSound, cookingSound, burntSound, readySound);
       			changePosition(noodles, pos.x,pos.y);
+      			TipLogic.currentInstance.endCase21(noodleSpawnerImg);
         	} 
         })
+        noodleSpawnerImg.disableInteractive();
         
         var numTablecloth = 1;
 
@@ -456,20 +469,24 @@ class tutorial extends Phaser.Scene {
         		var slotId = findFreeSlot(tableclothsNoodle, TableclothsNoodle.slots);
         		var pos = TableclothsNoodle.slots.getAt(slotId);
         		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_bowl');
-        		var dishImgContainer = new DishImgContainer(dishImg, slotId);
+        		var dishImgContainer = new TutorialDishContainer(dishImg, slotId);
         		GameManager.dishImgContainerNoodles.add(dishImgContainer);
+        		TipLogic.currentInstance.endCase20(dishPileImg);
         	} 
         })
+        dishPileImg.disableInteractive();
+        TutorialManager.bowl = dishPileImg;
+        
         
         for(var i = 0; i<4; i++)
 		{
 			var toppingSound = GameManager.scene.sound.add('snd_topping');
-			var topping = new Topping(i, false, toppingSound);
+			var topping = new TutorialTopping(i, false, toppingSound);
 		}
 		for(var i=0; i<4; i++)
 		{
 			var fillingSound = GameManager.scene.sound.add('snd_filling_catfe');
-			var sauce = new Sauce(i, fillingSound);
+			var sauce = new TutorialSauce(i, fillingSound);
 		}   
 	}
 	
@@ -477,7 +494,6 @@ class tutorial extends Phaser.Scene {
 	{
 		
 		var cm = this.plugins.get('rexglowfilterpipelineplugin').add(this,'GlowFilter');
-		//var platicos = this.add.image(config.width*0.5,config.height*0.2,'assets_atlas','spr_radio').setPipeline('GlowFilter');
 		this.tweens.add({
             targets: cm,
             intensity: 0.019,
@@ -486,11 +502,9 @@ class tutorial extends Phaser.Scene {
             repeat: -1,
             yoyo: true
         }); 
-        
-        //callClient(1);
-		new TutorialManager(this);
+        		new TutorialManager(this);
 		TutorialManager.customPipeline = cm;
-		var numSteps = 29;
+		var numSteps = 28;
 		for(var i=0; i<numSteps; i++)
 		{
 			TutorialManager.tipDataContainer.add(new TipData(i));
@@ -665,9 +679,10 @@ class tutorial extends Phaser.Scene {
         this.currentSong.play()
         this.currentSong.setVolume(this.volume)
         this.currentSong.setLoop(true)
-//
+//		//case15
         this.radioSongText.x = this.radioSongTitleStartPosition
         this.radioSongText.setText(this.titleSongs.getAt(this.globalIndex))
+        TipLogic.currentInstance.endCase15(this.radioFrecSpin);
 	}
 	
 }
@@ -690,16 +705,19 @@ class TutorialManager
 	static pancakeImg;
 	static syrupImg;
 	static clientImg;
-
+	static radioFrecSpin;
 	static coffee;
 	static pancake;
 	static noodle;
 	static syrup;
 	static sauce;
 	static topping;
+	static radioBackButton;
+	static goToNoodlesButton;
+	static noodleSpawner;
+	static bowl;
 
 	static tutorialPancakeClient;
-	static tutorialNoodlesClient;
 
 	constructor(_scene)
 	{
@@ -708,10 +726,17 @@ class TutorialManager
 
 	static showNext()
 	{
-		if(TutorialManager.currentTip >= TutorialManager.tipLogicContainer.length) return; //end tutorial
+		console.log("TutorialManager.currentTip: " + TutorialManager.currentTip );
+		if(TutorialManager.currentTip >= TutorialManager.tipLogicContainer.length) TutorialManager.endTutorial();
 
 		TutorialManager.tipLogicContainer.getAt(TutorialManager.currentTip).display();
 		TutorialManager.currentTip++;
+	}
+
+	static endTutorial()
+	{
+		console.log("TUTORIAL ENDED");
+		TutorialManager.scene.scene.start("Menu");
 	}
 }
 
@@ -722,7 +747,7 @@ class TipData
 	PANCAKE: 3, COIN: 4, RADIO: 5, RADIOSONG: 6, SWAPVIEWTRASH: 7,
 	CLEAN: 8, SWAPTONOODLES: 9, BOWL: 10, NOODLEBOX: 11};
 	static dragTypes = {PANCAKETODISH: 0, COFFEETOCLIENT: 1, CHOCSYRUP: 2, STRAWBERRYTOP: 3,
-	 DISHTOCLIENT: 4, FAVSAUCE: 5, NOODLEDISHTOCLIENT: 6, FAVTOPPING: 7}; 
+	 DISHTOCLIENT: 4, FAVSAUCE: 5, NOODLETODISH: 6, FAVTOPPING: 7, NOODLEDISHTOCLIENT: 8}; 
 	constructor(_i)
 	{
 		this.tutorialStrings = new TutorialStrings();
@@ -735,6 +760,7 @@ class TipData
 		this.dragType;
 		this.srcImg;
 		this.dstImg;
+		this.window;
 
 		// TEXT SETTING
 		switch(_i)
@@ -745,11 +771,13 @@ class TipData
 				this.text.add(this.tutorialStrings.case0_1);
 				this.text.add(this.tutorialStrings.case0_2);
 				this.type = TipData.types.WATCH;
+				this.window=0;
 			break;
 
 			case 1:
 				this.text.add(this.tutorialStrings.case1);
 				this.type = TipData.types.WATCH;
+				this.window=0;
 			break;
 
 			case 2:
@@ -757,6 +785,7 @@ class TipData
 				this.srcImg = TutorialManager.glassesImg;
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.GLASSES;
+				this.window=0;
 			break;
 
 			case 3:
@@ -764,6 +793,7 @@ class TipData
 				this.srcImg = TutorialManager.dishPileImg;
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.DISHES;
+				this.window=0;
 			break;
 
 			case 4:
@@ -771,6 +801,7 @@ class TipData
 				this.type = TipData.types.TOUCH;
 				this.srcImg = TutorialManager.pancakeBottleImg;
 				this.touchType = TipData.touchTypes.PANCAKEBOTTLE;
+				this.window=0;
 			break;
 
 			case 5:
@@ -778,6 +809,7 @@ class TipData
 				this.type = TipData.types.TOUCH;
 				this.srcImg = TutorialManager.pancakeImg;
 				this.touchType = TipData.touchTypes.PANCAKE;
+				this.window=0;
 			break;
 
 			case 6:
@@ -785,6 +817,7 @@ class TipData
 				this.type = TipData.types.DRAG;
 				this.srcImg = TutorialManager.pancakeImg;
 				this.dragType = TipData.dragTypes.PANCAKETODISH;
+				this.window=0;
 			break;
 
 			case 7:
@@ -792,11 +825,13 @@ class TipData
 				this.type = TipData.types.DRAG;
 				this.srcImg = TutorialManager.coffeeImg;
 				this.dragType = TipData.dragTypes.COFFEETOCLIENT;
+				this.window=0;
 			break;
 
 			case 8:
 				this.text.add(this.tutorialStrings.case8);
 				this.type = TipData.types.WATCH;
+				this.window=0;
 			break;
 
 			case 9:
@@ -804,6 +839,7 @@ class TipData
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.STRAWBERRYTOP;
 				this.srcImg = TutorialManager.toppingImg;
+				this.window=0;
 			break;
 
 			case 10:
@@ -811,12 +847,14 @@ class TipData
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.CHOCSYRUP;
 				this.srcImg = TutorialManager.syrupImg;
+				this.window=0;
 			break;
 
 			case 11:
 				this.text.add(this.tutorialStrings.case11);
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.DISHTOCLIENT;
+				this.window=0;
 			break;
 
 			case 12:
@@ -824,102 +862,129 @@ class TipData
 				this.text.add(this.tutorialStrings.case12_0);
 				this.text.add(this.tutorialStrings.case12_1);
 				this.type = TipData.types.WATCH;
+				this.window=0;
 			break;
 
 			case 13:
 				this.text.add(this.tutorialStrings.case13);
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.COIN;
+				this.window=0;
 			break;
 
 			case 14:
+				this.srcImg = TutorialManager.radioImg;
 				this.text.add(this.tutorialStrings.case14);
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.RADIO;
+				this.window=0;
 			break;
 
 			case 15:
+				this.srcImg = TutorialManager.radioFrecSpin;
 				this.text.add(this.tutorialStrings.case15);
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.RADIOSONG;
+				this.window=2;
 			break;
-
+			/*
 			case 16:
 				this.text.add("Parece ser que hay basura en el local. Toca el botón para ir a ver las mesas.");
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.SWAPVIEWTRASH;
 			break;
-
-			case 17:
-				this.text.add("Los clientes podrán dar información sobre sus gustos... o sobre cosas no tan interesantes.");
+			*/
+			case 16:
+				this.text.add(this.tutorialStrings.case16);
 				this.type = TipData.types.WATCH;
+				this.window=2;
 			break;
-
+			/*
 			case 18:
 				this.text.add("Recoge la basura o la felicidad global irá bajando.");
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.CLEAN;
 			break;
-
-			case 19:
-				this.text.add("Parece ser que un cliente ha llegado. Veamos si es para pedir noodles");
+			*/
+			case 17:
+				this.srcImg =  TutorialManager.goToNoodlesButton;
+				this.text.add(this.tutorialStrings.case17);
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.SWAPTONOODLES;
+				this.window=0;
+			break;
+
+			case 18:
+				this.text.add(this.tutorialStrings.case18);
+				this.type = TipData.types.WATCH;
+				this.window=1;
+			break;
+
+			case 19:
+				this.text.add(this.tutorialStrings.case19);
+				this.type = TipData.types.WATCH;
+				this.window=1;
 			break;
 
 			case 20:
-				this.text.add("¡Pero si es el mismo cliente! Seguro que es atleta de élite, cuida bien de clientela de tal embergadura.");
-				this.type = TipData.types.WATCH;
+				this.srcImg = TutorialManager.bowl;
+				this.text.add(this.tutorialStrings.case20);
+				this.type = TipData.types.TOUCH;
+				this.touchType = TipData.touchTypes.BOWL;
+				this.window=1;
 			break;
 
 			case 21:
-				this.text.add("Menos mal que antes hemos escuchado cómo le gustan los noodles.");
-				this.type = TipData.types.WATCH;
+				this.srcImg = TutorialManager.noodleSpawner;
+				this.text.add(this.tutorialStrings.case21);
+				this.type = TipData.types.TOUCH;
+				this.touchType = TipData.touchTypes.NOODLEBOX;
+				this.window=1;
 			break;
 
 			case 22:
-				this.text.add("Toca la pila de boles para colocar uno sobre el mantel.");
-				this.type = TipData.types.TOUCH;
-				this.touchType = TipData.touchTypes.BOWL;
+				this.text.add(this.tutorialStrings.case22);
+				this.type = TipData.types.DRAG;
+				this.dragType = TipData.dragTypes.FAVSAUCE;
+				this.window=1;
 			break;
 
 			case 23:
-				this.text.add("Toca la caja de noodles para comiaunzar a hacer un rico ramen.");
-				this.type = TipData.types.TOUCH;
-				this.touchType = TipData.touchTypes.NOODLEBOX;
+				this.text.add(this.tutorialStrings.case23);
+				this.type = TipData.types.DRAG;
+				this.dragType = TipData.dragTypes.NOODLETODISH;
+				this.window=1;
 			break;
 
 			case 24:
-				this.text.add("Mientras se hacen los noodles,podemos adelantar trabajo. Arrastra su salsa favorita al bol");
+				this.text.add(this.tutorialStrings.case24);
 				this.type = TipData.types.DRAG;
-				this.dragType = TipData.dragTypes.FAVSAUCE;
+				this.dragType = TipData.dragTypes.FAVTOPPING;
+				this.window=1;
 			break;
 
 			case 25:
-				this.text.add("Mira, ya están hechos. Arrastralos al bol antes de que se quemen.");
+				this.text.add(this.tutorialStrings.case25);
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.NOODLEDISHTOCLIENT;
+				this.window=1;
 			break;
 
 			case 26:
-				this.text.add("Por último, arrastra su topping favorito al bol");
-				this.type = TipData.types.DRAG;
-				this.dragType = TipData.dragTypes.FAVTOPPING;
+				this.text.add(this.tutorialStrings.case26);
+				this.type = TipData.types.TOUCH;
+				this.touchType = TipData.touchTypes.COIN;
+				this.window=1;
 			break;
 
 			case 27:
-				this.text.add("Recoge las monedas dejadas por el cliente.");
-				this.type = TipData.types.TOUCH;
-				this.touchType = TipData.touchTypes.COIN;
-			break;
-
-			case 28:
 				this.numTexts = 4;
-				this.text.add("Y eso es todo. Ya sabes todo lo que debes para que la felicidad del local no decaiga.");
-				this.text.add("Ya conoces los gustos de este cliente, pero recuerda que deberá descubrir el del resto de clientes.");
-				this.text.add("Para ello, fíjate en sus reacciones, en su aporte a la felicidad global y en sus conversaciones.");
-				this.text.add("Estoy seguro de que dejo el catfé en buenas patas. ¡MIAUCHA SUERTE!");
+				this.text.add(this.tutorialStrings.case27_0);
+				this.text.add(this.tutorialStrings.case27_1);
+				this.text.add(this.tutorialStrings.case27_2);
+				this.text.add(this.tutorialStrings.case27_3);
 				this.type = TipData.types.WATCH;
+				this.window=1;
 			break;
 		}
 	}
@@ -939,7 +1004,7 @@ class TipLogic
 	display()
 	{
 		TipLogic.currentInstance = this;
-		this.textImg = TutorialManager.scene.add.image(config.width*0.1, config.height*0.1, 'spr_tutorial');
+		
 		
 		var messageString;
 
@@ -948,7 +1013,22 @@ class TipLogic
 		var textList = tipDataContainer.text;
 		messageString = textList.getAt(tipDataContainer.readCount);
 		tipDataContainer.readCount++;
-		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.1, this.textImg.y, messageString,{ font: "13px PixelFont", fill: "#ffffff", align: "left" }).setResolution(10);
+		var offset;
+		if(tipDataContainer.window == 0)
+		{
+			offset = 0;
+		}
+		else if(tipDataContainer.window == 1)
+		{
+			offset = config.width;
+		}
+		else
+		{
+			offset = 2*config.width;
+		}
+		var style = { font: "9px PixelFont", fill: "#ffffff", align: "left", wordWrap:{ width: config.width*0.5, useAdvancedWrap:true} };
+		this.textImg = TutorialManager.scene.add.image(config.width*0.1+offset, config.height*0.1, 'spr_tutorial');
+		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.1, this.textImg.y-config.height*0.06, messageString, style).setResolution(10);
 
 		var selfRef = this;
 
@@ -963,7 +1043,7 @@ class TipLogic
 					{
 						selfRef.text.destroy();
 						messageString = textList.getAt(readCount);
-						selfRef.text = TutorialManager.scene.add.text(this.x-config.width*0.1, this.y, messageString);
+						selfRef.text = TutorialManager.scene.add.text(this.x-config.width*0.1, this.y-config.height*0.06, messageString, style).setResolution(10);
 						tipDataContainer.readCount++;
 					}
 					else
@@ -999,18 +1079,32 @@ class TipLogic
 						//To do
 						//Enable interactivity with coins
 						//End if click on coins
+						var coins = TutorialManager.scene.add.image(config.width*0.5+offset, config.height*0.4,'assets_atlas', 'spr_bowl');
+						coins.setPipeline('GlowFilter');
+						coins.setInteractive().on('pointerdown', () => {
+							coins.resetPipeline();
+							if(offset==0) selfRef.endCase13(coins);
+							else {selfRef.endCase26(coins);}
+						})
+						
 					break;
 
 					case TipData.touchTypes.RADIO:
 						//To do
-						//Enable interactivity with radio
-						//End if click on radio
+						TutorialManager.radioBackButton.disableInteractive();
+						TutorialManager.radioFrecSpin.disableInteractive();
+						img.setPipeline('GlowFilter');
+						img.setInteractive().on('pointerdown', () =>{ 
+							GameManager.scene.cameras.main.centerOnX(2*config.width + config.width/2);
+							img.resetPipeline();
+							selfRef.endCase14(img);
+						})
+
 					break;
 
 					case TipData.touchTypes.RADIOSONG:
-						//To do
-						//Enable interactivity with radiobuttons
-						//End if change on radio song
+						img.setPipeline('GlowFilter'); //InterferenceRadioButton
+						img.setInteractive();
 					break;
 
 					case TipData.touchTypes.SWAPVIEWTRASH:
@@ -1026,9 +1120,29 @@ class TipLogic
 					break;
 
 					case TipData.touchTypes.SWAPTONOODLES:
+						TutorialManager.radioBackButton.setPipeline('GlowFilter');
+						TutorialManager.radioBackButton.setInteractive();
+						img.setPipeline('GlowFilter'); //goToNoodlesButton
+						img.setInteractive().on('pointerdown', function(pointer){
+							GameManager.scene.cameras.main.centerOnX(config.width + config.width/2);
+    	    				GameManager.scene.cameras.main.fadeOut(25);
+    	    				selfRef.endCase17(img);
+    	    				callClient(2);
+    	    				TutorialManager.tutorialPancakeClient.clientImg.x += config.width*0.45;
+						})
 						//To do
 						//Enable interactivity with noodlesViewButton
 						//End if click on noodlesViewButton
+					break;
+
+					case TipData.touchTypes.BOWL:
+						img.setPipeline('GlowFilter');
+						img.setInteractive(); // Bowl -> spawn bowls
+					break;
+
+					case TipData.touchTypes.NOODLEBOX:
+						img.setPipeline('GlowFilter');
+						img.setInteractive(); // NoodleBox -> spawn noodles
 					break;
 
 				} 
@@ -1065,7 +1179,7 @@ class TipLogic
 						GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
 							child.setPipeline('GlowFilter');
 						});
-						TutorialTopping.ref.makeToppingInteractive();
+						TutorialTopping.pancakeTopRef.makeToppingInteractive();
 					break;
 
 					case TipData.dragTypes.DISHTOCLIENT:
@@ -1074,6 +1188,36 @@ class TipLogic
 							child.setPipeline('GlowFilter');
 						});
 						makeDishInteractive(TutorialSyrup.ref.dishContainer,"pancakeDish");
+					break;
+
+					case TipData.dragTypes.FAVSAUCE:
+						GameManager.dishImgContainerNoodles.getAt(0).dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
+						TutorialSauce.ref.makeSauceInteractive();
+					break;
+
+					case TipData.dragTypes.NOODLETODISH:
+						GameManager.dishImgContainerNoodles.getAt(0).dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
+						TutorialNoodles.noodlesList.getAt(0).noodlesDone();
+					break;
+
+					case TipData.dragTypes.FAVTOPPING:
+						GameManager.dishImgContainerNoodles.getAt(0).dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
+						TutorialTopping.noodleTopRef.makeToppingInteractive();
+					break;
+
+					case TipData.dragTypes.NOODLEDISHTOCLIENT:
+						TutorialManager.tutorialPancakeClient.favDish=2;
+						TutorialManager.tutorialPancakeClient.clientImg.setPipeline('GlowFilter');
+						GameManager.dishImgContainerNoodles.getAt(0).dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
+						makeDishInteractive(GameManager.dishImgContainerNoodles.getAt(0),"noodleDish");
 					break;
 				}
 			break;
@@ -1084,6 +1228,7 @@ class TipLogic
 
 	completeWatchTip()
 	{
+		console.log("completeWatchTip called");
 		this.textImg.destroy();
 		this.textImg = null;
 		this.text.destroy();
@@ -1230,7 +1375,7 @@ class TipLogic
 			child.resetPipeline();
 		});
 		TutorialManager.toppingImg.removeInteractive();
-		TutorialTopping.ref.staticImg.resetPipeline();
+		TutorialTopping.pancakeTopRef.staticImg.resetPipeline();
 		this.completeWatchTip();
 	}
 
@@ -1249,9 +1394,77 @@ class TipLogic
 		this.completeWatchTip();
 	}
 
-	endCase13()
+	endCase13(coinsImg)
 	{
-		
+		coinsImg.destroy();
+		this.completeWatchTip();
+	}
+
+	endCase14(radioImg)
+	{
+		radioImg.removeInteractive();
+		this.completeWatchTip();
+	}
+
+	endCase15(radioFrecSpin)
+	{
+		radioFrecSpin.resetPipeline();
+		this.completeWatchTip();
+	}
+
+	endCase17(buttonImg)
+	{
+		TutorialManager.radioBackButton.resetPipeline();
+		TutorialManager.radioBackButton.removeInteractive();
+		buttonImg.removeInteractive();
+		buttonImg.resetPipeline();
+		this.completeWatchTip();
+	}
+
+	endCase20(img) //Bowl created
+	{
+		img.resetPipeline();
+		img.removeInteractive();
+		this.completeWatchTip();
+	}
+
+	endCase21(img) //Noodles created
+	{
+		img.resetPipeline();
+		img.removeInteractive();
+		this.completeWatchTip();
+	}
+
+	endCase22(ladleImg) //Sauce served
+	{
+		ladleImg.resetPipeline();
+		GameManager.dishImgContainerNoodles.getAt(0).dishContainer.iterate(function(child){
+			child.resetPipeline();
+		});
+		this.completeWatchTip();
+	}
+
+	endCase23() //Noodles dragged to dish
+	{
+		this.completeWatchTip();
+	}
+
+	endCase24(img) //Topping dragged to dish
+	{
+		TutorialManager.toppingImg.removeInteractive();
+		TutorialTopping.noodleTopRef.staticImg.resetPipeline();
+		this.completeWatchTip();
+	}
+
+	endCase25() //Dish dragged to client
+	{
+		this.completeWatchTip();
+	}
+
+	endCase26(img) //Coins picked
+	{
+		img.destroy();
+		this.completeWatchTip();
 	}
 }
 
