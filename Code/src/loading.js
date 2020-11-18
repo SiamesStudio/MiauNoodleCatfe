@@ -176,6 +176,7 @@ class Loading extends Phaser.Scene {
         this.load.image('bg_maintitle_off','assets/bg_maintitle_off.png');
         this.load.image('bg_maintitle_light','assets/bg_maintitle_light.png');
 
+        this.load.image('spr_coins','assets/SpritesPatri/spr_coins.png')
 
         this.loadCoffeeScreen();
 		this.loadNoodleScreen();

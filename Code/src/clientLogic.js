@@ -29,6 +29,7 @@ class Client{
     this.favPancake=pancake;
     this.order=0;
     this.dishesFinalPoints=[];
+    this.orderCoins=0;
     this.tutorial = false;
     Client.clientList.add(this);
   }
@@ -124,7 +125,7 @@ class Client{
 
   goToRestaurant(place){
     this.place=place;
-    
+    this.orderCoins=0;
 	  var slotId=this.findFreeSlot(place);
 	  //console.log(Client.restaurantOccupiedSlots)
 	  //console.log(Client.streetOccupiedSlots)
@@ -160,14 +161,16 @@ class Client{
 
   compareOrderWithDish(dish){
     console.log(this.order.dishes)
-    var points=this.order.compareDish(dish);
+    var aux=this.order.compareDish(dish);
+    var points=aux[0]
+    var coins=aux[1] 
+    this.orderCoins+=coins
+    console.log("MONEDITAS "+this.orderCoins)
     this.dishesFinalPoints.push(points);
     console.log(this.order.dishes)
     if(this.order.dishes.length==0){
       this.exitRestaurant();
     }
-    GameManager.scene.numCoins.setText(GameManager.levelEarnedCoins);
-    GameManager.scene.noodlenumCoins.setText(GameManager.levelEarnedCoins);
   }
 
   exitRestaurant(){
@@ -187,18 +190,29 @@ class Client{
     GameManager.globalHappiness=Math.floor(GameManager.totalHappiness*(1/GameManager.customerCounter))
     GameManager.scene.progressBar.width=GameManager.scene.littleSlider.width*(GameManager.globalHappiness/100)
     GameManager.scene.noodleprogressBar.width=GameManager.scene.littleSlider.width*(GameManager.globalHappiness/100)
-    this.clientImg.disableBody(true,true);
+    if(this.orderCoins>0){
+      this.coinsImg=GameManager.scene.add.image(this.clientImg.x,this.clientImg.y+45,'spr_coins')
+      this.coinsImg.setInteractive().on('pointerdown', () => {
+        this.coinsImg.destroy();
+        GameManager.levelEarnedCoins+=this.orderCoins;
+        console.log(GameManager.levelEarnedCoins)
+        GameManager.scene.numCoins.setText(GameManager.levelEarnedCoins);
+        GameManager.scene.noodlenumCoins.setText(GameManager.levelEarnedCoins);
+        if(this.place==1){
+          this.place=0;
+          Client.restaurantSlots.getAt(this.slot).occupied=false;
+          Client.restaurantOccupiedSlots--;
+        }
+        if(this.place==2){
+          this.place=0;
+          Client.streetSlots.getAt(this.slot).occupied=false;
+          Client.streetOccupiedSlots--;
+        }
+      })
+    }
     
-    if(this.place==1){
-      this.place=0;
-      Client.restaurantSlots.getAt(this.slot).occupied=false;
-      Client.restaurantOccupiedSlots--;
-    }
-    if(this.place==2){
-      this.place=0;
-      Client.streetSlots.getAt(this.slot).occupied=false;
-      Client.streetOccupiedSlots--;
-    }
+
+    this.clientImg.disableBody(true,true);
   }
 }
 
@@ -245,12 +259,10 @@ class Order{
         if(received.index==0){ //coffee
           var points= this.dishes.getAt(i).points;
           this.dishes.removeAt(i);
-          GameManager.levelEarnedCoins+=5;
-          console.log(GameManager.levelEarnedCoins)
           if(points >100){
-            return 100;
+            return [100,5];
           }else{
-            return points;
+            return [points,5];
           }
           
         }
@@ -276,19 +288,17 @@ class Order{
             }
             
           }
-          GameManager.levelEarnedCoins+=20;
-          console.log(GameManager.levelEarnedCoins)
           var finalPoints=this.dishes.getAt(i).points-minusPoints
           this.dishes.removeAt(i);
           console.log("finalpoints="+finalPoints)
           if (finalPoints<0){
-            return 0;
+            return [0,20];
           }
           else if(points >100){
-            return 100;
+            return [100,20];
           }
           else{
-            return minusPoints;
+            return [finalPoints,20];
           }
           
         }  
@@ -311,19 +321,17 @@ class Order{
             }
             
           }
-          GameManager.levelEarnedCoins+=30;
-          console.log(GameManager.levelEarnedCoins)
           var finalPoints=this.dishes.getAt(i).points-minusPoints
           this.dishes.removeAt(i);
           console.log("finalpoints="+finalPoints)
           if (finalPoints<0){
-            return 0;
+            return [0,30];
           }
           else if(points >100){
-            return 100;
+            return [100,30];
           }
           else{
-            return minusPoints;
+            return [finalPoints,30];
           }
         }
       }

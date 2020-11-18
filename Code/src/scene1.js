@@ -587,7 +587,7 @@ class scene1 extends Phaser.Scene {
 				callClient(-1);
 		  }
 		  else {
-				if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 1){
+				if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 3){
 				  //console.log("esperando a cliente en coffee")
 				  GameManager.waitingRestaurantClient=true;
 				  var restaurantTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
@@ -596,7 +596,7 @@ class scene1 extends Phaser.Scene {
 					 }, restaurantTime);
 				}
 		
-				if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 1){
+				if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 3){
 					//console.log("esperando a cliente en calle")
 					GameManager.waitingStreetClient=true;
 					var streetTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
