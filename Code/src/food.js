@@ -37,7 +37,6 @@ class Coffee
 		this.readySound.play();
 		this.fillingSound.stop();
 		this.done = true;
-		//this.img.setTexture('assets_atlas', 'spr_glass_filled'); 
 
 		this.dish = new Dish([this.index]);
 		GameManager.coffeeDishes.add(this);
@@ -631,7 +630,8 @@ class Syrup
 		this.dishContainer;
 		this.animIdleKey;
 		this.animPlayKey; 
-		this.animKey; 
+		this.animKey;
+		 
 		switch(this.index)
 		{
 			case 0:

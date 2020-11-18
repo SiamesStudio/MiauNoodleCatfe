@@ -5,7 +5,7 @@ class TutorialCoffee
 	constructor(assignedSlot, fillingSound, readySound)
 	{
 		this.index = 0;
-		this.img = GameManager.scene.physics.add.sprite(0,0,'assets_atlas','spr_glass_empty');
+		this.img = GameManager.scene.physics.add.sprite(0,0,'anim_coffee');
 		this.posx;
 		this.posy;
 		GameManager.coffeeContainer;
@@ -13,8 +13,6 @@ class TutorialCoffee
 		this.assignedSlot = assignedSlot;
 		this.hovering = false;
 		this.done = false;
-		this.doneTime = TutorialCoffee.coffeeTime;
-		this.timer = GameManager.scene.time.addEvent({ delay: this.doneTime*1000, callback: this.coffeeDone, callbackScope: this });
 		this.clientCollider;
 		this.dish;
 		this.fillingSound = fillingSound;
@@ -23,20 +21,28 @@ class TutorialCoffee
 		TutorialCoffee.ref = this;
 		TutorialManager.coffeeImg = this.img;
 		TutorialManager.tipDataContainer.getAt(7).srcImg = this.img;
+		this.img.setDepth(3);
+		var animation = GameManager.scene.anims.create({
+    		key: 'fillCoffee',
+    		frames: GameManager.scene.anims.generateFrameNumbers('anim_coffee', { start: 0, end: 21}),
+    		duration: 1000*TutorialCoffee.coffeeTime,
+    		repeat: 0
+		});
+		this.img.anims.play('fillCoffee');
+		CoffeeMachine.playAnim(this.assignedSlot);
+		TipLogic.currentInstance.endGlassesInteractivity(TutorialManager.glassesImg);
 	}
 
-	coffeeDone()
+	coffeeDone() //only call fomr tipLogic
 	{
+		CoffeeMachine.stopAnim(this.assignedSlot);
 		this.readySound.play();
 		this.fillingSound.stop();
 		this.done = true;
-		this.img.setTexture('assets_atlas','spr_glass_filled'); 
-
+		this.img.setPipeline('GlowFilter');
 		this.dish = new Dish([this.index]);
 		GameManager.coffeeDishes.add(this);
-		TipLogic.currentInstance.endGlassesInteractivity(TutorialManager.glassesImg);
-		// case 7
-		//makeImgInteractive("coffeeDish", this.img, this)
+
 	}
 
 	dragEndBehaviour()
@@ -72,7 +78,6 @@ class TutorialCoffee
 		client.compareOrderWithDish(dish);
 		grabItem("", null, null);
 
-
 		// transition to case 8
 		TipLogic.currentInstance.endCase8();
 	}
@@ -81,21 +86,24 @@ class TutorialCoffee
 class TutorialPancake
 {
 	static ref;
-	static time = 0.5;
-	constructor(assignedSlot, trashSound, cookingSound, readySound)
+	static time = 1;
+	constructor(assignedSlot, trashSound, cookingSound, readySound, posx, posy)
 	{
 		this.index = 1;
+		this.posx = posx;
+		this.posy = posy;
 		this.side1Done = false;
 		this.side2Done = false;
 		this.flipped = false;
 		this.burnt = false;
 		this.hovering = false;
 		this.assignedSlot = assignedSlot;
-		this.img = GameManager.scene.physics.add.sprite(0,0,'assets_atlas','spr_pancake_cooking');
+		this.img = GameManager.scene.physics.add.sprite(posx,posy,'assets_atlas','spr_pancake_cooking');
 		this.trashCollider;
 		this.dishCollider;
 		this.container;
 		this.doneTime = TutorialPancake.time;
+		this.img.setDepth(2);
 		TutorialManager.pancakeImg = this.img;
 		TutorialManager.tipDataContainer.getAt(5).srcImg = this.img;
 		TutorialManager.tipDataContainer.getAt(6).srcImg = this.img;
@@ -108,6 +116,17 @@ class TutorialPancake
         this.cookingSound.setLoop(true);
         this.readySound = readySound;
         this.cookingSound.play();
+
+        this.animImg = GameManager.scene.physics.add.sprite(posx,posy-config.height*0.04,'anim_pancake');
+        
+        var animation = GameManager.scene.anims.create({
+    		key: 'doPancake',
+    		frames: GameManager.scene.anims.generateFrameNumbers('anim_pancake', { start: 0, end: 4}),
+    		frameRate: 8,
+    		repeat: -1
+		});
+
+		this.animImg.anims.play('doPancake');
 	}
 
 	/* Called when the current side of the pancake is done */
@@ -161,6 +180,7 @@ class TutorialPancake
 
 	dragToDish(food, dishImg)
 	{
+		this.animImg.destroy();
 		GameManager.scene.physics.world.removeCollider(this.trashCollider);
 		GameManager.scene.physics.world.removeCollider(this.dishCollider);
 		var container = GameManager.collidingObject;
@@ -177,7 +197,7 @@ class TutorialPancake
 		{
 			container.dish = new Dish([this.index,-1,1,0]);
 			// case 6
-			TipLogic.currentInstance.endPancakeDraggedToDish();
+			TipLogic.currentInstance.endPancakeDraggedToDish(food);
 			// case 7 or 8
 			//makeDishInteractive(container,"pancakeDish");
 			container.dishContainer.add(food);
@@ -194,6 +214,7 @@ class TutorialPancake
 
 	throwFood(food, trashCan)
 	{
+		this.animImg.destroy();
 		this.trashSound.play();
 		trashCan.setAlpha(1);
 		food.disableBody(true,true);
@@ -210,9 +231,12 @@ class TutorialPancake
 
 class TutorialNoodles
 {
+	static noodlesList = new Phaser.Structs.List();
 	static doneTime = 2; //10
 	constructor(assignedSlot, trashSound, cookingSound, readySound)
 	{
+		this.posx;
+		this.posy;
 		this.index = 2;
 		this.assignedSlot = assignedSlot;
 		this.img = GameManager.scene.physics.add.sprite(0,0,'assets_atlas','spr_noodles');
@@ -220,7 +244,7 @@ class TutorialNoodles
 		this.burnt = false;
 		this.trashCollider;
 		this.dishCollider;
-
+		this.img.setDepth(2);
 		this.noodleTime = TutorialNoodles.doneTime;
 
 		this.doneTimer = GameManager.scene.time.addEvent({ delay: this.noodleTime*1000, callback: this.noodlesDone, callbackScope: this });
@@ -229,13 +253,18 @@ class TutorialNoodles
         this.cookingSound = cookingSound;
         this.readySound = readySound;
         this.cookingSound.play();
+        GameManager.animatedStrainerImg.anims.play('potCooking');
+        GameManager.animatedStrainerImg.setAlpha(1);
+        Noodles.noodlesList.add(this);
 	}
 
 	noodlesDone()
 	{
+		this.img.y-=config.height*0.03;
 		this.readySound.play();
 		this.cookingSound.setMute(true);
 		var noodles = this;
+
 		makeImgInteractive("noodles",this.img, this, this.cookingSound);
 
 		this.img.on('dragstart', function(pointer,dragX,dragY){
@@ -276,6 +305,8 @@ class TutorialNoodles
 
 	freeStrainer()
 	{
+		Noodles.noodlesList.remove(this);
+		this.checkOtherNoodles();
 		this.doneTimer.remove(false);
 		GameManager.strainer.occupiedSlots--;
 		Strainer.slots.getAt(this.assignedSlot).occupied = false;
@@ -294,15 +325,32 @@ class TutorialNoodles
 		food.setPosition(dishImg.x,dishImg.y);
 		food.removeInteractive();
 		food.setScale(0.9);
-		//food.disableBody(true,true);
 		this.freeStrainer();
 		/* Update dish and create sprite according to the dish */
 		if(container.dish == null)
 		{
 			container.dish = new Dish([this.index,-1,0]);
 			container.dishContainer.add(food);
+			container.dishContainer.sendToBack(food);
+			container.dishContainer.sendToBack(container.img);
+			if(container.sauce != -1) container.dish.sauce = container.sauce;
+			for(var i=0; i<container.toppings.length; i++)
+			{
+				container.dish.addTopping(container.toppings.getAt(i));
+			}
 			makeDishInteractive(container,"noodleDish");
-		}	
+			console.log("dish num toppings: " + container.toppings.length);
+		}		
+	}
+
+	checkOtherNoodles()
+	{
+		var numDone=0;
+		for(var i=0; i<TutorialNoodles.noodlesList.length; i++)
+		{
+			if(TutorialNoodles.noodlesList.getAt(i).burnt==true) numDone++;
+		}
+		if(numDone == TutorialNoodles.noodlesList.length) GameManager.animatedStrainerImg.setAlpha(0);
 	}
 }
 
@@ -312,6 +360,7 @@ class TutorialTopping
 	constructor(index, pancake, toppingSound)
 	{
 		this.index = index;
+		this.pancake = pancake;
 		this.img;
 		this.staticImg;
 		this.hovering=false;
@@ -321,57 +370,70 @@ class TutorialTopping
 		this.toppingSound = toppingSound;
 		this.imgKey;
 		var staticImgKey;
+		this.staticImgKey;
 		var offset = !pancake ? offset = config.width : offset = 0;
 		var xMul;
 		var yMul;
+
 		switch(this.index)
 		{	
 			case 0:
 				if(pancake) { staticImgKey = 'spr_topping_lacasitos'; this.imgKey='spr_pancake_lacasitos'; xMul=0.3; yMul=0.9;}
-				else { staticImgKey = 'spr_topping_mushroom'; this.imgKey = 'spr_noodle_mushroom'; xMul=0.5; yMul=0.6;}
+				else { staticImgKey = 'spr_bg_topping_mushroom'; this.imgKey = 'spr_topping_mushroom'; xMul=0.5; yMul=0.545;}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
 				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
-				else{this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey); this.staticImg.setScale(0.22);} 
+				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
 			break;
 
 			case 1:
 				if(pancake) { staticImgKey = 'spr_topping_coconut'; this.imgKey = 'spr_pancake_coconut'; xMul=0.385; yMul=0.9;}
-				else { staticImgKey = 'spr_topping_egg'; this.imgKey = 'spr_noodle_egg'; xMul=0.5; yMul=0.7}
+				else { staticImgKey = 'spr_bg_topping_egg'; this.imgKey = 'spr_topping_egg'; xMul=0.5; yMul=0.675}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
 				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
-				else{this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey); this.staticImg.setScale(0.22);} 
+				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
 			break;
 
 			case 2:
-				if(pancake) { staticImgKey = 'spr_topping_strawberry'; this.imgKey = 'spr_pancake_strawberry'; xMul=0.47; yMul=0.9;}
-				else { staticImgKey = 'spr_topping_naruto'; this.imgKey = 'spr_noodle_naruto'; xMul=0.61; yMul=0.6}
+				if(pancake) {TutorialTopping.ref = this; staticImgKey = 'spr_topping_strawberry'; this.imgKey = 'spr_pancake_strawberry'; xMul=0.47; yMul=0.9;}
+				else { staticImgKey = 'spr_bg_topping_naruto'; this.imgKey = 'spr_topping_naruto'; xMul=0.628; yMul=0.55}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
 				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
-				else{this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey); this.staticImg.setScale(0.22);}
+				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
 			break;
 
 			case 3:
 				if(pancake) { staticImgKey = 'spr_topping_banana'; this.imgKey = 'spr_pancake_banana'; xMul=0.56; yMul=0.9;}
-				else { staticImgKey = 'spr_topping_springonion'; this.imgKey = 'spr_noodle_springonion'; xMul=0.63; yMul=0.72}
+				else { staticImgKey = 'spr_bg_topping_springonion'; this.imgKey = 'spr_topping_springonion'; xMul=0.648; yMul=0.69}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
-				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey)
-				else{this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey); this.staticImg.setScale(0.22);}
+				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
+				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
 			break;
 			
 			default:
 				console.log("No img assigned");
 			break;
 		}
-		var selfRef = this;
-		this.img.setDepth(2);
+		
+		this.img.setDepth(4);
 		this.img.setAlpha(0);
 		this.staticImg.setDepth(1);
-		var clonedImg = GameManager.scene.add.image(this.staticImg.x, this.staticImg.y,'assets_atlas',staticImgKey);
+		this.staticImgKey = staticImgKey;
+	}
+
+	makeToppingInteractive()
+	{
+		this.staticImg.setPipeline('GlowFilter');
+		
+		var selfRef = this;
+		var clonedImg;
+		if(this.pancake)clonedImg = GameManager.scene.add.image(this.staticImg.x, this.staticImg.y,'assets_atlas',this.staticImgKey);
+		else{clonedImg = GameManager.scene.add.image(this.staticImg.x, this.staticImg.y,this.staticImgKey);}
 		clonedImg.setAlpha(0.2);
+		TutorialManager.toppingImg = clonedImg;
 		clonedImg.setInteractive({draggable: true});
 
 		clonedImg.on('dragstart', function(pointer,dragX,dragY){
@@ -379,7 +441,8 @@ class TutorialTopping
 			selfRef.img.setAlpha(1);
 			clonedImg.setAlpha(0);
 			selfRef.posx = this.x;
-			selfRef.posy = this.y;	
+			selfRef.posy = this.y;
+			selfRef.img.setPipeline('GlowFilter');	
 		})
 
     	clonedImg.on('drag', function(pointer, dragX, dragY){
@@ -392,6 +455,7 @@ class TutorialTopping
 			clonedImg.setPosition(selfRef.posx, selfRef.posy);
 			clonedImg.setAlpha(1);
 			selfRef.img.setAlpha(0);
+			selfRef.img.resetPipeline();
     	})
 	}
 
@@ -419,41 +483,70 @@ class TutorialTopping
 		});
 		toppingImg.setPosition(this.posx,this.posy);
 
-		var numToppings = container.dish.numToppings;
-		if(container.dish.addTopping(this.index))
+		var numToppings=-1;
+		if(this.staticImg.x > config.width) //if noodle topping
 		{
-			console.log("this.img.texture: " + this.imgKey);
-			var clonedImg = GameManager.scene.add.image(0, 0,'assets_atlas', this.imgKey);
-
-			switch(numToppings)
+			//Aqui joseluis
+			if(container.dish == null)
 			{
-				case 0:
-					container.addToContainer(clonedImg,0,0);
-				break;
-				case 1:
-					container.addToContainer(clonedImg,2,-1.5);
-				break;
-				case 2:
-					container.addToContainer(clonedImg,-3,-3);
-				break;
-				case 3:
-					container.addToContainer(clonedImg,2,-5);
-				break;
+				if(container.addTopping(this.index)) //added to the list of the container
+				{
+					console.log("topping: " + this.index + " was added");
+					numToppings = container.toppings.length;
+				}
+			}
+			else
+			{
+				if(container.dish.addTopping(this.index)) //added to the list of toppings in the dish
+				{
+					numToppings = container.dish.numToppings;
+				}
+			}
+		}
+		else // if pancake topping
+		{
+			if(container.dish.addTopping(this.index)) //added to the list of toppings in the dish
+			{
+				numToppings = container.dish.numToppings;
 			}	
 		}
+		this.addToppingToContainer(container, numToppings-1);
 		// case 9
 		TipLogic.currentInstance.endCase9();	
+	}
+
+	addToppingToContainer(container, numToppings)
+	{
+		console.log("this.img.texture: " + this.imgKey);
+		var clonedImg = GameManager.scene.add.image(0, 0,'assets_atlas', this.imgKey);
+
+		switch(numToppings)
+		{
+			case 0:
+				container.addToContainer(clonedImg,0,0);
+			break;
+			case 1:
+				container.addToContainer(clonedImg,2,-1.5);
+			break;
+			case 2:
+				container.addToContainer(clonedImg,-3,-3);
+			break;
+			case 3:
+				container.addToContainer(clonedImg,2,-5);
+			break;
+		}
 	}
 }
 
 class TutorialSyrup
 {
+	static servingTime = 4;
 	static ref;
-	static dishContainerRef;
 	constructor(index, syrupSound)
 	{
 		this.index = index;
 		this.img;
+		this.staticImg;
 		this.hovering=false;
 		this.posx;
 		this.posy;
@@ -461,19 +554,36 @@ class TutorialSyrup
 		this.servingTimer;
 		this.syrupSound = syrupSound;
 		this.dishContainer;
-		
+		this.animIdleKey;
+		this.animPlayKey; 
+		this.animKey;
+
 		switch(this.index)
 		{
 			case 0:
-				this.img = GameManager.scene.physics.add.sprite(config.width * 0.25,config.height * 0.43,'assets_atlas','spr_syrup_strawberry'); 
+				this.animPlayKey = 'anim_syrup_strawberry_play'; 
+				this.animKey = 'anim_syrup_strawberry'; 
+				this.animIdleKey = 'anim_syrup_strawberry_idle';
+				this.img = GameManager.scene.physics.add.sprite(config.width * 0.25,config.height * 0.435,'anim_syrup_strawberry'); 
+				this.staticImg = GameManager.scene.physics.add.sprite(config.width * 0.25,config.height * 0.435,'assets_atlas','spr_syrup_strawberry');  
 			break;
 
 			case 1:
-				this.img = GameManager.scene.physics.add.sprite(config.width * 0.31 ,config.height * 0.43,'assets_atlas','spr_syrup_chocolate'); 
+				this.animPlayKey = 'anim_syrup_chocolate_play'; 
+				this.animKey = 'anim_syrup_chocolate';
+				this.animIdleKey = 'anim_syrup_chocolate_idle'; 
+				this.img = GameManager.scene.physics.add.sprite(config.width * 0.31 ,config.height * 0.435,'anim_syrup_chocolate'); 
+				this.staticImg = GameManager.scene.physics.add.sprite(config.width * 0.31,config.height * 0.435,'assets_atlas','spr_syrup_chocolate');  
+				TutorialSyrup.ref = this;
+				TutorialManager.syrupImg = this.staticImg;
 			break;
 
 			case 2:
-				this.img = GameManager.scene.physics.add.sprite(config.width * 0.37 ,config.height * 0.43,'assets_atlas','spr_syrup_caramel'); 
+				this.animPlayKey = 'anim_syrup_caramel_play'; 
+				this.animKey = 'anim_syrup_caramel';
+				this.animIdleKey = 'anim_syrup_caramel_idle'; 
+				this.img = GameManager.scene.physics.add.sprite(config.width * 0.37 ,config.height * 0.435,'anim_syrup_caramel');
+				this.staticImg = GameManager.scene.physics.add.sprite(config.width * 0.37,config.height * 0.435,'assets_atlas','spr_syrup_caramel');   
 			break;
 
 			default:
@@ -481,7 +591,24 @@ class TutorialSyrup
 			break;
 		}
 		this.img.setDepth(2);
-		
+		this.staticImg.setDepth(2);
+		//makeImgInteractive("syrup", this.staticImg, this, null, false);
+		var _animPlayKey = this.animPlayKey;
+		var _animKey = this.animKey;
+		var _animIdleKey = this.animIdleKey;
+		GameManager.scene.anims.create({
+    		key: _animPlayKey,
+    		frames: GameManager.scene.anims.generateFrameNumbers(_animKey, { start: 0, end: 15}),
+    		duration: 1000*Syrup.servingTime,
+    		repeat: 0
+		});
+		GameManager.scene.anims.create({
+    		key: _animIdleKey,
+    		frames: [ { key: _animKey, frame: 0 } ],
+    		frameRate: 20
+		});
+
+		this.img.disableBody(true,true);
 	}
 
 	dragEndBehaviour()
@@ -489,44 +616,50 @@ class TutorialSyrup
 		if(this.hovering)
 		{
 			this.hovering = false;
-			this.collider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.serveSauce, null, this);
+			this.collider = GameManager.scene.physics.add.overlap(this.staticImg, GameManager.collidingObjectImg, this.serveSyrup, null, this);
 		}
 		else
 		{
-           	this.img.setPosition(this.posx, this.posy); 
+           	this.staticImg.setPosition(this.posx, this.posy); 
 		}
 		grabItem("", null, null); 
 	}
 
-	serveSauce(sauceImg, dishImg)
+	serveSyrup(sauceImg, dishImg)
 	{
 		this.syrupSound.play();
 		var container = GameManager.collidingObject;
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(1);
 		});
-		//dishImg.setAlpha(1);
+
+		this.img.enableBody(true,container.dishContainer.x,container.dishContainer.y-config.height*0.2,true,true);
+		this.img.anims.play(this.animPlayKey);
+		this.img.setPipeline('GlowFilter');
 		this.collider.destroy();
-		this.servingTimer = GameManager.scene.time.addEvent({ delay: Sauce.servingTime*1000, callback: this.syrupServed, callbackScope: this });
-		this.img.removeInteractive();
+		this.servingTimer = GameManager.scene.time.addEvent({ delay: Syrup.servingTime*1000, callback: this.syrupServed, callbackScope: this });
+		this.staticImg.removeInteractive();
 		console.log("serving syrup");
 
-		console.log("syrup: " + container.dish.sauce);
 		container.dish.sauce = this.index;
-		console.log("this.index: " + this.index);
-		console.log("syrup: " + container.dish.sauce);
 		this.dishContainer = container;
-		TutorialSyrup.dishContainerRef = container;
 		container.img.removeInteractive();
-		//container.dishContainer.add(food); add sauce sprite to noodle
+		this.staticImg.disableBody(true,true);
+		//container.dishContainer.add(food); add syrup sprite to noodle
 
 	}
 
 	syrupServed()
 	{
+		this.img.resetPipeline();
+		this.staticImg.resetPipeline();
+		this.staticImg
+		this.img.anims.play(this.animIdleKey);
+		this.staticImg.enableBody(true,this.posx,this.posy,true,true);
+		this.img.disableBody(true,true);
 		this.syrupSound.stop();
 		this.img.setPosition(this.posx,this.posy);
-		//makeDishInteractive(this.dishContainer,"pancakeDish");
+		makeImgInteractive("syrup", this.staticImg, this, null, false);
 		console.log("syrup served");
 
 		//case 10
@@ -536,7 +669,7 @@ class TutorialSyrup
 
 class TutorialSauce
 {
-	static servingTime = 3; //4
+	static servingTime = 4; //4
 	constructor(index, fillingSound)
 	{
 		this.index = index;
@@ -548,29 +681,67 @@ class TutorialSauce
 		this.servingTimer;
 		this.fillingSound = fillingSound;
 		this.dishContainer;
+		this.animIdleKey;
+		this.animPlayKey; 
+		this.animKey;
+		this.addedSauceImgKey;
 		switch(this.index)
 		{
 			case 0:
-				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.65,config.height*0.9,'assets_atlas','spr_sauce_kimuchi');
+				this.animPlayKey = 'anim_ladle_shoyu_play'; 
+				this.animKey = 'anim_ladle_shoyu'; 
+				this.animIdleKey = 'anim_ladle_shoyu_idle';
+				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.28, config.height*0.94,'anim_ladle_shoyu');
+				this.addedSauceImgKey = 'spr_sauce_shoyu';
 			break;
 
 			case 1:
-				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.72,config.height*0.9,'assets_atlas','spr_sauce_miso');
+				this.animPlayKey = 'anim_ladle_shio_play'; 
+				this.animKey = 'anim_ladle_shio'; 
+				this.animIdleKey = 'anim_ladle_shio_idle';
+				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.4, config.height*0.94,'anim_ladle_shio');
+				this.addedSauceImgKey = 'spr_sauce_shio';
 			break;
 
 			case 2:
-				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.8, config.height*0.9,'assets_atlas','spr_sauce_shio');
+				this.animPlayKey = 'anim_ladle_kimuchi_play'; 
+				this.animKey = 'anim_ladle_kimuchi'; 
+				this.animIdleKey = 'anim_ladle_kimuchi_idle';
+				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.52,config.height*0.94,'anim_ladle_kimuchi');
+				this.addedSauceImgKey = 'spr_sauce_kimuchi';
 			break;
 
 			case 3:
-				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.86, config.height*0.9,'assets_atlas','spr_sauce_shoyu');
+				this.animPlayKey = 'anim_ladle_miso_play'; 
+				this.animKey = 'anim_ladle_miso'; 
+				this.animIdleKey = 'anim_ladle_miso_idle';
+				this.img = GameManager.scene.physics.add.sprite(config.width + config.width*0.64,config.height*0.94,'anim_ladle_miso');
+				this.addedSauceImgKey = 'spr_sauce_miso';
 			break;
 
 			default:
 				console.log("No img assigned");
 			break;
 		}
-		makeImgInteractive("sauce", this.img, this, null);
+		this.img.setDepth(2);
+		this.img.setInteractive({ draggable: true, pixelPerfect: true});
+		makeImgInteractive("sauce", this.img, this, null, true);
+
+		var _animPlayKey = this.animPlayKey;
+		var _animKey = this.animKey;
+		var _animIdleKey = this.animIdleKey;
+		GameManager.scene.anims.create({
+    		key: _animPlayKey,
+    		frames: GameManager.scene.anims.generateFrameNumbers(_animKey, { start: 0, end: 11}),
+    		duration: 1000*Sauce.servingTime,
+    		repeat: 0
+		});
+
+		GameManager.scene.anims.create({
+    		key: _animIdleKey,
+    		frames: [ { key: _animKey, frame: 0 } ],
+    		frameRate: 20
+		});
 	}
 
 	dragEndBehaviour()
@@ -589,28 +760,40 @@ class TutorialSauce
 
 	serveSauce(sauceImg, dishImg)
 	{
+		this.fillingSound.play();
 		var container = GameManager.collidingObject;
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(1);
 		});
-		//dishImg.setAlpha(1);
+		sauceImg.x = container.dishContainer.x+config.width*0.04;
+		sauceImg.y = container.dishContainer.y-config.height*0.2;
+		this.img.anims.play(this.animPlayKey);
+
 		this.collider.destroy();
 		this.servingTimer = GameManager.scene.time.addEvent({ delay: Sauce.servingTime*1000, callback: this.sauceServed, callbackScope: this });
 		this.img.removeInteractive();
 		console.log("serving sauce");
 
-		container.dish.sauce = this.index;
+		if(container.dish != null)
+		{
+			container.dish.sauce = this.index;
+		}
+		else
+		{
+			container.sauce = this.index;
+		}
 		this.dishContainer = container;
 		container.img.removeInteractive();
-		this.fillingSound.play();
-		//container.dishContainer.add(food); add sauce sprite to noodle
 	}
 
 	sauceServed()
 	{
+		var addedSauceImg = GameManager.scene.add.image(0,0,'assets_atlas',this.addedSauceImgKey);
+		this.dishContainer.dishContainer.add(addedSauceImg); 
+		this.img.anims.play(this.animIdleKey);
 		this.fillingSound.stop();
 		this.img.setPosition(this.posx,this.posy);
-		makeImgInteractive("sauce", this.img, this, null);
+		makeImgInteractive("sauce", this.img, this, null, false);
 		makeDishInteractive(this.dishContainer,"noodleDish");
 		console.log("sauce served");
 	}
@@ -630,6 +813,8 @@ class TutorialDishContainer
 		this.img.setPosition(0,0); //If this is not done, then the image would not appear in the scene
 		this.dishContainer.add(this.img);
 		this.clientCollider;
+		this.toppings = new Phaser.Structs.List();
+		this.sauce=-1;
 	}
 
 	addToContainer(img, xOffset, yOffset)
@@ -642,45 +827,66 @@ class TutorialDishContainer
 	{
 		if(this.hovering == true)
 		{
-			console.log("DISH drag end AND WAS HOVERING WITH CLIENT");
+			console.log("DISH drag end AND WAS HOVERING");
+			//this.clientCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.dragToClient, null, this);
+			var trashCanImg = GameManager.grabbedItemClass == "pancakeDish" ? GameManager.trashCanImgPancake : GameManager.trashCanImgNoodles;
+
+			if(checkOverlap(this.img, trashCanImg)) this.dragToTrash(this.img,trashCanImg);
+			else
+			{
+				if(checkOverlap(this.img,GameManager.collidingObjectImg)) this.dragToClient(this.img,GameManager.collidingObjectImg);
+			}
 			this.hovering = false;
-			this.clientCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.dragToClient, null, this);
 		}
 		else
 		{
-			this.dishContainer.setPosition(this.posx,this.posy);
 			grabItem("", null, null);
+			this.dishContainer.setPosition(this.posx,this.posy);
 		}
-		
 	}
 
 	//IMPLEMENT ALL THE LOGIC, this works for the pancakes and the noodles
 	dragToClient(dishImg, clientImg)
 	{
-		TipLogic.currentInstance.endCase11();
 		console.log("dish dragged to client");
-		GameManager.scene.physics.world.removeCollider(this.clientCollider);
-		
-		if(GameManager.grabbedItemClass = "pancakeDish"){
-			GameManager.dishImgContainerPancake.remove(this);
-			GameManager.tableclothsPancake.occupiedSlots--;
-			TableclothsPancake.slots.getAt(this.assignedSlot).occupied = false;
-		}
-		else if(GameManager.grabbedItemClass = "noodleDish"){ //Free the tablecloth, remove the order img, remo
-			GameManager.dishImgContainerNoodles.remove(this);
-			GameManager.tableclothsNoodle.occupiedSlots--;
-			TableclothsNoodle.slots.getAt(this.assignedSlot).occupied = false;
-		} 
-		
-		this.dishContainer.iterate(function(child){
-			//child.disableBody(true,true);
-			child.setAlpha(0);
-		});
+		//GameManager.scene.physics.world.removeCollider(this.clientCollider);	
+		this.freeTableCloth();		
 		clientImg.setAlpha(1);
-
 		var dish = this.dish; // aquí te dejo al objeto de la clase Dish
 		var client = GameManager.collidingObject; //El cliente con el que ha colisionado, objeto de la clase Client
 		client.compareOrderWithDish(dish);
 		grabItem("", null, null);
+		TipLogic.currentInstance.endCase11();
 	}
+
+	dragToTrash(dishImg, trashImg)
+	{
+		console.log("dish dragged to trash");
+		this.freeTableCloth();
+		trashImg.setAlpha(1);
+	}
+
+	freeTableCloth()
+	{
+		if(GameManager.grabbedItemClass == "pancakeDish"){
+			GameManager.dishImgContainerPancake.remove(this);
+			GameManager.tableclothsPancake.occupiedSlots--;
+			TableclothsPancake.slots.getAt(this.assignedSlot).occupied = false;
+		}
+		else if(GameManager.grabbedItemClass == "noodleDish"){ //Free the tablecloth, remove the order img, remo
+			GameManager.dishImgContainerNoodles.remove(this);
+			GameManager.tableclothsNoodle.occupiedSlots--;
+			TableclothsNoodle.slots.getAt(this.assignedSlot).occupied = false;
+		}
+		this.dishContainer.destroy();
+	}
+
+	addTopping(toppingType)
+  	{
+    	var originalSize = this.toppings.length;
+    	this.toppings.add(toppingType);
+	
+	    if(originalSize != this.toppings.length){this.numToppings++; return true;}
+    	else return false;
+  	}
 }

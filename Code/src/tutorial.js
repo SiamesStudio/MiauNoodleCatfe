@@ -10,8 +10,10 @@ class tutorial extends Phaser.Scene {
 	}
 
 	create(){
-		this.clientsSettings();		
 		var gm = new GameManager(this);
+		GameManager.tutorial=true;
+		this.interfaceSettings();
+		this.clientsSettings();	
         this.coffeeSetting();
         this.pancakesSetting();
         //this.noodlesSetting();
@@ -19,13 +21,20 @@ class tutorial extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 	}
 
+
 	clientsSettings(){
     	//index, salsa, nº toppings, toppings
-    	//index, salsa, nº plantas,nºtoppings, toppings
-    	var tutorialPancakeClient = new Client(0, 1,[2,0,1,0], [1,1,1,1,2]);
-    	tutorialPancakeClient.tutorial = true;
-    	//var tutorialNoodleClient = new Client(1, 2,[2,0,1,0], [1,1,1,1,2]);
+    	//index, sirope, nº plantas,nºtoppings, toppings
+    	
+    	
+    	TutorialManager.tutorialPancakeClient = new Client(0, 1,[2,0,1,0], [1,1,1,1,2]);
+    	TutorialManager.tutorialPancakeClient.tutorial = true;
+    	callClient(1);
 
+    	/*
+    	TutorialManager.tutorialNoodlesClient = new Client(1, 2,[2,0,1,0], [1,1,1,1,2]);
+    	TutorialManager.tutorialNoodlesClient.tutorial = true;
+    	callClient(2); */
     	/*
     	new Client(0, 0,[2,0,1,0], [1,-1,1,1,2]);
     	new Client(1, 1,[2,2,0], [1,-1,1,2,2,3]);
@@ -36,22 +45,61 @@ class tutorial extends Phaser.Scene {
     	//console.log(Client.clientList)
     	//añadir clientes a mano
   	}
+  	interfaceSettings(){
+		this.add.sprite(config.width*0.5,config.height/13,'assets_atlas','spr_ui_slider')
+        this.add.sprite(config.width*0.4,config.height/11,'assets_atlas','spr_ui_icon_coin')
+        this.numCoins = this.add.text(config.width*0.5,config.height/13, GameManager.levelEarnedCoins, { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+		
+		this.slider=this.add.sprite(3*config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
+        this.add.sprite(config.width*0.65,config.height/11,'assets_atlas','spr_ui_chefLvl')
+        this.numPlayerLevel = this.add.text(config.width*0.65,config.height/11, 0, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
+        this.numChefPoints = this.add.text(this.slider.x+6,config.height/13, "", { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5);
+		GameManager.scene.uploadPlayerLevel(0)
+		
+		this.slider=this.add.sprite(config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
+		this.slider=this.add.sprite(config.width/4+5 ,config.height/13,'assets_atlas','spr_ui_volumen')
+		this.add.sprite(config.width*0.145,config.height/11,'assets_atlas','spr_ui_icon_happy')
+		
+		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings')
+	}
 
 	coffeeSetting()
 	{
 		this.cameras.main.on('camerafadeoutcomplete', function (camera) {
             camera.fadeIn(100);
         });
+		var cam = this.cameras.main;	
+		var goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.08, 'spr_ui_arrow');
+		goToNoodlesButton.setInteractive().on('pointerdown', function(pointer){
+			cam.centerOnX(config.width + config.width/2);
+    	    GameManager.scene.cameras.main.fadeOut(25);
+		})
+
+		var coffeeMachineLvl = 0;
+		var coffeeMachineImg;
 		
 		var posx= config.width*0.86;
 		var posy= config.height*0.5;
+		switch(coffeeMachineLvl)
+		{
+			case 0:
+				coffeeMachineImg = this.add.image(posx, posy,'assets_atlas', 'spr_coffeeMachine_0'); 
+			break;
+			case 1:
+				coffeeMachineImg = this.add.image(posx, posy,'assets_atlas','spr_coffeeMachine_1'); 
+			break;
+			case 2:
+				coffeeMachineImg = this.add.image(posx, posy,'assets_atlas', 'spr_coffeeMachine_2');
+			break;
+			case 3:
+				coffeeMachineImg = this.add.image(posx, posy,'assets_atlas', 'spr_coffeeMachine_3'); 
+			break;
+		}
 
-		var coffeeMachineImg = this.add.image(posx, posy, 'assets_atlas','spr_coffeeMachine_0'); 
-
-		this.add.image(config.width*0.83,config.height*0.24,'assets_atlas','spr_radio');
+		var spr_radio = this.add.image(config.width*0.83,config.height*0.24,'assets_atlas','spr_radio');
 		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.915, 'assets_atlas', 'spr_glasses');
 
-		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, 0);
+		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, coffeeMachineLvl, true);
 		GameManager.coffeeMachine = coffeeMachine;
 		TutorialManager.glassesImg = coffeeSpawnerImg;
 		
@@ -227,21 +275,21 @@ class tutorial extends Phaser.Scene {
 	*/
 	tutStuff()
 	{
-		/*
-		var customPipeline = this.plugins.get('rexglowfilterpipelineplugin').add(this,'GlowFilter');
-		var platicos = this.add.image(config.width*0.5,config.height*0.2,'spr_radio').setPipeline('GlowFilter');
-
+		
+		var cm = this.plugins.get('rexglowfilterpipelineplugin').add(this,'GlowFilter');
+		//var platicos = this.add.image(config.width*0.5,config.height*0.2,'assets_atlas','spr_radio').setPipeline('GlowFilter');
 		this.tweens.add({
-            targets: customPipeline,
-            intensity: 0.02,
+            targets: cm,
+            intensity: 0.019,
             ease: 'Linear',
-            duration: 1000,
+            duration: 500,
             repeat: -1,
             yoyo: true
         }); 
-        */
+        
         //callClient(1);
 		new TutorialManager(this);
+		TutorialManager.customPipeline = cm;
 		var numSteps = 29;
 		for(var i=0; i<numSteps; i++)
 		{
@@ -253,9 +301,16 @@ class tutorial extends Phaser.Scene {
         	TutorialManager.tipLogicContainer.add(new TipLogic(i));
         }
         TutorialManager.showNext();
-
-
 	}
+
+	uploadPlayerLevel(number){
+        var expPerLevel = [0,200,1200,6200,21200,46200,96200]
+        //if(this.playerSettings.experience < expPerLevel[expPerLevel.length - 1]){//Comprobamos que 
+            
+        //}
+        this.numChefPoints.setText((0 - expPerLevel[0]) +"/"+ expPerLevel[0+1]);
+        return 1;
+    }
 
 	update(time, delta)
 	{
@@ -349,6 +404,17 @@ class TutorialManager
 	static pancakeImg;
 	static syrupImg;
 	static clientImg;
+
+	static coffee;
+	static pancake;
+	static noodle;
+	static syrup;
+	static sauce;
+	static topping;
+
+	static tutorialPancakeClient;
+	static tutorialNoodlesClient;
+
 	constructor(_scene)
 	{
 		TutorialManager.scene = _scene;
@@ -678,7 +744,6 @@ class TipLogic
 						//End if click on noodlesViewButton
 					break;
 
-
 				} 
 			break;
 
@@ -688,23 +753,40 @@ class TipLogic
 				switch(tipDataContainer.dragType)
 				{
 					case TipData.dragTypes.PANCAKETODISH:
+						GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
 						 this.pancakeDraggingInteractivity(img, TutorialPancake.ref);
 					break;
 
 					case TipData.dragTypes.COFFEETOCLIENT:
-						 makeImgInteractive("coffeeDish", img, TutorialCoffee.ref)
+						TutorialManager.tutorialPancakeClient.clientImg.setPipeline('GlowFilter');
+						TutorialCoffee.ref.coffeeDone();
+						makeImgInteractive("coffeeDish", img, TutorialCoffee.ref)
 					break;
 
 					case TipData.dragTypes.CHOCSYRUP:
-						 makeImgInteractive("syrup", img, TutorialSyrup.ref, null);
+						//makeImgInteractive("syrup", img, TutorialSyrup.ref, null);
+						TutorialSyrup.ref.staticImg.setPipeline('GlowFilter');
+						GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
+						makeImgInteractive("syrup", TutorialSyrup.ref.staticImg, TutorialSyrup.ref, null, false);
 					break;
 
 					case TipData.dragTypes.STRAWBERRYTOP:
-						 makeImgInteractive("topping", img, TutorialTopping.ref, null);
+						GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
+						TutorialTopping.ref.makeToppingInteractive();
 					break;
 
 					case TipData.dragTypes.DISHTOCLIENT:
-						 makeDishInteractive(TutorialSyrup.dishContainerRef,"pancakeDish");
+						TutorialManager.tutorialPancakeClient.clientImg.setPipeline('GlowFilter');
+						TutorialSyrup.ref.dishContainer.dishContainer.iterate(function(child){
+							child.setPipeline('GlowFilter');
+						});
+						makeDishInteractive(TutorialSyrup.ref.dishContainer,"pancakeDish");
 					break;
 				}
 			break;
@@ -727,13 +809,9 @@ class TipLogic
 		srcImg.removeInteractive();
 	}
 
-	completeDragTip(srcImg, dstImg)
-	{
-
-	}
-
 	glassesInteractivity(selfRef, img)
 	{
+		img.setPipeline('GlowFilter');
 		img.setInteractive();
 	    img.on('pointerdown', function(pointer){
 	    	if(GameManager.coffeeMachine.occupiedSlots < 1)
@@ -743,6 +821,7 @@ class TipLogic
 	    		var fillingSound = GameManager.scene.sound.add('snd_filling_catfe');
 	    		var readySound = GameManager.scene.sound.add('snd_ready');
 	    		var coffee = new TutorialCoffee(slotId, fillingSound, readySound);
+	    		img.resetPipeline();
 	    		changePosition(coffee, pos.x, pos.y);
 	    	} 
 	    })
@@ -756,6 +835,7 @@ class TipLogic
 
 	dishPileInteractivity(selfRef, img)
 	{
+		img.setPipeline('GlowFilter');
 		img.setInteractive();
         img.on('pointerdown', function(pointer){
         	if(GameManager.dishImgContainerPancake.length < 1)
@@ -766,6 +846,7 @@ class TipLogic
         		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_dish');
         		var dishImgContainer = new TutorialDishContainer(dishImg, slotId);
         		GameManager.dishImgContainerPancake.add(dishImgContainer);
+        		img.resetPipeline();
         		selfRef.endDishPileInteractivity(img);
         	} 
         })
@@ -779,6 +860,7 @@ class TipLogic
 
 	pancakeSpawnerInteractivity(selfRef, img)
 	{
+		img.setPipeline('GlowFilter');
 		img.setInteractive();
         img.on('pointerdown', function(pointer){
         	if(GameManager.griddle.occupiedSlots < 1)
@@ -788,8 +870,8 @@ class TipLogic
         		var cookingSound = GameManager.scene.sound.add('snd_pancake_cooking');
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
-        		var pancake = new TutorialPancake(slotId, trashSound, cookingSound, readySound);
-      			changePosition(pancake, pos.x,pos.y);
+        		img.resetPipeline();
+        		var pancake = new TutorialPancake(slotId, trashSound, cookingSound, readySound, pos.x, pos.y);
         	} 
         })
 	}
@@ -802,8 +884,10 @@ class TipLogic
 
 	pancakeInteractivity(selfRef, img)
 	{
+		img.setPipeline('GlowFilter');
 		img.setInteractive();
         img.on('pointerdown', function(pointer){
+        	img.resetPipeline();
         	TutorialPancake.ref.flipPancake();
         });
 	}
@@ -815,39 +899,60 @@ class TipLogic
 
 	pancakeDraggingInteractivity(img, pancake)
 	{
+		img.setPipeline('GlowFilter');
 		TutorialManager.scene.input.setDraggable(img);
 		img.on('dragstart', function(pointer,dragX,dragY){
 			GameManager.tapSound.play();
+			GameManager.tapSound.play();
+			this.setDepth(5);
+			pancake.animImg.setAlpha(0);
 		})
 
         img.on('drag', function(pointer, dragX, dragY){
         	img.setPosition(dragX, dragY);
+        	pancake.cookingSound.stop();
         	grabItem("pancake", img, pancake);
         })	
 		
-		img.on('dragend',() => {	
+		img.on('dragend',() => {
+			pancake.img.setDepth(2);
+			pancake.animImg.setAlpha(1);
+			pancake.cookingSound.play();	
 			pancake.dragEndBehaviour();		
        	})
 	}
 
-	endPancakeDraggedToDish()
+	endPancakeDraggedToDish(img)
 	{
+		GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+			child.resetPipeline();
+		});
+		img.resetPipeline();
 		this.completeWatchTip();
 	}
 
 	endCase8()
 	{
+		TutorialManager.tutorialPancakeClient.clientImg.resetPipeline();
 		this.completeWatchTip();
 	}
 
 	endCase9()
 	{
+		GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+			child.resetPipeline();
+		});
 		TutorialManager.toppingImg.removeInteractive();
+		TutorialTopping.ref.staticImg.resetPipeline();
 		this.completeWatchTip();
 	}
 
 	endCase10()
 	{
+		GameManager.dishImgContainerPancake.getAt(0).dishContainer.iterate(function(child){
+			child.resetPipeline();
+		});
+		TutorialSyrup.ref.staticImg.resetPipeline();
 		TutorialManager.syrupImg.removeInteractive();
 		this.completeWatchTip();
 	}
@@ -859,7 +964,7 @@ class TipLogic
 
 	endCase13()
 	{
-
+		
 	}
 }
 
@@ -884,13 +989,4 @@ function makeImgInteractive(itemClass, itemImg, item, cookingSound)
 		if(cookingSound) cookingSound.play();
 		item.dragEndBehaviour();
     })
-}
-
-function makeImgShine(delta)
-{
-	const maxAlpha = 1;
-	const minAlpha = 0.5;
-	var alphaValue;
-	if(GameManager.shinningObject.alpha >= 1) alphaValue = GameManager.shinningObject.alpha - delta;
-	GameManager.shinningObject.setAlpha(alphaValue);
 }

@@ -42,7 +42,8 @@ class scene1 extends Phaser.Scene {
 	
 
 	create(){
-		var gm = new GameManager(this);
+		var gm = new GameManager(this);g
+		gm.resetVars();
 		this.gameTimer = this.time.addEvent({ delay: GameManager.gameMinutes*60*1000, callback: finishGame, callbackScope: this });
 		this.resetVariables();
 		this.clientsSettings();
@@ -158,7 +159,7 @@ class scene1 extends Phaser.Scene {
 		this.add.image(config.width*0.83,config.height*0.24,'assets_atlas','spr_radio');
 		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.915,'assets_atlas', 'spr_glasses');
 
-		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, coffeeMachineLvl);
+		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, coffeeMachineLvl, false);
 		GameManager.coffeeMachine = coffeeMachine;
 		coffeeSpawnerImg.setInteractive();
         coffeeSpawnerImg.on('pointerdown', function(pointer){
@@ -308,16 +309,16 @@ class scene1 extends Phaser.Scene {
         	switch(i)
 			{
 				case 0:
-					strainerImg = this.add.image(config.width*0.8215 + config.width, config.height*0.475,'assets_atlas','spr_strainer_2'); 
+					strainerImg = this.add.image(config.width*0.775 + config.width, config.height*0.365,'assets_atlas','spr_strainer_2'); 
 				break;
 				case 1:
-					strainerImg = this.add.image(config.width*0.825 + config.width, config.height*0.475,'assets_atlas','spr_strainer_3'); 
+					strainerImg = this.add.image(config.width*0.86 + config.width, config.height*0.38,'assets_atlas','spr_strainer_3'); 
 				break;
 				case 2:
-					strainerImg = this.add.image(config.width*0.8215 + config.width, config.height*0.477,'assets_atlas','spr_strainer_0'); 
+					strainerImg = this.add.image(config.width*0.775 + config.width, config.height*0.42,'assets_atlas','spr_strainer_0'); 
 				break;
 				case 3:
-					strainerImg = this.add.image(config.width*0.825 + config.width, config.height*0.477,'assets_atlas','spr_strainer_1'); 
+					strainerImg = this.add.image(config.width*0.884 + config.width, config.height*0.422,'assets_atlas','spr_strainer_1'); 
 				break;
 
 			if(strainerLvl < i) strainerImg.setAlpha(0.3);
@@ -603,10 +604,18 @@ class GameManager
 	static globalHappiness=50;
 	static customerCounter=1;
 	static totalHappiness=50;
-
+	static tutorial = false;
 	constructor(scene)
 	{
 		GameManager.scene = scene;
+	}
+
+	resetVars()
+	{
+		GameManager.dishImgContainerPancake.removeAll();
+		GameManager.dishImgContainerNoodles.removeAll();
+		GameManager.clients.removeAll();
+		GameManager.coffeeDishes.removeAll();
 	}
 }
 
