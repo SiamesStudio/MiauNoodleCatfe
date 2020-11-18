@@ -212,10 +212,14 @@ class Menu extends Phaser.Scene {
         this.upgradeDescriptionBanner = this.add.sprite(1.8*config.width/3, config.height/2,'assets_atlas','spr_bck_improvementDescription').setVisible(false)//Panel descripcion
         this.upgradeTitleSlotText1 = this.add.text(1.8*config.width/3, config.height/3 , this.gameStrings.upgradesCoffeTime ,{ font: "14px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//.setTint(0x2f214f)//Texto descripcion
         this.upgradeDescriptionSlotText1 = this.add.text(1.8*config.width/3, config.height/2 , this.gameStrings.upgradesCoffeTimeDescription + this.playerSettings.upgrades.coffeeTime,{ font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//.setTint(0x2f214f)//Texto descripcion
-        this.buySlot = this.add.sprite(1.8*config.width/3, 2*config.height/3, 'assets_atlas','spr_buttomMenu').setVisible(false)//Boton comprar
-        this.buyUpgradeCoin = this.add.sprite(1.5*config.width/3, 2*config.height/3, 'assets_atlas','spr_ui_icon_coin').setVisible(false)
-        this.buySlotText = this.add.text(1.8*config.width/3, 2*config.height/3,500 + 500*this.playerSettings.upgrades.coffeeTime ,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
         
+        this.buySlot = this.add.sprite(1.8*config.width/3, 2*config.height/3, 'assets_atlas','spr_buttomMenu').setVisible(false)//.setScale(1.5)//Boton comprar
+        this.buyUpgradeCoin = this.add.sprite(1.5*config.width/3, 2*config.height/3 - 5, 'assets_atlas','spr_ui_icon_coin').setVisible(false).setScale(0.8)
+        this.buySlotText = this.add.text(1.8*config.width/3, 2*config.height/3 - 5,500 + 500*this.playerSettings.upgrades.coffeeTime ,{ font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        this.buyUpgradeGem = this.add.sprite(1.5*config.width/3, 2*config.height/3 + 6, 'assets_atlas','spr_ui_icon_gem').setVisible(false).setScale(0.8)
+        this.buySlotTextGem = this.add.text(1.8*config.width/3, 2*config.height/3 + 6,3 + 3*this.playerSettings.upgrades.coffeeTime ,{ font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+
+
         this.upgradeChangeSection = this.add.sprite(1.2*config.width/3, 1.25*config.height/6, 'assets_atlas','spr_ui_arrow').setVisible(false)//Panel opcion
         this.upgradeChangeSection.setInteractive().on('pointerdown', () => {
             this.UpgradeGroupSelected = (this.UpgradeGroupSelected + 1) % 3
@@ -235,9 +239,11 @@ class Menu extends Phaser.Scene {
             switch(this.UpgradeSelected){
                 case 1:
                     //code
-                    if(this.playerSettings.upgrades.coffeeTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.coffeeTime) ){
+                    if(this.playerSettings.upgrades.coffeeTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.coffeeTime ) && this.playerSettings.diamonds >= (3 + 3*this.playerSettings.upgrades.coffeeTime ) ){
                         this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.coffeeTime
+                        this.playerSettings.diamonds -= 3 + 3*this.playerSettings.upgrades.coffeeTime
                         this.numCoins.setText(this.playerSettings.coins)
+                        this.numDiamonds.setText(this.playerSettings.diamonds)
                         this.playerSettings.upgrades.coffeeTime += 1
                         this.savePlayerSettings()
                         this.upgradesPanelDescription(1);
@@ -248,9 +254,11 @@ class Menu extends Phaser.Scene {
                     break;
                 case 2:
                     //code
-                    if(this.playerSettings.upgrades.coffeeMachineLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.coffeeMachineLevel) ){
+                    if(this.playerSettings.upgrades.coffeeMachineLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.coffeeMachineLevel) && this.playerSettings.diamonds >= (3 + 3*this.playerSettings.upgrades.coffeeMachineLevel) ){
                         this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.coffeeMachineLevel
+                        this.playerSettings.diamonds -= 3 + 3*this.playerSettings.upgrades.coffeeMachineLevel
                         this.numCoins.setText(this.playerSettings.coins)
+                        this.numDiamonds.setText(this.playerSettings.diamonds)
                         this.playerSettings.upgrades.coffeeMachineLevel += 1
                         this.savePlayerSettings()
                         this.upgradesPanelDescription(2);
@@ -261,9 +269,11 @@ class Menu extends Phaser.Scene {
                     break;
                 case 3:
                     //code
-                    if(this.playerSettings.upgrades.pancakeTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.pancakeTime) ){
+                    if(this.playerSettings.upgrades.pancakeTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.pancakeTime) && this.playerSettings.diamonds >= (3 + 3*this.playerSettings.upgrades.pancakeTime) ){
                         this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.pancakeTime
+                        this.playerSettings.diamonds -= 3 + 3*this.playerSettings.upgrades.pancakeTime
                         this.numCoins.setText(this.playerSettings.coins)
+                        this.numDiamonds.setText(this.playerSettings.diamonds)
                         this.playerSettings.upgrades.pancakeTime += 1
                         this.savePlayerSettings()
                         this.upgradesPanelDescription(3);
@@ -275,9 +285,11 @@ class Menu extends Phaser.Scene {
                 
                     case 4:
                         //code
-                        if(this.playerSettings.upgrades.pancakeBurnTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.pancakeBurnTime) ){
+                        if(this.playerSettings.upgrades.pancakeBurnTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.pancakeBurnTime) && this.playerSettings.diamonds >= (3 + 3*this.playerSettings.upgrades.pancakeBurnTime) ){
                             this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.pancakeBurnTime
+                            this.playerSettings.diamonds -= 3 + 3*this.playerSettings.upgrades.pancakeBurnTime
                             this.numCoins.setText(this.playerSettings.coins)
+                        this.numDiamonds.setText(this.playerSettings.diamonds)
                             this.playerSettings.upgrades.pancakeBurnTime += 1
                             this.savePlayerSettings()
                             this.upgradesPanelDescription(4);
@@ -289,9 +301,11 @@ class Menu extends Phaser.Scene {
 
                     case 5:
                         //code
-                        if(this.playerSettings.upgrades.pancakePanLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.pancakePanLevel) ){
+                        if(this.playerSettings.upgrades.pancakePanLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.pancakePanLevel) && this.playerSettings.diamonds >= (3 + 3*this.playerSettings.upgrades.pancakePanLevel)){
                             this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.pancakePanLevel
+                            this.playerSettings.diamonds -= 3 + 3*this.playerSettings.upgrades.pancakePanLevel
                             this.numCoins.setText(this.playerSettings.coins)
+                        this.numDiamonds.setText(this.playerSettings.diamonds)
                             this.playerSettings.upgrades.pancakePanLevel += 1
                             this.savePlayerSettings()
                             this.upgradesPanelDescription(5);
@@ -303,9 +317,11 @@ class Menu extends Phaser.Scene {
 
                     case 6:
                         //code
-                        if(this.playerSettings.upgrades.tableClothPancakeLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.tableClothPancakeLevel) ){
+                        if(this.playerSettings.upgrades.tableClothPancakeLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.tableClothPancakeLevel) && this.playerSettings.diamonds >= (3 + 3*this.playerSettings.upgrades.tableClothPancakeLevel) ){
                             this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.tableClothPancakeLevel
+                            this.playerSettings.diamonds -= 3 + 3*this.playerSettings.upgrades.tableClothPancakeLevel
                             this.numCoins.setText(this.playerSettings.coins)
+                        this.numDiamonds.setText(this.playerSettings.diamonds)
                             this.playerSettings.upgrades.tableClothPancakeLevel += 1
                             this.savePlayerSettings()
                             this.upgradesPanelDescription(6);
@@ -317,9 +333,11 @@ class Menu extends Phaser.Scene {
 
                     case 7:
                        //code
-                       if(this.playerSettings.upgrades.noodleTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.noodleTime) ){
+                       if(this.playerSettings.upgrades.noodleTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.noodleTime) && this.playerSettings.diamonds >= (3 + 3*this.playerSettings.upgrades.noodleTime) ){
                            this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.noodleTime
+                           this.playerSettings.diamonds -= 3 + 3*this.playerSettings.upgrades.noodleTime
                            this.numCoins.setText(this.playerSettings.coins)
+                        this.numDiamonds.setText(this.playerSettings.diamonds)
                            this.playerSettings.upgrades.noodleTime += 1
                            this.savePlayerSettings()
                            this.upgradesPanelDescription(7);
@@ -331,9 +349,11 @@ class Menu extends Phaser.Scene {
 
                     case 8:
                      //code
-                     if(this.playerSettings.upgrades.noodleBurnTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.noodleBurnTime) ){
+                     if(this.playerSettings.upgrades.noodleBurnTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.noodleBurnTime) && this.playerSettings.diamonds >= (3 + 3*this.playerSettings.upgrades.noodleBurnTime)){
                          this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.noodleBurnTime
+                         this.playerSettings.diamonds -= 3 + 3*this.playerSettings.upgrades.noodleBurnTime
                          this.numCoins.setText(this.playerSettings.coins)
+                        this.numDiamonds.setText(this.playerSettings.diamonds)
                          this.playerSettings.upgrades.noodleBurnTime += 1
                          this.savePlayerSettings()
                          this.upgradesPanelDescription(8);
@@ -345,9 +365,11 @@ class Menu extends Phaser.Scene {
 
                     case 9:
                        //code
-                       if(this.playerSettings.upgrades.noodleLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.noodleLevel) ){
+                       if(this.playerSettings.upgrades.noodleLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.noodleLevel) && this.playerSettings.diamonds >= (3 + 3*this.playerSettings.upgrades.noodleLevel) ){
                            this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.noodleLevel
+                           this.playerSettings.diamonds -= 3 + 3*this.playerSettings.upgrades.noodleLevel
                            this.numCoins.setText(this.playerSettings.coins)
+                        this.numDiamonds.setText(this.playerSettings.diamonds)
                            this.playerSettings.upgrades.noodleLevel += 1
                            this.savePlayerSettings()
                            this.upgradesPanelDescription(9);
@@ -359,9 +381,11 @@ class Menu extends Phaser.Scene {
 
                     case 10:
                      //code
-                     if(this.playerSettings.upgrades.tableClothNoodleLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.tableClothNoodleLevel) ){
+                     if(this.playerSettings.upgrades.tableClothNoodleLevel < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.tableClothNoodleLevel) && this.playerSettings.diamonds >= (3 + 3*this.playerSettings.upgrades.tableClothNoodleLevel)){
                          this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.tableClothNoodleLevel
+                         this.playerSettings.diamonds -= 3 + 3*this.playerSettings.upgrades.tableClothNoodleLevel
                          this.numCoins.setText(this.playerSettings.coins)
+                        this.numDiamonds.setText(this.playerSettings.diamonds)
                          this.playerSettings.upgrades.tableClothNoodleLevel += 1
                          this.savePlayerSettings()
                          this.upgradesPanelDescription(9);
@@ -451,6 +475,8 @@ class Menu extends Phaser.Scene {
         this.buySlot.setVisible(true)
         this.buyUpgradeCoin.setVisible(true)
         this.buySlotText.setVisible(true)
+        this.buyUpgradeGem.setVisible(true)
+        this.buySlotTextGem.setVisible(true)
 
         this.showCurrentUpgrades(number)
     }
@@ -462,11 +488,13 @@ class Menu extends Phaser.Scene {
             this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesCoffeTimeDescription + this.playerSettings.upgrades.coffeeTime)
             if(this.playerSettings.upgrades.coffeeTime != 3){
                 this.buySlot.setInteractive()
+                this.buySlotTextGem.setText(3 + 3*this.playerSettings.upgrades.coffeeTime)
                 this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.coffeeTime)
                 this.buySlot.setTint(0xffffff);
             }
             else{
                 this.buySlotText.setText("MAX")
+                this.buySlotTextGem.setText("MAX")
                 this.buySlot.disableInteractive()
                 this.buySlot.setTint(0x566b5b);
             }
@@ -480,9 +508,11 @@ class Menu extends Phaser.Scene {
             if(this.playerSettings.upgrades.coffeeMachineLevel != 3){
                 this.buySlot.setInteractive()
                 this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.coffeeMachineLevel)
+                this.buySlotTextGem.setText(3 + 3*this.playerSettings.upgrades.coffeeMachineLevel)
                 this.buySlot.setTint(0xffffff);
             }else{
                 this.buySlotText.setText("MAX")
+                this.buySlotTextGem.setText("MAX")
                 this.buySlot.disableInteractive()
                 this.buySlot.setTint(0x566b5b);
             }
@@ -495,9 +525,11 @@ class Menu extends Phaser.Scene {
             if(this.playerSettings.upgrades.pancakeTime != 3){
                 this.buySlot.setInteractive()
                 this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
+                this.buySlotTextGem.setText(3 + 3*this.playerSettings.upgrades.pancakeTime)
                 this.buySlot.setTint(0xffffff);
             }else{
                 this.buySlotText.setText("MAX")
+                this.buySlotTextGem.setText("MAX")
                 this.buySlot.disableInteractive()
                 this.buySlot.setTint(0x566b5b);
             }
@@ -511,9 +543,11 @@ class Menu extends Phaser.Scene {
             if(this.playerSettings.upgrades.pancakeBurnTime != 3){
                 this.buySlot.setInteractive()
                 this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeBurnTime)
+                this.buySlotTextGem.setText(3 + 3*this.playerSettings.upgrades.pancakeBurnTime)
                 this.buySlot.setTint(0xffffff);
             }else{
                 this.buySlotText.setText("MAX")
+                this.buySlotTextGem.setText("MAX")
                 this.buySlot.disableInteractive()
                 this.buySlot.setTint(0x566b5b);
             }
@@ -527,9 +561,11 @@ class Menu extends Phaser.Scene {
             if(this.playerSettings.upgrades.pancakePanLevel != 3){
                 this.buySlot.setInteractive()
                 this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakePanLevel)
+                this.buySlotTextGem.setText(3 + 3*this.playerSettings.upgrades.pancakePanLevel)
                 this.buySlot.setTint(0xffffff);
             }else{
                 this.buySlotText.setText("MAX")
+                this.buySlotTextGem.setText("MAX")
                 this.buySlot.disableInteractive()
                 this.buySlot.setTint(0x566b5b);
             }
@@ -543,9 +579,11 @@ class Menu extends Phaser.Scene {
             if(this.playerSettings.upgrades.tableClothPancakeLevel != 3){
                 this.buySlot.setInteractive()
                 this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.tableClothPancakeLevel)
+                this.buySlotTextGem.setText(3 + 3*this.playerSettings.upgrades.tableClothPancakeLevel)
                 this.buySlot.setTint(0xffffff);
             }else{
                 this.buySlotText.setText("MAX")
+                this.buySlotTextGem.setText("MAX")
                 this.buySlot.disableInteractive()
                 this.buySlot.setTint(0x566b5b);
             }
@@ -559,9 +597,11 @@ class Menu extends Phaser.Scene {
             if(this.playerSettings.upgrades.noodleTime != 3){
                 this.buySlot.setInteractive()
                 this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.noodleTime)
+                this.buySlotTextGem.setText(3 + 3*this.playerSettings.upgrades.noodleTime)
                 this.buySlot.setTint(0xffffff);
             }else{
                 this.buySlotText.setText("MAX")
+                this.buySlotTextGem.setText("MAX")
                 this.buySlot.disableInteractive()
                 this.buySlot.setTint(0x566b5b);
             }
@@ -575,9 +615,11 @@ class Menu extends Phaser.Scene {
             if(this.playerSettings.upgrades.noodleBurnTime != 3){
                 this.buySlot.setInteractive()
                 this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.noodleBurnTime)
+                this.buySlotTextGem.setText(3 + 3*this.playerSettings.upgrades.noodleBurnTime)
                 this.buySlot.setTint(0xffffff);
             }else{
                 this.buySlotText.setText("MAX")
+                this.buySlotTextGem.setText("MAX")
                 this.buySlot.disableInteractive()
                 this.buySlot.setTint(0x566b5b);
             }
@@ -591,9 +633,11 @@ class Menu extends Phaser.Scene {
             if(this.playerSettings.upgrades.noodleLevel != 3){
                 this.buySlot.setInteractive()
                 this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.noodleLevel)
+                this.buySlotTextGem.setText(3 + 3*this.playerSettings.upgrades.noodleLevel)
                 this.buySlot.setTint(0xffffff);
             }else{
                 this.buySlotText.setText("MAX")
+                this.buySlotTextGem.setText("MAX")
                 this.buySlot.disableInteractive()
                 this.buySlot.setTint(0x566b5b);
             }
@@ -607,9 +651,11 @@ class Menu extends Phaser.Scene {
             if(this.playerSettings.upgrades.tableClothNoodleLevel != 3){
                 this.buySlot.setInteractive()
                 this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.tableClothNoodleLevel)
+                this.buySlotTextGem.setText(3 + 3*this.playerSettings.upgrades.tableClothNoodleLevel)
                 this.buySlot.setTint(0xffffff);
             }else{
                 this.buySlotText.setText("MAX")
+                this.buySlotTextGem.setText("MAX")
                 this.buySlot.disableInteractive()
                 this.buySlot.setTint(0x566b5b);
             }
@@ -807,6 +853,8 @@ class Menu extends Phaser.Scene {
 
         this.buySlot.setVisible(false)
         this.buyUpgradeCoin.setVisible(false)
+        this.buyUpgradeGem.setVisible(false)
+        this.buySlotTextGem.setVisible(false)
         this.buySlotText.setVisible(false)
 
         //EXP
