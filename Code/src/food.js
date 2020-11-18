@@ -81,9 +81,11 @@ class Coffee
 
 class Pancake
 {
+	static pancakesList = new Phaser.Structs.List();
 	static time = 1;
 	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound, posx, posy)
 	{
+		Pancake.pancakesList.add(this);
 		this.index = 1;
 		this.posx = posx;
 		this.posy = posy;
@@ -97,7 +99,7 @@ class Pancake
 		this.trashCollider;
 		this.dishCollider;
 		this.doneTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeTime - Pancake.time);
-		this.burnTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeBurnTime - (Pancake.time*2));
+		this.burnTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeBurnTime - (Pancake.time*2*5));
 
 		var pancake = this;
 		this.img.setDepth(2);
@@ -278,6 +280,7 @@ class Pancake
 
 	freeGriddle()
 	{
+		Pancake.pancakesList.remove(this);
 		this.sideTimer.remove(false);
         this.burnTimer.remove(false);
 		GameManager.griddle.occupiedSlots--;
@@ -289,7 +292,7 @@ class Noodles
 {
 	static noodlesList = new Phaser.Structs.List();
 	static doneTime = 2; //10
-	static burnTime = 7; //17
+	static burnTime = 8; //17
 	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound)
 	{
 		this.posx;
@@ -350,8 +353,6 @@ class Noodles
     	})
 
 		this.img.setTexture('assets_atlas','spr_noodles_cooked');
-
-
 	}
 
 	noodlesBurnt()
@@ -470,8 +471,7 @@ class Topping
 				else { staticImgKey = 'spr_bg_topping_mushroom'; this.imgKey = 'spr_topping_mushroom'; xMul=0.5; yMul=0.545;}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
-				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
-				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
+				this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
 			break;
 
 			case 1:
@@ -479,26 +479,23 @@ class Topping
 				else { staticImgKey = 'spr_bg_topping_egg'; this.imgKey = 'spr_topping_egg'; xMul=0.5; yMul=0.675}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
-				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
-				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
+				this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
 			break;
 
 			case 2:
 				if(pancake) { staticImgKey = 'spr_topping_strawberry'; this.imgKey = 'spr_pancake_strawberry'; xMul=0.47; yMul=0.9;}
-				else { staticImgKey = 'spr_bg_topping_naruto'; this.imgKey = 'spr_topping_naruto'; xMul=0.628; yMul=0.55}
+				else { staticImgKey = 'spr_bg_topping_naruto'; this.imgKey = 'spr_topping_naruto'; xMul=0.63; yMul=0.553}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
-				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
-				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
+				this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
 			break;
 
 			case 3:
 				if(pancake) { staticImgKey = 'spr_topping_banana'; this.imgKey = 'spr_pancake_banana'; xMul=0.56; yMul=0.9;}
-				else { staticImgKey = 'spr_bg_topping_springonion'; this.imgKey = 'spr_topping_springonion'; xMul=0.648; yMul=0.69}
+				else { staticImgKey = 'spr_bg_topping_springonion'; this.imgKey = 'spr_topping_springonion'; xMul=0.65; yMul=0.695}
 
 				this.img = GameManager.scene.physics.add.sprite(config.width*xMul + offset,config.height*yMul,'assets_atlas',this.imgKey); 
-				if(pancake)this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
-				else {this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,staticImgKey);}
+				this.staticImg = GameManager.scene.add.image(config.width*xMul + offset,config.height*yMul,'assets_atlas',staticImgKey);
 			break;
 			
 			default:
@@ -510,8 +507,7 @@ class Topping
 		this.img.setAlpha(0);
 		this.staticImg.setDepth(1);
 		var clonedImg;
-		if(pancake)clonedImg = GameManager.scene.add.image(this.staticImg.x, this.staticImg.y,'assets_atlas',staticImgKey);
-		else{clonedImg = GameManager.scene.add.image(this.staticImg.x, this.staticImg.y,staticImgKey);}
+		clonedImg = GameManager.scene.add.image(this.staticImg.x, this.staticImg.y,'assets_atlas',staticImgKey);
 		clonedImg.setAlpha(0.2);
 		clonedImg.setInteractive({draggable: true});
 
@@ -744,7 +740,6 @@ class Sauce
 		this.hovering=false;
 		this.posx;
 		this.posy;
-		this.collider;
 		this.servingTimer;
 		this.fillingSound = fillingSound;
 		this.dishContainer;
@@ -815,7 +810,8 @@ class Sauce
 		if(this.hovering)
 		{
 			this.hovering = false;
-			this.collider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.serveSauce, null, this);
+			if(checkOverlap(this.img, GameManager.collidingObjectImg)) this.serveSauce(this.img, GameManager.collidingObjectImg);
+			//this.collider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.serveSauce, null, this);
 		}
 		else
 		{
@@ -835,7 +831,7 @@ class Sauce
 		sauceImg.y = container.dishContainer.y-config.height*0.2;
 		this.img.anims.play(this.animPlayKey);
 
-		this.collider.destroy();
+		//this.collider.destroy();
 		this.servingTimer = GameManager.scene.time.addEvent({ delay: Sauce.servingTime*1000, callback: this.sauceServed, callbackScope: this });
 		this.img.removeInteractive();
 		console.log("serving sauce");

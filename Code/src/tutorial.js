@@ -11,40 +11,35 @@ class tutorial extends Phaser.Scene {
 
 	create(){
 		var gm = new GameManager(this);
+		gm.resetVars();
 		GameManager.tutorial=true;
+		this.resetVariables();
 		this.interfaceSettings();
-		this.clientsSettings();	
         this.coffeeSetting();
         this.pancakesSetting();
-        //this.noodlesSetting();
+        this.noodlesSetting();
+        this.clientsSettings();	
         this.tutStuff();
         this.cursors = this.input.keyboard.createCursorKeys();
 	}
 
+	resetVariables()
+	{
+		Client.clientList.removeAll();
+   		Client.clientsInRestaurant.removeAll();
+   		Client.streetSlots.removeAll();
+   		Client.restaurantSlots.removeAll();
+	}
 
 	clientsSettings(){
     	//index, salsa, nº toppings, toppings
-    	//index, sirope, nº plantas,nºtoppings, toppings
-    	
-    	
+    	//index, sirope, nº plantas,nºtoppings, toppings 	
     	TutorialManager.tutorialPancakeClient = new Client(0, 1,[2,0,1,0], [1,1,1,1,2]);
     	TutorialManager.tutorialPancakeClient.tutorial = true;
     	callClient(1);
-
-    	/*
-    	TutorialManager.tutorialNoodlesClient = new Client(1, 2,[2,0,1,0], [1,1,1,1,2]);
-    	TutorialManager.tutorialNoodlesClient.tutorial = true;
-    	callClient(2); */
-    	/*
-    	new Client(0, 0,[2,0,1,0], [1,-1,1,1,2]);
-    	new Client(1, 1,[2,2,0], [1,-1,1,2,2,3]);
-    	new Client(2, 0, [2,2,1,0], [1,1,1,0]);
-    	new Client(3, 2, [2,3,1,3], [1,2,1,1,0]);
-		new Client(4, 2, [2,2,1,1], [1,0,2,0]);
-		new Client(5,1,[2,0,2,1,2],[1,0,2,0]) */
-    	//console.log(Client.clientList)
-    	//añadir clientes a mano
+    	TutorialManager.tutorialPancakeClient.clientImg.x += config.width*0.4;
   	}
+
   	interfaceSettings(){
 		this.add.sprite(config.width*0.5,config.height/13,'assets_atlas','spr_ui_slider')
         this.add.sprite(config.width*0.4,config.height/11,'assets_atlas','spr_ui_icon_coin')
@@ -68,6 +63,7 @@ class tutorial extends Phaser.Scene {
 		this.cameras.main.on('camerafadeoutcomplete', function (camera) {
             camera.fadeIn(100);
         });
+        var background = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior');
 		var cam = this.cameras.main;	
 		var goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.08, 'spr_ui_arrow');
 		goToNoodlesButton.setInteractive().on('pointerdown', function(pointer){
@@ -106,7 +102,6 @@ class tutorial extends Phaser.Scene {
         GameManager.tapSound = GameManager.scene.sound.add('snd_tap');
 	}
 
-	
 	pancakesSetting()
 	{
 		var numTablecloth = 1;
@@ -195,34 +190,56 @@ class tutorial extends Phaser.Scene {
 		}
 	}
 	
-	
-	/*
 	noodlesSetting()
 	{
-		var noodleSpawnerImg = this.add.image(config.width*0.935 + config.width, config.height*0.8,'assets_atlas','spr_bowl'); 
-
+		var backgroundStreet = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_streetNoodles');
+		var background = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_kitchen');
+		
+		var noodleSpawnerImg = this.add.image(config.width*0.882 + config.width, config.height*0.91,'assets_atlas','spr_bg_noodles');
+		var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
+		GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
+		GameManager.animatedStrainerImg.setAlpha(0);
 		var strainerLvl = 0;
-        var strainerImg;
-		switch(strainerLvl)
-		{
-			case 0:
-				strainerImg = this.add.image(config.width*0.7 + config.width, config.height*0.6,'assets_atlas','spr_strainer_0'); 
-			break;
-			case 1:
-				strainerImg = this.add.image(config.width*0.7 + config.width, config.height*0.6,'assets_atlas','spr_strainer_1'); 
-			break;
-			case 2:
-				strainerImg = this.add.image(config.width*0.7 + config.width, config.height*0.6,'assets_atlas','spr_strainer_2'); 
-			break;
-			case 3:
-				strainerImg = this.add.image(config.width*0.7 + config.width, config.height*0.6,'assets_atlas','spr_strainer_3'); 
-			break;
-		}
-        var strainer = new Strainer(strainerImg, strainerLvl);
+		var cam = this.cameras.main;	
+		var goToCoffeeButton = this.add.image(config.width*0.06+config.width,config.height*0.08, 'spr_ui_arrow');
+		goToCoffeeButton.setInteractive().on('pointerdown', function(pointer){
+			cam.centerOnX(config.width/2);
+            GameManager.scene.cameras.main.fadeOut(25);
+		})
+ 		
+        for(var i=0; i<4; i++)
+        {
+        	var strainerImg;
+        	switch(i)
+			{
+				case 0:
+					strainerImg = this.add.image(config.width*0.775 + config.width, config.height*0.365,'assets_atlas','spr_strainer_2'); 
+				break;
+				case 1:
+					strainerImg = this.add.image(config.width*0.86 + config.width, config.height*0.38,'assets_atlas','spr_strainer_3'); 
+				break;
+				case 2:
+					strainerImg = this.add.image(config.width*0.775 + config.width, config.height*0.42,'assets_atlas','spr_strainer_0'); 
+				break;
+				case 3:
+					strainerImg = this.add.image(config.width*0.884 + config.width, config.height*0.422,'assets_atlas','spr_strainer_1'); 
+				break;
+
+			if(strainerLvl < i) strainerImg.setAlpha(0.3);
+			}
+        }
+		
+        this.anims.create({
+    		key: 'potCooking',
+    		frames: GameManager.scene.anims.generateFrameNumbers('anim_pot_bubbles', { start: 0, end: 4}),
+    		frameRate: 7,
+    		repeat: -1
+		});
+
+        var strainer = new Strainer(bigStrainerImg, strainerLvl);
         GameManager.strainer = strainer;
-       	var trashCanImgNoodles = this.physics.add.sprite(config.width*0.9 + config.width, config.height*0.12,'assets_atlas','spr_trashCan');
-       	
-       	GameManager.trashCanImgNoodles = trashCanImgNoodles;
+       	var trashCanImg = this.physics.add.sprite(config.width*0.09+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
+       	GameManager.trashCanImgNoodles = trashCanImg;
         noodleSpawnerImg.setInteractive();
         noodleSpawnerImg.on('pointerdown', function(pointer){
         	if(strainer.occupiedSlots < strainerLvl +1)
@@ -230,49 +247,74 @@ class tutorial extends Phaser.Scene {
         		var slotId = findFreeSlot(strainer, Strainer.slots);
         		var pos = Strainer.slots.getAt(slotId);
         		var cookingSound = GameManager.scene.sound.add('snd_noodles_cooking');
+        		var burntSound = GameManager.scene.sound.add('snd_burnt');
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
-        		var noodles = new TutorialNoodles(slotId, trashSound, cookingSound, readySound);
+        		var noodles = new Noodles(slotId, trashSound, cookingSound, burntSound, readySound);
       			changePosition(noodles, pos.x,pos.y);
         	} 
         })
-
+        
         var numTablecloth = 1;
+
 		var tableclothImgList = new Phaser.Structs.List();
-        for(var i=0; i<numTablecloth; i++)
+		
+        for(var i=0; i<4; i++)
         {
-        	var tableclothImg = this.add.image(config.width*0.075 + config.width + (i*42), config.height*0.65, 'spr_tablecloth'); tableclothImg.setScale(0.047);
+        	var tableclothImg;
+        	switch(i)
+        	{
+        		case 0:
+        		    tableclothImg = this.add.image(config.width*0.194+config.width, config.height*0.56,'assets_atlas', 'spr_tablecloth_0');
+        		break;
+
+        		case 1:
+        			tableclothImg = this.add.image(config.width*0.341+config.width, config.height*0.56,'assets_atlas', 'spr_tablecloth_1');
+        		break;
+
+        		case 2:
+        			tableclothImg = this.add.image(config.width*0.126+config.width, config.height*0.7,'assets_atlas', 'spr_tablecloth_2');	
+        		break;
+
+        		case 3:
+        			tableclothImg = this.add.image(config.width*0.3+config.width, config.height*0.7,'assets_atlas', 'spr_tablecloth_3');
+        		break;
+
+        	}
+        	if(numTablecloth-1 < i) tableclothImg.setAlpha(0.3);
+        	
         	tableclothImgList.add(tableclothImg);
         }
-        var tableclothNoodle = new TableclothsNoodle(tableclothImgList, 0);
-        GameManager.tableclothsNoodle = tableclothNoodle;
-        var dishPileImg = this.add.image(config.width*0.95 + config.width, config.height*0.6,'spr_dishes');
+
+        var tableclothsNoodle = new TableclothsNoodle(tableclothImgList, 0);
+        
+        GameManager.tableclothsNoodle = tableclothsNoodle;
+        var dishPileImg = this.add.image(config.width*0.72 + config.width, config.height*0.92,'assets_atlas','spr_bowl');
         dishPileImg.setInteractive();
         dishPileImg.on('pointerdown', function(pointer){
         	if(GameManager.dishImgContainerNoodles.length < numTablecloth)
         	{	
         		GameManager.scene.sound.play('snd_dish');
-        		var slotId = findFreeSlot(tableclothNoodle, TableclothsNoodle.slots);
+        		var slotId = findFreeSlot(tableclothsNoodle, TableclothsNoodle.slots);
         		var pos = TableclothsNoodle.slots.getAt(slotId);
-        		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'spr_dish'); dishImg.setScale(0.04);
-        		var dishImgContainer = new TutorialDishContainer(dishImg, slotId);
+        		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_bowl');
+        		var dishImgContainer = new DishImgContainer(dishImg, slotId);
         		GameManager.dishImgContainerNoodles.add(dishImgContainer);
         	} 
         })
-
+        
         for(var i = 0; i<4; i++)
 		{
-			//var toppingSound = GameManager.scene.sound.add('snd_toppingSound');
-			var topping = new Topping(i, false, null);
+			var toppingSound = GameManager.scene.sound.add('snd_topping');
+			var topping = new Topping(i, false, toppingSound);
 		}
-
 		for(var i=0; i<4; i++)
 		{
 			var fillingSound = GameManager.scene.sound.add('snd_filling_catfe');
-			var sauce = new TutorialSauce(i, fillingSound);
+			var sauce = new Sauce(i, fillingSound);
 		}   
 	}
-	*/
+	
 	tutStuff()
 	{
 		
@@ -439,6 +481,7 @@ class TipData
 	 DISHTOCLIENT: 4, FAVSAUCE: 5, NOODLEDISHTOCLIENT: 6, FAVTOPPING: 7}; 
 	constructor(_i)
 	{
+		this.tutorialStrings = new TutorialStrings();
 		this.numTexts = 1;
 		this.currentText = 0;
 		this.readCount = 0;
@@ -454,105 +497,105 @@ class TipData
 		{
 			case 0:
 				this.numTexts = 3;
-				this.text.add("¡Bienvenido a Miau Noodle Catfé! Aquí preparamos de todo! Bueno, sólo tortitas y noodles y y y catfé! Pero está todo buenísimo");
-				this.text.add("Bueno, lo importante es: este catfé funciona con felicidad. Tu trabajo se basa en que la felicidad no haya decaído para cuando amiaunezca.");
-				this.text.add("Para ello, debes conocer a tus comiaunsales. Cada uno tiene unos gustos particulares. Mira, ahí llega uno.");
+				this.text.add(this.tutorialStrings.case0_0);
+				this.text.add(this.tutorialStrings.case0_1);
+				this.text.add(this.tutorialStrings.case0_2);
 				this.type = TipData.types.WATCH;
 			break;
 
 			case 1:
-				this.text.add("La barra indica el tiempo de espera. Si se agota, el cliente se marchará triste.");
+				this.text.add(this.tutorialStrings.case1);
 				this.type = TipData.types.WATCH;
 			break;
 
 			case 2:
-				this.text.add("Toca la pila de vasos y el catfé se irá haciendo.");
+				this.text.add(this.tutorialStrings.case2);
 				this.srcImg = TutorialManager.glassesImg;
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.GLASSES;
 			break;
 
 			case 3:
-				this.text.add("Toca la pila de platos para colocar uno sobre el mantel.");
+				this.text.add(this.tutorialStrings.case3);
 				this.srcImg = TutorialManager.dishPileImg;
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.DISHES;
 			break;
 
 			case 4:
-				this.text.add("Toca la masa para vertirla sobre la plancha.");
+				this.text.add(this.tutorialStrings.case4);
 				this.type = TipData.types.TOUCH;
 				this.srcImg = TutorialManager.pancakeBottleImg;
 				this.touchType = TipData.touchTypes.PANCAKEBOTTLE;
 			break;
 
 			case 5:
-				this.text.add("Toca la plancha para dar la vuelta a la tortita.");
+				this.text.add(this.tutorialStrings.case5);
 				this.type = TipData.types.TOUCH;
 				this.srcImg = TutorialManager.pancakeImg;
 				this.touchType = TipData.touchTypes.PANCAKE;
 			break;
 
 			case 6:
-				this.text.add("Arrastra la tortita hasta el plato.");
+				this.text.add(this.tutorialStrings.case6);
 				this.type = TipData.types.DRAG;
 				this.srcImg = TutorialManager.pancakeImg;
 				this.dragType = TipData.dragTypes.PANCAKETODISH;
 			break;
 
 			case 7:
-				this.text.add("Mira, el catfé ya está hecho. Arrástralo al cliente.");
+				this.text.add(this.tutorialStrings.case7);
 				this.type = TipData.types.DRAG;
 				this.srcImg = TutorialManager.coffeeImg;
 				this.dragType = TipData.dragTypes.COFFEETOCLIENT;
 			break;
 
 			case 8:
-				this.text.add("El tiempo de espera del cliente aumenta al entregarle algo. Todo es miaus fácil con catfé en pata jeje");
+				this.text.add(this.tutorialStrings.case8);
 				this.type = TipData.types.WATCH;
 			break;
 
 			case 9:
-				this.text.add("A este cliente le gustan las fresas. Arrastra las fresas a las tortitas.");
+				this.text.add(this.tutorialStrings.case9);
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.STRAWBERRYTOP;
 				this.srcImg = TutorialManager.toppingImg;
 			break;
 
 			case 10:
-				this.text.add("También le gusta el chocolate. Arrastra el sirope a la tortita.");
+				this.text.add(this.tutorialStrings.case10);
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.CHOCSYRUP;
 				this.srcImg = TutorialManager.syrupImg;
 			break;
 
 			case 11:
-				this.text.add("Ya está hecha. Arrastra el plato al cliente.");
+				this.text.add(this.tutorialStrings.case11);
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.DISHTOCLIENT;
 			break;
 
 			case 12:
 				this.numTexts = 2;
-				this.text.add("La velocidad con la que has realizado el pedido y cuánto le ha gustado, determina cuántos puntos de chef ganas.");
-				this.text.add("También influyen en la felicidad global del restaurante. No dejes que decaiga por debajo del límite indicado o tendremos que cerrar.");
+				this.text.add(this.tutorialStrings.case12_0);
+				this.text.add(this.tutorialStrings.case12_1);
 				this.type = TipData.types.WATCH;
 			break;
 
 			case 13:
-				this.text.add("Recoge las monedas dejadas por el cliente.");
+				this.text.add(this.tutorialStrings.case13);
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.COIN;
 			break;
 
 			case 14:
-				this.text.add("Cambiemos la música, que esta canción ya la he escuchado.");
+				this.text.add(this.tutorialStrings.case14);
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.RADIO;
 			break;
 
 			case 15:
-				this.text.add("Puedes cambiar el volumen y la canción. Cambia la canción.");
+				this.text.add(this.tutorialStrings.case15);
 				this.type = TipData.types.TOUCH;
 				this.touchType = TipData.touchTypes.RADIOSONG;
 			break;
@@ -661,7 +704,7 @@ class TipLogic
 		var textList = tipDataContainer.text;
 		messageString = textList.getAt(tipDataContainer.readCount);
 		tipDataContainer.readCount++;
-		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.1, this.textImg.y, messageString);
+		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.1, this.textImg.y, messageString,{ font: "13px PixelFont", fill: "#ffffff", align: "left" }).setResolution(10);
 
 		var selfRef = this;
 

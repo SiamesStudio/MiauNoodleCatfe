@@ -42,7 +42,7 @@ class scene1 extends Phaser.Scene {
 	
 
 	create(){
-		var gm = new GameManager(this);g
+		var gm = new GameManager(this);
 		gm.resetVars();
 		this.gameTimer = this.time.addEvent({ delay: GameManager.gameMinutes*60*1000, callback: finishGame, callbackScope: this });
 		this.resetVariables();
@@ -60,6 +60,12 @@ class scene1 extends Phaser.Scene {
 		GameManager.customerCounter=1;
 		GameManager.gameOn=true;
 		GameManager.levelEarnedCoins=0;
+		Client.clientList.removeAll();
+   		Client.clientsInRestaurant.removeAll();
+   		Client.streetSlots.removeAll();
+   		Client.restaurantSlots.removeAll();
+		Noodles.noodlesList.removeAll();
+		Pancake.pancakesList.removeAll();
 	}
 
 
@@ -129,6 +135,7 @@ class scene1 extends Phaser.Scene {
 		this.cameras.main.on('camerafadeoutcomplete', function (camera) {
             camera.fadeIn(100);
         });
+        var background = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior');
 		var cam = this.cameras.main;	
 		var goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.08, 'spr_ui_arrow');
 		goToNoodlesButton.setInteractive().on('pointerdown', function(pointer){
@@ -288,9 +295,9 @@ class scene1 extends Phaser.Scene {
 
 	noodlesSetting()
 	{
-		var background = this.add.image(config.width*0.506+config.width, config.height*0.5085, 'bg_noodles'); background.setScale(0.25);
+		var backgroundStreet = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_streetNoodles');
+		var background = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_kitchen');
 		
-		//var saucesPosters = this.add.image(config.width*0.42+config.width, config.height*0.895,'spr_sauces_posters'); saucesPosters.setScale(0.22);
 		var noodleSpawnerImg = this.add.image(config.width*0.882 + config.width, config.height*0.91,'assets_atlas','spr_bg_noodles');
 		var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
 		GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
@@ -443,12 +450,14 @@ class scene1 extends Phaser.Scene {
 		if(!GameManager.gameOn && Client.clientsInRestaurant.length==0){ //condicion de victoria
 			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
 			this.savePlayerSettings();
+			this.stopSounds();
 			GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		}
 
 		if(GameManager.globalHappiness < 20){
 			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
 			this.savePlayerSettings();
+			this.stopSounds();
 			GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		}
 
@@ -510,6 +519,25 @@ class scene1 extends Phaser.Scene {
 
 	savePlayerSettings(){
         localStorage.setItem('playerSettings', JSON.stringify(this.playerSettings))
+	}
+
+	stopSounds()
+	{
+		for(var i=0; i<Pancake.pancakesList.length; i++)
+		{
+			var pancake = Pancake.pancakesList.getAt(i);
+			pancake.cookingSound.stop();
+			pancake.burntSound.stop();
+			pancake.readySound.stop();
+		}
+
+		for(var i=0; i<Noodles.noodlesList.length; i++)
+		{
+			var noodles = Noodles.noodlesList.getAt(i);
+			noodles.cookingSound.stop();
+			noodles.burntSound.stop();
+			noodles.readySound.stop();
+		}
 	}
 	
 	uploadPlayerLevel(number){
@@ -1027,7 +1055,7 @@ function makeDishInteractive(container, dishClass)
 
 	dishImg.on('dragstart', function(pointer,dragX,dragY){
 		GameManager.tapSound.play();
-		dishContainer.setDepth(5);
+		dishContainer.setDepth(4);
 		container.posx = dishContainer.x;
 		container.posy = dishContainer.y;
 	})
@@ -1038,7 +1066,6 @@ function makeDishInteractive(container, dishClass)
     })	
 		
 	dishImg.on('dragend',() => {
-		dishContainer.setDepth(1);
 		container.dragEndBehaviour();	
     })
 }

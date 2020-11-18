@@ -110,6 +110,12 @@ class Menu extends Phaser.Scene {
             this.scene.start("bootGame", { playerInfo: this.playerSettings });
         })
 
+        this.tutorialButton = this.add.sprite(config.width/2,config.height*0.7,'playButton').setScale(0.3)
+        this.tutorialButton.setInteractive().on('pointerdown', () => {
+            this.menuMusic.stop()
+            this.scene.start("tutorial");
+        })
+
         //BACK
         this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'assets_atlas','spr_back')
         this.backButton.setInteractive().on('pointerdown', () => {
@@ -219,10 +225,10 @@ class Menu extends Phaser.Scene {
         
         this.upgradeDescriptionBanner = this.add.sprite(1.8*config.width/3, config.height/2,'assets_atlas','spr_bck_improvementDescription').setVisible(false)//Panel descripcion
         this.upgradeTitleSlotText1 = this.add.text(1.8*config.width/3, config.height/3 , this.gameStrings.upgradesCoffeTime ,{ font: "14px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto descripcion
-        this.upgradeDescriptionSlotText1 = this.add.text(1.8*config.width/3, config.height/2 , this.gameStrings.upgradesCoffeTimeDescription + this.playerSettings.upgrades.cofeeTime,{ font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto descripcion
+        this.upgradeDescriptionSlotText1 = this.add.text(1.8*config.width/3, config.height/2 , this.gameStrings.upgradesCoffeTimeDescription + this.playerSettings.upgrades.coffeeTime,{ font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto descripcion
         this.buySlot = this.add.sprite(1.8*config.width/3, 2*config.height/3, 'assets_atlas','spr_buttomMenu').setVisible(false)//Boton comprar
         this.buyUpgradeCoin = this.add.sprite(1.5*config.width/3, 2*config.height/3, 'assets_atlas','spr_ui_icon_coin').setVisible(false)
-        this.buySlotText = this.add.text(1.8*config.width/3, 2*config.height/3,500 + 500*this.playerSettings.upgrades.cofeeTime ,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        this.buySlotText = this.add.text(1.8*config.width/3, 2*config.height/3,500 + 500*this.playerSettings.upgrades.coffeeTime ,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
         
         this.upgradeChangeSection = this.add.sprite(1.2*config.width/3, 1.25*config.height/6, 'assets_atlas','spr_ui_arrow').setVisible(false)//Panel opcion
         this.upgradeChangeSection.setInteractive().on('pointerdown', () => {
@@ -243,14 +249,14 @@ class Menu extends Phaser.Scene {
             switch(this.UpgradeSelected){
                 case 1:
                     //code
-                    if(this.playerSettings.upgrades.cofeeTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.cofeeTime) ){
-                        this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.cofeeTime
+                    if(this.playerSettings.upgrades.coffeeTime < 3 && this.playerSettings.coins >= (500 + 500*this.playerSettings.upgrades.coffeeTime) ){
+                        this.playerSettings.coins -= 500 + 500*this.playerSettings.upgrades.coffeeTime
                         this.numCoins.setText(this.playerSettings.coins)
-                        this.playerSettings.upgrades.cofeeTime += 1
+                        this.playerSettings.upgrades.coffeeTime += 1
                         this.savePlayerSettings()
                         this.upgradesPanelDescription(1);
-                        //this.upgradeDescriptionSlotText1.setText("-2 sec coffee time\nLevel: "+this.playerSettings.upgrades.cofeeTime)
-                        //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.cofeeTime)
+                        //this.upgradeDescriptionSlotText1.setText("-2 sec coffee time\nLevel: "+this.playerSettings.upgrades.coffeeTime)
+                        //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.coffeeTime)
                     }
                         
                     break;
@@ -367,10 +373,10 @@ class Menu extends Phaser.Scene {
         if(number==1){
             
             this.upgradeTitleSlotText1.setText(this.gameStrings.upgradesCoffeTime)
-            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesCoffeTimeDescription + this.playerSettings.upgrades.cofeeTime)
-            if(this.playerSettings.upgrades.cofeeTime != 3){
+            this.upgradeDescriptionSlotText1.setText(this.gameStrings.upgradesCoffeTimeDescription + this.playerSettings.upgrades.coffeeTime)
+            if(this.playerSettings.upgrades.coffeeTime != 3){
                 this.buySlot.setInteractive()
-                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.cofeeTime)
+                this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.coffeeTime)
                 this.buySlot.setTint(0xffffff);
             }
             else{
