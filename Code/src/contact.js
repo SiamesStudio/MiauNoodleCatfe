@@ -17,36 +17,28 @@ class Contact extends Phaser.Scene {
 
     create(){
 
-        this.add.text(config.width/3, 1.5*config.height/12, this.gameStrings.ContactDesignRole, { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.add.text(config.width/3, 2.5*config.height/12, 'Álvaro Roger Zapata', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        var background = this.add.image(config.width/2,config.height/2,'bg_contact')//fondo
+
+        this.add.text(1.1*config.width/3, 3.25*config.height/12, this.gameStrings.ContactDesignRole, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.add.text(1.1*config.width/3, 4*config.height/12, 'Álvaro Roger Zapata', { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         
-        this.add.text(config.width/3, 4*config.height/12, this.gameStrings.ContactProgrammingRole, { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.add.text(config.width/3, 5*config.height/12, 'Jose Luis Murcia Gamez', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.add.text(config.width/3, 6*config.height/12, 'Lucía Ortuño Guisado', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.add.text(config.width/3, 7*config.height/12, 'Daniel Brenlla Gómez', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        this.add.text(1.1*config.width/3, 5*config.height/12, this.gameStrings.ContactProgrammingRole, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.add.text(1.1*config.width/3, 5.75*config.height/12, 'Jose Luis Murcia Gamez', { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.add.text(1.1*config.width/3, 6.5*config.height/12, 'Lucía Ortuño Guisado', { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.add.text(1.1*config.width/3, 7.25*config.height/12, 'Daniel Brenlla Gómez', { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
 
-        this.add.text(config.width/3, 8.5*config.height/12, this.gameStrings.ContactArtRole, { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.add.text(config.width/3, 9.5*config.height/12, 'Patricia Ruiz Bermejo', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        this.add.text(config.width/3, 10.5*config.height/12, 'Mariam Baradi Del Álamo', { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        this.add.text(1.1*config.width/3, 8.25*config.height/12, this.gameStrings.ContactArtRole, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.add.text(1.1*config.width/3, 9*config.height/12, 'Patricia Ruiz Bermejo', { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.add.text(1.1*config.width/3, 9.75*config.height/12, 'Mariam Baradi Del Álamo', { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
 
-        this.add.text(3*config.width/4, 4*config.height/12, this.gameStrings.ContactGameBy, { font: "12px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5);
-        var logo = this.add.image(3*config.width/4, 7*config.height/12,'spr_logoTeam_Inicio').setScale(0.15).setOrigin(0.5);
+        this.add.text(3*config.width/4, 5.75*config.height/12, this.gameStrings.ContactGameBy, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        var logo = this.add.image(3*config.width/4, 8*config.height/12,'spr_logoTeam_Inicio').setScale(0.15).setOrigin(0.5);
 
+        //BACK 
+        this.backButton = this.add.image(config.width/12, 9*config.height/10,'assets_atlas','spr_back')
+        this.backButton.setInteractive().on('pointerdown', () => {
+                this.scene.start("Inicio", { playerInfo: this.playerSettings });})
 
-
-        //this.add.bitmapText(config.width/3, 1.5*config.height/12, 'BitPap',this.gameStrings.ContactDesignRole).setOrigin(0.5);
-        //this.add.bitmapText(config.width/3, 2.5*config.height/12, 'BitPap','Álvaro Roger Zapata', 12).setOrigin(0.5);
-        //
-        //this.add.bitmapText(config.width/3, 4*config.height/12, 'BitPap',this.gameStrings.ContactProgrammingRole, 12).setOrigin(0.5);
-        //this.add.bitmapText(config.width/3, 5*config.height/12, 'BitPap','Jose Luis Murcia Gamez', 12).setOrigin(0.5);
-        //this.add.bitmapText(config.width/3, 6*config.height/12, 'BitPap','Lucía Ortuño Guisado', 12).setOrigin(0.5);
-        //this.add.bitmapText(config.width/3, 7*config.height/12, 'BitPap','Daniel Brenlla Gómez', 12).setOrigin(0.5);
-//
-        //this.add.bitmapText(config.width/3, 8.5*config.height/12, 'BitPap',this.gameStrings.ContactArtRole, 12).setOrigin(0.5);
-        //this.add.bitmapText(config.width/3, 9.5*config.height/12, 'BitPap','Patricia Ruiz Bermejo', 12).setOrigin(0.5);
-        //this.add.bitmapText(config.width/3, 10.5*config.height/12, 'BitPap','Mariam Baradi Del Álamo', 12).setOrigin(0.5);
-//
-        //this.add.bitmapText(3*config.width/4, 4*config.height/12, this.gameStrings.ContactGameBy, 12).setOrigin(0.5);
     }
 
 
