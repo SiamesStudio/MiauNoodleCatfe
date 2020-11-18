@@ -205,6 +205,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">spr_arrow_improvementMenu.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,7,4</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,7,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">spr_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -220,6 +235,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">spr_bck_improvementDescription.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>27,25,53,51</rect>
+                <key>scale9Paddings</key>
+                <rect>27,25,53,51</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_bck_improvementMenu.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>62,33,123,67</rect>
+                <key>scale9Paddings</key>
+                <rect>62,33,123,67</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">spr_bck_mainMenu.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -232,6 +277,36 @@
                 <rect>21,10,41,21</rect>
                 <key>scale9Paddings</key>
                 <rect>21,10,41,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_bck_shopMenu.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>73,41,146,83</rect>
+                <key>scale9Paddings</key>
+                <rect>73,41,146,83</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_bck_subShopMenu.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,11,37,21</rect>
+                <key>scale9Paddings</key>
+                <rect>19,11,37,21</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -303,6 +378,36 @@
                 <rect>9,7,18,13</rect>
                 <key>scale9Paddings</key>
                 <rect>9,7,18,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_buttomMenu.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,5,28,9</rect>
+                <key>scale9Paddings</key>
+                <rect>14,5,28,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_button_babyUI.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,3,29,7</rect>
+                <key>scale9Paddings</key>
+                <rect>14,3,29,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1112,6 +1217,13 @@
             <filename>spr_bg_topping_springonion.png</filename>
             <filename>main_title_button_contact.png</filename>
             <filename>spr_ui_settings.png</filename>
+            <filename>spr_bck_improvementDescription.png</filename>
+            <filename>spr_bck_improvementMenu.png</filename>
+            <filename>spr_bck_shopMenu.png</filename>
+            <filename>spr_bck_subShopMenu.png</filename>
+            <filename>spr_buttomMenu.png</filename>
+            <filename>spr_button_babyUI.png</filename>
+            <filename>spr_arrow_improvementMenu.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
