@@ -37,18 +37,18 @@ class Menu extends Phaser.Scene {
         //COIN
         this.add.sprite(config.width/4 ,config.height/13,'assets_atlas','spr_button_babyUI')
         this.add.sprite(config.width*0.145 + 10,config.height/11,'assets_atlas','spr_ui_icon_coin')
-        this.numCoins = this.add.text(2*config.width/7 - 10,config.height/13, this.playerSettings.coins, { font: "10px pixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.numCoins = this.add.text(2*config.width/7 - 10,config.height/13 - 1, this.playerSettings.coins, { font: "10px pixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
 
         //DIAMONDS
         this.add.sprite(config.width*0.5,config.height/13,'assets_atlas','spr_button_babyUI')
         this.add.sprite(config.width*0.4 + 5,config.height/11,'assets_atlas','spr_ui_icon_gem')
-        this.numDiamonds = this.add.text(config.width*0.5,config.height/13, this.playerSettings.diamonds, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.numDiamonds = this.add.text(config.width*0.5,config.height/13 - 1, this.playerSettings.diamonds, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
 
         //CHEF POINTS
         this.add.sprite(3*config.width/4 ,config.height/13,'assets_atlas','spr_button_babyUI')
         this.add.sprite(2*config.width/3,config.height/11,'assets_atlas','spr_ui_chefLvl')
         this.numPlayerLevel = this.add.text(2*config.width/3,config.height/11, this.playerSettings.level, { font: "12px PixelFont", fill: "#000000", align: "center" }).setOrigin(0.5).setResolution(10);
-        this.numChefPoints = this.add.text(5*config.width/7,config.height/13, this.playerSettings.experience +'/'+ 0, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setResolution(10);
+        this.numChefPoints = this.add.text(5*config.width/7,config.height/13 - 1, this.playerSettings.experience +'/'+ 0, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setResolution(10);
         this.uploadPlayerLevel(0)
 
         //FREE DIAMONDS
@@ -75,8 +75,8 @@ class Menu extends Phaser.Scene {
             this.scene.start("Shop", { playerInfo: this.playerSettings });
         })
 
-        //OPTIONS
-        this.options = this.add.sprite(config.width/14,config.height/13,'assets_atlas','spr_ui_settings')
+        //OPTIONSaviso cuando lo
+        this.options = this.add.sprite(config.width/14,config.height/13,'spr_ui_settings1').setScale(0.5)
         this.options.setInteractive().on('pointerdown', () => {console.log("Options"); this.optionsPanel();})
 
         //LEVEL SELECTION
@@ -85,7 +85,7 @@ class Menu extends Phaser.Scene {
 
         //PLAY -> No aparecera en el juego final
         this.playButton = this.add.sprite(this.levelSelection.x + (this.levelSelection.width/6),this.levelSelection.y,'assets_atlas','spr_buttomMenu').setOrigin(0.5)
-        this.playButtonText = this.add.text(this.levelSelection.x + (this.levelSelection.width/6),this.levelSelection.y, "Jugar", { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.playButtonText = this.add.text(this.levelSelection.x + (this.levelSelection.width/6),this.levelSelection.y, this.gameStrings.playButton, { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         this.playButton.setInteractive().on('pointerdown', () => {
             this.menuMusic.stop()
             this.scene.start("bootGame", { playerInfo: this.playerSettings });
@@ -99,7 +99,7 @@ class Menu extends Phaser.Scene {
         })
 
         //BACK
-        this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'assets_atlas','spr_back')
+        this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'spr_back1')
         this.backButton.setInteractive().on('pointerdown', () => {
             this.menuMusic.stop();
             this.scene.start("Inicio", { playerInfo: this.playerSettings });
@@ -107,20 +107,20 @@ class Menu extends Phaser.Scene {
 
 
         //GIVE EXP
-        this.expButton = this.add.sprite(config.width/12, config.height/2,'assets_atlas','spr_buttomMenu').setTint(0x123456)
-        this.expButton.setInteractive().on('pointerdown', () => {
-            
-            this.prevPlayerLevel = this.playerSettings.level
-            console.log(this.prevPlayerLevel)
-            this.currentPlayerLevel = this.uploadPlayerLevel(5)
-            this.playerSettings.level = this.currentPlayerLevel;
-            this.numPlayerLevel.setText(this.playerSettings.level)
-            this.savePlayerSettings()
-            console.log(this.currentPlayerLevel)
-            if(this.prevPlayerLevel < this.currentPlayerLevel){
-                this.levelUpPanel()
-            }
-        })
+        //this.expButton = this.add.sprite(config.width/12, config.height/2,'assets_atlas','spr_buttomMenu').setTint(0x123456)
+        //this.expButton.setInteractive().on('pointerdown', () => {
+        //    
+        //    this.prevPlayerLevel = this.playerSettings.level
+        //    console.log(this.prevPlayerLevel)
+        //    this.currentPlayerLevel = this.uploadPlayerLevel(5)
+        //    this.playerSettings.level = this.currentPlayerLevel;
+        //    this.numPlayerLevel.setText(this.playerSettings.level)
+        //    this.savePlayerSettings()
+        //    console.log(this.currentPlayerLevel)
+        //    if(this.prevPlayerLevel < this.currentPlayerLevel){
+        //        this.levelUpPanel()
+        //    }
+        //})
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -171,53 +171,51 @@ class Menu extends Phaser.Scene {
         //ViweConfig
         this.titleOptions = this.add.text(config.width/2, config.height/4, this.gameStrings.OptionMenu_title ,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
         this.volumeOptions = this.add.text(3*config.width/7, config.height/2,this.gameStrings.OptionsMenu_text,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
-        this.empty_Selection = this.add.sprite(2*config.width/3, config.height/2,'tick_empty_button').setVisible(false).setScale(0.5)
-        this.tick_Selection = this.add.sprite(2*config.width/3, config.height/2,'tick_button').setVisible(false).setScale(0.5)
+        this.empty_Selection = this.add.sprite(4.5*config.width/7, config.height/2,'assets_atlas','spr_ui_icon_volume').setVisible(false).setOrigin(0,0.5)
+        this.tick_Selection = this.add.sprite(4.5*config.width/7, config.height/2,'assets_atlas','spr_ui_icon_no_volumen').setVisible(false).setOrigin(0,0.5)
 
         this.languageOptions = this.add.text(3*config.width/7, 2*config.height/3,this.gameStrings.OptionsMenu_language,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
-        //this.language_empty_Selection = this.add.sprite(2*config.width/3, 2*config.height/3,'tick_empty_button').setVisible(false).setScale(0.5)
-        //this.language_tick_Selection = this.add.sprite(2*config.width/3, 2*config.height/3,'tick_button').setVisible(false).setScale(0.5)
-        this.language_spanish = this.add.sprite(2*config.width/3, 2*config.height/3,'assets_atlas','spr_espaniol').setVisible(false)
-        this.language_english = this.add.sprite(2.2*config.width/3, 2*config.height/3,'assets_atlas','spr_ingles').setVisible(false)
+        this.language_spanish = this.add.sprite(4.5*config.width/7, 2*config.height/3,'assets_atlas','spr_espaniol').setVisible(false).setOrigin(0.5)
+        this.language_english = this.add.sprite(5*config.width/7, 2*config.height/3,'assets_atlas','spr_ingles').setVisible(false).setOrigin(0.5)
 
 
         //Upgrade Panel
         this.UpgradeSelected = 1; 
         
         this.upgradeSlot1 = this.add.sprite(0.85*config.width/3, 2*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false)//Panel opcion
-        this.upgradeSlotText1 = this.add.text(0.85*config.width/3, 2*config.height/6,'Mejora 1',{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
+        this.upgradeSlotText1 = this.add.text(0.85*config.width/3, 2*config.height/6,this.gameStrings.upgrades_type_Time,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
         this.upgradeSlot2 = this.add.sprite(0.85*config.width/3, 2.75*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
-        this.upgradeSlotText2 = this.add.text(0.85*config.width/3, 2.75*config.height/6,'Mejora 2',{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
+        this.upgradeSlotText2 = this.add.text(0.85*config.width/3, 2.75*config.height/6,this.gameStrings.upgrades_type_Level,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
         
         this.upgradeSlot3 = this.add.sprite(0.85*config.width/3, 2*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
-        this.upgradeSlotText3 = this.add.text(0.85*config.width/3, 2*config.height/6,'Mejora 3',{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
+        this.upgradeSlotText3 = this.add.text(0.85*config.width/3, 2*config.height/6,this.gameStrings.upgrades_type_Time,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
         this.upgradeSlot4 = this.add.sprite(0.85*config.width/3, 2.75*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
-        this.upgradeSlotText4 = this.add.text(0.85*config.width/3, 2.75*config.height/6,'Mejora 4',{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
+        this.upgradeSlotText4 = this.add.text(0.85*config.width/3, 2.75*config.height/6,this.gameStrings.upgrades_type_Burn,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
         this.upgradeSlot5 = this.add.sprite(0.85*config.width/3, 3.5*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
-        this.upgradeSlotText5 = this.add.text(0.85*config.width/3, 3.5*config.height/6,'Mejora 5',{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
+        this.upgradeSlotText5 = this.add.text(0.85*config.width/3, 3.5*config.height/6,this.gameStrings.upgrades_type_Level,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
         this.upgradeSlot6 = this.add.sprite(0.85*config.width/3, 4.25*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
-        this.upgradeSlotText6 = this.add.text(0.85*config.width/3, 4.25*config.height/6,'Mejora 6',{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
+        this.upgradeSlotText6 = this.add.text(0.85*config.width/3, 4.25*config.height/6,this.gameStrings.upgrades_type_Cloth,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
         
         this.upgradeSlot7 = this.add.sprite(0.85*config.width/3, 2*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
-        this.upgradeSlotText7 = this.add.text(0.85*config.width/3, 2*config.height/6,'Mejora 7',{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
+        this.upgradeSlotText7 = this.add.text(0.85*config.width/3, 2*config.height/6,this.gameStrings.upgrades_type_Time,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
         this.upgradeSlot8 = this.add.sprite(0.85*config.width/3, 2.75*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
-        this.upgradeSlotText8 = this.add.text(0.85*config.width/3, 2.75*config.height/6,'Mejora 8',{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
+        this.upgradeSlotText8 = this.add.text(0.85*config.width/3, 2.75*config.height/6,this.gameStrings.upgrades_type_Burn,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
         this.upgradeSlot9 = this.add.sprite(0.85*config.width/3, 3.5*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
-        this.upgradeSlotText9 = this.add.text(0.85*config.width/3, 3.5*config.height/6,'Mejora 9',{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
+        this.upgradeSlotText9 = this.add.text(0.85*config.width/3, 3.5*config.height/6,this.gameStrings.upgrades_type_Level,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
         this.upgradeSlot10 = this.add.sprite(0.85*config.width/3, 4.25*config.height/6, 'assets_atlas','spr_buttomMenu').setVisible(false).setTint(0xb0b0b0)//Panel opcion
-        this.upgradeSlotText10 = this.add.text(0.85*config.width/3, 4.25*config.height/6,'Mejora 10',{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
+        this.upgradeSlotText10 = this.add.text(0.85*config.width/3, 4.25*config.height/6,this.gameStrings.upgrades_type_Cloth,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//Texto opcion
         
         this.upgradesTextType = this.add.text(0.85*config.width/3, 1.25*config.height/6, "Tipo", { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
         
         this.upgradeDescriptionBanner = this.add.sprite(1.8*config.width/3, config.height/2,'assets_atlas','spr_bck_improvementDescription').setVisible(false)//Panel descripcion
-        this.upgradeTitleSlotText1 = this.add.text(1.8*config.width/3, config.height/3 , this.gameStrings.upgradesCoffeTime ,{ font: "14px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//.setTint(0x2f214f)//Texto descripcion
+        this.upgradeTitleSlotText1 = this.add.text(1.8*config.width/3, 0.92*config.height/3 , this.gameStrings.upgradesCoffeTime ,{ font: "14px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//.setTint(0x2f214f)//Texto descripcion
         this.upgradeDescriptionSlotText1 = this.add.text(1.8*config.width/3, config.height/2 , this.gameStrings.upgradesCoffeTimeDescription + this.playerSettings.upgrades.coffeeTime,{ font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)//.setTint(0x2f214f)//Texto descripcion
         
-        this.buySlot = this.add.sprite(1.8*config.width/3, 2*config.height/3, 'assets_atlas','spr_buttomMenu').setVisible(false)//.setScale(1.5)//Boton comprar
+        this.buySlot = this.add.sprite(1.8*config.width/3, 2*config.height/3, 'assets_atlas','spr_buttomMenu').setVisible(false).setScale(1.15)//Boton comprar
         this.buyUpgradeCoin = this.add.sprite(1.5*config.width/3, 2*config.height/3 - 5, 'assets_atlas','spr_ui_icon_coin').setVisible(false).setScale(0.8)
-        this.buySlotText = this.add.text(1.8*config.width/3, 2*config.height/3 - 5,500 + 500*this.playerSettings.upgrades.coffeeTime ,{ font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        this.buySlotText = this.add.text(1.8*config.width/3, 2*config.height/3 - 5,500 + 500*this.playerSettings.upgrades.coffeeTime ,{ font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
         this.buyUpgradeGem = this.add.sprite(1.5*config.width/3, 2*config.height/3 + 6, 'assets_atlas','spr_ui_icon_gem').setVisible(false).setScale(0.8)
-        this.buySlotTextGem = this.add.text(1.8*config.width/3, 2*config.height/3 + 6,3 + 3*this.playerSettings.upgrades.coffeeTime ,{ font: "13px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
+        this.buySlotTextGem = this.add.text(1.8*config.width/3, 2*config.height/3 + 6,3 + 3*this.playerSettings.upgrades.coffeeTime ,{ font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
 
 
         this.upgradeChangeSection = this.add.sprite(1.2*config.width/3, 1.25*config.height/6, 'assets_atlas','spr_ui_arrow').setVisible(false)//Panel opcion
@@ -390,7 +388,7 @@ class Menu extends Phaser.Scene {
                          this.savePlayerSettings()
                          this.upgradesPanelDescription(9);
                          //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
-                         //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
+                         //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pao esncakeTime)
                      }
                          
                      break;
@@ -777,7 +775,7 @@ class Menu extends Phaser.Scene {
         this.playButton.disableInteractive()
         this.extraBanner.setVisible(true)//Pintar panel -> Mismo para todas las acciones
         this.crossButton.setVisible(true)//Pintar boton de cerrar panel
-        this.expButton.disableInteractive()
+        //this.expButton.disableInteractive()
         this.upgradesTextButton.disableInteractive()
     }
 
@@ -858,7 +856,7 @@ class Menu extends Phaser.Scene {
         this.buySlotText.setVisible(false)
 
         //EXP
-        this.expButton.setInteractive()
+        //this.expButton.setInteractive()
         this.levelUpPanelTitle.setVisible(false)
         this.levelUpPanelDesc.setVisible(false)
         this.levelUpCoinReward.setVisible(false)
@@ -1047,6 +1045,18 @@ class Menu extends Phaser.Scene {
 
         //Upgrades
         this.upgradesPanelDescription(this.UpgradeSelected)
+        this.upgradeSlotText1.setText(this.gameStrings.upgrades_type_Time)
+        this.upgradeSlotText2.setText(this.gameStrings.upgrades_type_Level)
+
+        this.upgradeSlotText3.setText(this.gameStrings.upgrades_type_Time)
+        this.upgradeSlotText4.setText(this.gameStrings.upgrades_type_Burn)
+        this.upgradeSlotText5.setText(this.gameStrings.upgrades_type_Level)
+        this.upgradeSlotText6.setText(this.gameStrings.upgrades_type_Cloth)
+
+        this.upgradeSlotText7.setText(this.gameStrings.upgrades_type_Time)
+        this.upgradeSlotText8.setText(this.gameStrings.upgrades_type_Burn)
+        this.upgradeSlotText9.setText(this.gameStrings.upgrades_type_Level)
+        this.upgradeSlotText10.setText(this.gameStrings.upgrades_type_Cloth)
     }
 
     savePlayerSettings(){

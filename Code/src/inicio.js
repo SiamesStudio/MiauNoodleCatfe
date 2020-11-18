@@ -78,12 +78,12 @@ class Inicio extends Phaser.Scene {
             //this.playButtonPressed()
              //this.scene.start("Menu", {playerInfo: this.playerSettings }); 
         })
-        //playButton.disableInteractive();
+
 
         this.music = this.sound.add('snd_music_biscuit');
         this.music.play();
         this.music.setVolume(0.7)
-        //this.sound.play('snd_music_biscuit');
+        if(this.playerSettings.audioMuted) this.music.mute = true
 
         
 
@@ -92,13 +92,12 @@ class Inicio extends Phaser.Scene {
             this.scene.start("Contacto", {playerInfo: this.playerSettings });
         })
 
-        //contactButton.disableInteractive();
 
         this.cameras.main.once('camerafadeoutcomplete', function (camera) {
             camera.fadeIn(1000,0xffffff,0xffffff,0xffffff);
             currentScene.scene.start("Menu", {playerInfo: currentScene.playerSettings });          
         });
-        //currentScene.cameras.main.onFadeComplete.add(this.nextScene(), this);  
+
     } 
 
     nextScene(){

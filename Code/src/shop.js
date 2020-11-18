@@ -37,7 +37,7 @@ class Shop extends Phaser.Scene {
         this.slot6 = this.add.sprite(3*config.width/4, 4*config.height/5,'assets_atlas', 'spr_bck_subShopMenu')
 
         this.bannerCoins = this.add.sprite(config.width/4, config.height/7,'assets_atlas','spr_buttomMenu')
-        this.coinsText = this.add.text(config.width/4, config.height/7, this.gameStrings.Shop_coinsText, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10)
+        this.coinsText = this.add.text(config.width/4, config.height/7, this.gameStrings.Shop_coinsText_singular, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10)
         this.bannerDiamonds = this.add.sprite(config.width/2, config.height/7,'assets_atlas','spr_buttomMenu').setTint(0xb0b0b0)
         this.diamondsText = this.add.text(config.width/2, config.height/7, this.gameStrings.Shop_diamondsText, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setTint(0xb0b0b0).setResolution(10);
 
@@ -100,7 +100,7 @@ class Shop extends Phaser.Scene {
 
 
         //BACK
-        this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'assets_atlas','spr_back')
+        this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'spr_back1')
         this.backButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {playerInfo: this.playerSettings});})
 
         //EXTRA
