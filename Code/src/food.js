@@ -936,7 +936,10 @@ class Sauce
 	sauceServed()
 	{
 		var addedSauceImg = GameManager.scene.add.image(0,0,'assets_atlas',this.addedSauceImgKey);
+		this.dishContainer.dishContainer.sauceImg = addedSauceImg;
 		this.dishContainer.dishContainer.add(addedSauceImg); 
+		this.dishContainer.dishContainer.sendToBack(addedSauceImg);
+		this.dishContainer.dishContainer.sendToBack(this.dishContainer.img);
 		this.img.anims.play(this.animIdleKey);
 		this.fillingSound.stop();
 		this.img.setPosition(this.posx,this.posy);

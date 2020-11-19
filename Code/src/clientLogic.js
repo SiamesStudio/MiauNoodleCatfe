@@ -178,11 +178,7 @@ class Client{
     }
     if(!GameManager.tutorial)this.time+=40
     this.totalTime=this.time;
-    
-    this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_basecolor');
-    
-    
-    this.clientProgressBar= new ProgressBar(this.clientImg.x,this.clientImg.y-this.clientImg.height/2,GameManager.scene)
+        
     this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
     switch(this.index){
       case 0: 
@@ -370,12 +366,24 @@ class Client{
         }
         break
     }
+    this.clientProgressBar= new ProgressBar(this.clientImg.x,this.clientImg.y-this.clientImg.height/2,GameManager.scene)
+
     this.clientEmotionImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_emotion_normal');
     this.clientImg.setDepth(0.5);
     this.clientEmotionImg.setDepth(0.5);
-    this.clientProgressBar.backBar.setDepth(0.5);
-    this.clientProgressBar.progressBar.setDepth(0.5);
-
+    this.clientProgressBar.backBar.setDepth(0.9);
+    this.clientProgressBar.progressBar.setDepth(0.9);
+    if(this.place==1)
+    {
+      this.coffeeImg.setDepth(0.8);
+      this.pancakeImg.setDepth(0.8);
+    }
+    else if(this.place == 2)
+    {
+      this.noodlesImg.setDepth(0.8);
+    } 
+    this.bubbleImg.setDepth(0.8);
+    
     var arrivalSound = GameManager.scene.sound.add('snd_character_arrived');
     arrivalSound.play();
   }
@@ -383,17 +391,22 @@ class Client{
   offsetClient(offset)
   {
     this.clientImg.setPosition(this.clientImg.x+offset, this.clientImg.y);
-    this.clientSecondImg.setPosition(this.clientSecondImg.x+offset, this.clientSecondImg.y);
-    this.clientOutlineImg.setPosition(this.clientOutlineImg.x+offset, this.clientOutlineImg.y);
     this.clientEmotionImg.setPosition(this.clientEmotionImg.x+offset, this.clientEmotionImg.y);
     this.clientProgressBar.backBar.setPosition(this.clientImg.x, this.clientImg.y-this.clientImg.height/2);
     this.clientProgressBar.progressBar.setPosition(this.clientImg.x, this.clientImg.y-this.clientImg.height/2);
-    console.log("this.clientProgressBar.backBar.x: " + this.clientProgressBar.backBar.x);
-    console.log("this.clientProgressBar.backBar.y: " + this.clientProgressBar.backBar.y);
-    this.clientProgressBar.backBar.setDepth(5);
-    this.clientProgressBar.backBar.setAlpha(1);
-    this.clientProgressBar.progressBar.setAlpha(1);
-    this.clientProgressBar.progressBar.setDepth(5);
+    this.clientProgressBar.backBar.setDepth(0.9);
+    this.clientProgressBar.progressBar.setDepth(0.9);
+    if(this.place==1)
+    {
+      this.coffeeImg.setPosition(this.clientImg.x+this.clientImg.width/2+10,this.clientImg.y-this.clientImg.height/2-5);
+      this.pancakeImg.setPosition(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2);
+    }
+    else if(this.place == 2)
+    {
+      this.noodlesImg.setPosition(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2);
+    }
+      this.bubbleImg.setPosition(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2);
+      
   }
 
   compareOrderWithDish(dish){

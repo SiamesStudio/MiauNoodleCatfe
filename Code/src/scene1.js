@@ -28,8 +28,58 @@ class scene1 extends Phaser.Scene {
         this.pauseSettings();
 		this.interfaceSettings();
 		this.radioSettings();
+        this.timePassEffect();
         this.cursors = this.input.keyboard.createCursorKeys();
 	}
+
+    timePassEffect()
+    {
+        var currentScene = this;
+        this.orangetoBlueTimer = this.time.addEvent({ delay: 5000, callback: this.orangeToBlue});
+        this.blueToOrangeTimer = this.time.addEvent({ delay: 15000, callback: this.blueToOrange});
+    }
+
+    orangeToBlue()
+    {
+        GameManager.scene.tweenOrange = GameManager.scene.tweens.add({
+                targets: GameManager.scene.fondoNaranja,
+                alpha: 0,
+                ease: "Linear", // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
+                duration: 5000,
+                repeat: 0,
+                yoyo: false
+            });
+            //this.tweenOrange.onComplete.add(this.tweenBlue, this);
+            GameManager.scene.tweenBl = GameManager.scene.tweens.add({
+                targets: GameManager.scene.fondoAzul,
+                alpha: 1,
+                ease: "Linear", // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
+                duration: 5000,
+                repeat: 0,
+                yoyo: false
+            });
+    }
+
+    blueToOrange()
+    {
+        GameManager.scene.tweenOrange = GameManager.scene.tweens.add({
+                   targets: GameManager.scene.fondoAzul,
+                   alpha: 0,
+                   ease: "Linear", // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
+                   duration: 5000,
+                   repeat: 0,
+                   yoyo: false
+               });
+               //this.tweenOrange.onComplete.add(this.tweenBlue, this);
+               GameManager.scene.tweenBl = GameManager.scene.tweens.add({
+                   targets: GameManager.scene.fondoVerde,
+                   alpha: 1,
+                   ease: "Linear", // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
+                   duration: 5000,
+                   repeat: 0,
+                   yoyo: false
+               });
+    }
 
     pauseSettings()
     {   
@@ -214,12 +264,12 @@ class scene1 extends Phaser.Scene {
 	interfaceSettings(){
 		this.coinSlider=this.add.sprite(config.width*0.5,config.height/13,'assets_atlas','spr_ui_slider')
         this.coinIcon=this.add.sprite(config.width*0.4,config.height/11,'assets_atlas','spr_ui_icon_coin')
-        this.numCoins = this.add.text(config.width*0.5,config.height/13, GameManager.levelEarnedCoins, { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+        this.numCoins = this.add.text(config.width*0.5,config.height/13, GameManager.levelEarnedCoins, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
 		
 		this.chefLevelSlider=this.add.sprite(3*config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
         this.add.sprite(config.width*0.65,config.height/11,'assets_atlas','spr_ui_chefLvl')
-        this.numPlayerLevel = this.add.text(config.width*0.65,config.height/11, this.playerSettings.level, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
-        this.numChefPoints = this.add.text(this.chefLevelSlider.x+6,config.height/13, "", { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5);
+        this.numPlayerLevel = this.add.text(config.width*0.65,config.height/11, this.playerSettings.level, { font: "15px PixelFont", fill: "#000000", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.numChefPoints = this.add.text(this.chefLevelSlider.x+6,config.height/13, "", { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5).setResolution(10);
 		
 		this.progressBarPosX=(0.88*config.width/2)+1;
 		this.slider=this.add.sprite(config.width/4 ,config.height/13,'assets_atlas','spr_ui_slider')
@@ -231,19 +281,19 @@ class scene1 extends Phaser.Scene {
 		this.falseProgressBar.height=this.progressBar.height-4
 		this.add.sprite(config.width*0.145,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
-		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5)
+		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings')
         this.options.setInteractive().on('pointerdown', () => {
             this.optionsPanel();
         })
 
-		this.coinSlider=this.add.sprite(config.width*0.5+config.width,config.height/13,'assets_atlas','spr_ui_slider')
-        this.coinIcon=this.add.sprite(config.width*0.4+config.width,config.height/11,'assets_atlas','spr_ui_icon_coin')
-        this.noodlenumCoins = this.add.text(config.width*0.5+config.width,config.height/13, GameManager.levelEarnedCoins, { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5);
+		this.coinSlider=this.add.sprite(config.width*0.5+config.width,config.height/13,'assets_atlas','spr_ui_slider').setDepth(5);
+        this.coinIcon=this.add.sprite(config.width*0.4+config.width,config.height/11,'assets_atlas','spr_ui_icon_coin').setDepth(5);
+        this.noodlenumCoins = this.add.text(config.width*0.5+config.width,config.height/13, GameManager.levelEarnedCoins, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setDepth(5).setResolution(10);
 		
-		this.chefLevelSlider=this.add.sprite(3*config.width/4 +config.width,config.height/13,'assets_atlas','spr_ui_slider')
-        this.add.sprite(config.width*0.65+config.width,config.height/11,'assets_atlas','spr_ui_chefLvl')
-        this.noodlenumPlayerLevel = this.add.text(config.width*0.65+config.width,config.height/11, this.playerSettings.level, { font: "15px Arial", fill: "#000000", align: "center" }).setOrigin(0.5);
-        this.noodlenumChefPoints = this.add.text(this.chefLevelSlider.x+6,config.height/13, "aaaaaaaaa", { font: "10px Arial", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5);
+		this.chefLevelSlider=this.add.sprite(3*config.width/4 +config.width,config.height/13,'assets_atlas','spr_ui_slider').setDepth(5);
+        this.add.sprite(config.width*0.65+config.width,config.height/11,'assets_atlas','spr_ui_chefLvl').setDepth(5);
+        this.noodlenumPlayerLevel = this.add.text(config.width*0.65+config.width,config.height/11, this.playerSettings.level, { font: "15px PixelFont", fill: "#000000", align: "center" }).setOrigin(0.5).setDepth(5).setResolution(10);
+        this.noodlenumChefPoints = this.add.text(this.chefLevelSlider.x+6,config.height/13, "aaaaaaaaa", { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5,0.5).setDepth(5).setResolution(10);
 		GameManager.scene.uploadPlayerLevel(0)
 		
 		this.progressBarPosX=(0.88*config.width/2)+1+config.width;
@@ -256,7 +306,7 @@ class scene1 extends Phaser.Scene {
 		this.falseProgressBar.height=this.progressBar.height-4
 		this.add.sprite(config.width*0.145+config.width,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
-		this.optionsNoodle = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5);
+		this.optionsNoodle = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings')
         this.optionsNoodle.setInteractive().on('pointerdown', () => {
             this.optionsPanel();
         })
@@ -595,6 +645,9 @@ class scene1 extends Phaser.Scene {
 	noodlesSetting()
 	{
 		var backgroundStreet = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_streetNoodles');
+        this.fondoNaranja = this.add.image(config.width/2+config.width, config.height/2, 'bg_dawn').setBlendMode(Phaser.BlendModes.MULTIPLY).setAlpha(1);
+        this.fondoAzul = this.add.image(config.width/2+config.width, config.height/2, 'bg_night').setTint(0xffffff).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY).setAlpha(0);
+        this.fondoVerde = this.add.image(config.width/2+config.width, config.height/2, 'bg_sunrise').setTint(0xffffff).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY).setAlpha(0);
 		var background = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_kitchen');
 		background.setDepth(0.7);
 
@@ -1210,6 +1263,7 @@ class DishImgContainer
 		this.toppings = new Phaser.Structs.List();
 		this.sauce=-1;
         this.dishContainer.setDepth(1);
+        this.sauceImg;
 	}
 
 	addToContainer(img, xOffset, yOffset)
