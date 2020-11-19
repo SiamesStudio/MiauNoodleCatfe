@@ -33,6 +33,7 @@ class Client{
     this.orderCoins=0;
     this.tutorial = false;
     Client.clientList.add(this);
+    console.log("CLIENT CREATED");
   }
 
   subtractTime(){
@@ -217,13 +218,17 @@ class Client{
     this.clientSecondImg.setDepth(0.5);
     this.clientOutlineImg.setDepth(0.5);
     this.clientEmotionImg.setDepth(0.5);
-    this.clientProgressBar.backBar.setDepth(0.5)
-    this.clientProgressBar.progressBar.setDepth(0.5)
-    
+    this.clientProgressBar.backBar.setDepth(0.5);
+    this.clientProgressBar.progressBar.setDepth(0.5);  
   }
 
   offsetClient(offset)
   {
+    console.log("this.clientImg: " + this.clientImg);
+    console.log("this.clientSecondImg: " + this.clientSecondImg);
+    console.log("this.clientOutlineImg: " + this.clientOutlineImg);
+    console.log("this.clientEmotionImg: " + this.clientEmotionImg);
+    console.log("this.clientImg: " + this.clientImg);
     this.clientImg.setPosition(this.clientImg.x+offset, this.clientImg.y);
     this.clientSecondImg.setPosition(this.clientSecondImg.x+offset, this.clientSecondImg.y);
     this.clientOutlineImg.setPosition(this.clientOutlineImg.x+offset, this.clientOutlineImg.y);

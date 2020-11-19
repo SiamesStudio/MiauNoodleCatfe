@@ -30,11 +30,12 @@ class tutorial extends Phaser.Scene {
 
 	clientsSettings(){
     	//index, salsa, nº toppings, toppings
-    	//index, sirope, nº plantas,nºtoppings, toppings 	
+    	//index, sirope, nº plantas,nºtoppings, toppings 
+        Client.resetVariables();	
     	TutorialManager.tutorialPancakeClient = new Client(0, 1,[2,0,1,0], [1,1,1,1,2]);
     	TutorialManager.tutorialPancakeClient.tutorial = true;
     	callClient(1);
-        TutorialManager.tutorialPancakeClient.offsetClient(config.width*0.4)
+        TutorialManager.tutorialPancakeClient.offsetClient(config.width*0.4);
   	}
 
 	radioSettings(){

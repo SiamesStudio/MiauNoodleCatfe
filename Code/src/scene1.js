@@ -13,7 +13,7 @@ class scene1 extends Phaser.Scene {
 	create(){
 		var gm = new GameManager(this);
 		GameManager.resetVariables();
-		this.gameTimer = this.time.addEvent({ delay: 3 *  1 * 1000, callback: finishGame});
+		this.gameTimer = this.time.addEvent({ delay: 3 *  60 * 1000, callback: finishGame});
 		this.resetVariables();
 		this.clientsSettings();
         this.coffeeSetting();
@@ -610,8 +610,6 @@ class scene1 extends Phaser.Scene {
 
 	update(time, delta)
 	{
-
-
     	var maxTime = 9;
     	var minTime = 2;
     	if(GameManager.gameOn){
@@ -1403,7 +1401,8 @@ function makeImgInteractive(itemClass, itemImg, item, cookingSound, _pixelPerfec
 }
 
 function callClient(place){ 
-    if(!GameManager.gameOn) return;	
+    if(!GameManager.gameOn) return;
+
 	var long=Client.clientsInRestaurant.length
   	var clientId= Math.floor(Math.random()*Client.clientList.length);
   	Client.clientsInRestaurant.add(clientId);
