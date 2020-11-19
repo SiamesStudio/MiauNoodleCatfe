@@ -1,6 +1,6 @@
 class Coffee
 {
-	static coffeeTime = 8; //8
+	static coffeeTime = 5; //8
 	static coffeeList = new Phaser.Structs.List();
 	constructor(assignedSlot, fillingSound, readySound)
 	{
@@ -83,7 +83,7 @@ class Coffee
 class Pancake
 {
 	static pancakesList = new Phaser.Structs.List();
-	static time = 7;
+	static time = 5;
 	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound, posx, posy)
 	{
 		Pancake.pancakesList.add(this);
@@ -100,9 +100,9 @@ class Pancake
 		this.trashCollider;
 		this.dishCollider;
 		this.doneTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeTime - Pancake.time);
-		this.burnTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeBurnTime - (Pancake.time*2*5));
+		this.burnTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeBurnTime - (Pancake.time*2));
 		var pancake = this;
-		this.img.setDepth(2);
+		this.img.setDepth(3);
         this.img.setInteractive();
         this.img.on('pointerdown', function(pointer){
         	pancake.flipPancake();
@@ -293,8 +293,8 @@ class Pancake
 class Noodles
 {
 	static noodlesList = new Phaser.Structs.List();
-	static doneTime = 3; //10
-	static burnTime = 5; //17
+	static doneTime = 5; //10
+	static burnTime = 12; //17
 	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound)
 	{
 		//spr_noodles la que se pone en el plato
@@ -333,7 +333,7 @@ class Noodles
 		this.cookedImg = GameManager.scene.physics.add.sprite(0,0,'assets_atlas','spr_noodles_cooked');
 		this.noodleTime = Math.abs(GameManager.scene.playerSettings.upgrades.noodleTime - Noodles.doneTime);
 		this.noodleBurnTime = Math.abs(GameManager.scene.playerSettings.upgrades.noodleBurnTime - Noodles.burnTime);
-		this.img.setDepth(2);
+		this.img.setDepth(3);
 		this.doneTimer = GameManager.scene.time.addEvent({ delay: this.noodleTime*1000, callback: this.noodlesDone, callbackScope: this });
         this.burnTimer = GameManager.scene.time.addEvent({ delay: this.noodleBurnTime*1000, callback: this.noodlesBurnt, callbackScope: this });
 		this.soundWasPlaying = true;
@@ -360,7 +360,7 @@ class Noodles
 	noodlesDone()
 	{
 		var auxImg = GameManager.scene.physics.add.sprite(this.img.x,this.img.y,'anim_pot_noodles_done_'+this.assignedSlot);
-		auxImg.setDepth(1);
+		auxImg.setDepth(3);
 		this.img.destroy();
 		this.img = null;
 		this.img = auxImg;
@@ -406,7 +406,7 @@ class Noodles
 		this.img.on('dragend',() => {
 			noodles.cookingSound.play();
 			this.img.setAlpha(1);
-			this.img.setDepth(2);
+			this.img.setDepth(3);
 			noodles.cookedImg.setAlpha(0);
 			noodles.dragEndBehaviour();
     	})
@@ -415,7 +415,7 @@ class Noodles
 	noodlesBurnt()
 	{
 		var auxImg = GameManager.scene.physics.add.sprite(this.img.x,this.img.y,'anim_pot_noodles_burnt_'+this.assignedSlot);
-		auxImg.setDepth(1);
+		auxImg.setDepth(3);
 		this.img.destroy();
 		this.img = null;
 		this.img = auxImg;
@@ -729,7 +729,7 @@ class Syrup
 				console.log("No img assigned");
 			break;
 		}
-		this.img.setDepth(2);
+		this.img.setDepth(6);
 		this.staticImg.setDepth(2);
 		makeImgInteractive("syrup", this.staticImg, this, null, false);
 		var _animPlayKey = this.animPlayKey;
@@ -777,7 +777,7 @@ class Syrup
 
 		this.collider.destroy();
 		this.servingTimer = GameManager.scene.time.addEvent({ delay: Syrup.servingTime*1000, callback: this.syrupServed, callbackScope: this });
-		this.staticImg.removeInteractive();
+		this.staticImg.disableInteractive();
 		console.log("serving syrup");
 
 		container.dish.sauce = this.index;
@@ -812,7 +812,8 @@ class Syrup
 		this.img.disableBody(true,true);
 		this.syrupSound.stop();
 		this.img.setPosition(this.posx,this.posy);
-		makeImgInteractive("syrup", this.staticImg, this, null, false);
+		this.staticImg.setInteractive();
+		//makeImgInteractive("syrup", this.staticImg, this, null, false);
 		makeDishInteractive(this.dishContainer,"pancakeDish");
 	}
 }
@@ -872,7 +873,7 @@ class Sauce
 				console.log("No img assigned");
 			break;
 		}
-		this.img.setDepth(2);
+		this.img.setDepth(6);
 		this.img.setInteractive({ draggable: true, pixelPerfect: true});
 		makeImgInteractive("sauce", this.img, this, null, true);
 		var _animPlayKey = this.animPlayKey;

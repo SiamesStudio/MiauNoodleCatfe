@@ -369,20 +369,20 @@ class Client{
     this.clientProgressBar= new ProgressBar(this.clientImg.x,this.clientImg.y-this.clientImg.height/2,GameManager.scene)
 
     this.clientEmotionImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_emotion_normal');
-    this.clientImg.setDepth(0.5);
-    this.clientEmotionImg.setDepth(0.5);
-    this.clientProgressBar.backBar.setDepth(0.9);
-    this.clientProgressBar.progressBar.setDepth(0.9);
+    this.clientImg.setDepth(1);
+    this.clientEmotionImg.setDepth(1);
+    this.clientProgressBar.backBar.setDepth(6);
+    this.clientProgressBar.progressBar.setDepth(6);
     if(this.place==1)
     {
-      this.coffeeImg.setDepth(0.8);
-      this.pancakeImg.setDepth(0.8);
+      this.coffeeImg.setDepth(5);
+      this.pancakeImg.setDepth(5);
     }
     else if(this.place == 2)
     {
-      this.noodlesImg.setDepth(0.8);
+      this.noodlesImg.setDepth(5);
     } 
-    this.bubbleImg.setDepth(0.8);
+    this.bubbleImg.setDepth(5);
     
     var arrivalSound = GameManager.scene.sound.add('snd_character_arrived');
     arrivalSound.play();

@@ -649,18 +649,18 @@ class scene1 extends Phaser.Scene {
         this.fondoAzul = this.add.image(config.width/2+config.width, config.height/2, 'bg_night').setTint(0xffffff).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY).setAlpha(0);
         this.fondoVerde = this.add.image(config.width/2+config.width, config.height/2, 'bg_sunrise').setTint(0xffffff).setAlpha(0).setBlendMode(Phaser.BlendModes.MULTIPLY).setAlpha(0);
 		var background = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_kitchen');
-		background.setDepth(0.7);
+		background.setDepth(2);
 
 		var noodleSpawnerImg = this.add.image(config.width*0.882 + config.width, config.height*0.91,'assets_atlas','spr_bg_noodles');
-		noodleSpawnerImg.setDepth(0.8);
+		noodleSpawnerImg.setDepth(2);
         var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
-		bigStrainerImg.setDepth(0.8);
+		bigStrainerImg.setDepth(2);
         GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
 		GameManager.animatedStrainerImg.setAlpha(0);
 		var strainerLvl = GameManager.scene.playerSettings.upgrades.noodleLevel;
 		var cam = this.cameras.main;	
 		var goToCoffeeButton = this.add.image(config.width*0.04+config.width,config.height*0.4,'assets_atlas', 'spr_ui_arrow');
-		goToCoffeeButton.setDepth(1);
+		goToCoffeeButton.setDepth(2);
         goToCoffeeButton.toggleFlipX();
         goToCoffeeButton.setInteractive().on('pointerdown', function(pointer){
 			cam.centerOnX(config.width/2);
@@ -687,7 +687,7 @@ class scene1 extends Phaser.Scene {
 
 			}
 			if(strainerLvl < i) strainerImg.setAlpha(0.3);
-            strainerImg.setDepth(0.8);
+            strainerImg.setDepth(2);
         }
 		
         this.anims.create({
@@ -700,7 +700,7 @@ class scene1 extends Phaser.Scene {
         var strainer = new Strainer(bigStrainerImg, strainerLvl);
         GameManager.strainer = strainer;
        	var trashCanImg = this.physics.add.sprite(config.width*0.095+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
-        trashCanImg.setDepth(0.8);
+        trashCanImg.setDepth(2);
        	GameManager.trashCanImgNoodles = trashCanImg;
         noodleSpawnerImg.setInteractive();
         noodleSpawnerImg.on('pointerdown', function(pointer){
@@ -744,7 +744,7 @@ class scene1 extends Phaser.Scene {
 
         	}
         	if(numTablecloth-1 < i) tableclothImg.setAlpha(0.3);
-        	tableclothImg.setDepth(0.8);
+        	tableclothImg.setDepth(2);
         	tableclothImgList.add(tableclothImg);
         }
 
@@ -752,7 +752,7 @@ class scene1 extends Phaser.Scene {
         
         GameManager.tableclothsNoodle = tableclothsNoodle;
         var dishPileImg = this.add.image(config.width*0.72 + config.width, config.height*0.92,'assets_atlas','spr_bowl');
-        dishPileImg.setDepth(0.8);
+        dishPileImg.setDepth(2);
         dishPileImg.setInteractive();
         dishPileImg.on('pointerdown', function(pointer){
         	if(GameManager.dishImgContainerNoodles.length < numTablecloth)
@@ -761,7 +761,7 @@ class scene1 extends Phaser.Scene {
         		var slotId = findFreeSlot(tableclothsNoodle, TableclothsNoodle.slots);
         		var pos = TableclothsNoodle.slots.getAt(slotId);
         		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_bowl');
-                dishImg.setDepth(1);
+                dishImg.setDepth(2);
                 var dishImgContainer = new DishImgContainer(dishImg, slotId);
         		GameManager.dishImgContainerNoodles.add(dishImgContainer);
         	} 
@@ -1269,7 +1269,7 @@ class DishImgContainer
 		this.clientCollider;
 		this.toppings = new Phaser.Structs.List();
 		this.sauce=-1;
-        this.dishContainer.setDepth(1);
+        this.dishContainer.setDepth(3);
         this.sauceImg;
 	}
 
