@@ -6,7 +6,13 @@ class scene1 extends Phaser.Scene {
 	init(gameData)
 	{
 		this.playerSettings;
-		this.playerSettings = gameData.playerInfo;		
+		this.playerSettings = gameData.playerInfo;
+        this.gameStrings = new MenuStrings();
+        if(this.playerSettings.language){
+            this.gameStrings.convertToSpanish();
+        }else{
+            this.gameStrings.convertToEnglish();
+        }		
 	}
 	
 
@@ -19,10 +25,23 @@ class scene1 extends Phaser.Scene {
         this.coffeeSetting();
         this.pancakesSetting();
 		this.noodlesSetting();
+        this.pauseSettings();
 		this.interfaceSettings();
 		this.radioSettings();
         this.cursors = this.input.keyboard.createCursorKeys();
 	}
+
+    pauseSettings()
+    {   
+        this.titleOptions = this.add.text(config.width/2, config.height/4, this.gameStrings.OptionMenu_title,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10).setDepth(6);
+        this.titleOptionsNoodles = this.add.text(config.width/2+config.width, config.height/4, this.gameStrings.OptionMenu_title,{ font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10).setDepth(6);
+        this.volumeOptions = this.add.text(3*config.width/7, config.height/2,this.gameStrings.OptionsMenu_text,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10).setDepth(6);
+        this.volumeOptionsNoodles = this.add.text(3*config.width/7 + config.width, config.height/2,this.gameStrings.OptionsMenu_text,{ font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10).setDepth(6);
+        this.empty_Selection = this.add.sprite(4.5*config.width/7, config.height/2,'assets_atlas','spr_ui_icon_volume').setVisible(false).setOrigin(0,0.5).setDepth(6);
+        this.empty_SelectionNoodles = this.add.sprite(4.5*config.width/7+ config.width, config.height/2,'assets_atlas','spr_ui_icon_volume').setVisible(false).setOrigin(0,0.5).setDepth(6);
+        this.tick_Selection = this.add.sprite(4.5*config.width/7, config.height/2,'assets_atlas','spr_ui_icon_no_volumen').setVisible(false).setOrigin(0,0.5).setDepth(6);
+        this.tick_SelectionNoodles = this.add.sprite(4.5*config.width/7+ config.width, config.height/2,'assets_atlas','spr_ui_icon_no_volumen').setVisible(false).setOrigin(0,0.5).setDepth(6);
+    }
 
 	resetVariables(){
 		GameManager.globalHappiness=50;
@@ -213,12 +232,8 @@ class scene1 extends Phaser.Scene {
 		this.add.sprite(config.width*0.145,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
 		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5)
-        this.options2 = this.add.sprite(config.width*0.1,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5)
         this.options.setInteractive().on('pointerdown', () => {
-            GameManager.stopTimers();
-        })
-        this.options2.setInteractive().on('pointerdown', () => {
-            GameManager.resumeTimers();
+            this.optionsPanel();
         })
 
 		this.coinSlider=this.add.sprite(config.width*0.5+config.width,config.height/13,'assets_atlas','spr_ui_slider')
@@ -241,7 +256,10 @@ class scene1 extends Phaser.Scene {
 		this.falseProgressBar.height=this.progressBar.height-4
 		this.add.sprite(config.width*0.145+config.width,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
-		this.options = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5)
+		this.optionsNoodle = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5);
+        this.optionsNoodle.setInteractive().on('pointerdown', () => {
+            this.optionsPanel();
+        })
 
 		this.blackScreen = this.add.image(config.width/2, config.height/2, 'blackScreen').setAlpha(0.5).setDepth(5);
         this.blackScreen.setVisible(false)
@@ -249,7 +267,8 @@ class scene1 extends Phaser.Scene {
         this.extraBanner.setVisible(false)
         this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow').setDepth(5)
 		this.crossButton.setVisible(false)
-
+        this.crossButtonPause = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow').setDepth(5).setVisible(false);
+        
 		this.victoryText=this.add.text(config.width/2, config.height/2, "Victory", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
 		this.defeatText=this.add.text(config.width/2, config.height/2, "Defeat", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
 
@@ -259,6 +278,10 @@ class scene1 extends Phaser.Scene {
 		this.crossButton.setInteractive().on('pointerdown', () => {
             GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		})
+
+        this.crossButtonPause.setInteractive().on('pointerdown', () => {
+            this.disableOptionsPanel();
+        })
 		
 		this.blackScreenNoodles = this.add.image(config.width/2+config.width, config.height/2, 'blackScreen').setAlpha(0.5).setDepth(5);
         this.blackScreenNoodles.setVisible(false)
@@ -266,17 +289,20 @@ class scene1 extends Phaser.Scene {
         this.extraBannerNoodles.setVisible(false)
         this.crossButtonNoodles = this.add.sprite(4*config.width/5+config.width, 1*config.height/5,'spr_closeWindow').setDepth(5)
 		this.crossButtonNoodles.setVisible(false)
-
+        this.crossButtonPauseNoodles = this.add.sprite(4*config.width/5 + config.width, 1*config.height/5,'spr_closeWindow').setDepth(5).setVisible(false);
 		this.victoryTextNoodles=this.add.text(config.width/2+config.width, config.height/2, "Victory", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
 		this.defeatTextNoodles=this.add.text(config.width/2+config.width, config.height/2, "Defeat", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
 
 		this.blackScreenNoodles.setInteractive().on('pointerdown', () => {
-            
 		})
+
 		this.crossButtonNoodles.setInteractive().on('pointerdown', () => {
             GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		})
-		
+
+		 this.crossButtonPauseNoodles.setInteractive().on('pointerdown', () => {
+            this.disableOptionsPanel();
+        })
 		this.blackScreenRadio = this.add.image(config.width/2+2*config.width, config.height/2, 'blackScreen').setAlpha(0.5).setDepth(5);
         this.blackScreenRadio.setVisible(false)
         this.extraBannerRadio = this.add.sprite(config.width/2+2*config.width, config.height/2,'assets_atlas','spr_bck_improvementMenu').setDepth(5)
@@ -292,10 +318,91 @@ class scene1 extends Phaser.Scene {
 		})
 		this.crossButtonRadio.setInteractive().on('pointerdown', () => {
             GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
-        })
-        
+        })    
 	}
 
+    optionsPanel(){
+        this.blackScreen.setVisible(true)
+        this.extraBanner.setVisible(true)
+        this.crossButtonPause.setVisible(true)
+        this.blackScreenNoodles.setVisible(false)
+        this.extraBannerNoodles.setVisible(true)
+        this.crossButtonPauseNoodles.setVisible(true)
+
+        this.titleOptions.setVisible(true)
+        this.titleOptionsNoodles.setVisible(true)
+        this.volumeOptions.setVisible(true)
+        this.volumeOptionsNoodles.setVisible(true)
+        
+        GameManager.stopTimers();
+
+        if(this.playerSettings.audioMuted){
+            this.empty_Selection.setVisible(false)
+            this.tick_Selection.setVisible(true)
+        }else{
+            this.empty_Selection.setVisible(true)
+            this.tick_Selection.setVisible(false)
+        }
+        
+        this.empty_Selection.setInteractive().on('pointerdown', () => {
+            this.empty_Selection.setVisible(false)
+            this.playerSettings.audioMuted = true;
+            this.savePlayerSettings()
+            this.tick_Selection.setVisible(true)
+            
+        })
+
+        this.tick_Selection.setInteractive().on('pointerdown', () => {
+            this.empty_Selection.setVisible(true)
+            this.playerSettings.audioMuted = false;
+            this.savePlayerSettings()
+            this.tick_Selection.setVisible(false)
+        })
+
+        if(this.playerSettings.audioMuted){
+            this.empty_SelectionNoodles.setVisible(false)
+            this.tick_SelectionNoodles.setVisible(true)
+        }else{
+            this.empty_SelectionNoodles.setVisible(true)
+            this.tick_SelectionNoodles.setVisible(false)
+        }
+        
+        this.empty_SelectionNoodles.setInteractive().on('pointerdown', () => {
+            this.empty_SelectionNoodles.setVisible(false)
+            this.playerSettings.audioMuted = true;
+            this.savePlayerSettings()
+            this.tick_SelectionNoodles.setVisible(true)
+            
+        })
+
+        this.tick_SelectionNoodles.setInteractive().on('pointerdown', () => {
+            this.empty_SelectionNoodles.setVisible(true)
+            this.playerSettings.audioMuted = false;
+            this.savePlayerSettings()
+            this.tick_SelectionNoodles.setVisible(false)
+        })
+    }
+
+    disableOptionsPanel()
+    {
+        this.blackScreen.setVisible(false)
+        this.extraBanner.setVisible(false)
+        this.extraBannerNoodles.setVisible(false)
+        this.crossButton.setVisible(false)
+        this.crossButtonNoodles.setVisible(false)
+
+        this.titleOptions.setVisible(false)
+        this.titleOptionsNoodles.setVisible(false)
+        this.volumeOptionsNoodles.setVisible(false)
+        this.volumeOptions.setVisible(false)
+        this.empty_Selection.setVisible(false);
+        this.empty_SelectionNoodles.setVisible(false);
+        this.tick_Selection.setVisible(false);
+        this.tick_SelectionNoodles.setVisible(false);
+        this.crossButtonPause.setVisible(false);
+        this.crossButtonPauseNoodles.setVisible(false);
+        GameManager.resumeTimers();
+    }
 	clientsSettings(){
     	//index, salsa, nº toppings, toppings
     	//index, salsa, nº plantas,nºtoppings, toppings
@@ -579,10 +686,7 @@ class scene1 extends Phaser.Scene {
         		break;
 
         	}
-        	if(numTablecloth-1 < i)
-            {
-                tableclothImg.setAlpha(0.3);
-            } 
+        	if(numTablecloth-1 < i) tableclothImg.setAlpha(0.3);
         	tableclothImg.setDepth(0.8);
         	tableclothImgList.add(tableclothImg);
         }
