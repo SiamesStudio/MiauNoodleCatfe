@@ -98,15 +98,16 @@ class Menu extends Phaser.Scene {
 
 
         //PLAY -> No aparecera en el juego final
-        this.playButton = this.add.sprite(this.levelSelection.x + (this.levelSelection.width/6),this.levelSelection.y,'assets_atlas','spr_buttomMenu').setOrigin(0.5)
-        this.playButtonText = this.add.text(this.levelSelection.x + (this.levelSelection.width/6),this.levelSelection.y, this.gameStrings.playButton, { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.logo = this.add.sprite(this.levelSelection.x,this.levelSelection.y - (this.levelSelection.height/9),'spr_logo_game').setOrigin(0.5)
+        this.playButton = this.add.sprite(this.levelSelection.x + (this.levelSelection.width/5.5),this.levelSelection.y + (this.levelSelection.height/5),'assets_atlas','spr_buttomMenu').setOrigin(0.5)
+        this.playButtonText = this.add.text(this.levelSelection.x + (this.levelSelection.width/5.5),this.levelSelection.y + (this.levelSelection.height/5) , this.gameStrings.playButton, { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         this.playButton.setInteractive().on('pointerdown', () => {
             this.menuMusic.stop()
             this.scene.start("bootGame", { playerInfo: this.playerSettings });
         })
 
-        this.tutorialButton = this.add.sprite(this.levelSelection.x - (this.levelSelection.width/6),this.levelSelection.y,'assets_atlas','spr_buttomMenu').setOrigin(0.5)
-        this.tutorialButtonText = this.add.text(this.levelSelection.x - (this.levelSelection.width/6),this.levelSelection.y, "Tutorial", { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        this.tutorialButton = this.add.sprite(this.levelSelection.x - (this.levelSelection.width/5.5),this.levelSelection.y + (this.levelSelection.height/5),'assets_atlas','spr_buttomMenu').setOrigin(0.5)
+        this.tutorialButtonText = this.add.text(this.levelSelection.x - (this.levelSelection.width/5.5),this.levelSelection.y + (this.levelSelection.height/5), "Tutorial", { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         this.tutorialButton.setInteractive().on('pointerdown', () => {
             this.menuMusic.stop()
             this.scene.start("tutorial", { playerInfo: this.playerSettings });

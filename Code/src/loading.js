@@ -230,6 +230,7 @@ class Loading extends Phaser.Scene {
         this.load.image('spr_clue','assets/UI/spr_clue.png');
         this.load.image('spr_back1','assets/spr_back.png');
         this.load.image('spr_ui_settings1','assets/spr_ui_settings.png');
+        this.load.image('spr_logo_game','assets/spr_logo.png');
 
         this.load.image('spr_coins','assets/SpritesPatri/spr_coins.png')
         this.load.image('spr_glass_filled','assets/spr_glass_filled.png')
