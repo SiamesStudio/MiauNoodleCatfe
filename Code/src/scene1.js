@@ -476,7 +476,7 @@ class scene1 extends Phaser.Scene {
 		this.cameras.main.on('camerafadeoutcomplete', function (camera) {
             camera.fadeIn(100);
         });
-        var background_window = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_window');
+        var background_window = this.add.image(config.width*0.655, config.height*0.05, 'bg_interior_window');
         var background_interior_back= this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_back');
         var background_interior_barra = this.add.image(config.width*0.5, config.height*0.715, 'bg_interior_barra');
         var background_interior_cristal = this.add.image(config.width*0.62, config.height*0.32, 'bg_interior_cristal');
