@@ -232,6 +232,34 @@ class Loading extends Phaser.Scene {
         this.load.image('spr_ui_settings1','assets/spr_ui_settings.png');
 
         this.load.image('spr_coins','assets/SpritesPatri/spr_coins.png')
+        this.load.image('spr_glass_filled','assets/spr_glass_filled.png')
+
+        this.load.image('gato_1_noodles','assets/platosfav/gato_1_noodles.png')
+        this.load.image('gato_1_pancake','assets/platosfav/gato_1_pancake.png')
+        this.load.image('gato_2_noodles','assets/platosfav/gato_2_noodles.png')
+        this.load.image('gato_2_pancake','assets/platosfav/gato_2_pancake.png')
+        this.load.image('gato_3_noodles','assets/platosfav/gato_3_noodles.png')
+        this.load.image('gato_3_pancake','assets/platosfav/gato_3_pancake.png')
+        this.load.image('gato_4_noodles','assets/platosfav/gato_4_noodles.png')
+        this.load.image('gato_4_pancake','assets/platosfav/gato_4_pancake.png')
+        this.load.image('gato_5_noodles','assets/platosfav/gato_5_noodles.png')
+        this.load.image('gato_5_pancake','assets/platosfav/gato_5_pancake.png')
+        this.load.image('gato_6_noodles','assets/platosfav/gato_6_noodles.png')
+        this.load.image('gato_6_pancake','assets/platosfav/gato_6_pancake.png')
+        this.load.image('gato_7_noodles','assets/platosfav/gato_7_noodles.png')
+        this.load.image('gato_7_pancake','assets/platosfav/gato_7_pancake.png')
+        this.load.image('gato_8_noodles','assets/platosfav/gato_8_noodles.png')
+        this.load.image('gato_8_pancake','assets/platosfav/gato_8_pancake.png')
+
+        this.load.image('cat_1','assets/gatos/cat_1.png')
+        this.load.image('cat_2','assets/gatos/cat_2.png')
+        this.load.image('cat_3','assets/gatos/cat_3.png')
+        this.load.image('cat_4','assets/gatos/cat_4.png')
+        this.load.image('cat_5','assets/gatos/cat_5.png')
+        this.load.image('cat_6','assets/gatos/cat_6.png')
+        this.load.image('cat_7','assets/gatos/cat_7.png')
+        this.load.image('cat_8','assets/gatos/cat_8.png')
+
 
         this.loadCoffeeScreen();
 		this.loadNoodleScreen();
