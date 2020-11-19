@@ -43,7 +43,7 @@ class scene1 extends Phaser.Scene {
 	create(){
 		var gm = new GameManager(this);
 		GameManager.resetVariables();
-		this.gameTimer = this.time.addEvent({ delay: 60000, callback: finishGame});
+		this.gameTimer = this.time.addEvent({ delay: 3 *  60 * 1000, callback: finishGame});
 		this.resetVariables();
 		this.clientsSettings();
         this.coffeeSetting();
