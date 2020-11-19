@@ -105,7 +105,7 @@ class Shop extends Phaser.Scene {
 
         //BACK
         this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'spr_back1')
-        this.backButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {playerInfo: this.playerSettings});})
+        this.backButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {playerInfo: this.playerSettings, songMenu:true});})
 
         //EXTRA
         this.blackScreen = this.add.sprite(config.width/2, config.height/2,'blackScreen').setAlpha(0.5)
@@ -125,7 +125,12 @@ class Shop extends Phaser.Scene {
         this.no_Text = this.add.text((this.negationButton.x) + (this.negationButton.width/2), 2*config.height/3, this.gameStrings.Shop_no, { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10);
         this.number = 0
 
-        this.confirmationButton.setInteractive().on('pointerdown', () => {this.buy_Slot(this.number);})
+        this.snd_purchase = this.sound.add('snd_purchase')
+        
+        this.confirmationButton.setInteractive().on('pointerdown', () => {
+            this.buy_Slot(this.number);
+            this.snd_purchase.play()
+        })
         this.negationButton.setInteractive().on('pointerdown', () => {this.enableAllButtons();})
 
 

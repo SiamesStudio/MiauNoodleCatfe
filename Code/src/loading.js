@@ -33,9 +33,9 @@ class Loading extends Phaser.Scene {
         //this.load.image('loading','assets/UI/loading.jpg');
         var sceneRef = this;
         var loading_Text = this.add.text(config.width/2 ,config.height/3, 'Loading... 0%', { font: "30px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
-        var lastAssetLoaded = this.add.text(config.width/2 ,2*config.height/3, 'Asset: ', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
-        var progressBox = this.add.rectangle(config.width/2, config.height/2, 3.7*config.width/7, 25, 0xa4b0af).setOrigin(0.5);
-        var progressBar = this.add.rectangle(config.width/4, config.height/2, 0, 20, 0x9e616e);
+        //var lastAssetLoaded = this.add.text(config.width/2 ,2*config.height/3, 'Asset: ', { font: "15px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
+        var progressBox = this.add.rectangle(config.width/2, 2*config.height/3, 3.7*config.width/7, 25, 0xa4b0af).setOrigin(0.5);
+        var progressBar = this.add.rectangle(config.width/4, 2*config.height/3, 0, 20, 0x9e616e);
         var loadingText = "Loading... ";
 
         if(localStorage.getItem('playerSettings') === null){
@@ -53,12 +53,12 @@ class Loading extends Phaser.Scene {
             //console.log(value);
             loading_Text.setText(loadingText+ parseInt(value * 99) +"%")
             progressBar.destroy();
-            sceneRef.add.rectangle(config.width/4, config.height/2, config.width/2 * value, 20, 0x9e616e).setOrigin(0,0.5);
+            sceneRef.add.rectangle(config.width/4, 2*config.height/3, config.width/2 * value, 20, 0x9e616e).setOrigin(0,0.5);
         });
                     
         this.load.on('fileprogress', function (file) {
             //console.log(file.src);
-            lastAssetLoaded.setText("Asset: "+file.key);
+            //lastAssetLoaded.setText("Asset: "+file.key);
         });
          
         this.load.on('complete', function () {
@@ -285,23 +285,24 @@ class Loading extends Phaser.Scene {
 		this.load.audio('snd_filling_catfe', 'assets/sound/snd_filling_catfe.wav'); //Used
 		this.load.audio('snd_gameOver', 'assets/sound/snd_gameOver.wav'); 
 		this.load.audio('snd_levelUp', 'assets/sound/snd_levelUp.wav');
-		this.load.audio('snd_topping', 'assets/sound/snd_topping.wav');
+        this.load.audio('snd_topping', 'assets/sound/snd_topping.wav');
+        
 		this.load.audio('snd_music_alone', 'assets/music/snd_music_alone.mp3');
 		this.load.audio('snd_music_biscuit', 'assets/music/snd_music_biscuit.mp3');
-		this.load.audio('snd_music_bobaTea', 'assets/music/snd_music_bobaTea.mp3');
-		this.load.audio('snd_music_bored', 'assets/music/snd_music_bored.mp3');
-		this.load.audio('snd_music_branch', 'assets/music/snd_music_branch.mp3');
+		//this.load.audio('snd_music_bobaTea', 'assets/music/snd_music_bobaTea.mp3');
+		//this.load.audio('snd_music_bored', 'assets/music/snd_music_bored.mp3');
+		//this.load.audio('snd_music_branch', 'assets/music/snd_music_branch.mp3');
 		this.load.audio('snd_music_bread', 'assets/music/snd_music_bread.mp3');
-		this.load.audio('snd_music_breakUp', 'assets/music/snd_music_breakUp.mp3');
+		//this.load.audio('snd_music_breakUp', 'assets/music/snd_music_breakUp.mp3');
 		this.load.audio('snd_music_cafe', 'assets/music/snd_music_cafe.mp3');
 		this.load.audio('snd_music_cheese', 'assets/music/snd_music_cheese.mp3');
 		this.load.audio('snd_music_chocolate', 'assets/music/snd_music_chocolate.mp3');
-		this.load.audio('snd_music_cloud', 'assets/music/snd_music_cloud.mp3');
-		this.load.audio('snd_music_everyDay', 'assets/music/snd_music_everyDay.mp3');
-		this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3');
+		//this.load.audio('snd_music_cloud', 'assets/music/snd_music_cloud.mp3');
+		//this.load.audio('snd_music_everyDay', 'assets/music/snd_music_everyDay.mp3');
+		//this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3');
 		this.load.audio('snd_music_pancake', 'assets/music/snd_music_pancake.mp3');
-		this.load.audio('snd_music_rainyDay', 'assets/music/snd_music_rainyDay.mp3');
-        this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3'); 
+		//this.load.audio('snd_music_rainyDay', 'assets/music/snd_music_rainyDay.mp3');
+        //this.load.audio('snd_music_kitchen', 'assets/music/snd_music_kitchen.mp3'); 
         
 		this.load.audio('snd_noodles_cooking', 'assets/sound/snd_noodles_cooking.wav'); //Used
 		this.load.audio('snd_pancake_cooking', 'assets/sound/snd_pancake_cooking.wav'); //Used
@@ -313,6 +314,8 @@ class Loading extends Phaser.Scene {
         this.load.audio('snd_victory', 'assets/sound/snd_victory.wav');
         this.load.audio('snd_radio_interference', 'assets/sound/snd_radio_interference.mp3');
         this.load.audio('snd_opening_door', 'assets/sound/snd_opening_door.mp3');
+        this.load.audio('snd_purchase', 'assets/sound/snd_purchase.wav');
+        
     }
     
 

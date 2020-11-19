@@ -6,7 +6,12 @@ class Menu extends Phaser.Scene {
     init(gameData){
         this.gameStrings = new MenuStrings()
         this.playerSettings = gameData.playerInfo
-
+        if(gameData.songMenu === null){
+            this.playSong = false
+        }else{
+            this.playSong = gameData.songMenu
+        }
+        
         console.log(this.playerSettings)
         
         if(this.playerSettings.language){
@@ -32,10 +37,13 @@ class Menu extends Phaser.Scene {
         //var widthRatio = config.width / background.displayWidth
         //background.displayWidth = config.width;
         //background.displayHeight = background.displayHeight * widthRatio
-        this.menuMusic = this.sound.add('snd_music_rainyDay')
-        this.menuMusic.play()
-        this.menuMusic.setVolume(0.7)
-        if(this.playerSettings.audioMuted) this.menuMusic.mute = true
+        this.menuMusic = this.sound.add('snd_music_cheese')
+        if(!this.playSong){
+            this.menuMusic.play()
+            this.menuMusic.setVolume(0.7)
+            if(this.playerSettings.audioMuted) this.menuMusic.mute = true
+        }
+        
 
         
         //COIN
@@ -49,10 +57,12 @@ class Menu extends Phaser.Scene {
         this.numDiamonds = this.add.text(config.width*0.5,config.height/13 - 1, this.playerSettings.diamonds, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
 
         //CHEF POINTS
-        this.add.sprite(3*config.width/4 ,config.height/13,'assets_atlas','spr_button_babyUI')
-        this.add.sprite(2*config.width/3,config.height/11,'assets_atlas','spr_ui_chefLvl')
+        this.expUI = this.add.sprite(3*config.width/4 ,config.height/13,'assets_atlas','spr_button_babyUI')
+        this.expUI.scaleX = 1.5
+        this.expUI.x = 3.2*config.width/4
+        this.chefIcon = this.add.sprite(2*config.width/3,config.height/11,'assets_atlas','spr_ui_chefLvl')
         this.numPlayerLevel = this.add.text(2*config.width/3,config.height/11, this.playerSettings.level, { font: "12px PixelFont", fill: "#000000", align: "center" }).setOrigin(0.5).setResolution(10);
-        this.numChefPoints = this.add.text(5*config.width/7,config.height/13 - 1, this.playerSettings.experience +'/'+ 0, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setResolution(10);
+        this.numChefPoints = this.add.text(this.chefIcon.x + 10,config.height/13 - 1, this.playerSettings.experience +'/'+ 0, { font: "10px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0,0.5).setResolution(10);
         this.uploadPlayerLevel(0)
 
         //FREE DIAMONDS
@@ -75,7 +85,7 @@ class Menu extends Phaser.Scene {
         this.add.sprite(4.8*config.width/6, 6*config.height/7,'assets_atlas','spr_ui_icon_shop')
         this.shopTextButton = this.add.text(5.3*config.width/6, 6*config.height/7, this.gameStrings.shopButton, { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         this.shopButton.setInteractive().on('pointerdown', () => {
-            this.menuMusic.stop(), 
+            //this.menuMusic.stop(), 
             this.scene.start("Shop", { playerInfo: this.playerSettings });
         })
 
@@ -235,7 +245,7 @@ class Menu extends Phaser.Scene {
             this.showCurrentUpgrades(this.UpgradeGroupSelected)
         })
         
-
+        this.buySnd = this.sound.add('snd_purchase')
 
         this.buySlot.setInteractive().on('pointerdown', () => {
             switch(this.UpgradeSelected){
@@ -249,6 +259,7 @@ class Menu extends Phaser.Scene {
                         this.playerSettings.upgrades.coffeeTime += 1
                         this.savePlayerSettings()
                         this.upgradesPanelDescription(1);
+                        this.buySnd.play()
                         //this.upgradeDescriptionSlotText1.setText("-2 sec coffee time\nLevel: "+this.playerSettings.upgrades.coffeeTime)
                         //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.coffeeTime)
                     }
@@ -264,6 +275,7 @@ class Menu extends Phaser.Scene {
                         this.playerSettings.upgrades.coffeeMachineLevel += 1
                         this.savePlayerSettings()
                         this.upgradesPanelDescription(2);
+                        this.buySnd.play()
                         //this.upgradeDescriptionSlotText1.setText("+1 cofee machine\ncapacity\nLevel: "+this.playerSettings.upgrades.coffeMachineLevel)
                         //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.coffeMachineLevel)
                     }
@@ -279,6 +291,7 @@ class Menu extends Phaser.Scene {
                         this.playerSettings.upgrades.pancakeTime += 1
                         this.savePlayerSettings()
                         this.upgradesPanelDescription(3);
+                        this.buySnd.play()
                         //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
                         //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
                     }
@@ -295,6 +308,7 @@ class Menu extends Phaser.Scene {
                             this.playerSettings.upgrades.pancakeBurnTime += 1
                             this.savePlayerSettings()
                             this.upgradesPanelDescription(4);
+                            this.buySnd.play()
                             //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
                             //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
                         }
@@ -311,6 +325,7 @@ class Menu extends Phaser.Scene {
                             this.playerSettings.upgrades.pancakePanLevel += 1
                             this.savePlayerSettings()
                             this.upgradesPanelDescription(5);
+                            this.buySnd.play()
                             //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
                             //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
                         }
@@ -327,6 +342,7 @@ class Menu extends Phaser.Scene {
                             this.playerSettings.upgrades.tableClothPancakeLevel += 1
                             this.savePlayerSettings()
                             this.upgradesPanelDescription(6);
+                            this.buySnd.play()
                             //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
                             //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
                         }
@@ -343,6 +359,7 @@ class Menu extends Phaser.Scene {
                            this.playerSettings.upgrades.noodleTime += 1
                            this.savePlayerSettings()
                            this.upgradesPanelDescription(7);
+                           this.buySnd.play()
                            //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
                            //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
                        }
@@ -359,6 +376,7 @@ class Menu extends Phaser.Scene {
                          this.playerSettings.upgrades.noodleBurnTime += 1
                          this.savePlayerSettings()
                          this.upgradesPanelDescription(8);
+                         this.buySnd.play()
                          //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
                          //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
                      }
@@ -375,6 +393,7 @@ class Menu extends Phaser.Scene {
                            this.playerSettings.upgrades.noodleLevel += 1
                            this.savePlayerSettings()
                            this.upgradesPanelDescription(9);
+                           this.buySnd.play()
                            //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
                            //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pancakeTime)
                        }
@@ -390,7 +409,8 @@ class Menu extends Phaser.Scene {
                         this.numDiamonds.setText(this.playerSettings.diamonds)
                          this.playerSettings.upgrades.tableClothNoodleLevel += 1
                          this.savePlayerSettings()
-                         this.upgradesPanelDescription(9);
+                         this.upgradesPanelDescription(10);
+                         this.buySnd.play()
                          //this.upgradeDescriptionSlotText1.setText("-2 sec pancake time\nLevel: "+this.playerSettings.upgrades.pancakeTime)
                          //this.buySlotText.setText(500 + 500*this.playerSettings.upgrades.pao esncakeTime)
                      }
