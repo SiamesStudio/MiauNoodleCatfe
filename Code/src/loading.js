@@ -281,6 +281,7 @@ class Loading extends Phaser.Scene {
         
 		this.load.audio('snd_burnt', 'assets/sound/snd_burnt.wav'); //Used
 		this.load.audio('snd_coins_gain', 'assets/sound/snd_coins_gain.wav');
+        this.load.audio('snd_character_arrived', 'assets/sound/snd_character_arrived.wav');
 		this.load.audio('snd_dish', 'assets/sound/snd_dish.wav'); //Used
 		this.load.audio('snd_filling_catfe', 'assets/sound/snd_filling_catfe.wav'); //Used
 		this.load.audio('snd_gameOver', 'assets/sound/snd_gameOver.wav'); 

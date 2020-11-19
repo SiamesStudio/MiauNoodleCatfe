@@ -425,10 +425,9 @@ class tutorial extends Phaser.Scene {
         		var slotId = findFreeSlot(strainer, Strainer.slots);
         		var pos = Strainer.slots.getAt(slotId);
         		var cookingSound = GameManager.scene.sound.add('snd_noodles_cooking');
-        		var burntSound = GameManager.scene.sound.add('snd_burnt');
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
-        		var noodles = new TutorialNoodles(slotId, trashSound, cookingSound, burntSound, readySound);
+        		var noodles = new TutorialNoodles(slotId, trashSound, cookingSound, readySound);
       			changePosition(noodles, pos.x,pos.y);
       			TipLogic.currentInstance.endCase21(noodleSpawnerImg);
         	} 
@@ -521,6 +520,7 @@ class tutorial extends Phaser.Scene {
             	yoyo: true
         	}); 
         
+        if(TutorialManager.tween.isPaused()) TutorialManager.play();
 		var numSteps = 28;
 		for(var i=0; i<numSteps; i++)
 		{

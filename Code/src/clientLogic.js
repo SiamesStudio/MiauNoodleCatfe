@@ -219,7 +219,10 @@ class Client{
     this.clientOutlineImg.setDepth(0.5);
     this.clientEmotionImg.setDepth(0.5);
     this.clientProgressBar.backBar.setDepth(0.5);
-    this.clientProgressBar.progressBar.setDepth(0.5);  
+    this.clientProgressBar.progressBar.setDepth(0.5);
+
+    var arrivalSound = GameManager.scene.sound.add('snd_character_arrived');
+    arrivalSound.play();
   }
 
   offsetClient(offset)
