@@ -312,8 +312,8 @@ class TutorialStrings{
         this.case27_0 = "Ya sabes todo lo que debes para que la felicidad del local no decaiga.";
         this.case27_1 = "Ya conoces los gustos de este cliente, ";
         this.case27_2 = "pero recuerda que deberás descubrir el del resto de clientes.";
-        this.case27_3 = "Para ello, fíjate en sus reacciones, ";
-        this.case27_4 = "en su aporte a la felicidad global y en sus conversaciones.";
+        this.case27_3 = "Para ello, fíjate en sus reacciones y ";
+        this.case27_4 = "en su aporte a la felicidad global";
         this.case27_5 = "Estoy seguro de que dejo el catfé en buenas patas. ¡MIAUCHA SUERTE!";
 
     }
@@ -362,9 +362,8 @@ class TutorialStrings{
         this.case26 = "Recoge las monedas dejadas por el cliente.";
         this.case27_0 = "Ya sabes todo lo que debes para que la felicidad del local no decaiga.";
         this.case27_1 = "Ya conoces los gustos de este cliente, ";
-        this.case27_2 = "pero recuerda que deberás descubrir el del resto de clientes.";
-        this.case27_3 = "Para ello, fíjate en sus reacciones, ";
-        this.case27_4 = "en su aporte a la felicidad global y en sus conversaciones.";
+        this.case27_3 = "Para ello, fíjate en sus reacciones y ";
+        this.case27_4 = "en su aporte a la felicidad global";
         this.case27_5 = "Estoy seguro de que dejo el catfé en buenas patas. ¡MIAUCHA SUERTE!";
     }
 
@@ -415,8 +414,8 @@ class TutorialStrings{
         this.case27_0 = "You know everything so that the happiness of the place stays high.";
         this.case27_1 = "You already know the tastes of this client, ";
         this.case27_2 = "but remember that you must discover that of the rest of the clients.";
-        this.case27_3 = "To do this, look at their reactions, ";
-        this.case27_4 = "their contribution to global happiness and their conversations.";
+        this.case27_3 = "To do this, look at their reactions and ";
+        this.case27_4 = "their contribution to global happiness. ";
         this.case27_5 = "I am sure that I left the catfé on good feet. GOOD LUCK!";
     }
 }

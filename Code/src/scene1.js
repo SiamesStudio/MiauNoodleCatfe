@@ -213,7 +213,13 @@ class scene1 extends Phaser.Scene {
 		this.add.sprite(config.width*0.145,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
 		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5)
-
+        this.options2 = this.add.sprite(config.width*0.1,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5)
+        this.options.setInteractive().on('pointerdown', () => {
+            GameManager.stopTimers();
+        })
+        this.options2.setInteractive().on('pointerdown', () => {
+            GameManager.resumeTimers();
+        })
 
 		this.coinSlider=this.add.sprite(config.width*0.5+config.width,config.height/13,'assets_atlas','spr_ui_slider')
         this.coinIcon=this.add.sprite(config.width*0.4+config.width,config.height/11,'assets_atlas','spr_ui_icon_coin')
@@ -573,7 +579,10 @@ class scene1 extends Phaser.Scene {
         		break;
 
         	}
-        	if(numTablecloth-1 < i) tableclothImg.setAlpha(0.3);
+        	if(numTablecloth-1 < i)
+            {
+                tableclothImg.setAlpha(0.3);
+            } 
         	tableclothImg.setDepth(0.8);
         	tableclothImgList.add(tableclothImg);
         }
@@ -917,10 +926,90 @@ class GameManager
 	static customerCounter=3;
 	static totalHappiness=50;
 	static tutorial = false;
+    static paused = false;
 	constructor(scene)
 	{
 		GameManager.scene = scene;
 	}
+
+    static resumeTimers()
+    {
+        GameManager.paused = false;
+        console.log("GameManager.paused: " + GameManager.paused);
+        for(var i=0; i<Coffee.coffeeList.length; i++)
+        {
+            Coffee.coffeeList.getAt(i).timer.paused = false;
+        }
+
+        for(var i=0; i<Noodles.noodlesList.length; i++)
+        {
+            Noodles.noodlesList.getAt(i).doneTimer.paused = false;
+            Noodles.noodlesList.getAt(i).burnTimer.paused = false;
+        }
+
+        for(var i=0; i<Pancake.pancakesList.length; i++)
+        {
+            Pancake.pancakesList.getAt(i).sideTimer.paused = false;
+            Pancake.pancakesList.getAt(i).burnTimer.paused = false;
+        }
+
+        var clientList = getClientsInRestaurant();
+        for(var i=0; i<clientList.length; i++)
+        {
+            clientList.getAt(i).timeLeft.paused = false;
+            if(clientList.getAt(i).order.dishes.length == 1)
+            {
+                clientList.getAt(i).order.dishes.getAt(0).pointsTimer.paused = false;
+            }
+            else if(clientList.getAt(i).order.dishes.length == 2)
+            {
+                clientList.getAt(i).order.dishes.getAt(0).pointsTimer.paused = false;
+                clientList.getAt(i).order.dishes.getAt(1).pointsTimer.paused = false;
+            }
+            
+            clientList.getAt(i).timeLeft.paused = false;
+        }
+    }
+
+    static stopTimers()
+    {
+        GameManager.paused = true;
+        console.log("GameManager.paused: " + GameManager.paused);
+        for(var i=0; i<Coffee.coffeeList.length; i++)
+        {
+            Coffee.coffeeList.getAt(i).timer.paused = true;
+        }
+
+        for(var i=0; i<Noodles.noodlesList.length; i++)
+        {
+            Noodles.noodlesList.getAt(i).doneTimer.paused = true;
+            Noodles.noodlesList.getAt(i).burnTimer.paused = true;
+        }
+
+        for(var i=0; i<Pancake.pancakesList.length; i++)
+        {
+            Pancake.pancakesList.getAt(i).sideTimer.paused = true;
+            Pancake.pancakesList.getAt(i).burnTimer.paused = true;
+        }
+
+        var clientList = getClientsInRestaurant();
+        console.log("clientList.length: " + clientList.length);
+        for(var i=0; i<clientList.length; i++)
+        {
+            clientList.getAt(i).timeLeft.paused = true;
+            if(clientList.getAt(i).order.dishes.length == 1)
+            {
+                clientList.getAt(i).order.dishes.getAt(0).pointsTimer.paused = true;
+            }
+            else if(clientList.getAt(i).order.dishes.length == 2)
+            {
+                clientList.getAt(i).order.dishes.getAt(0).pointsTimer.paused = true;
+                clientList.getAt(i).order.dishes.getAt(1).pointsTimer.paused = true;
+            }
+            
+            clientList.getAt(i).timeLeft.paused = true;
+        }
+    }
 
 	static resetVariables()
 	{
@@ -955,6 +1044,7 @@ class GameManager
         GameManager.customerCounter = 1;
         GameManager.totalHappiness = 50;
         GameManager.tutorial = false;
+        GameManager.paused = false;
 	}
 }
 
@@ -1401,7 +1491,7 @@ function makeImgInteractive(itemClass, itemImg, item, cookingSound, _pixelPerfec
 }
 
 function callClient(place){ 
-    if(!GameManager.gameOn) return;
+    if(!GameManager.gameOn || GameManager.paused) return;
 
 	var long=Client.clientsInRestaurant.length
   	var clientId= Math.floor(Math.random()*Client.clientList.length);

@@ -1,6 +1,7 @@
 class Coffee
 {
 	static coffeeTime = 8; //8
+	static coffeeList = new Phaser.Structs.List();
 	constructor(assignedSlot, fillingSound, readySound)
 	{
 		this.index = 0;
@@ -29,6 +30,7 @@ class Coffee
 		});
 		this.img.anims.play('fillCoffee');
 		CoffeeMachine.playAnim(this.assignedSlot);
+		Coffee.coffeeList.add(this);
 	}
 
 	coffeeDone()
@@ -55,13 +57,13 @@ class Coffee
 		{
 			this.img.setPosition(this.posx,this.posy);
 		}
-		grabItem("", null, null);
-		
+		grabItem("", null, null);	
 	}
 
 	/* Here implement the dish comparison with the client */
 	deliverCoffee(coffeeImg, clientImg)
 	{
+		Coffee.coffeeList.remove();
 		GameManager.scene.physics.world.removeCollider(this.clientCollider);
 		coffeeImg.disableBody(true,true);
 		clientImg.setAlpha(1);
