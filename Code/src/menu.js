@@ -24,7 +24,11 @@ class Menu extends Phaser.Scene {
 
     create(){
         var scene = this;
-        var background = this.add.image(config.width/2,config.height/2,'bg_interior')//fondo
+        //var background = this.add.image(config.width/2,config.height/2,'bg_interior')//fondo
+        var background_window = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_window');
+        var background_interior_back= this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_back');
+        var background_interior_barra = this.add.image(config.width*0.5, config.height*0.715, 'bg_interior_barra');
+        var background_interior_cristal = this.add.image(config.width*0.62, config.height*0.32, 'bg_interior_cristal');
         //var widthRatio = config.width / background.displayWidth
         //background.displayWidth = config.width;
         //background.displayHeight = background.displayHeight * widthRatio
@@ -218,12 +222,12 @@ class Menu extends Phaser.Scene {
         this.buySlotTextGem = this.add.text(1.8*config.width/3, 2*config.height/3 + 6,3 + 3*this.playerSettings.upgrades.coffeeTime ,{ font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setVisible(false).setResolution(10)
 
 
-        this.upgradeChangeSection = this.add.sprite(1.2*config.width/3, 1.25*config.height/6, 'assets_atlas','spr_ui_arrow').setVisible(false)//Panel opcion
+        this.upgradeChangeSection = this.add.sprite(1.25*config.width/3, 1.25*config.height/6, 'assets_atlas','spr_ui_arrow').setVisible(false)//Panel opcion
         this.upgradeChangeSection.setInteractive().on('pointerdown', () => {
             this.UpgradeGroupSelected = (this.UpgradeGroupSelected + 1) % 3
             this.showCurrentUpgrades(this.UpgradeGroupSelected)
         })
-        this.upgradeChangeSectionMinus = this.add.sprite(0.5*config.width/3, 1.25*config.height/6, 'assets_atlas','spr_ui_arrow').setVisible(false)//Panel opcion
+        this.upgradeChangeSectionMinus = this.add.sprite(0.45*config.width/3, 1.25*config.height/6, 'assets_atlas','spr_ui_arrow').setVisible(false)//Panel opcion
         this.upgradeChangeSectionMinus.flipX = true
         this.upgradeChangeSectionMinus.setInteractive().on('pointerdown', () => {
             this.UpgradeGroupSelected = this.UpgradeGroupSelected - 1
@@ -1034,12 +1038,13 @@ class Menu extends Phaser.Scene {
         this.freeGemsTextButton.text = this.gameStrings.freeGemsText
         this.shopTextButton.text = this.gameStrings.shopButton
         this.upgradesTextButton.text = this.gameStrings.upgradesButtonText
+        this.playButtonText.setText(this.gameStrings.playButton)
         //AD
         this.textAd.text = this.gameStrings.FreeGems_Button
         this.textPreAd.text = this.gameStrings.FreeGems_Text
         this.titleAd.text = this.gameStrings.FreeGems_Title
         //Options
-        this.titleOptions.text = this.gameStrings.OptionMenu_title
+        this.titleOptions.text = this.gameStrings.OptionMenu_titles
         this.volumeOptions.text = this.gameStrings.OptionsMenu_text
         this.languageOptions.text = this.gameStrings.OptionsMenu_language
 
