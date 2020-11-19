@@ -311,16 +311,16 @@ class scene1 extends Phaser.Scene {
             this.optionsPanel();
         })
 
-		this.blackScreen = this.add.image(config.width/2, config.height/2, 'blackScreen').setAlpha(0.5).setDepth(5);
+		this.blackScreen = this.add.image(config.width/2, config.height/2, 'blackScreen').setAlpha(0.5).setDepth(10);
         this.blackScreen.setVisible(false)
-        this.extraBanner = this.add.sprite(config.width/2, config.height/2,'assets_atlas','spr_bck_improvementMenu').setDepth(5)
+        this.extraBanner = this.add.sprite(config.width/2, config.height/2,'assets_atlas','spr_bck_improvementMenu').setDepth(10)
         this.extraBanner.setVisible(false)
-        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow').setDepth(5)
+        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow').setDepth(10)
 		this.crossButton.setVisible(false)
-        this.crossButtonPause = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow').setDepth(5).setVisible(false);
+        this.crossButtonPause = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow').setDepth(10).setVisible(false);
         
-		this.victoryText=this.add.text(config.width/2, config.height/2, "Victory", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
-		this.defeatText=this.add.text(config.width/2, config.height/2, "Defeat", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
+		this.victoryText=this.add.text(config.width/2, config.height/2, "Victory", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(10);
+		this.defeatText=this.add.text(config.width/2, config.height/2, "Defeat", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(10);
 
 		this.blackScreen.setInteractive().on('pointerdown', () => {
             
@@ -333,15 +333,15 @@ class scene1 extends Phaser.Scene {
             this.disableOptionsPanel();
         })
 		
-		this.blackScreenNoodles = this.add.image(config.width/2+config.width, config.height/2, 'blackScreen').setAlpha(0.5).setDepth(5);
+		this.blackScreenNoodles = this.add.image(config.width/2+config.width, config.height/2, 'blackScreen').setAlpha(0.5).setDepth(10);
         this.blackScreenNoodles.setVisible(false)
-        this.extraBannerNoodles = this.add.sprite(config.width/2+config.width, config.height/2,'assets_atlas','spr_bck_improvementMenu').setDepth(5)
+        this.extraBannerNoodles = this.add.sprite(config.width/2+config.width, config.height/2,'assets_atlas','spr_bck_improvementMenu').setDepth(10)
         this.extraBannerNoodles.setVisible(false)
-        this.crossButtonNoodles = this.add.sprite(4*config.width/5+config.width, 1*config.height/5,'spr_closeWindow').setDepth(5)
+        this.crossButtonNoodles = this.add.sprite(4*config.width/5+config.width, 1*config.height/5,'spr_closeWindow').setDepth(10)
 		this.crossButtonNoodles.setVisible(false)
-        this.crossButtonPauseNoodles = this.add.sprite(4*config.width/5 + config.width, 1*config.height/5,'spr_closeWindow').setDepth(5).setVisible(false);
-		this.victoryTextNoodles=this.add.text(config.width/2+config.width, config.height/2, "Victory", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
-		this.defeatTextNoodles=this.add.text(config.width/2+config.width, config.height/2, "Defeat", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
+        this.crossButtonPauseNoodles = this.add.sprite(4*config.width/5 + config.width, 1*config.height/5,'spr_closeWindow').setDepth(10).setVisible(false);
+		this.victoryTextNoodles=this.add.text(config.width/2+config.width, config.height/2, "Victory", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(10);
+		this.defeatTextNoodles=this.add.text(config.width/2+config.width, config.height/2, "Defeat", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(10);
 
 		this.blackScreenNoodles.setInteractive().on('pointerdown', () => {
 		})
