@@ -181,6 +181,27 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">../../../../jwrrss_miau_cafe/spr_cat_basecolor.png</key>
+            <key type="filename">../../../../jwrrss_miau_cafe/spr_cat_emotion_happy.png</key>
+            <key type="filename">../../../../jwrrss_miau_cafe/spr_cat_emotion_normal.png</key>
+            <key type="filename">../../../../jwrrss_miau_cafe/spr_cat_emotion_sad.png</key>
+            <key type="filename">../../../../jwrrss_miau_cafe/spr_cat_outline.png</key>
+            <key type="filename">../../../../jwrrss_miau_cafe/spr_cat_secondcolor_spots.png</key>
+            <key type="filename">../../../../jwrrss_miau_cafe/spr_cat_secondcolor_stripes.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,10,29,21</rect>
+                <key>scale9Paddings</key>
+                <rect>15,10,29,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">main_title_button_contact.png</key>
             <key type="filename">main_title_button_play.png</key>
             <key type="filename">spr_bg_sauce_kimuchi.png</key>
@@ -381,6 +402,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">spr_bowl_pile.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,8,18,16</rect>
+                <key>scale9Paddings</key>
+                <rect>9,8,18,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">spr_buttomMenu.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -426,6 +462,21 @@
                 <rect>22,19,45,39</rect>
                 <key>scale9Paddings</key>
                 <rect>22,19,45,39</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_coins.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,5,9,9</rect>
+                <key>scale9Paddings</key>
+                <rect>4,5,9,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -640,6 +691,9 @@
             </struct>
             <key type="filename">spr_pancake_coconut.png</key>
             <key type="filename">spr_pancake_strawberry.png</key>
+            <key type="filename">spr_topping_syrup_caramel.png</key>
+            <key type="filename">spr_topping_syrup_chocolate.png</key>
+            <key type="filename">spr_topping_syrup_strawberry.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -742,6 +796,21 @@
                 <rect>10,10,20,19</rect>
                 <key>scale9Paddings</key>
                 <rect>10,10,20,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">spr_speechbubble.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,9,23,17</rect>
+                <key>scale9Paddings</key>
+                <rect>12,9,23,17</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1224,6 +1293,19 @@
             <filename>spr_buttomMenu.png</filename>
             <filename>spr_button_babyUI.png</filename>
             <filename>spr_arrow_improvementMenu.png</filename>
+            <filename>../../../../jwrrss_miau_cafe/spr_cat_basecolor.png</filename>
+            <filename>../../../../jwrrss_miau_cafe/spr_cat_emotion_happy.png</filename>
+            <filename>../../../../jwrrss_miau_cafe/spr_cat_emotion_normal.png</filename>
+            <filename>../../../../jwrrss_miau_cafe/spr_cat_emotion_sad.png</filename>
+            <filename>../../../../jwrrss_miau_cafe/spr_cat_outline.png</filename>
+            <filename>../../../../jwrrss_miau_cafe/spr_cat_secondcolor_spots.png</filename>
+            <filename>../../../../jwrrss_miau_cafe/spr_cat_secondcolor_stripes.png</filename>
+            <filename>spr_speechbubble.png</filename>
+            <filename>spr_bowl_pile.png</filename>
+            <filename>spr_topping_syrup_caramel.png</filename>
+            <filename>spr_topping_syrup_chocolate.png</filename>
+            <filename>spr_topping_syrup_strawberry.png</filename>
+            <filename>spr_coins.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
