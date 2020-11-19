@@ -219,7 +219,14 @@ class Loading extends Phaser.Scene {
         this.load.image('bg_maintitle_on','assets/bg_maintitle_on.png');
         this.load.image('bg_maintitle_off','assets/bg_maintitle_off.png');
         this.load.image('bg_maintitle_light','assets/bg_maintitle_light.png');
+        this.load.image('bg_maintitle_light2','assets/bg_maintitle_light2.png');
+        this.load.image('bg_interior_empty','assets/bg_interior_empty.png');
         this.load.image('bg_contact','assets/bg_contact.png');
+        
+        this.load.image('bg_dawn','assets/backgrounds/bg_dawn.png');
+        this.load.image('bg_night','assets/backgrounds/bg_night.png');
+        this.load.image('bg_sunrise','assets/backgrounds/bg_sunrise.png');
+
         this.load.image('spr_clue','assets/UI/spr_clue.png');
         this.load.image('spr_back1','assets/spr_back.png');
         this.load.image('spr_ui_settings1','assets/spr_ui_settings.png');

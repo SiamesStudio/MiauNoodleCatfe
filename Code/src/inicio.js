@@ -26,18 +26,17 @@ class Inicio extends Phaser.Scene {
         var scene = this;
         this.backgroundMenuOff = this.add.sprite(config.width/2,config.height/2,'bg_maintitle_off')
         this.backgroundMenuOn = this.add.sprite(config.width/2,config.height/2,'bg_maintitle_on').setVisible(false)
-        this.backgroundMenuLight = this.add.sprite(config.width/2,config.height/2,'bg_maintitle_light').setBlendMode(Phaser.BlendModes.SOFT_LIGHT).setAlpha(0)
-        //this.add.tween(this.backgroundMenuLight).to( { alpha: 0.6 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000,true);
+        this.backgroundMenuLight = this.add.sprite(config.width/2,config.height/2,'bg_maintitle_light2').setAlpha(0)
 
        
-        this.tweens.add({
-          targets: this.backgroundMenuLight ,
-          alpha: 0.6, // '+=100'
-          ease: "Elastic", // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
-          duration: 1000,
-          repeat: -1,
-          yoyo: true
-          });
+        this.tween = this.tweens.add({
+            targets: this.backgroundMenuLight,
+            alpha: 1,
+            ease: "Elastic", // 'Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 1000,
+            repeat: -1,
+            yoyo: true
+        });
 
         var contactButton = this.add.image(config.width/2, 1.6*config.height/2, 'assets_atlas','main_title_button_contact')
         
@@ -50,36 +49,34 @@ class Inicio extends Phaser.Scene {
         this.snd_door = this.sound.add('snd_opening_door');
         
         playButton.setInteractive().on('pointerdown', () => {
+            this.tween.stop()
+            this.backgroundMenuOff.setVisible(false)
             contactButton.disableInteractive()
             playButton.disableInteractive()
             setTimeout(function(){
                 currentScene.backgroundMenuOn.setVisible(true)
                 //currentScene.backgroundMenuLight.setVisible(true)
-                currentScene.backgroundMenuOff.setVisible(false)
+                currentScene.backgroundMenuLight.setVisible(false)
                 setTimeout(function(){
                     currentScene.backgroundMenuOn.setVisible(false)
                     //currentScene.backgroundMenuLight.setVisible(false)
-                    currentScene.backgroundMenuOff.setVisible(true)
+                    currentScene.backgroundMenuLight.setVisible(true)
                     setTimeout(function(){
                         currentScene.backgroundMenuOn.setVisible(true)
                         //currentScene.backgroundMenuLight.setVisible(true)
-                        currentScene.backgroundMenuOff.setVisible(true)
+                        currentScene.backgroundMenuLight.setVisible(true)
                         setTimeout(function(){
                             currentScene.backgroundMenuOn.setVisible(false)
                             //currentScene.backgroundMenuLight.setVisible(false)
-                            currentScene.backgroundMenuOff.setVisible(true)
+                            currentScene.backgroundMenuLight.setVisible(true)
                             setTimeout(function(){
                                 currentScene.backgroundMenuOn.setVisible(true)
                                 //currentScene.backgroundMenuLight.setVisible(true)
-                                currentScene.backgroundMenuOff.setVisible(false)    
+                                currentScene.backgroundMenuLight.setVisible(false)    
                                 currentScene.snd_door.play()                      
                                 setTimeout(function(){                                    
                                     currentScene.music.stop()
-                                    currentScene.cameras.main.fadeOut(1000,0xffffff, 0xffffff,0xffffff,);
-                                    //currentScene.scene.start("Menu", {playerInfo: currentScene.playerSettings });
-                                    //setTimeout(function(){
-                                    //    currentScene.scene.start("Menu", {playerInfo: currentScene.playerSettings });
-                                    //}, 2000);
+                                    currentScene.cameras.main.fadeOut(1000,0xffffff, 0xffffff,0xffffff,)
                                 }, 1500);
                             }, 100);
                         }, 100);
