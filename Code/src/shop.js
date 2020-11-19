@@ -22,11 +22,11 @@ class Shop extends Phaser.Scene {
     create(){
         this.CoinsSelected = true;
         var scene = this;
-        //var background = this.add.image(config.width/2,config.height/2,'bg_interior')
-        var background_window = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_window');
-        var background_interior_back= this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_back');
-        var background_interior_barra = this.add.image(config.width*0.5, config.height*0.715, 'bg_interior_barra');
-        var background_interior_cristal = this.add.image(config.width*0.62, config.height*0.32, 'bg_interior_cristal');
+        var background = this.add.image(config.width/2,config.height/2,'bg_interior_empty')
+        //var background_window = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_window');
+        //var background_interior_back= this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_back');
+        //var background_interior_barra = this.add.image(config.width*0.5, config.height*0.715, 'bg_interior_barra');
+        //var background_interior_cristal = this.add.image(config.width*0.62, config.height*0.32, 'bg_interior_cristal');
 
 
         this.shopBanner = this.add.sprite(config.width/2, config.height/2,'assets_atlas', 'spr_bck_shopMenu')

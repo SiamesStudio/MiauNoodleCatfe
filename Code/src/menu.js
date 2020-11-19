@@ -29,11 +29,11 @@ class Menu extends Phaser.Scene {
 
     create(){
         var scene = this;
-        //var background = this.add.image(config.width/2,config.height/2,'bg_interior')//fondo
-        var background_window = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_window');
-        var background_interior_back= this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_back');
-        var background_interior_barra = this.add.image(config.width*0.5, config.height*0.715, 'bg_interior_barra');
-        var background_interior_cristal = this.add.image(config.width*0.62, config.height*0.32, 'bg_interior_cristal');
+        var background = this.add.image(config.width/2,config.height/2,'bg_interior_empty')//fondo
+        //var background_window = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_window');
+        //var background_interior_back= this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_back');
+        //var background_interior_barra = this.add.image(config.width*0.5, config.height*0.715, 'bg_interior_barra');
+        //var background_interior_cristal = this.add.image(config.width*0.62, config.height*0.32, 'bg_interior_cristal');
         //var widthRatio = config.width / background.displayWidth
         //background.displayWidth = config.width;
         //background.displayHeight = background.displayHeight * widthRatio
@@ -144,7 +144,7 @@ class Menu extends Phaser.Scene {
         this.blackScreen.setVisible(false)
         this.extraBanner = this.add.sprite(config.width/2, config.height/2,'assets_atlas','spr_bck_improvementMenu')
         this.extraBanner.setVisible(false)
-        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow')
+        this.crossButton = this.add.sprite(config.width/2 - this.extraBanner.width/2 + 10, config.height/2 + this.extraBanner.height/2 - 10,'assets_atlas','spr_back')
         this.crossButton.setVisible(false)
         this.crossButton.setInteractive().on('pointerdown', () => {this.enableAllButtons();})
 
@@ -797,6 +797,7 @@ class Menu extends Phaser.Scene {
         //this.taskButton.disableInteractive()
         this.backButton.disableInteractive()
         this.playButton.disableInteractive()
+        this.tutorialButton.disableInteractive()
         this.extraBanner.setVisible(true)//Pintar panel -> Mismo para todas las acciones
         this.crossButton.setVisible(true)//Pintar boton de cerrar panel
         //this.expButton.disableInteractive()
@@ -813,6 +814,7 @@ class Menu extends Phaser.Scene {
         //this.taskButton.setInteractive()
         this.backButton.setInteractive()
         this.playButton.setInteractive()
+        this.tutorialButton.setInteractive()
         this.blackScreen.setVisible(false)//Desoscurecer la pantalla
         this.extraBanner.setVisible(false)
         this.crossButton.setVisible(false)
