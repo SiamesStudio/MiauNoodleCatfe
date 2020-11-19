@@ -288,7 +288,7 @@ class Pancake
 class Noodles
 {
 	static noodlesList = new Phaser.Structs.List();
-	static doneTime = 10; //10
+	static doneTime = 3; //10
 	static burnTime = 17; //17
 	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound)
 	{
@@ -354,6 +354,19 @@ class Noodles
 
 	noodlesDone()
 	{
+		var auxImg = GameManager.scene.physics.add.sprite(this.img.x,this.img.y,'anim_pot_noodles_done_'+this.assignedSlot);
+		auxImg.setDepth(1);
+		this.img.destroy();
+		this.img = null;
+		this.img = auxImg;
+		var burntCookingAnimation = GameManager.scene.anims.create({
+    		key: 'noodles_done_'+this.assignedSlot,
+    		frames: GameManager.scene.anims.generateFrameNumbers('anim_pot_noodles_done_' +this.assignedSlot, { start: 0, end: 2}),
+    		frameRate: 12,
+    		repeat: -1
+		});
+		this.img.anims.play('noodles_done_'+this.assignedSlot);
+		
 		this.readySound.play();
 		this.cookingSound.setMute(true);
 		this.makeNoodleInteractive();
@@ -718,7 +731,7 @@ class Syrup
 		GameManager.scene.anims.create({
     		key: _animPlayKey,
     		frames: GameManager.scene.anims.generateFrameNumbers(_animKey, { start: 0, end: 15}),
-    		duration: 1000*Syrup.servingTime*0.5,
+    		duration: 1000*Syrup.servingTime,
     		repeat: 1
 		});
 		GameManager.scene.anims.create({
@@ -861,7 +874,7 @@ class Sauce
 		GameManager.scene.anims.create({
     		key: _animPlayKey,
     		frames: GameManager.scene.anims.generateFrameNumbers(_animKey, { start: 0, end: 11}),
-    		duration: 1000*Sauce.servingTime*0.5,
+    		duration: 1000*Sauce.servingTime,
     		repeat: 1
 		});
 

@@ -1,7 +1,7 @@
 class TutorialCoffee
 {
 	static ref;
-	static coffeeTime = 0.5; //8 
+	static coffeeTime = 5; //8 
 	constructor(assignedSlot, fillingSound, readySound)
 	{
 		this.index = 0;
@@ -33,7 +33,7 @@ class TutorialCoffee
 		TipLogic.currentInstance.endGlassesInteractivity(TutorialManager.glassesImg);
 	}
 
-	coffeeDone() //only call fomr tipLogic
+	coffeeDone() //only call from tipLogic
 	{
 		CoffeeMachine.stopAnim(this.assignedSlot);
 		this.readySound.play();
@@ -86,7 +86,7 @@ class TutorialCoffee
 class TutorialPancake
 {
 	static ref;
-	static time = 1;
+	static time = 5;
 	constructor(assignedSlot, trashSound, cookingSound, readySound, posx, posy)
 	{
 		this.index = 1;
@@ -220,7 +220,7 @@ class TutorialPancake
 class TutorialNoodles
 {
 	static noodlesList = new Phaser.Structs.List();
-	static doneTime = 2; //10
+	static doneTime = 5; //10
 	constructor(assignedSlot, trashSound, cookingSound, readySound)
 	{
 		this.posx;
@@ -272,9 +272,23 @@ class TutorialNoodles
 
 	noodlesDone()
 	{
+		this.readySound.play();
+
+		var auxImg = GameManager.scene.physics.add.sprite(this.img.x,this.img.y,'anim_pot_noodles_done_'+this.assignedSlot);
+		auxImg.setDepth(1);
+		this.img.destroy();
+		this.img = null;
+		this.img = auxImg;
+		var burntCookingAnimation = GameManager.scene.anims.create({
+    		key: 'noodles_done_'+this.assignedSlot,
+    		frames: GameManager.scene.anims.generateFrameNumbers('anim_pot_noodles_done_' +this.assignedSlot, { start: 0, end: 2}),
+    		frameRate: 12,
+    		repeat: -1
+		});
 		this.img.setPipeline('GlowFilter');
 		this.cookedImg.setPipeline('GlowFilter');
-		this.readySound.play();
+		this.img.anims.play('noodles_done_'+this.assignedSlot);
+
 		this.cookingSound.setMute(true);
 		//case23
 		this.makeNoodleInteractive();		
@@ -619,8 +633,8 @@ class TutorialSyrup
 		GameManager.scene.anims.create({
     		key: _animPlayKey,
     		frames: GameManager.scene.anims.generateFrameNumbers(_animKey, { start: 0, end: 15}),
-    		duration: 1000*Syrup.servingTime*0.5,
-    		repeat: 1
+    		duration: 1000*Syrup.servingTime,
+    		repeat: 0
 		});
 		GameManager.scene.anims.create({
     		key: _animIdleKey,
@@ -771,8 +785,8 @@ class TutorialSauce
 		GameManager.scene.anims.create({
     		key: _animPlayKey,
     		frames: GameManager.scene.anims.generateFrameNumbers(_animKey, { start: 0, end: 11}),
-    		duration: 1000*Sauce.servingTime*0.25,
-    		repeat: 4
+    		duration: 1000*Sauce.servingTime,
+    		repeat: 0
 		});
 
 		GameManager.scene.anims.create({
@@ -861,6 +875,7 @@ class TutorialDishContainer
 		this.clientCollider;
 		this.toppings = new Phaser.Structs.List();
 		this.sauce=-1;
+		this.dishContainer.setDepth(1);
 	}
 
 	addToContainer(img, xOffset, yOffset)

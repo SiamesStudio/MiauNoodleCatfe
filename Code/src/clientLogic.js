@@ -222,6 +222,16 @@ class Client{
     
   }
 
+  offsetClient(offset)
+  {
+    this.clientImg.setPosition(this.clientImg.x+offset, this.clientImg.y);
+    this.clientSecondImg.setPosition(this.clientSecondImg.x+offset, this.clientSecondImg.y);
+    this.clientOutlineImg.setPosition(this.clientOutlineImg.x+offset, this.clientOutlineImg.y);
+    this.clientEmotionImg.setPosition(this.clientEmotionImg.x+offset, this.clientEmotionImg.y);
+    this.clientProgressBar.backBar.setPosition(this.clientImg.x+offset, this.clientImg.y);
+    this.clientProgressBar.progressBar.setPosition(this.clientImg.x+offset, this.clientImg.y);
+  }
+
   compareOrderWithDish(dish){
     var aux=this.order.compareDish(dish);
     var points=aux[0]

@@ -206,10 +206,11 @@ class Strainer extends Machine //arregla joselu
 	{
 		super(img, upgradeLVL);
 		this.resetVars();
-		Strainer.slots.add(new Slot(img.x-config.width*0.06,img.y-config.height*0.11));
-		Strainer.slots.add(new Slot(img.x+config.width*0.027,img.y-config.height*0.11));
-		Strainer.slots.add(new Slot(img.x-config.width*0.04,img.y-config.height*0.055));
-		Strainer.slots.add(new Slot(img.x+config.width*0.04,img.y-config.height*0.055));
+		Strainer.slots.add(new Slot(img.x-config.width*0.06+config.width*0.03,img.y-config.height*0.11-config.height*0.03));
+		Strainer.slots.add(new Slot(img.x+config.width*0.027+config.width*0.03,img.y-config.height*0.11-config.height*0.03));
+		Strainer.slots.add(new Slot(img.x-config.width*0.04+config.width*0.03,img.y-config.height*0.055-config.height*0.03));
+		Strainer.slots.add(new Slot(img.x+config.width*0.04+config.width*0.03,img.y-config.height*0.055-config.height*0.03));
+
 	}
 
 	resetVars()

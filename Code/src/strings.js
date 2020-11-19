@@ -291,7 +291,7 @@ class TutorialStrings{
         this.case12_0 = "La velocidad con la que has realizado el pedido y";
         this.case12_1 = "cuánto le ha gustado, determina cuántos puntos de chef ganas.";
         this.case12_2 = "También influyen en la felicidad global del restaurante.";
-        this.case12_3 = "No dejes que decaiga por debajo del límite indicado o tendremos que cerrar.";
+        this.case12_3 = "No dejes que decaiga o tendremos que cerrar.";
         this.case13 = "Recoge las monedas dejadas por el cliente.";
         this.case14 = "Cambiemos la música, que esta canción ya la he escuchado.";
         this.case15 = "Puedes cambiar el volumen y la canción. Cambia la canción.";
@@ -342,7 +342,7 @@ class TutorialStrings{
         this.case12_0 = "La velocidad con la que has realizado el pedido y";
         this.case12_1 = "cuánto le ha gustado, determina cuántos puntos de chef ganas.";
         this.case12_2 = "También influyen en la felicidad global del restaurante.";
-        this.case12_3 = "No dejes que decaiga por debajo del límite indicado o tendremos que cerrar.";
+        this.case12_3 = "No dejes que decaiga o tendremos que cerrar.";
         this.case13 = "Recoge las monedas dejadas por el cliente.";
         this.case14 = "Cambiemos la música, que esta canción ya la he escuchado.";
         this.case15 = "Puedes cambiar el volumen y la canción. Cambia la canción.";
@@ -400,7 +400,7 @@ class TutorialStrings{
        
         this.case16_0 = "Customers will be able to give information about their tastes";
         this.case16_1 = "... or about things not so interesting.";
-        this.case17 = "It seems that a customer has arrived. Let's see if it's to order noodles";
+        this.case17 = "It seems that a customer has arrived. Is it to order noodles?";
         this.case18_0 = "It is the same customer! He is surely an elite athlete,";
         this.case18_1 = "take good care of such a large clientele.";
         this.case19 = "Luckily we've heard before how he likes noodles.";
@@ -412,7 +412,7 @@ class TutorialStrings{
         this.case24 = "Lastly, drag his favorite topping to the bowl";
         this.case25 = "Ya está hecho. Arrastra el plato al cliente.";
         this.case26 = "It is done. Drag the plate to the customer.";
-        this.case27_0 = "You already know everything so that the happiness of the place does not decline.";
+        this.case27_0 = "You know everything so that the happiness of the place stays high.";
         this.case27_1 = "You already know the tastes of this client, ";
         this.case27_2 = "but remember that you must discover that of the rest of the clients.";
         this.case27_3 = "To do this, look at their reactions, ";

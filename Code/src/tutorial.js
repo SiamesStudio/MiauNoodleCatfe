@@ -3,6 +3,12 @@ class tutorial extends Phaser.Scene {
 		super("tutorial");
 	}
 
+    init(gameData)
+    {
+        this.playerSettings;
+        this.playerSettings = gameData.playerInfo;      
+    }
+
 	preload()
 	{
 		this.load.plugin('rexglowfilterpipelineplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexglowfilterpipelineplugin.min.js', true);
@@ -28,8 +34,7 @@ class tutorial extends Phaser.Scene {
     	TutorialManager.tutorialPancakeClient = new Client(0, 1,[2,0,1,0], [1,1,1,1,2]);
     	TutorialManager.tutorialPancakeClient.tutorial = true;
     	callClient(1);
-    	TutorialManager.tutorialPancakeClient.clientImg.x += config.width*0.4;
-    	TutorialManager.tutorialPancakeClient.clientSecondImg.x += config.width*0.4;
+        TutorialManager.tutorialPancakeClient.offsetClient(config.width*0.4)
   	}
 
 	radioSettings(){
@@ -364,10 +369,13 @@ class tutorial extends Phaser.Scene {
 	{
 		var backgroundStreet = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_streetNoodles');
 		var background = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_kitchen');
+        background.setDepth(0.7);
 		
 		var noodleSpawnerImg = this.add.image(config.width*0.882 + config.width, config.height*0.91,'assets_atlas','spr_bg_noodles');
-		var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
-		GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
+		noodleSpawnerImg.setDepth(0.8);
+        var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
+		bigStrainerImg.setDepth(0.8);
+        GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
 		GameManager.animatedStrainerImg.setAlpha(0);
 		var strainerLvl = 0;
 		var cam = this.cameras.main;	
@@ -391,9 +399,9 @@ class tutorial extends Phaser.Scene {
 				case 3:
 					strainerImg = this.add.image(config.width*0.884 + config.width, config.height*0.422,'assets_atlas','spr_strainer_1'); 
 				break;
-
-			if(strainerLvl < i) strainerImg.setAlpha(0.3);
 			}
+			if(strainerLvl < i) strainerImg.setAlpha(0.3);
+            strainerImg.setDepth(0.8);
         }
 		
         this.anims.create({
@@ -406,7 +414,8 @@ class tutorial extends Phaser.Scene {
         var strainer = new Strainer(bigStrainerImg, strainerLvl);
         GameManager.strainer = strainer;
        	var trashCanImg = this.physics.add.sprite(config.width*0.09+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
-       	GameManager.trashCanImgNoodles = trashCanImg;
+       	trashCanImg.setDepth(0.8);
+        GameManager.trashCanImgNoodles = trashCanImg;
        	TutorialManager.noodleSpawner = noodleSpawnerImg;
         noodleSpawnerImg.setInteractive();
         noodleSpawnerImg.on('pointerdown', function(pointer){
@@ -419,7 +428,7 @@ class tutorial extends Phaser.Scene {
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
         		var noodles = new TutorialNoodles(slotId, trashSound, cookingSound, burntSound, readySound);
-      			changePosition(noodles, pos.x+config.width*0.03,pos.y-config.height*0.03);
+      			changePosition(noodles, pos.x,pos.y);
       			TipLogic.currentInstance.endCase21(noodleSpawnerImg);
         	} 
         })
@@ -452,7 +461,7 @@ class tutorial extends Phaser.Scene {
 
         	}
         	if(numTablecloth-1 < i) tableclothImg.setAlpha(0.3);
-        	
+        	tableclothImg.setDepth(0.8);
         	tableclothImgList.add(tableclothImg);
         }
 
@@ -460,6 +469,7 @@ class tutorial extends Phaser.Scene {
         
         GameManager.tableclothsNoodle = tableclothsNoodle;
         var dishPileImg = this.add.image(config.width*0.72 + config.width, config.height*0.92,'assets_atlas','spr_bowl');
+        dishPileImg.setDepth(0.8);
         dishPileImg.setInteractive();
         dishPileImg.on('pointerdown', function(pointer){
         	if(GameManager.dishImgContainerNoodles.length < numTablecloth)
@@ -744,6 +754,8 @@ class TutorialManager
 	static endTutorial()
 	{
 		console.log("TUTORIAL ENDED");
+        TutorialManager.scene.interferenceSound.stop();
+        TutorialManager.scene.currentSong.stop();
 		TutorialManager.resetVariables();
 		GameManager.scene.scene.start("Menu");
 	}
@@ -811,6 +823,12 @@ class TipData
 	constructor(_i)
 	{
 		this.tutorialStrings = new TutorialStrings();
+        if(GameManager.scene.playerSettings.language){
+            this.tutorialStrings.convertToSpanish()
+        }else{
+            this.tutorialStrings.convertToEnglish()
+        }
+
 		this.numTexts = 1;
 		this.currentText = 0;
 		this.readCount = 0;
@@ -1100,11 +1118,12 @@ class TipLogic
 			offset = 2*config.width;
 		}
 
-		this.textImg = TutorialManager.scene.add.image(config.width*0.2+offset, config.height*0.2, 'spr_clue');
-		this.textImg.setScale(1.2);
-		var style = { font: "10px PixelFont", fill: "#000000", align: "left", wordWrap:{ width: this.textImg.displayWidth-2, useAdvancedWrap:true} };
-		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.17, this.textImg.y-config.height*0.135, messageString, style).setResolution(10);
-
+		this.textImg = TutorialManager.scene.add.image(config.width*0.2+offset, config.height*0.28, 'spr_clue');
+		this.textImg.setScale(1.25,1);
+        this.textImg.setDepth(0.8);
+        var style = { font: "10px PixelFont", fill: "#000000", align: "left", wordWrap:{ width: this.textImg.displayWidth-2, useAdvancedWrap:true} };
+		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.18, this.textImg.y-config.height*0.135, messageString, style).setResolution(10);
+        this.text.setDepth(0.8);
 		var selfRef = this;
 
 		switch(tipDataContainer.type)
@@ -1113,7 +1132,7 @@ class TipLogic
 				console.log("TYPE WATCH");
 
 				var textContainer = this.textImg;
-				var nextButton = GameManager.scene.add.image(textContainer.x+config.width*0.205, textContainer.y+config.height*0.1,'assets_atlas', 'spr_ui_arrow');
+				var nextButton = GameManager.scene.add.image(textContainer.x+config.width*0.215, textContainer.y+config.height*0.08,'assets_atlas', 'spr_ui_arrow');
 				nextButton.setDepth(1);
                 nextButton.setPipeline('GlowFilter');
 				nextButton.setInteractive().on('pointerdown', function(pointer){
@@ -1122,8 +1141,9 @@ class TipLogic
 					{
 						selfRef.text.destroy();
 						messageString = textList.getAt(readCount);
-						selfRef.text = TutorialManager.scene.add.text(textContainer.x-config.width*0.17, textContainer.y-config.height*0.135, messageString, style).setResolution(10);
-						tipDataContainer.readCount++;
+						selfRef.text = TutorialManager.scene.add.text(textContainer.x-config.width*0.18, textContainer.y-config.height*0.135, messageString, style).setResolution(10);
+						selfRef.text.setDepth(0.8);
+                        tipDataContainer.readCount++;
 					}
 					else
 					{
@@ -1209,8 +1229,7 @@ class TipLogic
     	    				GameManager.scene.cameras.main.fadeOut(25);
     	    				selfRef.endCase17(img);
     	    				callClient(2);
-    	    				TutorialManager.tutorialPancakeClient.clientImg.x += config.width*0.45;
-    	    				TutorialManager.tutorialPancakeClient.clientSecondImg.x += config.width*0.45;
+                            TutorialManager.tutorialPancakeClient.offsetClient(config.width*0.4)
 						})
 						//To do
 						//Enable interactivity with noodlesViewButton

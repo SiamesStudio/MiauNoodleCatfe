@@ -196,6 +196,22 @@ class Loading extends Phaser.Scene {
         this.load.spritesheet('anim_pot_noodles_burnt_3', 'assets/animaciones/anim_pot_noodles_burnt_3.png',
         {frameWidth: 84,frameHeight: 85}
         );
+
+        this.load.spritesheet('anim_pot_noodles_done_0', 'assets/animaciones/anim_pot_noodles_done_0.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_done_1', 'assets/animaciones/anim_pot_noodles_done_1.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_done_2', 'assets/animaciones/anim_pot_noodles_done_2.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_done_3', 'assets/animaciones/anim_pot_noodles_done_3.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
         
         this.load.multiatlas('assets_atlas', 'assets/assets.json', 'assets');
         this.load.image('spr_cristal_canciones','assets/UI/UI_temporal/spr_cristal_canciones.png');

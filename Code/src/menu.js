@@ -95,7 +95,7 @@ class Menu extends Phaser.Scene {
         this.tutorialButtonText = this.add.text(this.levelSelection.x - (this.levelSelection.width/6),this.levelSelection.y, "Tutorial", { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         this.tutorialButton.setInteractive().on('pointerdown', () => {
             this.menuMusic.stop()
-            this.scene.start("tutorial");
+            this.scene.start("tutorial", { playerInfo: this.playerSettings });
         })
 
         //BACK

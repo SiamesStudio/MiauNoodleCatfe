@@ -1,5 +1,3 @@
-var joselu = false;
-
 class scene1 extends Phaser.Scene {
 	constructor() {
 		super("bootGame");
@@ -8,42 +6,14 @@ class scene1 extends Phaser.Scene {
 	init(gameData)
 	{
 		this.playerSettings;
-		if(joselu)
-		{
-			this.playerSettings = {
-            coins: 0,
-            diamonds: 0,
-            level: 1,
-            experience: 0,
-            language: false,
-			audioMuted: false,
-			gameLevel:1,
-            moneySpent: 0,
-            upgrades : {
-                coffeeTime : 0,
-                coffeeMachineLevel : 3,
-                pancakeTime : 0,
-                pancakeBurnTime : 0,
-                pancakePanLevel : 3,
-                noodleTime : 0,
-                noodleBurnTime : 0,
-                noodleLevel : 3,
-                tableClothPancakeLevel :3,
-                tableClothNoodleLevel :3, 
-            	}
-        	}
-		}
-		else
-		{
-			this.playerSettings = gameData.playerInfo;
-		}		
+		this.playerSettings = gameData.playerInfo;		
 	}
 	
 
 	create(){
 		var gm = new GameManager(this);
 		GameManager.resetVariables();
-		this.gameTimer = this.time.addEvent({ delay: 3 *  60 * 1000, callback: finishGame});
+		this.gameTimer = this.time.addEvent({ delay: 3 *  1 * 1000, callback: finishGame});
 		this.resetVariables();
 		this.clientsSettings();
         this.coffeeSetting();
@@ -509,10 +479,13 @@ class scene1 extends Phaser.Scene {
 	{
 		var backgroundStreet = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_streetNoodles');
 		var background = this.add.image(config.width*0.5+config.width, config.height*0.5, 'bg_kitchen');
-		
+		background.setDepth(0.7);
+
 		var noodleSpawnerImg = this.add.image(config.width*0.882 + config.width, config.height*0.91,'assets_atlas','spr_bg_noodles');
-		var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
-		GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
+		noodleSpawnerImg.setDepth(0.8);
+        var bigStrainerImg = this.add.image(config.width*0.84 + config.width, config.height*0.543,'assets_atlas','spr_bg_pot');
+		bigStrainerImg.setDepth(0.8);
+        GameManager.animatedStrainerImg = this.physics.add.sprite(config.width*0.825 + config.width, config.height*0.475,'anim_pot_bubbles');
 		GameManager.animatedStrainerImg.setAlpha(0);
 		var strainerLvl = GameManager.scene.playerSettings.upgrades.noodleLevel;
 		var cam = this.cameras.main;	
@@ -542,8 +515,9 @@ class scene1 extends Phaser.Scene {
 					strainerImg = this.add.image(config.width*0.884 + config.width, config.height*0.422,'assets_atlas','spr_strainer_1'); 
 				break;
 
-			if(strainerLvl < i) strainerImg.setAlpha(0.3);
 			}
+			if(strainerLvl < i) strainerImg.setAlpha(0.3);
+            strainerImg.setDepth(0.8);
         }
 		
         this.anims.create({
@@ -556,6 +530,7 @@ class scene1 extends Phaser.Scene {
         var strainer = new Strainer(bigStrainerImg, strainerLvl);
         GameManager.strainer = strainer;
        	var trashCanImg = this.physics.add.sprite(config.width*0.095+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
+        trashCanImg.setDepth(0.8);
        	GameManager.trashCanImgNoodles = trashCanImg;
         noodleSpawnerImg.setInteractive();
         noodleSpawnerImg.on('pointerdown', function(pointer){
@@ -568,7 +543,7 @@ class scene1 extends Phaser.Scene {
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
         		var noodles = new Noodles(slotId, trashSound, cookingSound, burntSound, readySound);
-      			changePosition(noodles, pos.x+config.width*0.03,pos.y-config.height*0.03);
+      			changePosition(noodles, pos.x,pos.y);
         	} 
         })
         
@@ -599,7 +574,7 @@ class scene1 extends Phaser.Scene {
 
         	}
         	if(numTablecloth-1 < i) tableclothImg.setAlpha(0.3);
-        	
+        	tableclothImg.setDepth(0.8);
         	tableclothImgList.add(tableclothImg);
         }
 
@@ -607,6 +582,7 @@ class scene1 extends Phaser.Scene {
         
         GameManager.tableclothsNoodle = tableclothsNoodle;
         var dishPileImg = this.add.image(config.width*0.72 + config.width, config.height*0.92,'assets_atlas','spr_bowl');
+        dishPileImg.setDepth(0.8);
         dishPileImg.setInteractive();
         dishPileImg.on('pointerdown', function(pointer){
         	if(GameManager.dishImgContainerNoodles.length < numTablecloth)
@@ -1012,6 +988,7 @@ class DishImgContainer
 		this.clientCollider;
 		this.toppings = new Phaser.Structs.List();
 		this.sauce=-1;
+        this.dishContainer.setDepth(1);
 	}
 
 	addToContainer(img, xOffset, yOffset)
@@ -1425,7 +1402,8 @@ function makeImgInteractive(itemClass, itemImg, item, cookingSound, _pixelPerfec
     })
 }
 
-function callClient(place){  	
+function callClient(place){ 
+    if(!GameManager.gameOn) return;	
 	var long=Client.clientsInRestaurant.length
   	var clientId= Math.floor(Math.random()*Client.clientList.length);
   	Client.clientsInRestaurant.add(clientId);
