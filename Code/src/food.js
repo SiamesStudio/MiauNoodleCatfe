@@ -289,7 +289,7 @@ class Noodles
 {
 	static noodlesList = new Phaser.Structs.List();
 	static doneTime = 3; //10
-	static burnTime = 17; //17
+	static burnTime = 5; //17
 	constructor(assignedSlot, trashSound, cookingSound, burntSound, readySound)
 	{
 		//spr_noodles la que se pone en el plato
@@ -409,6 +409,7 @@ class Noodles
 	noodlesBurnt()
 	{
 		var auxImg = GameManager.scene.physics.add.sprite(this.img.x,this.img.y,'anim_pot_noodles_burnt_'+this.assignedSlot);
+		auxImg.setDepth(1);
 		this.img.destroy();
 		this.img = null;
 		this.img = auxImg;
@@ -748,7 +749,7 @@ class Syrup
 		if(this.hovering)
 		{
 			this.hovering = false;
-			this.collider = GameManager.scene.physics.add.overlap(this.staticImg, GameManager.collidingObjectImg, this.serveSauce, null, this);
+			this.collider = GameManager.scene.physics.add.overlap(this.staticImg, GameManager.collidingObjectImg, this.serveSyrup, null, this);
 		}
 		else
 		{
@@ -757,7 +758,7 @@ class Syrup
 		grabItem("", null, null); 
 	}
 
-	serveSauce(sauceImg, dishImg)
+	serveSyrup(sauceImg, dishImg)
 	{	
 		this.syrupSound.play();
 		var container = GameManager.collidingObject;
@@ -891,7 +892,6 @@ class Sauce
 		{
 			this.hovering = false;
 			if(checkOverlap(this.img, GameManager.collidingObjectImg)) this.serveSauce(this.img, GameManager.collidingObjectImg);
-			//this.collider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.serveSauce, null, this);
 		}
 		else
 		{
@@ -913,7 +913,7 @@ class Sauce
 
 		//this.collider.destroy();
 		this.servingTimer = GameManager.scene.time.addEvent({ delay: Sauce.servingTime*1000, callback: this.sauceServed, callbackScope: this });
-		this.img.removeInteractive();
+		this.img.disableInteractive();
 
 		if(container.dish != null)
 		{
@@ -934,7 +934,8 @@ class Sauce
 		this.img.anims.play(this.animIdleKey);
 		this.fillingSound.stop();
 		this.img.setPosition(this.posx,this.posy);
-		makeImgInteractive("sauce", this.img, this, null, false);
+		this.img.setInteractive();
+		//makeImgInteractive("sauce", this.img, this, null, false);
 		makeDishInteractive(this.dishContainer,"noodleDish");
 	}
 }

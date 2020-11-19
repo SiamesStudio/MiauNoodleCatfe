@@ -140,12 +140,12 @@ class TutorialPancake
 		else if(this.side1Done) // The pancake is finally done
 		{
 			TipLogic.currentInstance.endPancakeInteractivity(this.img, this);
-			this.readySound.play();
 			this.side2Done = true;
 			this.cookingSound.setMute(true);
 			this.sideTimer.remove(false);
 		}
 		this.img.setTexture('assets_atlas','spr_pancake_cooked');
+		this.readySound.play();
 	}
 
 	/* Called when the user clicks on the pancake */

@@ -591,7 +591,8 @@ class scene1 extends Phaser.Scene {
         		var slotId = findFreeSlot(tableclothsNoodle, TableclothsNoodle.slots);
         		var pos = TableclothsNoodle.slots.getAt(slotId);
         		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_bowl');
-        		var dishImgContainer = new DishImgContainer(dishImg, slotId);
+                dishImg.setDepth(1);
+                var dishImgContainer = new DishImgContainer(dishImg, slotId);
         		GameManager.dishImgContainerNoodles.add(dishImgContainer);
         	} 
         })
@@ -980,7 +981,6 @@ class DishImgContainer
 		this.img = dishImg; //Img of the dish
 		this.dish; //Object from the class Dish
 		this.dishContainer = GameManager.scene.add.container(dishImg.x, dishImg.y);
-		this.dishContainer.setDepth(1);
 		this.img.setPosition(0,0); //If this is not done, then the image would not appear in the scene
 		this.dishContainer.add(this.img);
 		this.clientCollider;

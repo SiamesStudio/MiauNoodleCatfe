@@ -277,7 +277,7 @@ class tutorial extends Phaser.Scene {
 		GameManager.coffeeMachine = coffeeMachine;
 		TutorialManager.glassesImg = coffeeSpawnerImg;
 		
-		var _goToNoodlesButton = this.add.image(config.width*0.96,config.height*0.4,'assets_atlas', 'spr_ui_arrow');
+		var _goToNoodlesButton = this.add.image(config.width*0.96,config.height*0.45,'assets_atlas', 'spr_ui_arrow');
 		_goToNoodlesButton.setDepth(1);
         TutorialManager.goToNoodlesButton = _goToNoodlesButton;
         GameManager.tapSound = GameManager.scene.sound.add('snd_tap');
@@ -380,7 +380,7 @@ class tutorial extends Phaser.Scene {
 		GameManager.animatedStrainerImg.setAlpha(0);
 		var strainerLvl = 0;
 		var cam = this.cameras.main;	
-		var goToCoffeeButton = this.add.image(config.width*0.04+config.width,config.height*0.4,'assets_atlas', 'spr_ui_arrow');
+		var goToCoffeeButton = this.add.image(config.width*0.04+config.width,config.height*0.45,'assets_atlas', 'spr_ui_arrow');
         goToCoffeeButton.toggleFlipX();
  		goToCoffeeButton.setDepth(1);
         for(var i=0; i<4; i++)
@@ -479,6 +479,7 @@ class tutorial extends Phaser.Scene {
         		var slotId = findFreeSlot(tableclothsNoodle, TableclothsNoodle.slots);
         		var pos = TableclothsNoodle.slots.getAt(slotId);
         		var dishImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_bowl');
+                dishImg.setDepth(1);
         		var dishImgContainer = new TutorialDishContainer(dishImg, slotId);
         		GameManager.dishImgContainerNoodles.add(dishImgContainer);
         		TipLogic.currentInstance.endCase20(dishPileImg);
@@ -1125,6 +1126,7 @@ class TipLogic
         var style = { font: "10px PixelFont", fill: "#000000", align: "left", wordWrap:{ width: this.textImg.displayWidth-2, useAdvancedWrap:true} };
 		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.18, this.textImg.y-config.height*0.135, messageString, style).setResolution(10);
         this.text.setDepth(0.8);
+        this.textImg.toggleFlipX();
 		var selfRef = this;
 
 		switch(tipDataContainer.type)

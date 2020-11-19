@@ -190,7 +190,7 @@ class Client{
     }
     this.clientEmotionImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_emotion_normal');
     this.clientProgressBar= new ProgressBar(this.clientImg.x,this.clientImg.y-this.clientImg.height/2,GameManager.scene)
-    if(!GameManager.tutorial)this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
+    this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
     switch(this.index){
       case 0: 
         this.clientImg.setTint(0xe91c1c)
@@ -224,17 +224,18 @@ class Client{
 
   offsetClient(offset)
   {
-    console.log("this.clientImg: " + this.clientImg);
-    console.log("this.clientSecondImg: " + this.clientSecondImg);
-    console.log("this.clientOutlineImg: " + this.clientOutlineImg);
-    console.log("this.clientEmotionImg: " + this.clientEmotionImg);
-    console.log("this.clientImg: " + this.clientImg);
     this.clientImg.setPosition(this.clientImg.x+offset, this.clientImg.y);
     this.clientSecondImg.setPosition(this.clientSecondImg.x+offset, this.clientSecondImg.y);
     this.clientOutlineImg.setPosition(this.clientOutlineImg.x+offset, this.clientOutlineImg.y);
     this.clientEmotionImg.setPosition(this.clientEmotionImg.x+offset, this.clientEmotionImg.y);
-    this.clientProgressBar.backBar.setPosition(this.clientImg.x+offset, this.clientImg.y);
-    this.clientProgressBar.progressBar.setPosition(this.clientImg.x+offset, this.clientImg.y);
+    this.clientProgressBar.backBar.setPosition(this.clientImg.x, this.clientImg.y-this.clientImg.height/2);
+    this.clientProgressBar.progressBar.setPosition(this.clientImg.x, this.clientImg.y-this.clientImg.height/2);
+    console.log("this.clientProgressBar.backBar.x: " + this.clientProgressBar.backBar.x);
+    console.log("this.clientProgressBar.backBar.y: " + this.clientProgressBar.backBar.y);
+    this.clientProgressBar.backBar.setDepth(5);
+    this.clientProgressBar.backBar.setAlpha(1);
+    this.clientProgressBar.progressBar.setAlpha(1);
+    this.clientProgressBar.progressBar.setDepth(5);
   }
 
   compareOrderWithDish(dish){
@@ -295,6 +296,8 @@ class Client{
           Client.streetSlots.getAt(this.slot).occupied=false;
           Client.streetOccupiedSlots--;
         }
+        var coinsSound = GameManager.scene.sound.add('snd_coins_gain');
+        coinsSound.play();
       })
 
       if(GameManager.tutorial) this.coinsImg.disableInteractive();
@@ -510,7 +513,8 @@ class ProgressBar{
           this.porcentage = 100
           this.scene_0 = currentScene
           this.backBar = this.scene_0.add.rectangle(this.posX, this.posY, 30, 5, 0xa4b0af).setOrigin(0.5);
-          this.progressBar = this.scene_0.add.rectangle(this.posX , this.posY, 30 * this.porcentage/100, 5, 0x9e616e).setOrigin(0.5);      
+          this.progressBar = this.scene_0.add.rectangle(this.posX , this.posY, 30 * this.porcentage/100, 5, 0xfb3333).setOrigin(0.5);
+          //0x9e616e rojo más suave
   }
 
   update(number,totalTime){
