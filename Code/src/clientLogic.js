@@ -21,6 +21,7 @@ class Client{
     this.index=index;
     this.place=0;
     this.slot=-1;
+    this.totalTime;
     this.time;
     //this.clientImg = GameManager.scene.physics.add.sprite(100,100, 'client');
     this.clientImg;
@@ -36,8 +37,8 @@ class Client{
 
   subtractTime(){
     if(this.time){
-      //console.log(this.index+ "in "+this.place+" left: "+this.time);
       if(!GameManager.tutorial)this.time--;
+      this.clientProgressBar.update(this.time,this.totalTime)
     }
     else{
       if(!GameManager.tutorial)this.timeLeft.paused=true;
@@ -69,7 +70,6 @@ class Client{
       return slotId;
     }
     if(id==2){//street
-      console.log(Client.streetSlots)
       while(i<maxSlots && !found)
       {
         slot = Client.streetSlots.getAt(i);
@@ -145,6 +145,7 @@ class Client{
   goToRestaurant(place){
     this.place=place;
     this.orderCoins=0;
+    this.totalTime=0;
     this.dishesFinalPoints=[];
 	  var slotId=this.findFreeSlot(place);
 	  //console.log(Client.restaurantOccupiedSlots)
@@ -174,18 +175,21 @@ class Client{
         this.time+=Noodles.doneTime;
       }
     }
-    console.log(this.time)
-    if(!GameManager.tutorial)this.time+=GameManager.levelSeconds[Math.floor(GameManager.scene.playerSettings.level/5)]
-    console.log("cliente "+this.index+": "+this.time)
-
-    if(!GameManager.tutorial)this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
+    if(!GameManager.tutorial)this.time+=GameManager.levelSeconds[0]
+    this.totalTime=this.time;
+    
     this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_basecolor');
+    this.clientOutlineImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_outline');
+   
     if(this.index%2==0){
       this.clientSecondImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_secondcolor_spots');
     }
     else{
       this.clientSecondImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_secondcolor_stripes');
     }
+    this.clientEmotionImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_emotion_normal');
+    this.clientProgressBar= new ProgressBar(this.clientImg.x,this.clientImg.y-this.clientImg.height/2,GameManager.scene)
+    if(!GameManager.tutorial)this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
     switch(this.index){
       case 0: 
         this.clientImg.setTint(0xe91c1c)
@@ -211,17 +215,30 @@ class Client{
     }
     this.clientImg.setDepth(0.5);
     this.clientSecondImg.setDepth(0.5);
+    this.clientOutlineImg.setDepth(0.5);
+    this.clientEmotionImg.setDepth(0.5);
+    this.clientProgressBar.backBar.setDepth(0.5)
+    this.clientProgressBar.progressBar.setDepth(0.5)
+    
   }
 
   compareOrderWithDish(dish){
-    console.log(this.order.dishes)
     var aux=this.order.compareDish(dish);
     var points=aux[0]
     var coins=aux[1] 
+    console.log(points)
+    if (points > 66){
+      this.clientEmotionImg.setTexture('assets_atlas','spr_cat_emotion_happy');
+    }
+    else if(points>33 && points<=66){
+      this.clientEmotionImg.setTexture('assets_atlas','spr_cat_emotion_normal');
+    }
+    else if(points<=33){
+      this.clientEmotionImg.setTexture('assets_atlas','spr_cat_emotion_sad');
+    }
+
     this.orderCoins+=coins
-    console.log("MONEDITAS "+this.orderCoins)
     this.dishesFinalPoints.push(points);
-    console.log(this.order.dishes)
     if(this.order.dishes.length==0){
       this.exitRestaurant();
     }
@@ -245,14 +262,12 @@ class Client{
     GameManager.scene.progressBar.width=GameManager.scene.littleSlider.width*(GameManager.globalHappiness/100)
     GameManager.scene.noodleprogressBar.width=GameManager.scene.littleSlider.width*(GameManager.globalHappiness/100)
     if(this.orderCoins>0){
-      this.coinsImg=GameManager.scene.add.image(this.clientImg.x,this.clientImg.y+45,'spr_coins')
+      this.coinsImg=GameManager.scene.add.image(this.clientImg.x,this.clientImg.y+20,'spr_coins').setDepth(2)
       TutorialManager.coins = this.coinsImg;
-      console.log("PONGO BOLSITA")
       this.coinsImg.setInteractive().on('pointerdown', () => {
         Client.clientsInRestaurant.remove(this.index);
         this.coinsImg.destroy();
         GameManager.levelEarnedCoins+=this.orderCoins;
-        console.log(GameManager.levelEarnedCoins)
         GameManager.scene.numCoins.setText(GameManager.levelEarnedCoins);
         GameManager.scene.noodlenumCoins.setText(GameManager.levelEarnedCoins);
         if(this.place==1){
@@ -284,6 +299,10 @@ class Client{
     }
     this.clientImg.destroy();
     this.clientSecondImg.destroy();
+    this.clientEmotionImg.destroy();
+    this.clientOutlineImg.destroy();
+    this.clientProgressBar.progressBar.destroy();
+    this.clientProgressBar.backBar.destroy();
   }
 }
 
@@ -361,7 +380,6 @@ class Order{
           }
           var finalPoints=this.dishes.getAt(i).points-minusPoints
           this.dishes.removeAt(i);
-          console.log("finalpoints="+finalPoints)
           if (finalPoints<0){
             return [0,20];
           }
@@ -394,7 +412,6 @@ class Order{
           }
           var finalPoints=this.dishes.getAt(i).points-minusPoints
           this.dishes.removeAt(i);
-          console.log("finalpoints="+finalPoints)
           if (finalPoints<0){
             return [0,30];
           }
@@ -469,4 +486,19 @@ class Dish{
     else return false;
   }
   
+}
+
+class ProgressBar{
+  constructor(xPos, yPos, currentScene){
+          this.posX = xPos;
+          this.posY = yPos;
+          this.porcentage = 100
+          this.scene_0 = currentScene
+          this.backBar = this.scene_0.add.rectangle(this.posX, this.posY, 30, 5, 0xa4b0af).setOrigin(0.5);
+          this.progressBar = this.scene_0.add.rectangle(this.posX , this.posY, 30 * this.porcentage/100, 5, 0x9e616e).setOrigin(0.5);      
+  }
+
+  update(number,totalTime){
+          this.progressBar.width = 30 * number/totalTime
+  }
 }

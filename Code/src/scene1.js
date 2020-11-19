@@ -43,7 +43,7 @@ class scene1 extends Phaser.Scene {
 	create(){
 		var gm = new GameManager(this);
 		GameManager.resetVariables();
-		this.gameTimer = this.time.addEvent({ delay: GameManager.gameMinutes*60*1000, callback: finishGame, callbackScope: this });
+		this.gameTimer = this.time.addEvent({ delay: 60000, callback: finishGame});
 		this.resetVariables();
 		this.clientsSettings();
         this.coffeeSetting();
@@ -266,6 +266,57 @@ class scene1 extends Phaser.Scene {
 		this.add.sprite(config.width*0.145+config.width,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
 		this.options = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings').setScale(0.5)
+
+		this.blackScreen = this.add.image(config.width/2, config.height/2, 'blackScreen').setAlpha(0.5).setDepth(5);
+        this.blackScreen.setVisible(false)
+        this.extraBanner = this.add.sprite(config.width/2, config.height/2,'assets_atlas','spr_bck_improvementMenu').setDepth(5)
+        this.extraBanner.setVisible(false)
+        this.crossButton = this.add.sprite(4*config.width/5, 1*config.height/5,'spr_closeWindow').setDepth(5)
+		this.crossButton.setVisible(false)
+
+		this.victoryText=this.add.text(config.width/2, config.height/2, "Victory", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
+		this.defeatText=this.add.text(config.width/2, config.height/2, "Defeat", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
+
+		this.blackScreen.setInteractive().on('pointerdown', () => {
+            
+		})
+		this.crossButton.setInteractive().on('pointerdown', () => {
+            GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
+		})
+		
+		this.blackScreenNoodles = this.add.image(config.width/2+config.width, config.height/2, 'blackScreen').setAlpha(0.5).setDepth(5);
+        this.blackScreenNoodles.setVisible(false)
+        this.extraBannerNoodles = this.add.sprite(config.width/2+config.width, config.height/2,'assets_atlas','spr_bck_improvementMenu').setDepth(5)
+        this.extraBannerNoodles.setVisible(false)
+        this.crossButtonNoodles = this.add.sprite(4*config.width/5+config.width, 1*config.height/5,'spr_closeWindow').setDepth(5)
+		this.crossButtonNoodles.setVisible(false)
+
+		this.victoryTextNoodles=this.add.text(config.width/2+config.width, config.height/2, "Victory", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
+		this.defeatTextNoodles=this.add.text(config.width/2+config.width, config.height/2, "Defeat", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
+
+		this.blackScreenNoodles.setInteractive().on('pointerdown', () => {
+            
+		})
+		this.crossButtonNoodles.setInteractive().on('pointerdown', () => {
+            GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
+		})
+		
+		this.blackScreenRadio = this.add.image(config.width/2+2*config.width, config.height/2, 'blackScreen').setAlpha(0.5).setDepth(5);
+        this.blackScreenRadio.setVisible(false)
+        this.extraBannerRadio = this.add.sprite(config.width/2+2*config.width, config.height/2,'assets_atlas','spr_bck_improvementMenu').setDepth(5)
+        this.extraBannerRadio.setVisible(false)
+        this.crossButtonRadio = this.add.sprite(4*config.width/5+2*config.width, 1*config.height/5,'spr_closeWindow').setDepth(5)
+		this.crossButtonRadio.setVisible(false)
+
+		this.victoryTextRadio=this.add.text(config.width/2+2*config.width, config.height/2, "Victory", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
+		this.defeatTextRadio=this.add.text(config.width/2+2*config.width, config.height/2, "Defeat", { font: "20px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10).setVisible(false).setDepth(5);
+
+		this.blackScreenRadio.setInteractive().on('pointerdown', () => {
+            
+		})
+		this.crossButtonRadio.setInteractive().on('pointerdown', () => {
+            GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
+        })
         
 	}
 
@@ -590,7 +641,6 @@ class scene1 extends Phaser.Scene {
     	if(GameManager.gameOn){
 			
 			if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 3){
-				console.log("+++++++++++ENTRO REST Y HAY "+Client.streetOccupiedSlots+" SLOTS OCUPADOS")
 				  GameManager.waitingRestaurantClient=true;
 				  var restaurantTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
 				  setTimeout(function(){
@@ -599,7 +649,6 @@ class scene1 extends Phaser.Scene {
 			}
 				
 			if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 3){
-				console.log("+++++++++++ENTRO STREET Y HAY "+Client.streetOccupiedSlots+" SLOTS OCUPADOS")
 				GameManager.waitingStreetClient=true;
 				var streetTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
 				setTimeout(function(){
@@ -613,14 +662,34 @@ class scene1 extends Phaser.Scene {
 			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
 			this.savePlayerSettings();
 			this.stopSounds();
-			GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
+			this.blackScreen.setVisible(true);
+			this.extraBanner.setVisible(true);
+			this.crossButton.setVisible(true);
+			this.victoryText.setVisible(true);
+			this.extraBannerNoodles.setVisible(true);
+			this.crossButtonNoodles.setVisible(true);
+			this.victoryTextNoodles.setVisible(true);
+			this.extraBannerRadio.setVisible(true);
+			this.crossButtonRadio.setVisible(true);
+			this.victoryTextRadio.setVisible(true);
+			//GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		}
 
-		if(GameManager.globalHappiness < 20){
+		if(GameManager.globalHappiness < 20){ //condicion de derrota
 			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
 			this.savePlayerSettings();
 			this.stopSounds();
-			GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
+			this.blackScreen.setVisible(true);
+			this.extraBanner.setVisible(true);
+			this.crossButton.setVisible(true);
+			this.defeatText.setVisible(true);
+			this.extraBannerNoodles.setVisible(true);
+			this.crossButtonNoodles.setVisible(true);
+			this.defeatTextNoodles.setVisible(true);
+			this.extraBannerRadio.setVisible(true);
+			this.crossButtonRadio.setVisible(true);
+			this.defeatTextRadio.setVisible(true);
+			//GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		}
 
 
@@ -679,7 +748,7 @@ class scene1 extends Phaser.Scene {
 	}
 
 	savePlayerSettings(){
-        localStorage.setItem('playerSettings', JSON.stringify(this.playerSettings))
+        localStorage.setItem('playerSettings_PreRelease', JSON.stringify(this.playerSettings))
 	}
 
 	changeRadioFrecuency(){
@@ -690,7 +759,6 @@ class scene1 extends Phaser.Scene {
             this.angle = this.radioFrecSpin.angle
         }
         this.frec = (this.angle - 0) / (360 - 0)
-        //console.log(this.frec)
         this.radioFrecuencyBar.x = (this.radioFrecuencyBox_positionX - this.radioFrecuencyBox.width/2) + (this.frec * (this.radioFrecuencyBox.width))
 
         this.changeSong(this.frec);
@@ -866,12 +934,12 @@ class GameManager
 	static tapSound;
 	static waitingRestaurantClient = false;
 	static waitingStreetClient = false;
-	static levelSeconds=[10,8,6,4,2,1];
-	static gameMinutes=10;
+	static levelSeconds=[20,10,8,6,4,2,1];
+	static gameMinutes=1;
 	static gameOn=true;
 	static levelEarnedCoins=0;
 	static globalHappiness=50;
-	static customerCounter=1;
+	static customerCounter=3;
 	static totalHappiness=50;
 	static tutorial = false;
 	constructor(scene)
