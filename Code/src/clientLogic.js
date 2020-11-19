@@ -209,6 +209,8 @@ class Client{
         this.clientImg.setTint(0xff9b00)
         break 
     }
+    this.clientImg.setDepth(0.5);
+    this.clientSecondImg.setDepth(0.5);
   }
 
   compareOrderWithDish(dish){

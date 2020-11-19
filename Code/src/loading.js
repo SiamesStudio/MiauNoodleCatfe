@@ -122,26 +122,22 @@ class Loading extends Phaser.Scene {
 
         //ANIMATIONS
         this.load.spritesheet('anim_ladle_kimuchi', 'assets/animaciones/anim_ladle_kimuchi.png',
-        {frameWidth: 48,frameHeight: 75}
+        {frameWidth: 57,frameHeight: 91}
         );
         
         this.load.spritesheet('anim_ladle_miso', 'assets/animaciones/anim_ladle_miso.png',
-        {frameWidth: 48,frameHeight: 75}
+        {frameWidth: 57,frameHeight: 91}
         );
 
         this.load.spritesheet('anim_ladle_shio', 'assets/animaciones/anim_ladle_shio.png',
-        {frameWidth: 48,frameHeight: 75}
+        {frameWidth: 57,frameHeight: 91}
         );
 
         this.load.spritesheet('anim_ladle_shoyu', 'assets/animaciones/anim_ladle_shoyu.png',
-        {frameWidth: 48,frameHeight: 75}
+        {frameWidth: 57,frameHeight: 91}
         );
 
         this.load.spritesheet('anim_pot_bubbles', 'assets/animaciones/anim_pot_bubbles.png',
-        {frameWidth: 84,frameHeight: 85}
-        );
-
-        this.load.spritesheet('anim_pot_noodles_burnt', 'assets/animaciones/anim_pot_noodles_burnt.png',
         {frameWidth: 84,frameHeight: 85}
         );
 
@@ -167,6 +163,38 @@ class Loading extends Phaser.Scene {
         
         this.load.spritesheet('anim_coffeeMachine', 'assets/animaciones/anim_coffeeMachine.png',
         {frameWidth: 1,frameHeight: 10}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_cooking_0', 'assets/animaciones/anim_pot_noodles_cooking_0.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_cooking_1', 'assets/animaciones/anim_pot_noodles_cooking_1.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_cooking_2', 'assets/animaciones/anim_pot_noodles_cooking_2.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_cooking_3', 'assets/animaciones/anim_pot_noodles_cooking_3.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_burnt_0', 'assets/animaciones/anim_pot_noodles_burnt_0.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_burnt_1', 'assets/animaciones/anim_pot_noodles_burnt_1.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_burnt_2', 'assets/animaciones/anim_pot_noodles_burnt_2.png',
+        {frameWidth: 84,frameHeight: 85}
+        );
+
+        this.load.spritesheet('anim_pot_noodles_burnt_3', 'assets/animaciones/anim_pot_noodles_burnt_3.png',
+        {frameWidth: 84,frameHeight: 85}
         );
         
         this.load.multiatlas('assets_atlas', 'assets/assets.json', 'assets');
@@ -194,8 +222,11 @@ class Loading extends Phaser.Scene {
     loadCoffeeScreen()
 	{
         this.load.image('client','assets/client.jpg');
-        this.load.image('bg_interior','assets/bg_interior.png');
+        //this.load.image('bg_interior','assets/bg_interior.png');
         this.load.image('bg_interior_window','assets/bg_interior_window.png');
+        this.load.image('bg_interior_back','assets/bg_interior_back.png');
+        this.load.image('bg_interior_barra','assets/bg_interior_barra.png');
+        this.load.image('bg_interior_cristal','assets/bg_interior_cristal.png');
         this.load.path = 'assets/SpritesPatri/';
         
         

@@ -36,7 +36,6 @@ class scene1 extends Phaser.Scene {
 		else
 		{
 			this.playerSettings = gameData.playerInfo;
-        	console.log(this.playerSettings);
 		}		
 	}
 	
@@ -65,8 +64,8 @@ class scene1 extends Phaser.Scene {
    		Client.clientsInRestaurant.removeAll();
    		Client.streetSlots.removeAll();
    		Client.restaurantSlots.removeAll();
-		Noodles.noodlesList.removeAll();
-		Pancake.pancakesList.removeAll();
+        Noodles.noodlesList.removeAll();
+        Pancake.pancakesList.removeAll();
 	}
 
 
@@ -119,8 +118,6 @@ class scene1 extends Phaser.Scene {
         this.add.image(config.width/2  +  2*config.width ,config.height/2,'bg_radio_zoomed').setOrigin(0.5)
 
         this.radioSongText.x = this.radioSongTitleStartPosition
-        console.log(this.titleSongs.getAt(this.globalIndex))
-
 
 //
         this.currentSong = this.songs.getAt(this.globalIndex)
@@ -200,7 +197,6 @@ class scene1 extends Phaser.Scene {
 
 
         this.radioVolumeSpin.on('dragstart', function(pointer,dragX,dragY){
-                //console.log("vecToPointer : "+ dragX, dragY)
                 this.modB = Math.sqrt(dragX*dragX + dragY*dragY)
                 this.vectorB = new Phaser.Math.Vector2(dragX/this.modB , dragY/this.modB)
                 this.currentAngle = 180 * (this.vectorB.angle()) / Math.PI
@@ -292,14 +288,13 @@ class scene1 extends Phaser.Scene {
 		this.cameras.main.on('camerafadeoutcomplete', function (camera) {
             camera.fadeIn(100);
         });
-        var background = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior');
+        var background_window = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_window');
+        var background_interior_back= this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_back');
+        var background_interior_barra = this.add.image(config.width*0.5, config.height*0.715, 'bg_interior_barra');
+        var background_interior_cristal = this.add.image(config.width*0.62, config.height*0.32, 'bg_interior_cristal');
+        background_interior_cristal.setDepth(0.75); //ALL THE CATS GET DEPTH == 0.5
 		var cam = this.cameras.main;	
-		var goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.08, 'spr_ui_arrow');
-		goToNoodlesButton.setInteractive().on('pointerdown', function(pointer){
-			cam.centerOnX(config.width + config.width/2);
-			GameManager.scene.cameras.main.fadeOut(25);
-		})
-
+		
 		var coffeeMachineLvl = GameManager.scene.playerSettings.upgrades.coffeeMachineLevel;
 		var coffeeMachineImg;
 		
@@ -321,12 +316,14 @@ class scene1 extends Phaser.Scene {
 			break;
 		}
 		var radio = this.add.image(config.width*0.83,config.height*0.24,'assets_atlas','spr_radio');
-		radio.setInteractive().on('pointerdown', () =>{ cam.centerOnX(2*config.width + config.width/2);})
-		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.915,'assets_atlas', 'spr_glasses');
+		radio.setDepth(1);
+        radio.setInteractive().on('pointerdown', () =>{ cam.centerOnX(2*config.width + config.width/2);})
+		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.92,'assets_atlas', 'spr_glasses');
 
 		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, coffeeMachineLvl, false);
 		GameManager.coffeeMachine = coffeeMachine;
 		coffeeSpawnerImg.setInteractive();
+        coffeeMachineImg.setDepth(0.9);
         coffeeSpawnerImg.on('pointerdown', function(pointer){
         	if(coffeeMachine.occupiedSlots < coffeeMachineLvl+1)
         	{	
@@ -339,6 +336,12 @@ class scene1 extends Phaser.Scene {
         	} 
         })
         GameManager.tapSound = GameManager.scene.sound.add('snd_tap');
+        var goToNoodlesButton = this.add.image(config.width*0.96,config.height*0.4,'assets_atlas', 'spr_ui_arrow');
+        goToNoodlesButton.setDepth(1);
+        goToNoodlesButton.setInteractive().on('pointerdown', function(pointer){
+            cam.centerOnX(config.width + config.width/2);
+            GameManager.scene.cameras.main.fadeOut(25);
+        })
 	}
 
 	pancakesSetting()
@@ -390,8 +393,8 @@ class scene1 extends Phaser.Scene {
         	} 
         })
 
-		var pancakeSpawnerImg = this.add.image(config.width*0.85, config.height*0.91,'spr_pancake_bottle');
-        var griddleImg = this.add.image(config.width*0.56, config.height*0.625,'assets_atlas','spr_griddle');
+		var pancakeSpawnerImg = this.add.image(config.width*0.85, config.height*0.92,'spr_pancake_bottle');
+        var griddleImg = this.add.image(config.width*0.562, config.height*0.625,'assets_atlas','spr_griddle');
         var griddleUpgradeLvl = this.playerSettings.upgrades.pancakePanLevel;
         var griddle = new Griddle(griddleImg, griddleUpgradeLvl);
         GameManager.griddle = griddle;
@@ -437,7 +440,7 @@ class scene1 extends Phaser.Scene {
         	} 
         })
         
-        this.add.image(config.width*0.42, config.height*0.895,'assets_atlas', 'spr_topping_posters');
+        this.add.image(config.width*0.42, config.height*0.9,'assets_atlas', 'spr_topping_posters');
         for(var i=0; i<4; i++)
 		{
 			var toppingSound = GameManager.scene.sound.add('snd_topping');
@@ -462,8 +465,10 @@ class scene1 extends Phaser.Scene {
 		GameManager.animatedStrainerImg.setAlpha(0);
 		var strainerLvl = GameManager.scene.playerSettings.upgrades.noodleLevel;
 		var cam = this.cameras.main;	
-		var goToCoffeeButton = this.add.image(config.width*0.06+config.width,config.height*0.08, 'spr_ui_arrow');
-		goToCoffeeButton.setInteractive().on('pointerdown', function(pointer){
+		var goToCoffeeButton = this.add.image(config.width*0.04+config.width,config.height*0.4,'assets_atlas', 'spr_ui_arrow');
+		goToCoffeeButton.setDepth(1);
+        goToCoffeeButton.toggleFlipX();
+        goToCoffeeButton.setInteractive().on('pointerdown', function(pointer){
 			cam.centerOnX(config.width/2);
             GameManager.scene.cameras.main.fadeOut(25);
 		})
@@ -499,7 +504,7 @@ class scene1 extends Phaser.Scene {
 
         var strainer = new Strainer(bigStrainerImg, strainerLvl);
         GameManager.strainer = strainer;
-       	var trashCanImg = this.physics.add.sprite(config.width*0.09+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
+       	var trashCanImg = this.physics.add.sprite(config.width*0.095+config.width, config.height*0.92,'assets_atlas','spr_trashCan');
        	GameManager.trashCanImgNoodles = trashCanImg;
         noodleSpawnerImg.setInteractive();
         noodleSpawnerImg.on('pointerdown', function(pointer){
@@ -512,7 +517,7 @@ class scene1 extends Phaser.Scene {
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
         		var noodles = new Noodles(slotId, trashSound, cookingSound, burntSound, readySound);
-      			changePosition(noodles, pos.x,pos.y);
+      			changePosition(noodles, pos.x+config.width*0.03,pos.y-config.height*0.03);
         	} 
         })
         
@@ -586,7 +591,6 @@ class scene1 extends Phaser.Scene {
 			
 			if(GameManager.waitingRestaurantClient==false && Client.restaurantOccupiedSlots < 3){
 				console.log("+++++++++++ENTRO REST Y HAY "+Client.streetOccupiedSlots+" SLOTS OCUPADOS")
-				  //console.log("esperando a cliente en coffee")
 				  GameManager.waitingRestaurantClient=true;
 				  var restaurantTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
 				  setTimeout(function(){
@@ -596,7 +600,6 @@ class scene1 extends Phaser.Scene {
 				
 			if(GameManager.waitingStreetClient==false && Client.streetOccupiedSlots < 3){
 				console.log("+++++++++++ENTRO STREET Y HAY "+Client.streetOccupiedSlots+" SLOTS OCUPADOS")
-				//console.log("esperando a cliente en calle")
 				GameManager.waitingStreetClient=true;
 				var streetTime= Math.floor(Math.random()*(maxTime-minTime)+minTime)*1000;
 				setTimeout(function(){
@@ -634,46 +637,38 @@ class scene1 extends Phaser.Scene {
 		switch(GameManager.grabbedItemClass)
 		{
 			case "pancake":
-				//console.log("Pancake grabbed");
 				if(checkHoverWithTrashCan()) return;
 				checkHoverWithDishes();
 			break;
 
 			case "noodles":
-				//console.log("Noodles grabbed");
 				if(checkHoverWithTrashCan()) return;
 				checkHoverWithDishes();
 			break;
 
 			case "topping":
-				//console.log("Topping grabbed");
 				checkToppingHoverWithDish();
 			break;
 
 			case "syrup":
-				//console.log("Syrup grabbed");
 				checkSauceAndSyrupHover();
 			break;
 
 			case "pancakeDish":
-				//console.log("pancakeDish grabbed");
 				if(checkHoverWithTrashCan()) return;
 				checkHoverWithClient();
 			break;
 
 			case "noodleDish":
-				//console.log("noodleDish grabbed");
 				if(checkHoverWithTrashCan()) return;
 				checkHoverWithClient();
 			break;
 
 			case "coffeeDish":
-				//console.log("coffeeDish grabbed");
 				checkHoverWithClient();
 			break;
 
 			case "sauce":
-				//console.log("Sauce grabbed");
 				checkSauceAndSyrupHover();
 			break;
 
@@ -955,15 +950,12 @@ class DishImgContainer
 	{
 		img.setPosition(img.x + xOffset, img.y + yOffset);
 		this.dishContainer.add(img);
-
 	}
 
 	dragEndBehaviour()
 	{
 		if(this.hovering == true)
 		{
-			console.log("DISH drag end AND WAS HOVERING");
-			//this.clientCollider = GameManager.scene.physics.add.overlap(this.img, GameManager.collidingObjectImg, this.dragToClient, null, this);
 			var trashCanImg = GameManager.grabbedItemClass == "pancakeDish" ? GameManager.trashCanImgPancake : GameManager.trashCanImgNoodles;
 
 			if(checkOverlap(this.img, trashCanImg)) this.dragToTrash(this.img,trashCanImg);
@@ -984,7 +976,6 @@ class DishImgContainer
 	//IMPLEMENT ALL THE LOGIC, this works for the pancakes and the noodles
 	dragToClient(dishImg, clientImg)
 	{
-		console.log("dish dragged to client");
 		//GameManager.scene.physics.world.removeCollider(this.clientCollider);	
 		this.freeTableCloth();		
 		clientImg.setAlpha(1);
@@ -996,7 +987,6 @@ class DishImgContainer
 
 	dragToTrash(dishImg, trashImg)
 	{
-		console.log("dish dragged to trash");
 		this.freeTableCloth();
 		trashImg.setAlpha(1);
 	}
@@ -1376,7 +1366,6 @@ function callClient(place){
 		var clientId= Math.floor(Math.random()*Client.clientList.length);
     	Client.clientsInRestaurant.add(clientId);
   	}
-  	console.log("callClient() -> place: " + place);
   	Client.clientList.getAt(clientId).goToRestaurant(place);
   	if(place==1){
     	GameManager.waitingRestaurantClient=false;

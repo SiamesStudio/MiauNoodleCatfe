@@ -234,7 +234,11 @@ class tutorial extends Phaser.Scene {
 		this.cameras.main.on('camerafadeoutcomplete', function (camera) {
             camera.fadeIn(100);
         });
-        var background = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior');
+        var background_window = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_window');
+        var background_interior_back= this.add.image(config.width*0.5, config.height*0.5, 'bg_interior_back');
+        var background_interior_barra = this.add.image(config.width*0.5, config.height*0.715, 'bg_interior_barra');
+        var background_interior_cristal = this.add.image(config.width*0.62, config.height*0.32, 'bg_interior_cristal');
+        background_interior_cristal.setDepth(0.75); //ALL THE CATS GET DEPTH == 0.5
 		var cam = this.cameras.main;	
 
 		var coffeeMachineLvl = 0;
@@ -257,17 +261,19 @@ class tutorial extends Phaser.Scene {
 				coffeeMachineImg = this.add.image(posx, posy,'assets_atlas', 'spr_coffeeMachine_3'); 
 			break;
 		}
-
+        coffeeMachineImg.setDepth(0.9);
 		var spr_radio = this.add.image(config.width*0.83,config.height*0.24,'assets_atlas','spr_radio');
-		TutorialManager.radioImg = spr_radio;
+		spr_radio.setDepth(1);
+        TutorialManager.radioImg = spr_radio;
 		var coffeeSpawnerImg = this.add.image(config.width*0.95, config.height*0.915, 'assets_atlas', 'spr_glasses');
 
 		var coffeeMachine = new CoffeeMachine(coffeeMachineImg, coffeeMachineLvl, true);
 		GameManager.coffeeMachine = coffeeMachine;
 		TutorialManager.glassesImg = coffeeSpawnerImg;
 		
-		var _goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.4,'assets_atlas', 'spr_ui_arrow');
-		TutorialManager.goToNoodlesButton = _goToNoodlesButton;
+		var _goToNoodlesButton = this.add.image(config.width*0.96,config.height*0.4,'assets_atlas', 'spr_ui_arrow');
+		_goToNoodlesButton.setDepth(1);
+        TutorialManager.goToNoodlesButton = _goToNoodlesButton;
         GameManager.tapSound = GameManager.scene.sound.add('snd_tap');
 	}
 
@@ -365,8 +371,9 @@ class tutorial extends Phaser.Scene {
 		GameManager.animatedStrainerImg.setAlpha(0);
 		var strainerLvl = 0;
 		var cam = this.cameras.main;	
-		var goToCoffeeButton = this.add.image(config.width*0.06+config.width,config.height*0.08,'assets_atlas', 'spr_ui_arrow');
- 		
+		var goToCoffeeButton = this.add.image(config.width*0.04+config.width,config.height*0.4,'assets_atlas', 'spr_ui_arrow');
+        goToCoffeeButton.toggleFlipX();
+ 		goToCoffeeButton.setDepth(1);
         for(var i=0; i<4; i++)
         {
         	var strainerImg;
@@ -412,7 +419,7 @@ class tutorial extends Phaser.Scene {
         		var trashSound = GameManager.scene.sound.add('snd_trash');
         		var readySound = GameManager.scene.sound.add('snd_ready');
         		var noodles = new TutorialNoodles(slotId, trashSound, cookingSound, burntSound, readySound);
-      			changePosition(noodles, pos.x,pos.y);
+      			changePosition(noodles, pos.x+config.width*0.03,pos.y-config.height*0.03);
       			TipLogic.currentInstance.endCase21(noodleSpawnerImg);
         	} 
         })
@@ -484,18 +491,24 @@ class tutorial extends Phaser.Scene {
 	
 	tutStuff()
 	{
-		
-		var cm = this.plugins.get('rexglowfilterpipelineplugin').add(this,'GlowFilter');
-		this.tweens.add({
-            targets: cm,
-            intensity: 0.019,
-            ease: 'Linear',
-            duration: 500,
-            repeat: -1,
-            yoyo: true
-        }); 
-        		new TutorialManager(this);
-		TutorialManager.customPipeline = cm;
+        new TutorialManager(this);
+        if(TutorialManager.timesPlayed == 1)
+        {
+        	TutorialManager.customPipeline = this.plugins.get('rexglowfilterpipelineplugin').add(this,'GlowFilter');
+        }
+        else
+        {
+        	TutorialManager.tween.remove();
+        }
+        TutorialManager.tween = TutorialManager.scene.tweens.add({
+            	targets: TutorialManager.customPipeline,
+            	intensity: 0.019,
+            	ease: 'Linear',
+            	duration: 500,
+            	repeat: -1,
+            	yoyo: true
+        	}); 
+        
 		var numSteps = 28;
 		for(var i=0; i<numSteps; i++)
 		{
@@ -682,11 +695,12 @@ class tutorial extends Phaser.Scene {
 class TutorialManager
 {
 	static scene;
+	static tween;
+	static customPipeline;
 	static tipDataContainer = new Phaser.Structs.List();
 	static tipLogicContainer = new Phaser.Structs.List();
 	static currentTip = 0;
 	static toppingImg;
-	static orderImg;
 	static dishPileImg;
 	static pancakeBottleImg;
 	static glassesImg;
@@ -694,7 +708,6 @@ class TutorialManager
 	static coffeeImg;
 	static pancakeImg;
 	static syrupImg;
-	static clientImg;
 	static radioFrecSpin;
 	static coffee;
 	static pancake;
@@ -707,10 +720,12 @@ class TutorialManager
 	static noodleSpawner;
 	static bowl;
 	static tutorialPancakeClient;
+	static timesPlayed = 0;
 
 	constructor(_scene)
 	{
 		TutorialManager.scene = _scene;
+		TutorialManager.timesPlayed++;
 	}
 
 	static showNext()
@@ -735,12 +750,23 @@ class TutorialManager
 
 	static resetVariables()
 	{
-		TutorialManager.scene = null;
 		TutorialManager.tipDataContainer = new Phaser.Structs.List();
 		TutorialManager.tipLogicContainer = new Phaser.Structs.List();
 		TutorialManager.currentTip = 0;
+		TutorialManager.toppingImg.resetPipeline();
+		TutorialManager.dishPileImg.resetPipeline();
+		TutorialManager.pancakeBottleImg.resetPipeline();
+		TutorialManager.glassesImg.resetPipeline();
+		TutorialManager.radioImg.resetPipeline();
+		TutorialManager.coffeeImg.resetPipeline();
+		TutorialManager.pancakeImg.resetPipeline();
+		TutorialManager.syrupImg.resetPipeline();
+		TutorialManager.radioFrecSpin.resetPipeline();
+		TutorialManager.radioBackButton.resetPipeline();
+		TutorialManager.goToNoodlesButton.resetPipeline();
+		TutorialManager.noodleSpawner.resetPipeline();
+		TutorialManager.bowl.resetPipeline();
 		TutorialManager.toppingImg = null;
-		TutorialManager.orderImg = null;
 		TutorialManager.dishPileImg = null;
 		TutorialManager.pancakeBottleImg = null;
 		TutorialManager.glassesImg = null;
@@ -748,7 +774,6 @@ class TutorialManager
 		TutorialManager.coffeeImg = null;
 		TutorialManager.pancakeImg = null;
 		TutorialManager.syrupImg = null;
-		TutorialManager.clientImg = null;
 		TutorialManager.radioFrecSpin = null;
 		TutorialManager.coffee = null;
 		TutorialManager.pancake = null;
@@ -1089,7 +1114,8 @@ class TipLogic
 
 				var textContainer = this.textImg;
 				var nextButton = GameManager.scene.add.image(textContainer.x+config.width*0.205, textContainer.y+config.height*0.1,'assets_atlas', 'spr_ui_arrow');
-				nextButton.setPipeline('GlowFilter');
+				nextButton.setDepth(1);
+                nextButton.setPipeline('GlowFilter');
 				nextButton.setInteractive().on('pointerdown', function(pointer){
 				var readCount = tipDataContainer.readCount;
 					if(readCount < textList.length)
@@ -1134,6 +1160,7 @@ class TipLogic
 						//Enable interactivity with coins
 						//End if click on coins
 						var coins = TutorialManager.coins;
+                        coins.setDepth(5);
 						coins.setPipeline('GlowFilter');
 						coins.setInteractive().on('pointerdown', () => {
 							coins.resetPipeline();
