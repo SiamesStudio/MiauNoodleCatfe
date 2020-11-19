@@ -79,7 +79,7 @@ class CoffeeMachine extends Machine
 			var animation = GameManager.scene.anims.create({
     			key: animationKey,
     			frames: GameManager.scene.anims.generateFrameNumbers('anim_coffeeMachine', { start: 0, end: 19}),
-    			duration: 1000*CoffeeMachine.animTime,
+    			duration: 1000*CoffeeMachine.animTime*0.25,
     			//frameRate: 10,
     			repeat: -1
 			});
@@ -92,6 +92,7 @@ class CoffeeMachine extends Machine
 			});
 
 			CoffeeMachine.animImgs.getAt(i).setAlpha(0);
+			CoffeeMachine.animImgs.getAt(i).setDepth(3);
 		}
 		
 	}

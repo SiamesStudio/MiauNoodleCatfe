@@ -661,7 +661,7 @@ class Topping
 
 class Syrup
 {
-	static servingTime = 3;
+	static servingTime = 4;
 	constructor(index, syrupSound)
 	{
 		this.index = index;
@@ -718,8 +718,8 @@ class Syrup
 		GameManager.scene.anims.create({
     		key: _animPlayKey,
     		frames: GameManager.scene.anims.generateFrameNumbers(_animKey, { start: 0, end: 15}),
-    		duration: 1000*Syrup.servingTime,
-    		repeat: 0
+    		duration: 1000*Syrup.servingTime*0.5,
+    		repeat: 1
 		});
 		GameManager.scene.anims.create({
     		key: _animIdleKey,
@@ -861,8 +861,8 @@ class Sauce
 		GameManager.scene.anims.create({
     		key: _animPlayKey,
     		frames: GameManager.scene.anims.generateFrameNumbers(_animKey, { start: 0, end: 11}),
-    		duration: 1000*Sauce.servingTime,
-    		repeat: 0
+    		duration: 1000*Sauce.servingTime*0.5,
+    		repeat: 1
 		});
 
 		GameManager.scene.anims.create({
