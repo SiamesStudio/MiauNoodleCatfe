@@ -176,47 +176,202 @@ class Client{
         this.time+=Noodles.doneTime;
       }
     }
-    if(!GameManager.tutorial)this.time+=GameManager.levelSeconds[0]
+    if(!GameManager.tutorial)this.time+=40
     this.totalTime=this.time;
     
     this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_basecolor');
-    this.clientOutlineImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_outline');
-   
-    if(this.index%2==0){
-      this.clientSecondImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_secondcolor_spots');
-    }
-    else{
-      this.clientSecondImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_secondcolor_stripes');
-    }
-    this.clientEmotionImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_emotion_normal');
+    
+    
     this.clientProgressBar= new ProgressBar(this.clientImg.x,this.clientImg.y-this.clientImg.height/2,GameManager.scene)
     this.timeLeft = GameManager.scene.time.addEvent({ delay: 1000, loop: true, callback: this.subtractTime, callbackScope: this });
     switch(this.index){
       case 0: 
-        this.clientImg.setTint(0xe91c1c)
+      this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'cat_1');
+        if(this.place==2){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.noodlesImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_1_noodles');
+        }
+        else if (place==1){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.pancakeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_1_pancake');
+          this.coffeeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2+10, this.clientImg.y-this.clientImg.height/2-5, 'spr_glass_filled').setScale(0.8);
+          if(this.order.numDishes==1){
+            var index=this.order.dishes.getAt(0).index;
+            if(index==0){
+              this.pancakeImg.setVisible(false);
+              this.coffeeImg.x-=5;
+            }
+            if(index==1){
+              this.coffeeImg.setVisible(false);
+            }
+            
+          }
+        }
         break
       case 1:
-        this.clientImg.setTint(0x35e91c)
+        this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'cat_2');
+        if(this.place==2){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.noodlesImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_2_noodles');
+        }
+        else if (place==1){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.pancakeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_2_pancake');
+          this.coffeeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2+10, this.clientImg.y-this.clientImg.height/2-5, 'spr_glass_filled').setScale(0.8);
+          if(this.order.numDishes==1){
+            var index=this.order.dishes.getAt(0).index;
+            if(index==0){
+              this.pancakeImg.setVisible(false);
+              this.coffeeImg.x-=5;
+            }
+            if(index==1){
+              this.coffeeImg.setVisible(false);
+            }
+            
+          }
+        }
         break
       case 2:
-        this.clientImg.setTint(0x1c51e9)
+        this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'cat_3');
+        if(this.place==2){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.noodlesImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_3_noodles');
+        }
+        else if (place==1){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.pancakeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_3_pancake');
+          this.coffeeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2+10, this.clientImg.y-this.clientImg.height/2-5, 'spr_glass_filled').setScale(0.8);
+          if(this.order.numDishes==1){
+            var index=this.order.dishes.getAt(0).index;
+            if(index==0){
+              this.pancakeImg.setVisible(false);
+              this.coffeeImg.x-=5;
+            }
+            if(index==1){
+              this.coffeeImg.setVisible(false);
+            }
+            
+          }
+        }
         break
       case 3:
-        this.clientImg.setTint(0xe91ce3)
+        this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'cat_4');
+        if(this.place==2){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.noodlesImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_4_noodles');
+        }
+        else if (place==1){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.pancakeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_4_pancake');
+          this.coffeeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2+10, this.clientImg.y-this.clientImg.height/2-5, 'spr_glass_filled').setScale(0.8);
+          if(this.order.numDishes==1){
+            var index=this.order.dishes.getAt(0).index;
+            if(index==0){
+              this.pancakeImg.setVisible(false);
+              this.coffeeImg.x-=5;
+            }
+            if(index==1){
+              this.coffeeImg.setVisible(false);
+            }
+            
+          }
+        }
         break
       case 4:
-        this.clientImg.setTint(0x1ce9dd)
+        this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'cat_5');
+        if(this.place==2){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.noodlesImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_5_noodles');
+        }
+        else if (place==1){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.pancakeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_5_pancake');
+          this.coffeeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2+10, this.clientImg.y-this.clientImg.height/2-5, 'spr_glass_filled').setScale(0.8);
+          if(this.order.numDishes==1){
+            var index=this.order.dishes.getAt(0).index;
+            if(index==0){
+              this.pancakeImg.setVisible(false);
+              this.coffeeImg.x-=5;
+            }
+            if(index==1){
+              this.coffeeImg.setVisible(false);
+            }
+            
+          }
+        }
         break
       case 5:
-        this.clientImg.setTint(0x000000)
+        this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'cat_6');
+        if(this.place==2){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.noodlesImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_6_noodles');
+        }
+        else if (place==1){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.pancakeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_6_pancake');
+          this.coffeeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2+10, this.clientImg.y-this.clientImg.height/2-5, 'spr_glass_filled').setScale(0.8);
+          if(this.order.numDishes==1){
+            var index=this.order.dishes.getAt(0).index;
+            if(index==0){
+              this.pancakeImg.setVisible(false);
+              this.coffeeImg.x-=5;
+            }
+            if(index==1){
+              this.coffeeImg.setVisible(false);
+            }
+            
+          }
+        }
         break
       case 6:
-        this.clientImg.setTint(0xff9b00)
+        this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'cat_7');
+        if(this.place==2){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.noodlesImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_7_noodles');
+        }
+        else if (place==1){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.pancakeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_7_pancake');
+          this.coffeeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2+10, this.clientImg.y-this.clientImg.height/2-5, 'spr_glass_filled').setScale(0.8);
+          if(this.order.numDishes==1){
+            var index=this.order.dishes.getAt(0).index;
+            if(index==0){
+              this.pancakeImg.setVisible(false);
+              this.coffeeImg.x-=5;
+            }
+            if(index==1){
+              this.coffeeImg.setVisible(false);
+            }
+            
+          }
+        }
         break 
+      case 7:
+        this.clientImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'cat_8');
+        if(this.place==2){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.noodlesImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_8_noodles');
+        }
+        else if (place==1){
+          this.bubbleImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2,'assets_atlas','spr_speechbubble')
+          this.pancakeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2, this.clientImg.y-this.clientImg.height/2, 'gato_8_pancake');
+          this.coffeeImg=GameManager.scene.physics.add.image(this.clientImg.x+this.clientImg.width/2+10, this.clientImg.y-this.clientImg.height/2-5, 'spr_glass_filled').setScale(0.8);
+          if(this.order.numDishes==1){
+            var index=this.order.dishes.getAt(0).index;
+            if(index==0){
+              this.pancakeImg.setVisible(false);
+              this.coffeeImg.x-=5;
+            }
+            if(index==1){
+              this.coffeeImg.setVisible(false);
+            }
+            
+          }
+        }
+        break
     }
+    this.clientEmotionImg = GameManager.scene.physics.add.sprite(pos.x,pos.y,'assets_atlas','spr_cat_emotion_normal');
     this.clientImg.setDepth(0.5);
-    this.clientSecondImg.setDepth(0.5);
-    this.clientOutlineImg.setDepth(0.5);
     this.clientEmotionImg.setDepth(0.5);
     this.clientProgressBar.backBar.setDepth(0.5);
     this.clientProgressBar.progressBar.setDepth(0.5);
@@ -280,6 +435,13 @@ class Client{
     GameManager.globalHappiness=Math.floor(GameManager.totalHappiness*(1/GameManager.customerCounter))
     GameManager.scene.progressBar.width=GameManager.scene.littleSlider.width*(GameManager.globalHappiness/100)
     GameManager.scene.noodleprogressBar.width=GameManager.scene.littleSlider.width*(GameManager.globalHappiness/100)
+    if(this.place==2){
+      this.noodlesImg.destroy()
+    }
+    if(this.place==1){
+      this.pancakeImg.destroy()
+      this.coffeeImg.destroy()
+    }
     if(this.orderCoins>0){
       this.coinsImg=GameManager.scene.add.image(this.clientImg.x,this.clientImg.y+20,'spr_coins').setDepth(2)
       TutorialManager.coins = this.coinsImg;
@@ -319,11 +481,11 @@ class Client{
       }
     }
     this.clientImg.destroy();
-    this.clientSecondImg.destroy();
     this.clientEmotionImg.destroy();
-    this.clientOutlineImg.destroy();
     this.clientProgressBar.progressBar.destroy();
     this.clientProgressBar.backBar.destroy();
+    this.bubbleImg.destroy();
+    
   }
 }
 
