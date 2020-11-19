@@ -35,8 +35,8 @@ class scene1 extends Phaser.Scene {
     timePassEffect()
     {
         var currentScene = this;
-        this.orangetoBlueTimer = this.time.addEvent({ delay: 5000, callback: this.orangeToBlue});
-        this.blueToOrangeTimer = this.time.addEvent({ delay: 15000, callback: this.blueToOrange});
+        GameManager.orangeToBlueTimer = this.time.addEvent({ delay: 60000/2, callback: this.orangeToBlue});
+        GameManager.blueToOrangeTimer = this.time.addEvent({ delay: 120000/2, callback: this.blueToOrange});
     }
 
     orangeToBlue()
@@ -1113,6 +1113,8 @@ class GameManager
 	static totalHappiness=50;
 	static tutorial = false;
     static paused = false;
+    static orangeToBlueTimer;
+    static blueToOrangeTimer;
 	constructor(scene)
 	{
 		GameManager.scene = scene;
@@ -1155,6 +1157,9 @@ class GameManager
             
             clientList.getAt(i).timeLeft.paused = false;
         }
+
+        GameManager.orangeToBlueTimer.paused = false;
+        GameManager.blueToOrangeTimer.paused = false;
     }
 
     static stopTimers()
@@ -1195,6 +1200,8 @@ class GameManager
             
             clientList.getAt(i).timeLeft.paused = true;
         }
+        GameManager.orangeToBlueTimer.paused = true;
+        GameManager.blueToOrangeTimer.paused = true;
     }
 
 	static resetVariables()
