@@ -6,30 +6,20 @@ class tutorial extends Phaser.Scene {
 	preload()
 	{
 		this.load.plugin('rexglowfilterpipelineplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexglowfilterpipelineplugin.min.js', true);
-		this.load.image('spr_tutorial','assets/spr_tutorial.png');
 	}
 
 	create(){
 		var gm = new GameManager(this);
-		gm.resetVars();
+		GameManager.resetVariables();
 		GameManager.tutorial=true;
-		this.resetVariables();
-		this.interfaceSettings();
         this.coffeeSetting();
         this.pancakesSetting();
         this.noodlesSetting();
+        this.interfaceSettings();
         this.clientsSettings();	
 		this.radioSettings();
         this.cursors = this.input.keyboard.createCursorKeys();
         this.tutStuff();
-	}
-
-	resetVariables()
-	{
-		Client.clientList.removeAll();
-   		Client.clientsInRestaurant.removeAll();
-   		Client.streetSlots.removeAll();
-   		Client.restaurantSlots.removeAll();
 	}
 
 	clientsSettings(){
@@ -39,6 +29,7 @@ class tutorial extends Phaser.Scene {
     	TutorialManager.tutorialPancakeClient.tutorial = true;
     	callClient(1);
     	TutorialManager.tutorialPancakeClient.clientImg.x += config.width*0.4;
+    	TutorialManager.tutorialPancakeClient.clientSecondImg.x += config.width*0.4;
   	}
 
 	radioSettings(){
@@ -211,7 +202,7 @@ class tutorial extends Phaser.Scene {
 		this.add.sprite(config.width*0.145,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
 		this.options = this.add.sprite(config.width*0.05,config.height/11-1,'assets_atlas','spr_ui_settings')
-
+		this.options.setScale(0.5);
 
 		this.coinSlider=this.add.sprite(config.width*0.5+config.width,config.height/13,'assets_atlas','spr_ui_slider')
         this.coinIcon=this.add.sprite(config.width*0.4+config.width,config.height/11,'assets_atlas','spr_ui_icon_coin')
@@ -233,7 +224,8 @@ class tutorial extends Phaser.Scene {
 		this.falseProgressBar.height=this.progressBar.height-4
 		this.add.sprite(config.width*0.145+config.width,config.height/11,'assets_atlas','spr_ui_icon_happy')
 		
-		this.options = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings') 
+		this.options = this.add.sprite(config.width*0.05+config.width,config.height/11-1,'assets_atlas','spr_ui_settings'); 
+		this.options.setScale(0.5);
 	}
 
 
@@ -244,8 +236,6 @@ class tutorial extends Phaser.Scene {
         });
         var background = this.add.image(config.width*0.5, config.height*0.5, 'bg_interior');
 		var cam = this.cameras.main;	
-		var _goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.08, 'spr_ui_arrow');
-		TutorialManager.goToNoodlesButton = _goToNoodlesButton;
 
 		var coffeeMachineLvl = 0;
 		var coffeeMachineImg;
@@ -276,6 +266,8 @@ class tutorial extends Phaser.Scene {
 		GameManager.coffeeMachine = coffeeMachine;
 		TutorialManager.glassesImg = coffeeSpawnerImg;
 		
+		var _goToNoodlesButton = this.add.image(config.width*0.95,config.height*0.4,'assets_atlas', 'spr_ui_arrow');
+		TutorialManager.goToNoodlesButton = _goToNoodlesButton;
         GameManager.tapSound = GameManager.scene.sound.add('snd_tap');
 	}
 
@@ -373,7 +365,7 @@ class tutorial extends Phaser.Scene {
 		GameManager.animatedStrainerImg.setAlpha(0);
 		var strainerLvl = 0;
 		var cam = this.cameras.main;	
-		var goToCoffeeButton = this.add.image(config.width*0.06+config.width,config.height*0.08, 'spr_ui_arrow');
+		var goToCoffeeButton = this.add.image(config.width*0.06+config.width,config.height*0.08,'assets_atlas', 'spr_ui_arrow');
  		
         for(var i=0; i<4; i++)
         {
@@ -682,7 +674,7 @@ class tutorial extends Phaser.Scene {
 //		//case15
         this.radioSongText.x = this.radioSongTitleStartPosition
         this.radioSongText.setText(this.titleSongs.getAt(this.globalIndex))
-        TipLogic.currentInstance.endCase15(this.radioFrecSpin);
+        if(TutorialManager.currentTip == 16)TipLogic.currentInstance.endCase15(this.radioFrecSpin);
 	}
 	
 }
@@ -693,8 +685,6 @@ class TutorialManager
 	static tipDataContainer = new Phaser.Structs.List();
 	static tipLogicContainer = new Phaser.Structs.List();
 	static currentTip = 0;
-
-	// Images for the tutorial
 	static toppingImg;
 	static orderImg;
 	static dishPileImg;
@@ -716,7 +706,6 @@ class TutorialManager
 	static goToNoodlesButton;
 	static noodleSpawner;
 	static bowl;
-
 	static tutorialPancakeClient;
 
 	constructor(_scene)
@@ -740,7 +729,49 @@ class TutorialManager
 	static endTutorial()
 	{
 		console.log("TUTORIAL ENDED");
-		TutorialManager.scene.scene.start("Menu");
+		TutorialManager.resetVariables();
+		GameManager.scene.scene.start("Menu");
+	}
+
+	static resetVariables()
+	{
+		TutorialManager.scene = null;
+		TutorialManager.tipDataContainer = new Phaser.Structs.List();
+		TutorialManager.tipLogicContainer = new Phaser.Structs.List();
+		TutorialManager.currentTip = 0;
+		TutorialManager.toppingImg = null;
+		TutorialManager.orderImg = null;
+		TutorialManager.dishPileImg = null;
+		TutorialManager.pancakeBottleImg = null;
+		TutorialManager.glassesImg = null;
+		TutorialManager.radioImg = null;
+		TutorialManager.coffeeImg = null;
+		TutorialManager.pancakeImg = null;
+		TutorialManager.syrupImg = null;
+		TutorialManager.clientImg = null;
+		TutorialManager.radioFrecSpin = null;
+		TutorialManager.coffee = null;
+		TutorialManager.pancake = null;
+		TutorialManager.noodle = null;
+		TutorialManager.syrup = null;
+		TutorialManager.sauce = null;
+		TutorialManager.topping = null;
+		TutorialManager.radioBackButton = null;
+		TutorialManager.goToNoodlesButton = null;
+		TutorialManager.noodleSpawner = null;
+		TutorialManager.bowl = null;
+		TutorialManager.tutorialPancakeClient = null;
+
+		Client.resetVariables();
+		TutorialCoffee.ref = null;
+		TutorialPancake.ref = null;
+		TutorialNoodles.noodlesList = new Phaser.Structs.List();
+		TutorialTopping.noodleTopRef = null;
+		TutorialTopping.pancakeTopRef = null;
+		TutorialSyrup.ref = null;
+		TutorialSauce.ref = null;
+
+		GameManager.resetVariables();
 	}
 }
 
@@ -770,16 +801,21 @@ class TipData
 		switch(_i)
 		{
 			case 0:
-				this.numTexts = 3;
+				this.numTexts = 6;
 				this.text.add(this.tutorialStrings.case0_0);
 				this.text.add(this.tutorialStrings.case0_1);
 				this.text.add(this.tutorialStrings.case0_2);
+				this.text.add(this.tutorialStrings.case0_3);
+				this.text.add(this.tutorialStrings.case0_4);
+				this.text.add(this.tutorialStrings.case0_5);
 				this.type = TipData.types.WATCH;
 				this.window=0;
 			break;
 
 			case 1:
-				this.text.add(this.tutorialStrings.case1);
+				this.numTexts = 2;
+				this.text.add(this.tutorialStrings.case1_0);
+				this.text.add(this.tutorialStrings.case1_1);
 				this.type = TipData.types.WATCH;
 				this.window=0;
 			break;
@@ -833,7 +869,8 @@ class TipData
 			break;
 
 			case 8:
-				this.text.add(this.tutorialStrings.case8);
+				this.text.add(this.tutorialStrings.case8_0);
+				this.text.add(this.tutorialStrings.case8_1);
 				this.type = TipData.types.WATCH;
 				this.window=0;
 			break;
@@ -862,9 +899,11 @@ class TipData
 			break;
 
 			case 12:
-				this.numTexts = 2;
+				this.numTexts = 4;
 				this.text.add(this.tutorialStrings.case12_0);
 				this.text.add(this.tutorialStrings.case12_1);
+				this.text.add(this.tutorialStrings.case12_2);
+				this.text.add(this.tutorialStrings.case12_3);
 				this.type = TipData.types.WATCH;
 				this.window=0;
 			break;
@@ -899,7 +938,9 @@ class TipData
 			break;
 			*/
 			case 16:
-				this.text.add(this.tutorialStrings.case16);
+				this.numTexts = 2;
+				this.text.add(this.tutorialStrings.case16_0);
+				this.text.add(this.tutorialStrings.case16_1);
 				this.type = TipData.types.WATCH;
 				this.window=2;
 			break;
@@ -919,7 +960,9 @@ class TipData
 			break;
 
 			case 18:
-				this.text.add(this.tutorialStrings.case18);
+				this.numTexts = 2;
+				this.text.add(this.tutorialStrings.case18_0);
+				this.text.add(this.tutorialStrings.case18_1);
 				this.type = TipData.types.WATCH;
 				this.window=1;
 			break;
@@ -947,7 +990,9 @@ class TipData
 			break;
 
 			case 22:
-				this.text.add(this.tutorialStrings.case22);
+				this.numTexts = 2;
+				this.text.add(this.tutorialStrings.case22_0);
+				this.text.add(this.tutorialStrings.case22_1);
 				this.type = TipData.types.DRAG;
 				this.dragType = TipData.dragTypes.FAVSAUCE;
 				this.window=1;
@@ -982,11 +1027,13 @@ class TipData
 			break;
 
 			case 27:
-				this.numTexts = 4;
+				this.numTexts = 6;
 				this.text.add(this.tutorialStrings.case27_0);
 				this.text.add(this.tutorialStrings.case27_1);
 				this.text.add(this.tutorialStrings.case27_2);
 				this.text.add(this.tutorialStrings.case27_3);
+				this.text.add(this.tutorialStrings.case27_4);
+				this.text.add(this.tutorialStrings.case27_5);
 				this.type = TipData.types.WATCH;
 				this.window=1;
 			break;
@@ -1001,15 +1048,12 @@ class TipLogic
 	{
 		this.textImg;
 		this.text;
-		this.closeButton;
 		this.dataContainer;
 	}
 
 	display()
 	{
 		TipLogic.currentInstance = this;
-		
-		
 		var messageString;
 
 		var tipDataContainer = TutorialManager.tipDataContainer.getAt(TutorialManager.currentTip);
@@ -1030,9 +1074,11 @@ class TipLogic
 		{
 			offset = 2*config.width;
 		}
-		var style = { font: "9px PixelFont", fill: "#ffffff", align: "left", wordWrap:{ width: config.width*0.5, useAdvancedWrap:true} };
-		this.textImg = TutorialManager.scene.add.image(config.width*0.1+offset, config.height*0.1, 'spr_tutorial');
-		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.1, this.textImg.y-config.height*0.06, messageString, style).setResolution(10);
+
+		this.textImg = TutorialManager.scene.add.image(config.width*0.2+offset, config.height*0.2, 'spr_clue');
+		this.textImg.setScale(1.2);
+		var style = { font: "10px PixelFont", fill: "#000000", align: "left", wordWrap:{ width: this.textImg.displayWidth-2, useAdvancedWrap:true} };
+		this.text = TutorialManager.scene.add.text(this.textImg.x-config.width*0.17, this.textImg.y-config.height*0.135, messageString, style).setResolution(10);
 
 		var selfRef = this;
 
@@ -1040,18 +1086,22 @@ class TipLogic
 		{
 			case TipData.types.WATCH:
 				console.log("TYPE WATCH");
-				this.textImg.setInteractive();
-				this.textImg.on('pointerdown', function(pointer){
+
+				var textContainer = this.textImg;
+				var nextButton = GameManager.scene.add.image(textContainer.x+config.width*0.205, textContainer.y+config.height*0.1,'assets_atlas', 'spr_ui_arrow');
+				nextButton.setPipeline('GlowFilter');
+				nextButton.setInteractive().on('pointerdown', function(pointer){
 				var readCount = tipDataContainer.readCount;
 					if(readCount < textList.length)
 					{
 						selfRef.text.destroy();
 						messageString = textList.getAt(readCount);
-						selfRef.text = TutorialManager.scene.add.text(this.x-config.width*0.1, this.y-config.height*0.06, messageString, style).setResolution(10);
+						selfRef.text = TutorialManager.scene.add.text(textContainer.x-config.width*0.17, textContainer.y-config.height*0.135, messageString, style).setResolution(10);
 						tipDataContainer.readCount++;
 					}
 					else
 					{
+						nextButton.destroy();
 						selfRef.completeWatchTip();
 					}
         		})
@@ -1133,6 +1183,7 @@ class TipLogic
     	    				selfRef.endCase17(img);
     	    				callClient(2);
     	    				TutorialManager.tutorialPancakeClient.clientImg.x += config.width*0.45;
+    	    				TutorialManager.tutorialPancakeClient.clientSecondImg.x += config.width*0.45;
 						})
 						//To do
 						//Enable interactivity with noodlesViewButton

@@ -176,7 +176,7 @@ class Loading extends Phaser.Scene {
         this.load.image('bg_maintitle_off','assets/bg_maintitle_off.png');
         this.load.image('bg_maintitle_light','assets/bg_maintitle_light.png');
         this.load.image('bg_contact','assets/bg_contact.png');
-        
+        this.load.image('spr_clue','assets/UI/spr_clue.png');
         this.load.image('spr_back1','assets/spr_back.png');
         this.load.image('spr_ui_settings1','assets/spr_ui_settings.png');
 
@@ -212,9 +212,6 @@ class Loading extends Phaser.Scene {
     {
         this.load.path = '';
     	// Animación de hervir: nombrado dependiente de la implementación.
-        this.load.image('spr_bowls','assets/spr_bowls.png');
-        this.load.image('spr_ui_arrow','assets/spr_ui_arrow.png');
-        this.load.image('spr_sauces_posters','assets/spr_sauces_posters.png');
         this.load.image('bg_streetNoodles','assets/bg_streetNoodles.png');
         this.load.image('bg_kitchen','assets/bg_kitchen.png');
     	// Animación del cucharón echando cada salsa. (3 en total): nombrado dependiente de la implementación

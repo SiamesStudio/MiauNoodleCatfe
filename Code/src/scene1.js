@@ -43,7 +43,7 @@ class scene1 extends Phaser.Scene {
 
 	create(){
 		var gm = new GameManager(this);
-		gm.resetVars();
+		GameManager.resetVariables();
 		this.gameTimer = this.time.addEvent({ delay: GameManager.gameMinutes*60*1000, callback: finishGame, callbackScope: this });
 		this.resetVariables();
 		this.clientsSettings();
@@ -860,25 +860,20 @@ class GameManager
 	static currentContainer;
 	static dishImgContainerNoodles = new Phaser.Structs.List();
 	static clients = new Phaser.Structs.List();
-
 	static grabbedItemImg; //pancake
 	static grabbedItem; //
 	static grabbedItemClass;
 	static trashCanImgPancake;
 	static trashCanImgNoodles;
 	static animatedStrainerImg;
-
 	static collidingObjectImg;
 	static collidingObject;
-
 	static tapSound;
 	static waitingRestaurantClient = false;
 	static waitingStreetClient = false;
-	
 	static levelSeconds=[10,8,6,4,2,1];
 	static gameMinutes=10;
 	static gameOn=true;
-
 	static levelEarnedCoins=0;
 	static globalHappiness=50;
 	static customerCounter=1;
@@ -889,12 +884,39 @@ class GameManager
 		GameManager.scene = scene;
 	}
 
-	resetVars()
+	static resetVariables()
 	{
 		GameManager.dishImgContainerPancake.removeAll();
 		GameManager.dishImgContainerNoodles.removeAll();
 		GameManager.clients.removeAll();
 		GameManager.coffeeDishes.removeAll();
+
+        GameManager.coffeeMachine = null;
+        GameManager.griddle = null;
+        GameManager.strainer = null;
+        GameManager.tableclothsNoodle = null;
+        GameManager.tableclothsPancake = null;
+        GameManager.currentContainer = null;
+        GameManager.grabbedItemImg = null;
+        GameManager.grabbedItem = null;
+        GameManager.grabbedItemClass = null;
+        GameManager.trashCanImgPancake = null;
+        GameManager.trashCanImgNoodles = null;
+        GameManager.animatedStrainerImg = null;
+        GameManager.collidingObjectImg = null;
+        GameManager.collidingObject = null;
+        GameManager.tapSound = null;
+
+        GameManager.waitingRestaurantClient = false;
+        GameManager.waitingStreetClient = false;
+        GameManager.levelSeconds = [10,8,6,4,2,1];
+        GameManager.gameMinutes = 10;
+        GameManager.gameOn = true;
+        GameManager.levelEarnedCoins = 0;
+        GameManager.globalHappiness = 50;
+        GameManager.customerCounter = 1;
+        GameManager.totalHappiness = 50;
+        GameManager.tutorial = false;
 	}
 }
 

@@ -87,6 +87,15 @@ class Client{
     
   }
 
+  static resetVariables()
+  {
+    Client.clientList = new Phaser.Structs.List();
+    Client.clientsInRestaurant = new Phaser.Structs.List();
+    Client.streetSlots = new Phaser.Structs.List();
+    Client.streetOccupiedSlots=0;
+    Client.restaurantSlots = new Phaser.Structs.List();
+    Client.restaurantOccupiedSlots=0;
+  }
 
   changePosition(x, y)
   {
@@ -255,6 +264,8 @@ class Client{
           Client.streetOccupiedSlots--;
         }
       })
+
+      if(GameManager.tutorial) this.coinsImg.disableInteractive();
     }
     else if(this.orderCoins==0){
       Client.clientsInRestaurant.remove(this.index);
