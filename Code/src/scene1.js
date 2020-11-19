@@ -322,6 +322,8 @@ class scene1 extends Phaser.Scene {
 	}
 
     optionsPanel(){
+        this.stopSounds();
+
         this.blackScreen.setVisible(true)
         this.extraBanner.setVisible(true)
         this.crossButtonPause.setVisible(true)
@@ -385,6 +387,8 @@ class scene1 extends Phaser.Scene {
 
     disableOptionsPanel()
     {
+        this.resumeSounds();
+
         this.blackScreen.setVisible(false)
         this.extraBanner.setVisible(false)
         this.extraBannerNoodles.setVisible(false)
@@ -926,21 +930,46 @@ class scene1 extends Phaser.Scene {
 		{
 			var pancake = Pancake.pancakesList.getAt(i);
 			pancake.cookingSound.stop();
-			pancake.burntSound.stop();
-			pancake.readySound.stop();
 		}
 
 		for(var i=0; i<Noodles.noodlesList.length; i++)
 		{
 			var noodles = Noodles.noodlesList.getAt(i);
 			noodles.cookingSound.stop();
-			noodles.burntSound.stop();
-			noodles.readySound.stop();
 		}
+
+        for(var i=0; i<Coffee.coffeeList.length; i++)
+        {
+            Coffee.coffeeList.getAt(i).fillingSound.stop();
+        }
 
 		this.currentSong.stop()
         this.interferenceSound.stop()
 	}
+
+    resumeSounds()
+    {
+        for(var i=0; i<Pancake.pancakesList.length; i++)
+        {
+            var pancake = Pancake.pancakesList.getAt(i);
+            if(pancake.soundWasPlaying) pancake.cookingSound.play();
+        }
+
+        for(var i=0; i<Noodles.noodlesList.length; i++)
+        {
+            var noodles = Noodles.noodlesList.getAt(i);
+            if(noodles.soundWasPlaying) noodles.cookingSound.play();
+        }
+
+        for(var i=0; i<Coffee.coffeeList.length; i++)
+        {
+            var coffee = Coffee.coffeeList.getAt(i);
+            if(coffee.soundWasPlaying) coffee.fillingSound.play();
+        }
+
+        this.currentSong.play()
+        this.interferenceSound.play()
+    }
 	
 	uploadPlayerLevel(number){
         var expPerLevel = [0,200,1200,6200,21200,46200,96200]

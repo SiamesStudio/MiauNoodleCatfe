@@ -31,6 +31,7 @@ class Coffee
 		this.img.anims.play('fillCoffee');
 		CoffeeMachine.playAnim(this.assignedSlot);
 		Coffee.coffeeList.add(this);
+		this.soundWasPlaying=true;
 	}
 
 	coffeeDone()
@@ -38,6 +39,7 @@ class Coffee
 		CoffeeMachine.stopAnim(this.assignedSlot);
 		this.readySound.play();
 		this.fillingSound.stop();
+		this.soundWasPlaying=false;
 		this.done = true;
 
 		this.dish = new Dish([this.index]);
@@ -63,7 +65,7 @@ class Coffee
 	/* Here implement the dish comparison with the client */
 	deliverCoffee(coffeeImg, clientImg)
 	{
-		Coffee.coffeeList.remove();
+		Coffee.coffeeList.remove(this);
 		GameManager.scene.physics.world.removeCollider(this.clientCollider);
 		coffeeImg.disableBody(true,true);
 		clientImg.setAlpha(1);
@@ -99,7 +101,6 @@ class Pancake
 		this.dishCollider;
 		this.doneTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeTime - Pancake.time);
 		this.burnTime = Math.abs(GameManager.scene.playerSettings.upgrades.pancakeBurnTime - (Pancake.time*2*5));
-
 		var pancake = this;
 		this.img.setDepth(2);
         this.img.setInteractive();
@@ -127,6 +128,7 @@ class Pancake
 		});
 
 		this.animImg.anims.play('doPancake');
+		this.soundWasPlaying = true;
 	}
 
 	/* Called when the current side of the pancake is done */
@@ -165,7 +167,7 @@ class Pancake
 				pancake.cookingSound.play();	
 				pancake.dragEndBehaviour();		
        		})
-       		
+       		this.soundWasPlaying = false;
 		}
 		this.img.setTexture('assets_atlas','spr_pancake_cooked');
 	}
@@ -187,6 +189,7 @@ class Pancake
 	/* Method called when the pancake has spent too much time in the griddle */
 	burnPancake()
 	{
+		this.soundWasPlaying=false;
 		this.animImg.destroy();
 		this.cookingSound.stop();
 		this.cookingSound.setMute(true);
@@ -333,7 +336,7 @@ class Noodles
 		this.img.setDepth(2);
 		this.doneTimer = GameManager.scene.time.addEvent({ delay: this.noodleTime*1000, callback: this.noodlesDone, callbackScope: this });
         this.burnTimer = GameManager.scene.time.addEvent({ delay: this.noodleBurnTime*1000, callback: this.noodlesBurnt, callbackScope: this });
-	
+		this.soundWasPlaying = true;
 		this.trashSound = trashSound;
         this.cookingSound = cookingSound;
         this.burntSound = burntSound;
@@ -372,6 +375,7 @@ class Noodles
 		this.readySound.play();
 		this.cookingSound.setMute(true);
 		this.makeNoodleInteractive();
+		this.soundWasPlaying=false;
 	}
 
 	makeNoodleInteractive()
