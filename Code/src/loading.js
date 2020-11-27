@@ -116,6 +116,9 @@ class Loading extends Phaser.Scene {
         this.load.image('diamond_5','assets/UI/diamond_5.png');
         this.load.image('diamond_6','assets/UI/diamond_6.png');
 
+        //FONDO GIF
+        this.load.image('background_gif','assets/fondoparagif.png');
+
         //RADIO
         this.load.image('spr_radioSpin','assets/UI/radio_spin.png');
 

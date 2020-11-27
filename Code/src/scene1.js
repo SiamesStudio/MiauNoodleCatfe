@@ -326,6 +326,7 @@ class scene1 extends Phaser.Scene {
             
 		})
 		this.crossButton.setInteractive().on('pointerdown', () => {
+			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
             GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		})
 
@@ -347,6 +348,7 @@ class scene1 extends Phaser.Scene {
 		})
 
 		this.crossButtonNoodles.setInteractive().on('pointerdown', () => {
+			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
             GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		})
 
@@ -367,6 +369,7 @@ class scene1 extends Phaser.Scene {
             
 		})
 		this.crossButtonRadio.setInteractive().on('pointerdown', () => {
+			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
             GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
         })    
 	}
@@ -804,7 +807,7 @@ class scene1 extends Phaser.Scene {
 		}
     	
 		if(!GameManager.gameOn && Client.clientsInRestaurant.length==0){ //condicion de victoria
-			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
+			//GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
 			this.savePlayerSettings();
 			this.stopSounds();
 			this.blackScreen.setVisible(true);
@@ -817,11 +820,12 @@ class scene1 extends Phaser.Scene {
 			this.extraBannerRadio.setVisible(true);
 			this.crossButtonRadio.setVisible(true);
 			this.victoryTextRadio.setVisible(true);
+			
 			//GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		}
 
 		if(GameManager.globalHappiness < 20){ //condicion de derrota
-			GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
+			//GameManager.scene.playerSettings.coins+=GameManager.levelEarnedCoins;
 			this.savePlayerSettings();
 			this.stopSounds();
 			this.blackScreen.setVisible(true);
@@ -834,6 +838,7 @@ class scene1 extends Phaser.Scene {
 			this.extraBannerRadio.setVisible(true);
 			this.crossButtonRadio.setVisible(true);
 			this.defeatTextRadio.setVisible(true);
+
 			//GameManager.scene.scene.start("Menu",{playerInfo: GameManager.scene.playerSettings})
 		}
 
