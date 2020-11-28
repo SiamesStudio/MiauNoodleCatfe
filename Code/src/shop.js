@@ -105,7 +105,13 @@ class Shop extends Phaser.Scene {
 
         //BACK
         this.backButton = this.add.sprite(config.width/12, 9*config.height/10,'spr_back1')
-        this.backButton.setInteractive().on('pointerdown', () => {this.scene.start("Menu", {playerInfo: this.playerSettings, songMenu:true});})
+        this.backButton.setInteractive().on('pointerdown', () => {
+            
+            //this.scene.start("Menu", {playerInfo: this.playerSettings});
+            this.scene.resume("Menu")
+            this.scene.remove("Shop");
+        
+        })
 
         //EXTRA
         this.blackScreen = this.add.sprite(config.width/2, config.height/2,'blackScreen').setAlpha(0.5)

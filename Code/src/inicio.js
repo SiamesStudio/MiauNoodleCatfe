@@ -83,13 +83,12 @@ class Inicio extends Phaser.Scene {
                     }, 100);
                 }, 100);
             }, 500); 
-            //this.playButtonPressed()
-             //this.scene.start("Menu", {playerInfo: this.playerSettings }); 
         })
 
 
         this.music = this.sound.add('snd_music_biscuit');
         this.music.play();
+        this.music.setLoop(true)
         this.music.setVolume(0.7)
         if(this.playerSettings.audioMuted) this.music.mute = true
 
@@ -107,8 +106,4 @@ class Inicio extends Phaser.Scene {
         });
 
     } 
-
-    nextScene(){
-        currentScene.scene.start("Menu", {playerInfo: currentScene.playerSettings });
-    }
 }

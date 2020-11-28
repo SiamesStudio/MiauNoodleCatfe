@@ -6,11 +6,12 @@ class Menu extends Phaser.Scene {
     init(gameData){
         this.gameStrings = new MenuStrings()
         this.playerSettings = gameData.playerInfo
-        if(gameData.songMenu === null){
-            this.playSong = false
-        }else{
-            this.playSong = gameData.songMenu
-        }
+        
+        //if(gameData.songMenu != 5){
+        //    this.playSong = false
+        //}else{
+        //    this.playSong = true
+        //}
         
         console.log(this.playerSettings)
         
@@ -38,11 +39,13 @@ class Menu extends Phaser.Scene {
         //background.displayWidth = config.width;
         //background.displayHeight = background.displayHeight * widthRatio
         this.menuMusic = this.sound.add('snd_music_cheese')
-        if(!this.playSong){
+        
+        //if(!this.playSong){
             this.menuMusic.play()
+            this.menuMusic.setLoop(true)
             this.menuMusic.setVolume(0.7)
             if(this.playerSettings.audioMuted) this.menuMusic.mute = true
-        }
+        //}
         
 
         
@@ -89,7 +92,8 @@ class Menu extends Phaser.Scene {
         this.shopTextButton = this.add.text(5.3*config.width/6, 6*config.height/7, this.gameStrings.shopButton, { font: "11px PixelFont", fill: "#ffffff", align: "center" }).setOrigin(0.5).setResolution(10);
         this.shopButton.setInteractive().on('pointerdown', () => {
             //this.menuMusic.stop(), 
-            this.scene.start("Shop", { playerInfo: this.playerSettings });
+            this.scene.pause();
+            this.scene.launch("Shop", { playerInfo: this.playerSettings });
         })
 
         //OPTIONSaviso cuando lo
