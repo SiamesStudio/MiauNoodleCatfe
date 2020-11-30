@@ -20,6 +20,8 @@ class Coffee
 		this.fillingSound = fillingSound;
 		this.readySound = readySound;
 		this.fillingSound.play();
+		this.soundWasPlaying=true;
+		if(GameManager.scene.audioMuted) this.fillingSound.setMute(true);
 		this.img.setDepth(3);
 		var time = this.doneTime;
 		var animation = GameManager.scene.anims.create({
@@ -31,13 +33,13 @@ class Coffee
 		this.img.anims.play('fillCoffee');
 		CoffeeMachine.playAnim(this.assignedSlot);
 		Coffee.coffeeList.add(this);
-		this.soundWasPlaying=true;
+		
 	}
 
 	coffeeDone()
 	{
 		CoffeeMachine.stopAnim(this.assignedSlot);
-		this.readySound.play();
+		if(!GameManager.scene.audioMuted) this.readySound.play();
 		this.fillingSound.stop();
 		this.soundWasPlaying=false;
 		this.done = true;
@@ -117,7 +119,7 @@ class Pancake
         this.burntSound = burntSound;
         this.readySound = readySound;
         this.cookingSound.play();
-
+        if(GameManager.scene.audioMuted) this.cookingSound.setMute(true);
         this.animImg = GameManager.scene.physics.add.sprite(posx,posy-config.height*0.04,'anim_pancake');
         
         var animation = GameManager.scene.anims.create({
@@ -137,18 +139,18 @@ class Pancake
 		var pancake = this;
 		if(!this.side1Done)
 		{
-			this.readySound.play();
+			if(!GameManager.scene.audioMuted)this.readySound.play();
 			this.side1Done = true;
 		} 
 		else if(this.side1Done) // The pancake is finally done
 		{
-			this.readySound.play();
+			if(!GameManager.scene.audioMuted)this.readySound.play();
 			this.side2Done = true;
 			this.cookingSound.setMute(true);
 			GameManager.scene.input.setDraggable(this.img);
 
 			this.img.on('dragstart', function(pointer,dragX,dragY){
-				GameManager.tapSound.play();
+				if(!GameManager.scene.audioMuted)GameManager.tapSound.play();
 				this.setDepth(this.depth+5);
 				pancake.animImg.setAlpha(0);
 				pancake.sideTimer.paused = true;
@@ -164,7 +166,7 @@ class Pancake
 			this.img.on('dragend',() => {
 				pancake.img.setDepth(pancake.img.depth-5);
 				pancake.animImg.setAlpha(1);
-				pancake.cookingSound.play();	
+				if(!GameManager.scene.audioMuted)pancake.cookingSound.play();	
 				pancake.dragEndBehaviour();		
        		})
        		this.soundWasPlaying = false;
@@ -193,7 +195,7 @@ class Pancake
 		this.animImg.destroy();
 		this.cookingSound.stop();
 		this.cookingSound.setMute(true);
-		this.burntSound.play();
+		if(!GameManager.scene.audioMuted)this.burntSound.play();
 		this.sideTimer.remove(false);
 		this.burnTimer.remove(false);
 		this.burnt = true;
@@ -206,7 +208,7 @@ class Pancake
 		GameManager.scene.input.setDraggable(this.img);
 
 		this.img.on('dragstart', function(pointer,dragX,dragY){
-			GameManager.tapSound.play();
+			if(!GameManager.scene.audioMuted)GameManager.tapSound.play();
 		})
 
         this.img.on('drag', function(pointer, dragX, dragY){
@@ -273,7 +275,7 @@ class Pancake
 	throwFood(food, trashCan)
 	{
 		this.animImg.destroy();
-		this.trashSound.play();
+		if(!GameManager.scene.audioMuted)this.trashSound.play();
 		trashCan.setAlpha(1);
 		food.destroy();
 		//food.disableBody(true,true);
@@ -326,7 +328,6 @@ class Noodles
 			break;
 		}
 		
-		//this.img = GameManager.scene.physics.add.sprite(0,0,'spr_noodles_cooking');
 		this.burnt = false;
 		this.trashCollider;
 		this.dishCollider;
@@ -342,7 +343,7 @@ class Noodles
         this.burntSound = burntSound;
         this.readySound = readySound;
         this.cookingSound.play();
-
+        if(GameManager.scene.audioMuted) this.cookingSound.setMute(true);
         GameManager.animatedStrainerImg.anims.play('potCooking');
         GameManager.animatedStrainerImg.setAlpha(1);
         Noodles.noodlesList.add(this);
@@ -372,7 +373,7 @@ class Noodles
 		});
 		this.img.anims.play('noodles_done_'+this.assignedSlot);
 		
-		this.readySound.play();
+		if(!GameManager.scene.audioMuted)this.readySound.play();
 		this.cookingSound.setMute(true);
 		this.makeNoodleInteractive();
 		this.soundWasPlaying=false;
@@ -385,7 +386,7 @@ class Noodles
 		this.img.setInteractive({ draggable: true});
 
 		this.img.on('dragstart', function(pointer,dragX,dragY){
-			GameManager.tapSound.play();
+			if(!GameManager.scene.audioMuted)GameManager.tapSound.play();
 			this.setAlpha(0);
 			this.setDepth(5);
 			noodles.cookedImg.setAlpha(1);
@@ -404,7 +405,7 @@ class Noodles
     	})	
 		
 		this.img.on('dragend',() => {
-			noodles.cookingSound.play();
+			if(!GameManager.scene.audioMuted)noodles.cookingSound.play();
 			this.img.setAlpha(1);
 			this.img.setDepth(3);
 			noodles.cookedImg.setAlpha(0);
@@ -428,7 +429,7 @@ class Noodles
 		this.img.anims.play('noodles_burnt_'+this.assignedSlot);
 		this.cookingSound.stop();
 		this.cookingSound.setMute(true);
-		this.burntSound.play();
+		if(!GameManager.scene.audioMuted)this.burntSound.play();
 		
 		this.cookedImg.setTexture('assets_atlas','spr_noodles_burnt');
 		this.burnt = true;
@@ -459,7 +460,7 @@ class Noodles
 
 	throwFood(food, trashCan)
 	{
-		this.trashSound.play();
+		if(!GameManager.scene.audioMuted)this.trashSound.play();
 		trashCan.setAlpha(1);
 		food.destroy();
 		this.img.destroy();
@@ -582,7 +583,7 @@ class Topping
 		clonedImg.setInteractive({draggable: true});
 
 		clonedImg.on('dragstart', function(pointer,dragX,dragY){
-			GameManager.tapSound.play();
+			if(!GameManager.scene.audioMuted)GameManager.tapSound.play();
 			selfRef.img.setAlpha(1);
 			clonedImg.setAlpha(0);
 			selfRef.posx = this.x;
@@ -619,7 +620,7 @@ class Topping
 
 	dragToDish(toppingImg, dishImg)
 	{
-		this.toppingSound.play();
+		if(!GameManager.scene.audioMuted)this.toppingSound.play();
 		this.collider.destroy();
 		var container = GameManager.collidingObject;
 		container.dishContainer.iterate(function(child){
@@ -766,7 +767,7 @@ class Syrup
 
 	serveSyrup(sauceImg, dishImg)
 	{	
-		this.syrupSound.play();
+		if(!GameManager.scene.audioMuted)this.syrupSound.play();
 		var container = GameManager.collidingObject;
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(1);
@@ -909,7 +910,7 @@ class Sauce
 
 	serveSauce(sauceImg, dishImg)
 	{
-		this.fillingSound.play();
+		if(!GameManager.scene.audioMuted)this.fillingSound.play();
 		var container = GameManager.collidingObject;
 		container.dishContainer.iterate(function(child){
 			child.setAlpha(1);

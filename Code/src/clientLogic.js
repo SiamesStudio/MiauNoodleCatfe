@@ -385,7 +385,7 @@ class Client{
     this.bubbleImg.setDepth(5);
     
     var arrivalSound = GameManager.scene.sound.add('snd_character_arrived');
-    arrivalSound.play();
+    if(!GameManager.scene.audioMuted) arrivalSound.play();
   }
 
   offsetClient(offset)
@@ -475,7 +475,7 @@ class Client{
           Client.streetOccupiedSlots--;
         }
         var coinsSound = GameManager.scene.sound.add('snd_coins_gain');
-        coinsSound.play();
+        if(!GameManager.scene.audioMuted) coinsSound.play();
       })
 
       if(GameManager.tutorial) this.coinsImg.disableInteractive();
