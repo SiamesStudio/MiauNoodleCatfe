@@ -10,7 +10,7 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "spr_bck_improvementMenu.png",
+					"filename": "spr_bck_improvementMenu",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -35,7 +35,7 @@
 					}
 				},
 				{
-					"filename": "spr_bg_pot.png",
+					"filename": "spr_bg_pot",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -60,7 +60,7 @@
 					}
 				},
 				{
-					"filename": "spr_bg_noodles.png",
+					"filename": "spr_bg_noodles",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -85,7 +85,7 @@
 					}
 				},
 				{
-					"filename": "spr_griddle.png",
+					"filename": "spr_griddle",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -110,7 +110,7 @@
 					}
 				},
 				{
-					"filename": "spr_coffeeMachine_0.png",
+					"filename": "spr_coffeeMachine_0",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -135,7 +135,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_posters.png",
+					"filename": "spr_topping_posters",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -160,7 +160,7 @@
 					}
 				},
 				{
-					"filename": "spr_coffeeMachine_1.png",
+					"filename": "spr_coffeeMachine_1",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -185,7 +185,7 @@
 					}
 				},
 				{
-					"filename": "spr_coffeeMachine_2.png",
+					"filename": "spr_coffeeMachine_2",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -210,7 +210,7 @@
 					}
 				},
 				{
-					"filename": "spr_coffeeMachine_3.png",
+					"filename": "spr_coffeeMachine_3",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -235,7 +235,7 @@
 					}
 				},
 				{
-					"filename": "main_title_button_play.png",
+					"filename": "main_title_button_play",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -260,7 +260,7 @@
 					}
 				},
 				{
-					"filename": "spr_cristal_canciones.png",
+					"filename": "spr_cristal_canciones",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -285,7 +285,7 @@
 					}
 				},
 				{
-					"filename": "spr_pantalla_canciones.png",
+					"filename": "spr_pantalla_canciones",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -310,7 +310,7 @@
 					}
 				},
 				{
-					"filename": "main_title_button_contact.png",
+					"filename": "main_title_button_contact",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -335,7 +335,7 @@
 					}
 				},
 				{
-					"filename": "spr_tablecloth_2.png",
+					"filename": "spr_tablecloth_2",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -360,7 +360,7 @@
 					}
 				},
 				{
-					"filename": "spr_cat_basecolor.png",
+					"filename": "spr_cat_basecolor",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -385,7 +385,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_slider.png",
+					"filename": "spr_ui_slider",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -410,7 +410,7 @@
 					}
 				},
 				{
-					"filename": "spr_tablecloth_3.png",
+					"filename": "spr_tablecloth_3",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -435,7 +435,7 @@
 					}
 				},
 				{
-					"filename": "spr_cat_emotion_happy.png",
+					"filename": "spr_cat_emotion_happy",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -460,7 +460,7 @@
 					}
 				},
 				{
-					"filename": "spr_cat_emotion_normal.png",
+					"filename": "spr_cat_emotion_normal",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -485,7 +485,7 @@
 					}
 				},
 				{
-					"filename": "spr_cat_emotion_sad.png",
+					"filename": "spr_cat_emotion_sad",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -510,7 +510,7 @@
 					}
 				},
 				{
-					"filename": "spr_trashCan.png",
+					"filename": "spr_trashCan",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -535,7 +535,7 @@
 					}
 				},
 				{
-					"filename": "spr_strainer_0.png",
+					"filename": "spr_strainer_0",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -560,7 +560,7 @@
 					}
 				},
 				{
-					"filename": "spr_cat_outline.png",
+					"filename": "spr_cat_outline",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -585,7 +585,7 @@
 					}
 				},
 				{
-					"filename": "spr_cat_secondcolor_spots.png",
+					"filename": "spr_cat_secondcolor_spots",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -610,7 +610,7 @@
 					}
 				},
 				{
-					"filename": "spr_tablecloth_0.png",
+					"filename": "spr_tablecloth_0",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -635,7 +635,7 @@
 					}
 				},
 				{
-					"filename": "spr_cat_secondcolor_stripes.png",
+					"filename": "spr_cat_secondcolor_stripes",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -660,7 +660,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_chefLvl.png",
+					"filename": "spr_ui_chefLvl",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -685,7 +685,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_volumen.png",
+					"filename": "spr_ui_volumen",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -710,7 +710,7 @@
 					}
 				},
 				{
-					"filename": "spr_strainer_2.png",
+					"filename": "spr_strainer_2",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -735,7 +735,7 @@
 					}
 				},
 				{
-					"filename": "spr_speechbubble.png",
+					"filename": "spr_speechbubble",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -760,7 +760,7 @@
 					}
 				},
 				{
-					"filename": "spr_tablecloth_1.png",
+					"filename": "spr_tablecloth_1",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -785,7 +785,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_strawberry.png",
+					"filename": "spr_topping_strawberry",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -810,7 +810,7 @@
 					}
 				},
 				{
-					"filename": "spr_borde_pantalla.png",
+					"filename": "spr_borde_pantalla",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -835,7 +835,7 @@
 					}
 				},
 				{
-					"filename": "spr_cristal_volumen_cancion.png",
+					"filename": "spr_cristal_volumen_cancion",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -860,7 +860,7 @@
 					}
 				},
 				{
-					"filename": "spr_bg_sauce_shoyu.png",
+					"filename": "spr_bg_sauce_shoyu",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -885,7 +885,7 @@
 					}
 				},
 				{
-					"filename": "spr_radio_zoomed_vol_song.png",
+					"filename": "spr_radio_zoomed_vol_song",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -910,7 +910,7 @@
 					}
 				},
 				{
-					"filename": "spr_bg_sauce_kimuchi.png",
+					"filename": "spr_bg_sauce_kimuchi",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -935,7 +935,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_settings.png",
+					"filename": "spr_ui_settings",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -960,7 +960,7 @@
 					}
 				},
 				{
-					"filename": "spr_radio.png",
+					"filename": "spr_radio",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -985,7 +985,7 @@
 					}
 				},
 				{
-					"filename": "spr_bg_sauce_miso.png",
+					"filename": "spr_bg_sauce_miso",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1010,7 +1010,7 @@
 					}
 				},
 				{
-					"filename": "spr_bg_sauce_shio.png",
+					"filename": "spr_bg_sauce_shio",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1035,7 +1035,7 @@
 					}
 				},
 				{
-					"filename": "spr_bowl_pile.png",
+					"filename": "spr_bowl_pile",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1060,7 +1060,7 @@
 					}
 				},
 				{
-					"filename": "spr_coins.png",
+					"filename": "spr_coins",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1085,7 +1085,7 @@
 					}
 				},
 				{
-					"filename": "spr_pantalla_volumen_cancion.png",
+					"filename": "spr_pantalla_volumen_cancion",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1110,7 +1110,7 @@
 					}
 				},
 				{
-					"filename": "spr_dishes.png",
+					"filename": "spr_dishes",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1135,7 +1135,7 @@
 					}
 				},
 				{
-					"filename": "spr_bg_topping_mushroom.png",
+					"filename": "spr_bg_topping_mushroom",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1160,7 +1160,7 @@
 					}
 				},
 				{
-					"filename": "spr_bg_topping_egg.png",
+					"filename": "spr_bg_topping_egg",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1185,7 +1185,7 @@
 					}
 				},
 				{
-					"filename": "spr_bowl.png",
+					"filename": "spr_bowl",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1210,7 +1210,7 @@
 					}
 				},
 				{
-					"filename": "spr_bg_topping_springonion.png",
+					"filename": "spr_bg_topping_springonion",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1235,7 +1235,7 @@
 					}
 				},
 				{
-					"filename": "spr_griddle_0.png",
+					"filename": "spr_griddle_0",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1260,7 +1260,7 @@
 					}
 				},
 				{
-					"filename": "spr_griddle_1.png",
+					"filename": "spr_griddle_1",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1285,7 +1285,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_lacasitos.png",
+					"filename": "spr_topping_lacasitos",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1310,7 +1310,7 @@
 					}
 				},
 				{
-					"filename": "spr_dish.png",
+					"filename": "spr_dish",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1335,7 +1335,7 @@
 					}
 				},
 				{
-					"filename": "spr_close_window.png",
+					"filename": "spr_close_window",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1360,7 +1360,7 @@
 					}
 				},
 				{
-					"filename": "spr_button_menu.png",
+					"filename": "spr_button_menu",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1385,7 +1385,7 @@
 					}
 				},
 				{
-					"filename": "spr_strainer_1.png",
+					"filename": "spr_strainer_1",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1410,7 +1410,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_cooking.png",
+					"filename": "spr_pancake_cooking",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1435,7 +1435,7 @@
 					}
 				},
 				{
-					"filename": "spr_griddle_2.png",
+					"filename": "spr_griddle_2",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1460,7 +1460,7 @@
 					}
 				},
 				{
-					"filename": "spr_bg_topping_naruto.png",
+					"filename": "spr_bg_topping_naruto",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1485,7 +1485,7 @@
 					}
 				},
 				{
-					"filename": "spr_strainer_3.png",
+					"filename": "spr_strainer_3",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1510,7 +1510,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_icon_gem.png",
+					"filename": "spr_ui_icon_gem",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1535,7 +1535,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_0.png",
+					"filename": "spr_pancake_0",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1560,7 +1560,7 @@
 					}
 				},
 				{
-					"filename": "spr_bck_subShopMenu.png",
+					"filename": "spr_bck_subShopMenu",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1585,7 +1585,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_1.png",
+					"filename": "spr_pancake_1",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1610,7 +1610,7 @@
 					}
 				},
 				{
-					"filename": "spr_noodles.png",
+					"filename": "spr_noodles",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1635,7 +1635,7 @@
 					}
 				},
 				{
-					"filename": "spr_noodles_burnt.png",
+					"filename": "spr_noodles_burnt",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1660,7 +1660,7 @@
 					}
 				},
 				{
-					"filename": "spr_griddle_3.png",
+					"filename": "spr_griddle_3",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1685,7 +1685,7 @@
 					}
 				},
 				{
-					"filename": "spr_sauce_kimuchi.png",
+					"filename": "spr_sauce_kimuchi",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1710,7 +1710,7 @@
 					}
 				},
 				{
-					"filename": "spr_sauce_miso.png",
+					"filename": "spr_sauce_miso",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1735,7 +1735,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_coconut.png",
+					"filename": "spr_topping_coconut",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1760,7 +1760,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_lacasitos.png",
+					"filename": "spr_pancake_lacasitos",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1785,7 +1785,7 @@
 					}
 				},
 				{
-					"filename": "spr_noodles_cooked.png",
+					"filename": "spr_noodles_cooked",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1810,7 +1810,7 @@
 					}
 				},
 				{
-					"filename": "spr_glasses.png",
+					"filename": "spr_glasses",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1835,7 +1835,7 @@
 					}
 				},
 				{
-					"filename": "spr_sauce_shio.png",
+					"filename": "spr_sauce_shio",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1860,7 +1860,7 @@
 					}
 				},
 				{
-					"filename": "spr_sauce_shoyu.png",
+					"filename": "spr_sauce_shoyu",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1885,7 +1885,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_banana.png",
+					"filename": "spr_topping_banana",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1910,7 +1910,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_2.png",
+					"filename": "spr_pancake_2",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1935,7 +1935,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_egg.png",
+					"filename": "spr_topping_egg",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1960,7 +1960,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_mushroom.png",
+					"filename": "spr_topping_mushroom",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1985,7 +1985,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_naruto.png",
+					"filename": "spr_topping_naruto",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2010,7 +2010,7 @@
 					}
 				},
 				{
-					"filename": "spr_syrup_strawberry.png",
+					"filename": "spr_syrup_strawberry",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2035,7 +2035,7 @@
 					}
 				},
 				{
-					"filename": "spr_syrup_caramel.png",
+					"filename": "spr_syrup_caramel",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2060,7 +2060,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_springonion.png",
+					"filename": "spr_topping_springonion",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2085,7 +2085,7 @@
 					}
 				},
 				{
-					"filename": "spr_glass_empty.png",
+					"filename": "spr_glass_empty",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2110,7 +2110,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_icon_volume.png",
+					"filename": "spr_ui_icon_volume",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2135,7 +2135,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_icon_coin.png",
+					"filename": "spr_ui_icon_coin",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2160,7 +2160,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_burnt.png",
+					"filename": "spr_pancake_burnt",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2185,7 +2185,7 @@
 					}
 				},
 				{
-					"filename": "spr_syrup_chocolate.png",
+					"filename": "spr_syrup_chocolate",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2210,7 +2210,7 @@
 					}
 				},
 				{
-					"filename": "spr_glass_filled.png",
+					"filename": "spr_glass_filled",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2235,7 +2235,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_icon_shop.png",
+					"filename": "spr_ui_icon_shop",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2260,7 +2260,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_banana.png",
+					"filename": "spr_pancake_banana",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2285,7 +2285,7 @@
 					}
 				},
 				{
-					"filename": "spr_language_english.png",
+					"filename": "spr_language_english",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2310,7 +2310,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_arrow.png",
+					"filename": "spr_ui_arrow",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2335,7 +2335,7 @@
 					}
 				},
 				{
-					"filename": "spr_porcentaje_volumen_pantalla_juego.png",
+					"filename": "spr_porcentaje_volumen_pantalla_juego",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2360,7 +2360,7 @@
 					}
 				},
 				{
-					"filename": "spr_porcentaje_volumen.png",
+					"filename": "spr_porcentaje_volumen",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2385,7 +2385,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_syrup_caramel.png",
+					"filename": "spr_topping_syrup_caramel",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2410,7 +2410,7 @@
 					}
 				},
 				{
-					"filename": "spr_indicador_cancion.png",
+					"filename": "spr_indicador_cancion",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2435,7 +2435,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_cooked.png",
+					"filename": "spr_pancake_cooked",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2460,7 +2460,7 @@
 					}
 				},
 				{
-					"filename": "spr_language_spanish.png",
+					"filename": "spr_language_spanish",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2485,7 +2485,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_syrup_chocolate.png",
+					"filename": "spr_topping_syrup_chocolate",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2510,7 +2510,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_icon_happy.png",
+					"filename": "spr_ui_icon_happy",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2535,7 +2535,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_icon_meh.png",
+					"filename": "spr_ui_icon_meh",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2560,7 +2560,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_icon_no_volumen.png",
+					"filename": "spr_ui_icon_no_volumen",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2585,7 +2585,7 @@
 					}
 				},
 				{
-					"filename": "spr_ui_icon_sad.png",
+					"filename": "spr_ui_icon_sad",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2610,7 +2610,7 @@
 					}
 				},
 				{
-					"filename": "spr_palito_cancion_volumen.png",
+					"filename": "spr_palito_cancion_volumen",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2635,7 +2635,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_coconut.png",
+					"filename": "spr_pancake_coconut",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2660,7 +2660,7 @@
 					}
 				},
 				{
-					"filename": "spr_pancake_strawberry.png",
+					"filename": "spr_pancake_strawberry",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2685,7 +2685,7 @@
 					}
 				},
 				{
-					"filename": "spr_topping_syrup_strawberry.png",
+					"filename": "spr_topping_syrup_strawberry",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2710,7 +2710,7 @@
 					}
 				},
 				{
-					"filename": "spr_porcentaje_volumen_pantalla_juego_2.png",
+					"filename": "spr_porcentaje_volumen_pantalla_juego_2",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -2736,10 +2736,5 @@
 				}
 			]
 		}
-	],
-	"meta": {
-		"app": "https://www.codeandweb.com/texturepacker",
-		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:a57c4e92f78960c6dcdaec9e48c3ea3e:4656c3590a35cbaa725922d099dba2c9:a759b6bbc8381ac9c472b28f589ad0d6$"
-	}
+	]
 }
