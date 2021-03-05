@@ -226,7 +226,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">spr_arrow_improvementMenu.png</key>
+            <key type="filename">postentrega/spr_bck_improvementMenu.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -235,13 +235,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,2,7,4</rect>
+                <rect>50,32,100,63</rect>
                 <key>scale9Paddings</key>
-                <rect>3,2,7,4</rect>
+                <rect>50,32,100,63</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">spr_back.png</key>
+            <key type="filename">postentrega/spr_bck_subShopMenu.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -250,13 +250,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,2,5,5</rect>
+                <rect>10,6,19,11</rect>
                 <key>scale9Paddings</key>
-                <rect>3,2,5,5</rect>
+                <rect>10,6,19,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">spr_bck_improvementDescription.png</key>
+            <key type="filename">postentrega/spr_button_menu.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -265,13 +265,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>27,25,53,51</rect>
+                <rect>11,3,21,6</rect>
                 <key>scale9Paddings</key>
-                <rect>27,25,53,51</rect>
+                <rect>11,3,21,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">spr_bck_improvementMenu.png</key>
+            <key type="filename">postentrega/spr_close_window.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -280,13 +280,15 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>62,33,123,67</rect>
+                <rect>5,5,9,9</rect>
                 <key>scale9Paddings</key>
-                <rect>62,33,123,67</rect>
+                <rect>5,5,9,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">spr_bck_mainMenu.png</key>
+            <key type="filename">postentrega/spr_language_english.png</key>
+            <key type="filename">postentrega/spr_language_spanish.png</key>
+            <key type="filename">postentrega/spr_ui_chefLvl.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -295,13 +297,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>21,10,41,21</rect>
+                <rect>4,4,8,7</rect>
                 <key>scale9Paddings</key>
-                <rect>21,10,41,21</rect>
+                <rect>4,4,8,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">spr_bck_shopMenu.png</key>
+            <key type="filename">postentrega/spr_ui_arrow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -310,13 +312,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>73,41,146,83</rect>
+                <rect>2,3,3,5</rect>
                 <key>scale9Paddings</key>
-                <rect>73,41,146,83</rect>
+                <rect>2,3,3,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">spr_bck_subShopMenu.png</key>
+            <key type="filename">postentrega/spr_ui_icon_coin.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -325,9 +327,101 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>19,11,37,21</rect>
+                <rect>4,4,7,7</rect>
                 <key>scale9Paddings</key>
-                <rect>19,11,37,21</rect>
+                <rect>4,4,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">postentrega/spr_ui_icon_happy.png</key>
+            <key type="filename">postentrega/spr_ui_icon_meh.png</key>
+            <key type="filename">postentrega/spr_ui_icon_sad.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">postentrega/spr_ui_icon_no_volumen.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,7,9</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,7,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">postentrega/spr_ui_icon_shop.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,9,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,9,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">postentrega/spr_ui_icon_volume.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,4,11,9</rect>
+                <key>scale9Paddings</key>
+                <rect>6,4,11,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">postentrega/spr_ui_settings.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,10,21,19</rect>
+                <key>scale9Paddings</key>
+                <rect>11,10,21,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">postentrega/spr_ui_slider.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,3,39,7</rect>
+                <key>scale9Paddings</key>
+                <rect>19,3,39,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -417,36 +511,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">spr_buttomMenu.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>14,5,28,9</rect>
-                <key>scale9Paddings</key>
-                <rect>14,5,28,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_button_babyUI.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>14,3,29,7</rect>
-                <key>scale9Paddings</key>
-                <rect>14,3,29,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">spr_coffeeMachine_0.png</key>
             <key type="filename">spr_coffeeMachine_1.png</key>
             <key type="filename">spr_coffeeMachine_2.png</key>
@@ -526,25 +590,6 @@
                 <rect>13,6,25,12</rect>
                 <key>scale9Paddings</key>
                 <rect>13,6,25,12</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_espaniol.png</key>
-            <key type="filename">spr_ingles.png</key>
-            <key type="filename">spr_language_english.png</key>
-            <key type="filename">spr_language_spanish.png</key>
-            <key type="filename">spr_ui_chefLvl.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,8,7</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,8,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -999,38 +1044,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">spr_ui_arrow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,3,4,7</rect>
-                <key>scale9Paddings</key>
-                <rect>2,3,4,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_ui_icon_coin.png</key>
-            <key type="filename">spr_ui_icon_reload.png</key>
-            <key type="filename">spr_ui_settings.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">spr_ui_icon_gem.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1043,128 +1056,6 @@
                 <rect>4,3,7,5</rect>
                 <key>scale9Paddings</key>
                 <rect>4,3,7,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_ui_icon_happy.png</key>
-            <key type="filename">spr_ui_icon_meh.png</key>
-            <key type="filename">spr_ui_icon_sad.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_ui_icon_no_volumen.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,4,7,9</rect>
-                <key>scale9Paddings</key>
-                <rect>3,4,7,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_ui_icon_shop.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,3,9,7</rect>
-                <key>scale9Paddings</key>
-                <rect>4,3,9,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_ui_icon_volume.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,4,11,9</rect>
-                <key>scale9Paddings</key>
-                <rect>6,4,11,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_ui_scrollBar.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,5,3,9</rect>
-                <key>scale9Paddings</key>
-                <rect>1,5,3,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_ui_scrollBar_bckg.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,10,3,19</rect>
-                <key>scale9Paddings</key>
-                <rect>1,10,3,19</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_ui_slider.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>19,3,37,7</rect>
-                <key>scale9Paddings</key>
-                <rect>19,3,37,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">spr_ui_slider2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,3,3,7</rect>
-                <key>scale9Paddings</key>
-                <rect>2,3,3,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1240,34 +1131,14 @@
             <filename>spr_topping_posters.png</filename>
             <filename>spr_topping_strawberry.png</filename>
             <filename>spr_trashCan.png</filename>
-            <filename>spr_ui_arrow.png</filename>
-            <filename>spr_ui_chefLvl.png</filename>
-            <filename>spr_ui_icon_coin.png</filename>
             <filename>spr_ui_icon_gem.png</filename>
-            <filename>spr_ui_icon_happy.png</filename>
-            <filename>spr_ui_icon_meh.png</filename>
-            <filename>spr_ui_icon_no_volumen.png</filename>
-            <filename>spr_ui_icon_reload.png</filename>
-            <filename>spr_ui_icon_sad.png</filename>
-            <filename>spr_ui_icon_shop.png</filename>
-            <filename>spr_ui_icon_volume.png</filename>
-            <filename>spr_ui_scrollBar.png</filename>
-            <filename>spr_ui_scrollBar_bckg.png</filename>
-            <filename>spr_ui_slider.png</filename>
-            <filename>spr_ui_slider2.png</filename>
             <filename>spr_ui_volumen.png</filename>
-            <filename>spr_language_english.png</filename>
-            <filename>spr_language_spanish.png</filename>
             <filename>spr_radio_zoomed_vol_song.png</filename>
-            <filename>spr_back.png</filename>
-            <filename>spr_bck_mainMenu.png</filename>
             <filename>main_title_button_play.png</filename>
             <filename>spr_borde_pantalla.png</filename>
             <filename>spr_cristal_canciones.png</filename>
             <filename>spr_cristal_volumen_cancion.png</filename>
-            <filename>spr_espaniol.png</filename>
             <filename>spr_indicador_cancion.png</filename>
-            <filename>spr_ingles.png</filename>
             <filename>spr_palito_cancion_volumen.png</filename>
             <filename>spr_pantalla_canciones.png</filename>
             <filename>spr_pantalla_volumen_cancion.png</filename>
@@ -1285,14 +1156,6 @@
             <filename>spr_bg_topping_naruto.png</filename>
             <filename>spr_bg_topping_springonion.png</filename>
             <filename>main_title_button_contact.png</filename>
-            <filename>spr_ui_settings.png</filename>
-            <filename>spr_bck_improvementDescription.png</filename>
-            <filename>spr_bck_improvementMenu.png</filename>
-            <filename>spr_bck_shopMenu.png</filename>
-            <filename>spr_bck_subShopMenu.png</filename>
-            <filename>spr_buttomMenu.png</filename>
-            <filename>spr_button_babyUI.png</filename>
-            <filename>spr_arrow_improvementMenu.png</filename>
             <filename>../../../../jwrrss_miau_cafe/spr_cat_basecolor.png</filename>
             <filename>../../../../jwrrss_miau_cafe/spr_cat_emotion_happy.png</filename>
             <filename>../../../../jwrrss_miau_cafe/spr_cat_emotion_normal.png</filename>
@@ -1306,6 +1169,23 @@
             <filename>spr_topping_syrup_chocolate.png</filename>
             <filename>spr_topping_syrup_strawberry.png</filename>
             <filename>spr_coins.png</filename>
+            <filename>postentrega/spr_ui_icon_volume.png</filename>
+            <filename>postentrega/spr_ui_icon_shop.png</filename>
+            <filename>postentrega/spr_bck_improvementMenu.png</filename>
+            <filename>postentrega/spr_bck_subShopMenu.png</filename>
+            <filename>postentrega/spr_button_menu.png</filename>
+            <filename>postentrega/spr_close_window.png</filename>
+            <filename>postentrega/spr_language_english.png</filename>
+            <filename>postentrega/spr_language_spanish.png</filename>
+            <filename>postentrega/spr_ui_arrow.png</filename>
+            <filename>postentrega/spr_ui_chefLvl.png</filename>
+            <filename>postentrega/spr_ui_icon_coin.png</filename>
+            <filename>postentrega/spr_ui_icon_happy.png</filename>
+            <filename>postentrega/spr_ui_icon_meh.png</filename>
+            <filename>postentrega/spr_ui_icon_no_volumen.png</filename>
+            <filename>postentrega/spr_ui_icon_sad.png</filename>
+            <filename>postentrega/spr_ui_settings.png</filename>
+            <filename>postentrega/spr_ui_slider.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
